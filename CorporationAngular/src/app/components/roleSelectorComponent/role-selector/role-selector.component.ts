@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DataUser } from 'src/app/interfaces/dataUser';
 
 @Component({
   selector: 'app-role-selector',
@@ -7,9 +8,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RoleSelectorComponent implements OnInit {
 
-  constructor() { }
+
+  dataUser:DataUser={
+    id:null,
+    roles:null
+  }
+
+  isSelected:boolean=false;
+  modeSelector:string="";
+  constructor() {}
 
   ngOnInit(): void {
+    this.isSelected=false;
+    this.dataUser=this.getDataUser();
+  }
+
+  onSelect(selected:string){
+    console.log("onSelectedService");
+    this.modeSelector=selected;
+    this.isSelected=true;
+  }
+
+  //template methods
+
+  getDataUser():DataUser{
+    return {
+      id:1,
+      roles:["AdminManager","ProductManager"]
+    }
   }
 
 }
