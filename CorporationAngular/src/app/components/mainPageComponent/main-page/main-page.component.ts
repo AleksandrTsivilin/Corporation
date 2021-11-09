@@ -19,7 +19,7 @@ export class MainPageComponent implements OnInit {
 
   toLogin(){
     console.log("tologin");
-    this.isLogin=false; // if token !==null isLogin=true else false
+    this.isLogin=true; // if token !==null isLogin=true else false
     this.isLogin? this.router.navigate(["roleSelector"])
                 : this.router.navigate(["loginForm"]);
     

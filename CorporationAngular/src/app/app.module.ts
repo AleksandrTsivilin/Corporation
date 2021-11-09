@@ -7,6 +7,8 @@ import { MainPageComponent } from './components/mainPageComponent/main-page/main
 import { RoleSelectorComponent } from './components/roleSelectorComponent/role-selector/role-selector.component';
 import { InformationPageComponent } from './components/mainPageComponent/information-page/information-page.component';
 import { LoginFormComponent } from './components/loginPageComponent/login-form/login-form.component';
+import { AdminManagerComponent } from './components/adminPage/admin-manager/admin-manager.component';
+
 
 @NgModule({
   declarations: [
@@ -14,7 +16,8 @@ import { LoginFormComponent } from './components/loginPageComponent/login-form/l
     MainPageComponent,
     RoleSelectorComponent,
     InformationPageComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    AdminManagerComponent
   ],
   imports: [
     BrowserModule,

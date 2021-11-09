@@ -1,3 +1,27 @@
-<p>role-selector works!</p>
-<button>AdminManager</button>
-<button>ProductManager</button>
+<button *ngIf="isSelected" (click)="exit()">❌</button>
+
+
+<div *ngIf="!isSelected else selectItem">
+    <p>role-selector-works</p>
+    <div *ngFor="let role of dataUser.roles">
+        <button
+            *ngIf="role==='AdminManager'" 
+            (click)="onSelect('AdminManager')"
+        >AdminManager</button>
+        <button 
+            *ngIf="role==='ProductManager'" 
+            (click)="onSelect('ProductManager')"
+        >ProductManager</button>
+    </div>
+</div>
+
+<ng-template #selectItem>
+    <div [ngSwitch]='modeSelector'>
+        <app-admin-manager *ngSwitchCase="'AdminManager'" [userId]="dataUser.id"></app-admin-manager>
+    </div>
+</ng-template>
+<!-- <div [ngSwitch]='modeSelector'>
+    <app-add-user *ngSwitchCase="'createUser'" [userId]="userId" ></app-add-user>
+    <app-add-module *ngSwitchCase="'createModule'" [userId]="userId" ></app-add-module>
+    <app-users *ngSwitchCase="'getUsers'" [userId]="userId"></app-users>
+</div>  -->
