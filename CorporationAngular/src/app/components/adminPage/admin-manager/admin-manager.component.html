@@ -1,1 +1,27 @@
 <p>admin-manager works!</p>
+
+
+
+
+<div *ngIf="!isSelect else selectItem">
+    <button 
+        *ngIf="canGet()"
+        (click)="onSelect('getUsers')"
+    >Get users</button>
+    <span *ngIf="canCreate()">
+        <button (click)="onSelect('addUser')">Add user</button>
+        <button (click)="onSelect('addModel')">Add module</button>
+    </span>
+</div>
+
+<ng-template #selectItem>
+    <h1>{{modeAdminPage}}</h1>
+    <!-- <div [ngSwitch]='modeSelector'>
+        <app-admin-manager *ngSwitchCase="'AdminManager'" [userId]="dataUser.id"></app-admin-manager>
+    </div> -->
+</ng-template>
+
+
+
+
+
