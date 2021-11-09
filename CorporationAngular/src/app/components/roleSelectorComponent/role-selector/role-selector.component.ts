@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { DataUser } from 'src/app/interfaces/dataUser';
 
 @Component({
@@ -8,21 +8,21 @@ import { DataUser } from 'src/app/interfaces/dataUser';
 })
 export class RoleSelectorComponent implements OnInit {
 
+  
 
   dataUser:DataUser={
     id:null,
     roles:null
-  }
+  } 
 
   isSelected:boolean=false;
   modeSelector:string="";
-  constructor() { console.log("constr")}
+  constructor() { }
 
   ngOnInit(): void {
     this.isSelected=false;
     this.dataUser=this.getDataUser();
-    console.log("onInit")
-    console.log(this.isSelected);
+    
   }
 
   onSelect(selected:string){
