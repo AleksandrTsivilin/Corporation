@@ -1,29 +1,32 @@
-<p>main-page works!</p>
-<div class="main-page">
-    <div >
-        <a routerLink="">Main</a>
-    </div>
-    <div *ngIf="isLogin">
-        <a routerLink="roleSelector">
-            Services
-        </a>
-    </div> 
-    <div *ngIf="!isLogin; else logout">
-        <button (click)="toLogin()">Log in</button>        
-    </div>
-    <div>
-        <p>language</p>
-        <select name="lang" >
-            <option></option>
-        </select>
-    </div>
-    <div>
-        <p>setting</p>
-        <select name="setting" >
-            <option></option>
-        </select>
+<div class="container-header">
+    <p>main-page works!</p>
+    <div class="main-page">
+        <div >
+            <a routerLink="">Main</a>
+        </div>
+        <div *ngIf="isLogin">
+            <a routerLink="roleSelector">
+                Services
+            </a>
+        </div> 
+        <div *ngIf="!isLogin; else logout">
+            <button (click)="toLogin()">Log in</button>        
+        </div>
+        <div>
+            <p>language</p>
+            <select name="lang" >
+                <option></option>
+            </select>
+        </div>
+        <div>
+            <p>setting</p>
+            <select name="setting" >
+                <option></option>
+            </select>
+        </div>
     </div>
 </div>
+
 
 <ng-template #logout>
     <div>
