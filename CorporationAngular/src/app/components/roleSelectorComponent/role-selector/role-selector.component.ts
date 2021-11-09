@@ -16,17 +16,23 @@ export class RoleSelectorComponent implements OnInit {
 
   isSelected:boolean=false;
   modeSelector:string="";
-  constructor() {}
+  constructor() { console.log("constr")}
 
   ngOnInit(): void {
     this.isSelected=false;
     this.dataUser=this.getDataUser();
+    console.log("onInit")
+    console.log(this.isSelected);
   }
 
   onSelect(selected:string){
     console.log("onSelectedService");
     this.modeSelector=selected;
     this.isSelected=true;
+  }
+
+  exit(){
+    this.isSelected=false;
   }
 
   //template methods

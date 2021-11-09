@@ -1,7 +1,8 @@
-<p>role-selector works!</p>
+<button *ngIf="isSelected" (click)="exit()">❌</button>
 
 
 <div *ngIf="!isSelected else selectItem">
+    <p>role-selector-works</p>
     <div *ngFor="let role of dataUser.roles">
         <button
             *ngIf="role==='AdminManager'" 
@@ -15,8 +16,8 @@
 </div>
 
 <ng-template #selectItem>
-    <div>
-        <h1>{{modeSelector}}</h1>
+    <div [ngSwitch]='modeSelector'>
+        <app-admin-manager *ngSwitchCase="'AdminManager'"></app-admin-manager>
     </div>
 </ng-template>
 <!-- <div [ngSwitch]='modeSelector'>
