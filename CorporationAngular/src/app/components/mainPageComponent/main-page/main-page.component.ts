@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main-page',
@@ -9,19 +10,25 @@ export class MainPageComponent implements OnInit {
 
   isLogin:boolean=false;
 
-  constructor() { }
+  constructor(private readonly router:Router) {
+    
+   }
 
   ngOnInit(): void {
   }
 
   toLogin(){
     console.log("tologin");
-    this.isLogin=true;
+    this.isLogin=false; // if token !==null isLogin=true else false
+    this.isLogin? this.router.navigate(["roleSelector"])
+                : this.router.navigate(["loginForm"]);
+    
   }
 
   toLogout(){
     console.log("logout");
     this.isLogin=false;
+    this.router.navigate([""]);
   }
 
 }
