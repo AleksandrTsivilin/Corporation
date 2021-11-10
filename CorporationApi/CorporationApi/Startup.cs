@@ -26,6 +26,8 @@ namespace CorporationApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(option => option.AddPolicy("devCors",
+                opts => opts.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -42,6 +44,7 @@ namespace CorporationApi
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CorporationApi v1"));
+                app.UseCors("devCors");
             }
 
             app.UseHttpsRedirection();
