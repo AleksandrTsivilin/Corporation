@@ -18,7 +18,12 @@ export class AdminManagerComponent implements OnInit {
     console.log(this.userId);
     
     if (this.userId !== null) {
-      this.adminService.getPermissions(this.userId);
+      this.adminService.getPermissions(this.userId)
+        .subscribe((result)=>{
+          this.permissions=result;
+        },
+        ()=>{console.log("request failed getPermissions")}
+        )
     }
   }
 
