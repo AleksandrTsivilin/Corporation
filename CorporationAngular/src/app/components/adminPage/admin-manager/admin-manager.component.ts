@@ -14,7 +14,7 @@ export class AdminManagerComponent implements OnInit {
   isSelect:boolean=false;
   constructor(private readonly adminService:AdminManagerService) { }
 
-  ngOnInit(): void {
+  ngOnInit(): void {    
     console.log(this.userId);
     
     if (this.userId !== null) {
@@ -27,7 +27,7 @@ export class AdminManagerComponent implements OnInit {
     }
   }
 
-  canCreate():boolean{
+  canCreate():boolean{    
     return this.permissions.includes("create");
   }
 
@@ -41,12 +41,4 @@ export class AdminManagerComponent implements OnInit {
     this.modeAdminPage=selected;
     this.isSelect=true;
   }
-
-  
-
-  //template methods
-  getPermissions(userId:number):string[]{
-    return ["create","read","update","delete"]
-  }
-
 }
