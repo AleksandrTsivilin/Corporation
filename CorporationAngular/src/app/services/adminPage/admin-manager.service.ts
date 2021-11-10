@@ -6,4 +6,8 @@ import { Injectable } from '@angular/core';
 export class AdminManagerService {
 
   constructor() { }
+
+  getPermissions(userId:number){
+    console.log("getPermissions");
+  }
 }
