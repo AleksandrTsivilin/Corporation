@@ -15,7 +15,7 @@ namespace CorporationApi.Controllers
         public IActionResult GetPermissionsByUser(int userId)
         {
             var permissions = new string[] { "create", "read", "delete", "update" };
-            return Ok( new { p=permissions});
+            return Ok( permissions);
         }
 
         [HttpGet("registrationData")]
