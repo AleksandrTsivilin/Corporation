@@ -8,6 +8,7 @@ import { RoleSelectorComponent } from './components/roleSelectorComponent/role-s
 import { InformationPageComponent } from './components/mainPageComponent/information-page/information-page.component';
 import { LoginFormComponent } from './components/loginPageComponent/login-form/login-form.component';
 import { AdminManagerComponent } from './components/adminPage/admin-manager/admin-manager.component';
+import { UsersComponent } from './components/adminPage/users/users.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AdminManagerComponent } from './components/adminPage/admin-manager/admi
     RoleSelectorComponent,
     InformationPageComponent,
     LoginFormComponent,
-    AdminManagerComponent
+    AdminManagerComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
