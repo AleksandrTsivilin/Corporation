@@ -12,7 +12,8 @@ export class RoleSelectorComponent implements OnInit {
 
   dataUser:DataUser={
     id:null,
-    roles:null
+    roles:null,
+    permissions:null
   } 
 
   isSelected:boolean=false;
@@ -40,7 +41,8 @@ export class RoleSelectorComponent implements OnInit {
   getDataUser():DataUser{
     return {
       id:1,
-      roles:["AdminManager","ProductManager"]
+      roles:["AdminManager","ProductManager"],
+      permissions:["create","read","update","delete"]
     }
   }
 
