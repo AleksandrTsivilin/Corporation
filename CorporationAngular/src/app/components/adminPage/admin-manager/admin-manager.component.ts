@@ -1,4 +1,5 @@
 import { Component, OnInit , Input} from '@angular/core';
+import { AdminManagerService } from 'src/app/services/adminPage/admin-manager.service';
 
 @Component({
   selector: 'app-admin-manager',
@@ -11,16 +12,22 @@ export class AdminManagerComponent implements OnInit {
   permissions:string[]=[];
   modeAdminPage:string="";
   isSelect:boolean=false;
-  constructor() { }
+  constructor(private readonly adminService:AdminManagerService) { }
 
-  ngOnInit(): void {
-    console.log(this.userId)
+  ngOnInit(): void {    
+    console.log(this.userId);
+    
     if (this.userId !== null) {
-       this.permissions=this.getPermissions(this.userId);
+      this.adminService.getPermissions(this.userId)
+        .subscribe((result)=>{
+          this.permissions=result;
+        },
+        ()=>{console.log("request failed getPermissions")}
+        )
     }
   }
 
-  canCreate():boolean{
+  canCreate():boolean{    
     return this.permissions.includes("create");
   }
 
@@ -34,12 +41,4 @@ export class AdminManagerComponent implements OnInit {
     this.modeAdminPage=selected;
     this.isSelect=true;
   }
-
-  
-
-  //template methods
-  getPermissions(userId:number):string[]{
-    return ["create","read","update","delete"]
-  }
-
 }
