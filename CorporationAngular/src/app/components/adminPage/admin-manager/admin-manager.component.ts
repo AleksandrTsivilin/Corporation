@@ -9,34 +9,21 @@ import { AdminManagerService } from 'src/app/services/adminPage/admin-manager.se
 })
 export class AdminManagerComponent implements OnInit {
 
-  //@Input () userId:number | null=null;
   @Input () dataUser:DataUser={
     id:null,
     roles:null,
     permissions:null
   };
-  //permissions:string[]=[];
+  
   modeAdminPage:string="";
   isSelect:boolean=false;
   constructor(private readonly adminService:AdminManagerService) { }
 
   ngOnInit(): void {    
-    //console.log(this.userId);
     
-    // if (this.userId !== null) {
-    //   this.adminService.getPermissions(this.userId)
-    //     .subscribe((result)=>{
-    //       this.permissions=result;
-    //     },
-    //     ()=>{console.log("request failed getPermissions")}
-    //     )
-    // }
   }
 
-  canCreate():boolean | undefined{    
-    //return this.permissions.includes("create");
-    console.log("canCreate adminManager");
-    console.log(this.dataUser);
+  canCreate():boolean | undefined{       
     return this.dataUser?.permissions?.includes("create");
   }
 
@@ -44,10 +31,6 @@ export class AdminManagerComponent implements OnInit {
     return this.dataUser?.permissions?.includes("read") || 
       this.dataUser?.permissions?.includes("update") || 
       this.dataUser?.permissions?.includes("delete");
-
-    // return this.permissions.includes("read") || 
-    //   this.permissions.includes("update") || 
-    //   this.permissions.includes("delete");
   }
 
   onSelect(selected:string){

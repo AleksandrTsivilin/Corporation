@@ -9,9 +9,6 @@ import { UserService } from 'src/app/services/adminPage/user.service';
 })
 export class UsersComponent implements OnInit {
 
-  //@Input () userId:number | null =null;
- // @Input () permissions:string[] =[];
-
   @Input () dataUser:DataUser={
     id:null,
     roles:null,
@@ -21,10 +18,7 @@ export class UsersComponent implements OnInit {
   constructor(private readonly userService:UserService) { }
 
   ngOnInit(): void {
-    //console.log(this.userId)
-    //console.log(this.permissions);
     if (this.dataUser.id !==null) {
-      // this.users=this.getUsers(this.userId);
       this.userService.getUsers(this.dataUser.id)
         .subscribe((result)=>{
           this.users=result;
