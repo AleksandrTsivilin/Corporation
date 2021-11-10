@@ -18,11 +18,13 @@
     <div [ngSwitch]="modeAdminPage">
         <app-users 
             *ngSwitchCase="'getUsers'"
-            [userId]="userId"
-            [permissions]="permissions"
+            [dataUser]="dataUser"
         ></app-users>
     </div>
 </ng-template>
+
+<!-- [userId]="userId" -->
+            <!-- [permissions]="permissions" -->
 
 
 

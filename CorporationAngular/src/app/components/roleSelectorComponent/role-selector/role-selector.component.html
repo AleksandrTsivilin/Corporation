@@ -17,7 +17,7 @@
 
 <ng-template #selectItem>
     <div [ngSwitch]='modeSelector'>
-        <app-admin-manager *ngSwitchCase="'AdminManager'" [userId]="dataUser.id"></app-admin-manager>
+        <app-admin-manager *ngSwitchCase="'AdminManager'" [dataUser]="dataUser"></app-admin-manager>
     </div>
 </ng-template>
 <!-- <div [ngSwitch]='modeSelector'>

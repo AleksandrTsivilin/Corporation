@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { DataUser } from 'src/app/interfaces/dataUser';
+import { UserService } from 'src/app/services/adminPage/user.service';
 
 @Component({
   selector: 'app-users',
@@ -7,27 +9,36 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class UsersComponent implements OnInit {
 
-  @Input () userId:number | null =null;
-  @Input () permissions:string[] =[];
+  //@Input () userId:number | null =null;
+ // @Input () permissions:string[] =[];
+
+  @Input () dataUser:DataUser={
+    id:null,
+    roles:null,
+    permissions:null
+  }
   users:string []=[]
-  constructor() { }
+  constructor(private readonly userService:UserService) { }
 
   ngOnInit(): void {
-    console.log(this.userId)
-    console.log(this.permissions);
-    if (this.userId !==null) {
-      this.users=this.getUsers(this.userId);
-    }
-  
-    
+    //console.log(this.userId)
+    //console.log(this.permissions);
+    if (this.dataUser.id !==null) {
+      // this.users=this.getUsers(this.userId);
+      this.userService.getUsers(this.dataUser.id)
+        .subscribe((result)=>{
+          this.users=result;
+        },
+        ()=>{console.log("getUser failed")})
+    }    
   }
 
-  canEdit():boolean{
-    return this.permissions.includes("update");
+  canEdit():boolean | undefined{
+    return this.dataUser?.permissions?.includes("update");
   }
 
-  canDelete():boolean{
-    return this.permissions.includes("delete");
+  canDelete():boolean | undefined{
+    return this.dataUser?.permissions?.includes("delete");
   }
 
   edit(){
