@@ -1,6 +1,6 @@
 import { Component, OnInit , Input} from '@angular/core';
 import { DataUser } from 'src/app/interfaces/dataUser';
-import { AdminManagerService } from 'src/app/services/adminPage/admin-manager.service';
+
 
 @Component({
   selector: 'app-admin-manager',
@@ -17,7 +17,7 @@ export class AdminManagerComponent implements OnInit {
   
   modeAdminPage:string="";
   isSelect:boolean=false;
-  constructor(private readonly adminService:AdminManagerService) { }
+  constructor() { }
 
   ngOnInit(): void {    
     
