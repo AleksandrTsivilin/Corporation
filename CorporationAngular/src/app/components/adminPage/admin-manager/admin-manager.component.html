@@ -16,7 +16,11 @@
 
 <ng-template #selectItem>
     <div [ngSwitch]="modeAdminPage">
-        <app-users *ngSwitchCase="'getUsers'"></app-users>
+        <app-users 
+            *ngSwitchCase="'getUsers'"
+            [userId]="userId"
+            [permissions]="permissions"
+        ></app-users>
     </div>
 </ng-template>
 

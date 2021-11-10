@@ -35,6 +35,8 @@ export class AdminManagerComponent implements OnInit {
     this.isSelect=true;
   }
 
+  
+
   //template methods
   getPermissions(userId:number):string[]{
     return ["create","read","update","delete"]
