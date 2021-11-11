@@ -10,6 +10,8 @@ import { InformationPageComponent } from './components/mainPageComponent/informa
 import { LoginFormComponent } from './components/loginPageComponent/login-form/login-form.component';
 import { AdminManagerComponent } from './components/adminPage/admin-manager/admin-manager.component';
 import { UsersComponent } from './components/adminPage/users/users.component';
+import { UserItemComponent } from './components/adminPage/user-item/user-item.component';
+
 
 
 @NgModule({
@@ -20,7 +22,8 @@ import { UsersComponent } from './components/adminPage/users/users.component';
     InformationPageComponent,
     LoginFormComponent,
     AdminManagerComponent,
-    UsersComponent
+    UsersComponent,
+    UserItemComponent
   ],
   imports: [
     BrowserModule,

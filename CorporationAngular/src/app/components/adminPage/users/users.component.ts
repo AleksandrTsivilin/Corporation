@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserService } from 'src/app/services/adminPage/user.service';
+import { UserInfo } from 'src/app/interfaces/userInfo';
 
 @Component({
   selector: 'app-users',
@@ -14,14 +15,18 @@ export class UsersComponent implements OnInit {
     roles:null,
     permissions:null
   }
-  users:string []=[]
+
+  userInfos:UserInfo[]=[];
+  tableHeaders:string[]=["#","username","firstname","roles","action"]
+  
   constructor(private readonly userService:UserService) { }
 
   ngOnInit(): void {
     if (this.dataUser.id !==null) {
       this.userService.getUsers(this.dataUser.id)
         .subscribe((result)=>{
-          this.users=result;
+          this.userInfos=result;
+          console.log(this.userInfos)
         },
         ()=>{console.log("getUser failed")})
     }    
@@ -42,11 +47,4 @@ export class UsersComponent implements OnInit {
   remove(){
     console.log("remove user");
   }
-
-  // template methods
-
-  getUsers(userId:number): string[]{
-    return  ["aa","bb","cc"]
-  }
-
 }

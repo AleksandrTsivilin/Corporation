@@ -1,0 +1,19 @@
+td { 
+    padding: 5px; 
+    border: 1px solid black; 
+    .item{
+        display: flex;
+        .title-item{
+            width: 85%;
+        }
+
+        .btn-item{
+            width: 15%;
+            .edit-btn{
+                width: 100%;
+            }
+        }
+
+    }
+    
+}

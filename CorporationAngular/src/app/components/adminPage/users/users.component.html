@@ -1,10 +1,14 @@
-<p>users works!</p>
 
+<table>
+    <tr>
+      <th *ngFor="let head of tableHeaders">
+        {{head}}
+      </th>    
+    </tr>
+    <tr app-user-item *ngFor="let userInfo of userInfos let i=index"    
+        [numUser]="i+1"
+        [userInfo]="userInfo" 
+    >   
 
-<div *ngFor="let user of users">
-    <div>
-        <span>{{user}}</span>
-        <button *ngIf="canEdit()" (click)="edit()">✏️</button>
-        <button *ngIf="canDelete()" (click)="remove()">❌</button>
-    </div>
-</div>
+    </tr>
+  </table>

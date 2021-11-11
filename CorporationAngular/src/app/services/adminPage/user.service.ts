@@ -1,0 +1,17 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { UserInfo } from 'src/app/interfaces/userInfo';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserService {
+
+  constructor(private readonly client:HttpClient) { }
+
+  getUsers(userId:number){
+    const urlGetUsers="https://localhost:5001/api/Admin/users";
+    let params = new HttpParams().set("userId",userId);
+    return this.client.get<UserInfo[]>(urlGetUsers,{params});
+  }
+}
