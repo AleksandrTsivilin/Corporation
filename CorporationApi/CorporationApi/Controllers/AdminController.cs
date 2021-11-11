@@ -15,21 +15,21 @@ namespace CorporationApi.Controllers
         public IActionResult GetPermissionsByUser(int userId)
         {
             var permissions = new string[] { "create", "read", "delete", "update" };
-            return Ok( permissions);
+            return Ok(permissions);
         }
 
         [HttpGet("registrationData")]
         public IActionResult GetRegistrationData(int userId)
         {
             var departmentsOfUser = new string[] { "dep 1", "dep 2" };
-            var allRoles = new string[] {"adminManager","productManager"};
+            var allRoles = new string[] { "adminManager", "productManager" };
             var allPermissions = new string[] { "create", "read", "update", "delete" };
             var accessOfUser = new string[] { "full", "region", "factory", "department" };
-            return Ok(new { 
-                departments=departmentsOfUser,
-                roles=allRoles,
-                permissions=allPermissions,
-                access=accessOfUser
+            return Ok(new {
+                departments = departmentsOfUser,
+                roles = allRoles,
+                permissions = allPermissions,
+                access = accessOfUser
             });
         }
 
@@ -49,8 +49,17 @@ namespace CorporationApi.Controllers
         [HttpGet("users")]
         public IActionResult GetUsersByUser()
         {
-            var users = new string[] { "vasya", "petya", "oleg" };
-            return Ok(new { users = users });
+            var userInfos = new List<UserInfo>{
+                new UserInfo
+                {
+                    Username="VasyaUser",
+                    Firstname="Vasya",
+                    Roles=new string[]{ "adminManager", "productManager" }
+                }
+
+            };
+
+            return Ok(userInfos);
         }
     }
 
@@ -62,5 +71,18 @@ namespace CorporationApi.Controllers
         public string Role { get; set; }
         public string[] Permissions { get; set; }
         public string[] Access { get; set; }
+    }
+
+
+    public class UserInfo
+    {
+        public string Username { get; set; } = "VasyaUser";
+        public string Firstname { get; set; } = "Vasya";
+        public string[] Roles { get; set; } = { "AdminManager", "ProductManager" };        
+    }
+
+    public class Permissions
+    {
+        public string Title { get; set; }
     }
 }
