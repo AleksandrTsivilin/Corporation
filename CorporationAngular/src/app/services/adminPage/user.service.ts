@@ -6,12 +6,24 @@ import { UserInfo } from 'src/app/interfaces/userInfo';
   providedIn: 'root'
 })
 export class UserService {
-
+  
   constructor(private readonly client:HttpClient) { }
 
   getUsers(userId:number){
     const urlGetUsers="https://localhost:5001/api/Admin/users";
     let params = new HttpParams().set("userId",userId);
     return this.client.get<UserInfo[]>(urlGetUsers,{params});
+  }
+
+  remove(userId:number | null){
+    console.log("userService remove");
+    const urlDelete="https://localhost:5001/api/Admin";
+    console.log(userId)
+    if (userId!==null){
+      let params = new HttpParams().set("userId",userId);
+      return this.client.delete(urlDelete,{params});
+    }
+    return null;
+    
   }
 }

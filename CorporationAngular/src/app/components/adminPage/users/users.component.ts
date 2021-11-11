@@ -44,7 +44,13 @@ export class UsersComponent implements OnInit {
     console.log("edit user");
   }
 
-  remove(){
-    console.log("remove user");
+  remove(userId:number | null){
+    console.log(userId)
+    this.userService.remove(userId)
+      ?.subscribe((result)=>
+      {
+        console.log("user removed");
+      },
+      ()=>{})
   }
 }

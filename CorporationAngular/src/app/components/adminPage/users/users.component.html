@@ -8,7 +8,7 @@
     <tr app-user-item *ngFor="let userInfo of userInfos let i=index"    
         [numUser]="i+1"
         [userInfo]="userInfo" 
-    >   
-
+        (remove)="remove(userInfo.id)"
+    >  
     </tr>
   </table>

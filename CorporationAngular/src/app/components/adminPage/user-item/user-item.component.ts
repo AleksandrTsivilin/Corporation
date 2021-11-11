@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ThrowStmt } from '@angular/compiler';
+import { Component, Input, OnInit, Output , EventEmitter } from '@angular/core';
 import { UserInfo } from 'src/app/interfaces/userInfo';
+
 
 @Component({
   selector: 'tr[app-user-item]',
@@ -9,12 +11,16 @@ import { UserInfo } from 'src/app/interfaces/userInfo';
 export class UserItemComponent implements OnInit {
 
   @Input () userInfo:UserInfo={
+    id:null,
     username:null,
     firstname:null,
     roles:null
   }
 
   @Input () numUser:number=0;
+
+  @Output() remove =new EventEmitter();
+
 
   constructor() { }
 
@@ -25,6 +31,8 @@ export class UserItemComponent implements OnInit {
     if (array===null) return [];
     return array.join(", ");
   }
-  
+  removeUser(){
+    this.remove.emit();
+  }
 
 }
