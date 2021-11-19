@@ -20,7 +20,7 @@ export class UserItemComponent implements OnInit {
   @Input () numUser:number=0;
 
   @Output() remove =new EventEmitter();
-
+  @Output() edit=new EventEmitter();
 
   constructor() { }
 
@@ -33,6 +33,10 @@ export class UserItemComponent implements OnInit {
   }
   removeUser(){
     this.remove.emit();
+  }
+
+  editUser(){
+    this.edit.emit();
   }
 
 }

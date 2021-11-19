@@ -15,6 +15,13 @@ export class UserService {
     return this.client.get<UserInfo[]>(urlGetUsers,{params});
   }
 
+  update(updateUser:UserInfo){
+    console.log("update service");
+    const urlUpdate="https://localhost:5001/api/Admin";
+    //let params = new HttpParams().set("model",updateUser)
+    return this.client.put(urlUpdate,updateUser);
+  }
+
   remove(userId:number | null){
     console.log("userService remove");
     const urlDelete="https://localhost:5001/api/Admin";

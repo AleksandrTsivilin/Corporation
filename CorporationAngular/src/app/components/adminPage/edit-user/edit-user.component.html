@@ -1,0 +1,34 @@
+<h1>edit user work</h1>
+<button (click)="addRole()">Add role</button>
+<form 
+  [formGroup]="userAvaiables"
+  (ngSubmit)="onSubmit()"
+  
+>
+  <div
+    formArrayName="avaiables"
+    *ngFor="let avaiable of avaiables.value ; let i=index"
+  >
+    <div >
+      <h1>{{avaiable.title}}</h1>
+    </div>
+    <form [formGroup]="permissionsForm">
+      <div
+        formArrayName="permissionsAction"
+        *ngFor="let permission of permissionsAction.value ; let j=index"
+      >
+        <div [formGroupName]="j">
+          <h1>{{permission.title}}</h1>
+          <input
+          type="checkbox" formControlName="selected"
+          
+          >
+          <!-- <label>{{permission.title}}</label> -->
+        </div>
+        
+      </div>
+    </form>
+      
+  </div>
+    <button type="submit" >Submit</button>
+</form>

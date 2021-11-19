@@ -1,14 +1,27 @@
 
-<table>
-    <tr>
-      <th *ngFor="let head of tableHeaders">
-        {{head}}
-      </th>    
-    </tr>
-    <tr app-user-item *ngFor="let userInfo of userInfos let i=index"    
-        [numUser]="i+1"
-        [userInfo]="userInfo" 
-        (remove)="remove(userInfo.id)"
-    >  
-    </tr>
-  </table>
+<div *ngIf="!editUserMode else toUpdateForm">
+    <table>
+        <tr>
+          <th *ngFor="let head of tableHeaders">
+            {{head}}
+          </th>    
+        </tr>
+        <tr app-user-item *ngFor="let userInfo of userInfos let i=index"    
+            [numUser]="i+1"
+            [userInfo]="userInfo" 
+            (remove)="remove(userInfo.id)"
+            (edit)="edit(userInfo)"
+        >  
+        </tr>
+    </table>
+</div>
+
+<!-- [editUser]="editUser" -->
+<ng-template #toUpdateForm >
+    <app-edit-user
+        [editUser]="editUser"
+        (updateUser)="update()"
+    >
+    </app-edit-user>
+</ng-template>
+

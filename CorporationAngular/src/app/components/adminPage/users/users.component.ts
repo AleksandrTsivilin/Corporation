@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserService } from 'src/app/services/adminPage/user.service';
 import { UserInfo } from 'src/app/interfaces/userInfo';
+import { EditUser } from 'src/app/interfaces/editUser';
+
 
 @Component({
   selector: 'app-users',
@@ -17,7 +19,20 @@ export class UsersComponent implements OnInit {
   }
 
   userInfos:UserInfo[]=[];
-  tableHeaders:string[]=["#","username","firstname","roles","action"]
+  tableHeaders:string[]=["#","username","firstname","roles","action"];
+  editUserMode:boolean=false;
+
+  // editUser:UserInfo={
+  //   id: null,
+  //   username: null,
+  //   roles: null,
+  //   firstname:null
+  // }
+
+  editUser:EditUser={
+    id:null,
+    roles:null
+  }
   
   constructor(private readonly userService:UserService) { }
 
@@ -40,8 +55,33 @@ export class UsersComponent implements OnInit {
     return this.dataUser?.permissions?.includes("delete");
   }
 
-  edit(){
-    console.log("edit user");
+  edit(editUser:UserInfo){
+    // this.editUser={
+    //   id:editUser.id,
+    //   firstname:editUser.firstname,
+    //   username:editUser.username,
+    //   roles:editUser.roles
+    // }
+
+    this.editUser={
+      id:1,
+      roles:[
+        {title:"role 1",permissions:[{title:"per 1",isSelected:false}]},
+        {title:"role 2",permissions:[{title:"per 1",isSelected:true},{title:"per 2",isSelected:false}]}
+      ]
+    }
+    this.editUserMode=true;
+  }
+
+  update(){
+    console.log("update in usersComponent")
+    console.log(this.editUser);
+    // this.userService.update(this.editUser)
+    //   .subscribe(()=>{
+        
+    //   })
+    // this.editUserMode=false;
+
   }
 
   remove(userId:number | null){
