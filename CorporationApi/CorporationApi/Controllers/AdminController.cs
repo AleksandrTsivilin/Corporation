@@ -68,6 +68,12 @@ namespace CorporationApi.Controllers
         {
             return Ok();
         }
+
+        [HttpPut]
+        public IActionResult Put(UserInfo model)
+        {
+            return Ok();
+        }
     }
 
     //public class RegistrationModel
