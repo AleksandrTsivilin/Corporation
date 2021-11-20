@@ -5,10 +5,10 @@ export interface EditUser{
 
 interface Roles{
     title:string | null,
-    permissions:Permission[] | null
+    permissions:PermissionAction[] | null
 }
 
-interface Permission{
+interface PermissionAction{
     title:string | null,
     isSelected:boolean | null
 }
