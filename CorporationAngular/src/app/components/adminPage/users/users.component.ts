@@ -18,7 +18,7 @@ export class UsersComponent implements OnInit {
     permissions:null
   }
 
-  userInfos:UserInfo[]=[];
+  usersInfo:UserInfo[]=[];
   tableHeaders:string[]=["#","username","firstname","roles","action"];
   editUserMode:boolean=false;
 
@@ -40,8 +40,8 @@ export class UsersComponent implements OnInit {
     if (this.dataUser.id !==null) {
       this.userService.getUsers(this.dataUser.id)
         .subscribe((result)=>{
-          this.userInfos=result;
-          console.log(this.userInfos)
+          this.usersInfo=result;
+          console.log(this.usersInfo)
         },
         ()=>{console.log("getUser failed")})
     }    
