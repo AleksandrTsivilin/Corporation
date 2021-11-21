@@ -49,13 +49,25 @@ namespace CorporationApi.Controllers
         [HttpGet("users")]
         public IActionResult GetUsersByUser()
         {
+            var permissions1 = new List<Permission>
+            {
+                new Permission { Title="create"},
+                new Permission { Title="read"}
+
+            };
+            var roles1 = new List<Role>
+            {
+                new Role{Title="AdminManager",Permissions=permissions1}
+            };
+
             var userInfos = new List<UserInfo>{
                 new UserInfo
                 {
                     Id=1,
                     Username="VasyaUser",
                     Firstname="Vasya",
-                    Roles=new string[]{ "adminManager", "productManager" }
+                    Roles=roles1
+                    
                 }
 
             };
@@ -92,10 +104,16 @@ namespace CorporationApi.Controllers
         public int Id { get; set; }
         public string Username { get; set; } 
         public string Firstname { get; set; } 
-        public string[] Roles { get; set; }        
+        public ICollection<Role> Roles { get; set; }        
     }
 
-    public class Permissions
+    public class Role
+    {
+        public string Title { get; set; }
+        public ICollection< Permission> Permissions { get; set; }
+    }
+
+    public class Permission
     {
         public string Title { get; set; }
     }
