@@ -1,7 +1,7 @@
 import { ThrowStmt } from '@angular/compiler';
 import { Component, Input, OnInit, Output , EventEmitter } from '@angular/core';
 import { UserInfo } from 'src/app/interfaces/userInfo';
-
+import { Role} from 'src/app/interfaces/userInfo';
 
 @Component({
   selector: 'tr[app-user-item]',
@@ -14,7 +14,7 @@ export class UserItemComponent implements OnInit {
     id:null,
     username:null,
     firstname:null,
-    roles:null
+    roles:[]
   }
 
   @Input () numUser:number=0;

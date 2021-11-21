@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserService } from 'src/app/services/adminPage/user.service';
 import { UserInfo } from 'src/app/interfaces/userInfo';
-import { EditUser } from 'src/app/interfaces/editUser';
+//import { EditUser } from 'src/app/interfaces/editUser';
 
 
 @Component({
@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
   }
 
   usersInfo:UserInfo[]=[];
-  tableHeaders:string[]=["#","username","firstname","roles","action"];
+  tableHeaders:string[]=["#","username","firstname","action"];
   editUserMode:boolean=false;
 
   // editUser:UserInfo={
@@ -28,10 +28,13 @@ export class UsersComponent implements OnInit {
   //   roles: null,
   //   firstname:null
   // }
-
-  editUser:EditUser={
+  
+  
+  editUser:UserInfo={
     id:null,
-    roles:null
+    username:null,
+    firstname:null,
+    roles:[]
   }
   
   constructor(private readonly userService:UserService) {}
@@ -41,7 +44,7 @@ export class UsersComponent implements OnInit {
       this.userService.getUsers(this.dataUser.id)
         .subscribe((result)=>{
           this.usersInfo=result;
-          //console.log(this.usersInfo)
+          console.log(this.usersInfo)
         },
         ()=>{console.log("getUser failed")})
     }    
@@ -55,22 +58,22 @@ export class UsersComponent implements OnInit {
     return this.dataUser?.permissions?.includes("delete");
   }
 
-  edit(editUser:UserInfo){
-    console.log(editUser);
-    // this.editUser={
-    //   id:editUser.id,
-    //   firstname:editUser.firstname,
-    //   username:editUser.username,
-    //   roles:editUser.roles
-    // }
-
+  edit(rawUserInfo:UserInfo){
+    //console.log(editUser);
     this.editUser={
-      id:1,
-      roles:[
-        {title:"role 1",permissions:[{title:"per 1",isSelected:false}]},
-        {title:"role 2",permissions:[{title:"per 1",isSelected:true},{title:"per 2",isSelected:false}]}
-      ]
+      id:rawUserInfo.id,
+      username:rawUserInfo.username,
+      firstname:rawUserInfo.firstname,
+      roles:rawUserInfo.roles
     }
+
+    // this.editUser={
+    //   id:1,
+    //   roles:[
+    //     {title:"role 1",permissions:[{title:"per 1",isSelected:false}]},
+    //     {title:"role 2",permissions:[{title:"per 1",isSelected:true},{title:"per 2",isSelected:false}]}
+    //   ]
+    // }
     this.editUserMode=true;
   }
 

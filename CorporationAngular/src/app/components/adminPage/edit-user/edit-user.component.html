@@ -51,7 +51,7 @@
 <button type="button" (click)="addRole()">add roles</button>
 
 <form
-  (ngSubmit)="submitExample()"
+  (ngSubmit)="onSubmit()"
 
 >  
   <div *ngFor="let avaiable of avaiablesUser ; let j=index">
@@ -71,4 +71,3 @@
   </div>
   <button type="submit" >submitExample</button>
 </form>
-<!-- [(ngModel)]="permission.isSelected" name ="isSelected" -->

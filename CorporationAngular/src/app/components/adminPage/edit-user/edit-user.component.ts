@@ -1,8 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, NgForm } from '@angular/forms';
-import { UserInfo } from 'src/app/interfaces/userInfo';
-import { EditUser} from 'src/app/interfaces/editUser';
-import { PermissionAction} from 'src/app/interfaces/editUser';
+import { Permission, UserInfo } from 'src/app/interfaces/userInfo';
+//import { EditUser} from 'src/app/interfaces/editUser';
+import { PermissionAction} from 'src/app/interfaces/permissionAction';
+import {Role} from 'src/app/interfaces/userInfo';
+//import { title } from 'process';
+//import { Permission} from 'src/app/interfaces/userInfo';
 // interface Avaiables{
 //   roles:RolesExample[]
 
@@ -10,7 +13,7 @@ import { PermissionAction} from 'src/app/interfaces/editUser';
 
 interface AvaiableUser{
   role:string | null,
-  permissions:PermissionAction[] | null
+  permissions:PermissionAction[] 
 }
 
 // interface PermissionsAction{
@@ -37,9 +40,11 @@ export class EditUserComponent implements OnInit {
 
   
 
-  @Input () editUser:EditUser={
+  @Input () editUser:UserInfo={
     id:null,
-    roles:null
+    username:null,
+    firstname:null,
+    roles:[]
   }
 
   @Output() updateUser=new EventEmitter();
@@ -142,22 +147,62 @@ export class EditUserComponent implements OnInit {
     
   }
 
-  createPermissionsAction(permissionsActionUser:PermissionAction[] | null):PermissionAction[]{
+  createPermissionsAction(
+    permissionsUser:Permission[] ):PermissionAction[]{
+      
+    const allPermissions=this.getAllPermissions();
+    //let permissionsAction=[];
     let permissionsAction:PermissionAction[]=[];
-    if (permissionsActionUser!==null){
-      for (let permissionAction of permissionsActionUser){
-        permissionsAction.push({title:permissionAction.title ,isSelected:permissionAction.isSelected});
+    for (let  permission of allPermissions){
+      
+      if (permissionsUser!==null){
+        permissionsAction.push(
+          {
+            title:permission,
+            isSelected:permissionsUser.map(_=>_.title).includes(permission)
+          })
       }
+      //console.log(permissionsAction) 
     }
-    console.log(permissionsAction)
+    
     return permissionsAction;
   }
 
-  submitExample(){
-    console.log("submitExample")
-    console.log(this.avaiablesUser);
+  onSubmit(){
+    let editRoles:Role[]=[];
+    for (let avaiable of this.avaiablesUser){
+      
+      // let editPermissions=avaiable.permissions
+      //   .filter(_=>_.isSelected)
+      //   .map(_=>_.title);
+      
+      let editPermissions=this.getEditPermissions(avaiable.permissions);
+      let editRole=this.getEditRole(avaiable.role,editPermissions as string[]);
+      editRoles.push(editRole);
+    }
+    this.editUser.roles=editRoles;
+    
+    
     this.updateUser.emit();
-    //console.log(this.avaiablesa)
+    
+  }
+  getEditPermissions(permissionsAction:PermissionAction[]):string[]{
+    return permissionsAction
+      .filter(permissionAction=>permissionAction.isSelected)
+      .map(permission=>permission.title) as string[];
+  }
+  getEditRole(role:string | null,permissions:string[]):Role{
+    console.log(role);
+    console.log(permissions);
+    let newPermissions:Permission[]=[];
+    for (let permission of permissions){
+      newPermissions.push({title:permission})
+    }
+    
+    return {
+      title:role,
+      permissions:newPermissions
+    };
   }
 
   onSelectRole(event:any){
@@ -190,7 +235,7 @@ export class EditUserComponent implements OnInit {
   }  
 
   getAllPermissions():string[]{
-    return ["per 1","per 2","per 3"]
+    return ['create','read','update','delete']
   }
 
 }
