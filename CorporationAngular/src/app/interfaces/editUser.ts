@@ -8,7 +8,7 @@ interface Roles{
     permissions:PermissionAction[] | null
 }
 
-interface PermissionAction{
+export interface PermissionAction{
     title:string | null,
     isSelected:boolean | null
 }
