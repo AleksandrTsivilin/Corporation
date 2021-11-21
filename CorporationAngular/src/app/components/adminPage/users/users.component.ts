@@ -34,14 +34,14 @@ export class UsersComponent implements OnInit {
     roles:null
   }
   
-  constructor(private readonly userService:UserService) { }
+  constructor(private readonly userService:UserService) {}
 
   ngOnInit(): void {
     if (this.dataUser.id !==null) {
       this.userService.getUsers(this.dataUser.id)
         .subscribe((result)=>{
           this.usersInfo=result;
-          console.log(this.usersInfo)
+          //console.log(this.usersInfo)
         },
         ()=>{console.log("getUser failed")})
     }    
@@ -56,6 +56,7 @@ export class UsersComponent implements OnInit {
   }
 
   edit(editUser:UserInfo){
+    console.log(editUser);
     // this.editUser={
     //   id:editUser.id,
     //   firstname:editUser.firstname,
