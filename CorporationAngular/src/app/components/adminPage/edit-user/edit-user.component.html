@@ -34,8 +34,97 @@
       <button type="submit" >Submit</button>
   </form>
 </div> -->
+<div class="edit-user-page">
+  <div class="edit-user-card">
+    <div class="info-user">
+      <div class="header">user info</div>
+      <div class="info-user-row">
+        <div class="title">username</div>
+        <div class="value">{{editUser.username}}</div>
+      </div>
+      <div class="info-user-row">
+        <div class="title">firstname</div>
+        <div class="value">{{editUser.firstname}}</div>
+      </div>
+    </div>
+    <div class="info-user">
+      <div class="header">avaiables user</div>
+      <div class="add-role">
+        <select 
+          class="select-role"
+          (change)="onSelectRole($event)"
+        >
+          <option
+            [value]="" selected disabled
+          >choise role</option>
+          <option 
+            *ngFor="let item of allRoles"
+            [value]="item"
+          >
+            {{item}}
+          </option>
+        </select>
+        <button 
+          class="btn"
+          type="button"
+          (click)="addRole()"
+        >
+          add role
+        </button>
+      </div>
+      <div >        
+        <form
+          (ngSubmit)="onSubmit()"         
 
-<select  (change)="onSelectRole($event)">
+        >  
+          <div class="avaiables-user" *ngFor="let avaiable of avaiablesUser ; let j=index">
+            <div class="role">
+              <h1>{{avaiable.role}}</h1>
+            </div>
+            <div class="permission">
+              <div  *ngFor="let permission of avaiable.permissions; let i=index">
+                <input 
+                  type="checkbox"
+                  [(ngModel)]="permission.isSelected"
+                  name="{{avaiable.role}}+{{i}}" 
+                  [checked]="permission.isSelected"
+                  
+                >
+                <label>{{permission.title}}</label>
+                <h1>{{permission.isSelected}}</h1>
+              </div>
+            </div>
+            <div class="btn-section">
+              <button type="button" (click)="removeRole(j)">❌</button>
+            </div>        
+          </div>
+          <button class="btn-submit" type="submit">submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div class="inline-block">
+  <select 
+    class="block bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+    (change)="onSelectRole($event)"
+  >
+    <option
+      [value]="" selected disabled
+    >choise role</option>
+    <option 
+      *ngFor="let item of allRoles"
+      [value]="item"
+    >
+      {{item}}
+    </option>
+  </select>
+  <button type="button" (click)="addRole()">add roles</button>
+  
+</div> -->
+
+
+<!-- <select  (change)="onSelectRole($event)">
   <option
     [value]="" selected disabled
   >
@@ -48,9 +137,9 @@
     {{item}}
   </option>
 </select>
-<button type="button" (click)="addRole()">add roles</button>
+<button type="button" (click)="addRole()">add roles</button> -->
 
-<form
+<!-- <form
   (ngSubmit)="onSubmit()"
 
 >  
@@ -71,4 +160,4 @@
   </div>
   <button type="submit" >submitExample</button>
 </form>
-<button>aaa</button>
+<button>aaa</button> -->

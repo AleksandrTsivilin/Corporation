@@ -1,16 +1,99 @@
+.edit-user-page{
+    // @apply bg-gray-300;
 
-.avaiableUser{
-    display: flex;
-    border: 1px solid black;
-    margin: 5px;
+    // @apply h-screen;
+    // @apply fixed inset-0;
+
+    .edit-user-card{
+        @apply border-2 border-gray-900;
+        
+
+        .header{
+            @apply text-center;
+            @apply bg-gray-400;
+            @apply font-bold;
+        }
+
+        .info-user-row{
+            @apply flex flex-row;
+            @apply bg-gray-300;
+            
+            .title{
+                @apply flex flex-1
+            }
+
+            .value{
+                @apply flex flex-1
+            }
+        }
+
+        .add-role{
+            @apply flex;           
+
+            
+            .select-role{
+                @apply flex-1;
+                @apply px-4  pr-8 rounded;
+                @apply text-center;
+
+            }
+
+            .select-role:hover{
+                 @apply border-2 border-blue-900;
+            }
+
+            
+                
+            .btn{
+                @apply flex-none;
+                @apply bg-blue-400;
+                @apply rounded;
+                @apply text-white font-bold
+            }
+
+            .btn:hover{
+                @apply bg-blue-700;
+            }           
+            
+        }
+
+        .avaiables-user{
+            @apply flex flex-row;
+            @apply bg-gray-300;
+            @apply border-b-2 border-gray-900;
+
+            .role{
+                @apply flex-1; 
+                @apply flex justify-center items-center;
+
+            }
+
+            .permission{
+                @apply flex-1;
+            }
+
+            .btn-section{
+                @apply flex-none;
+
+            }
+        }
+
+        .btn-submit{
+            
+            @apply w-full;
+            @apply bg-green-500;
+            @apply rounded;
+            @apply text-white font-bold;
+            @apply py-2;
+        }
+
+        .btn-submit:hover{
+            @apply bg-green-700;
+        }
+    }
 }
 
-.roleInfo{
-    // border: 1px solid black;
-    width: 200px;
-}
 
-.permissions{
-    // border: 1px solid black;
-    width: 200px;
-}
+
+
+
