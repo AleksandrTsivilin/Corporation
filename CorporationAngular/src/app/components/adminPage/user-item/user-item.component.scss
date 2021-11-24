@@ -1,19 +1,24 @@
-td { 
-    padding: 5px; 
-    border: 1px solid black; 
-    .item{
-        display: flex;
-        .title-item{
-            width: 85%;
-        }
+// td { 
+//     padding: 5px; 
+//     border: 1px solid black; 
+//     .item{
+//         display: flex;
+//         .title-item{
+//             width: 85%;
+//         }
 
-        .btn-item{
-            width: 15%;
-            .edit-btn{
-                width: 100%;
-            }
-        }
+//         .btn-item{
+//             width: 15%;
+//             .edit-btn{
+//                 width: 100%;
+//             }
+//         }
 
-    }
+//     }
     
+// }
+
+.user-item{
+    @apply border border-green-600;
+    @apply pl-2;
 }

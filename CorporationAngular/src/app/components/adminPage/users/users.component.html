@@ -1,12 +1,18 @@
 
 <div *ngIf="!editUserMode else toUpdateForm">
-    <table>
+    <table class="table">
         <tr>
-          <th *ngFor="let head of tableHeaders">
+          <th 
+            class="header"
+            *ngFor="let head of tableHeaders"
+
+          >
             {{head}}
           </th>    
         </tr>
-        <tr app-user-item *ngFor="let userInfo of usersInfo let i=index"    
+        <tr app-user-item 
+            class="user-item"
+            *ngFor="let userInfo of usersInfo let i=index"    
             [numUser]="i+1"
             [userInfo]="userInfo" 
             (remove)="remove(userInfo.id)"
