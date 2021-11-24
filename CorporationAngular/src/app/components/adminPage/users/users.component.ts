@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
   }
 
   usersInfo:UserInfo[]=[];
-  tableHeaders:string[]=["#","username","firstname","action"];
+  tableHeaders:string[]=["#","username","firstname","edit","delete"];
   editUserMode:boolean=false;
 
   // editUser:UserInfo={

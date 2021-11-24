@@ -1,5 +1,5 @@
 
-<td class="user-item">
+<td class="user-counter">
     {{numUser}}
 </td>
 <td class="user-item">
@@ -11,7 +11,9 @@
 <!-- <td >
     {{convertToString(userInfo.roles)}}
 </td> -->
-<td class="user-item">
-    <button (click)="editUser()">✏️</button>
-    <button (click)="removeUser()">❌</button>
+<td class="action-btn ">    
+    <button class="btn" (click)="editUser()">✏️</button>   
+</td>
+<td class="action-btn">    
+    <button class="btn" (click)="removeUser()">❌</button>       
 </td>
