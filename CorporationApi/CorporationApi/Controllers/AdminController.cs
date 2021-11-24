@@ -68,7 +68,15 @@ namespace CorporationApi.Controllers
                     Firstname="Vasya",
                     Roles=roles1
                     
+                },
+                new UserInfo
+                {
+                    Id=2,
+                    Username="OlegUser",
+                    Firstname="Oleg",
+                    Roles=roles1
                 }
+
 
             };
 
