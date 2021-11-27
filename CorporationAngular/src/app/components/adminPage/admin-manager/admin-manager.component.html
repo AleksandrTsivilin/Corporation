@@ -1,16 +1,58 @@
 <p>admin-manager works!</p>
 
-
-
-
-<div *ngIf="!isSelect else selectItem">
-    <button 
+<div 
+    class="admin-manager-page"
+    *ngIf="!isSelect else selectItem"
+>
+    <div 
+        class="menu-item" 
         *ngIf="canGet()"
         (click)="onSelect('getUsers')"
-    >Get users</button>
+    >
+        <div class="img-area">
+            <img src="assets/images/users.png">
+        </div>
+        <div class="title-area">
+            users
+        </div>
+    </div>
+    <div
+        class="menu-item" 
+        *ngIf="canCreate()"
+        (click)="onSelect('addModel')"
+    >
+        <div class="img-area">
+            <img src="assets/images/newModule.jpg">
+        </div>
+        <div class="title-area">
+            create new module
+        </div>
+
+    </div>
+    <!-- <div
+        class="menu-item" 
+        *ngIf="canCreate()"
+        (click)="onSelect('addModel')"
+    >
+        <div class="img-area">
+            <img src="assets/images/newModule.jpg">
+        </div>
+        <div class="title-area">
+            create new module
+        </div>
+
+    </div> -->
+</div>
+
+
+<div >
+    <!-- <button 
+        *ngIf="canGet()"
+        (click)="onSelect('getUsers')"
+    >Get users</button> -->
     <span *ngIf="canCreate()">
-        <button (click)="onSelect('addUser')">Add user</button>
-        <button (click)="onSelect('addModel')">Add module</button>
+        <!-- <button (click)="onSelect('addUser')">Add user</button>
+        <button (click)="onSelect('addModel')">Add module</button> -->
     </span>
 </div>
 

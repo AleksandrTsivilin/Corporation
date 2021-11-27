@@ -1,0 +1,29 @@
+
+.admin-manager-page{
+    
+    @apply h-full;
+    @apply flex flex-col;
+    @apply bg-red-600;
+
+    .menu-item{
+        @apply flex flex-1;
+        
+        @apply border-2 border-red-500;
+        @apply bg-gray-300;
+
+        .img-area{
+            @apply w-3/12;
+            @apply h-full;
+            
+            
+
+            .img{
+                @apply h-full;
+                               
+                
+            }
+        }
+    }
+}
+
+    
