@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DataUser } from 'src/app/interfaces/dataUser';
+//import { DataUser } from 'src/app/interfaces/dataUser';
 @Component({
   selector: 'app-add-module',
   templateUrl: './add-module.component.html',

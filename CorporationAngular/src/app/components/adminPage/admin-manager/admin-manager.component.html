@@ -60,7 +60,8 @@
     <div [ngSwitch]="modeAdminPage">
         <app-users 
             *ngSwitchCase="'getUsers'"
-            [dataUser]="dataUser"
+            [userId]="userId"
+            [permissions]="permissions"
         ></app-users>
         <app-add-module
             *ngSwitchCase="'addModule'"

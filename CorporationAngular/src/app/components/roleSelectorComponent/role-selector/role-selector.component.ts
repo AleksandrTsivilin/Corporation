@@ -1,5 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
-import { DataUser } from 'src/app/interfaces/dataUser';
+//import { DataUser } from 'src/app/interfaces/dataUser';
+import { UserInfo } from 'src/app/interfaces/userInfo';
+import { Permission } from 'src/app/interfaces/userInfo';
 
 @Component({
   selector: 'app-role-selector',
@@ -8,13 +10,18 @@ import { DataUser } from 'src/app/interfaces/dataUser';
 })
 export class RoleSelectorComponent implements OnInit {
 
-  
+  user:UserInfo={
+    id:0,
+    username:"",
+    firstname:"",
+    roles:[]
+  }
 
-  dataUser:DataUser={
-    id:null,
-    roles:null,
-    permissions:null
-  } 
+  // dataUser:DataUser={
+  //   id:null,
+  //   roles:null,
+  //   permissions:null
+  // } 
 
   isSelected:boolean=false;
   modeSelector:string="";
@@ -22,8 +29,19 @@ export class RoleSelectorComponent implements OnInit {
 
   ngOnInit(): void {
     this.isSelected=false;
-    this.dataUser=this.getDataUser();
+    //this.dataUser=this.getDataUser();
+
+    this.user=this.getUser();
     
+  }
+
+  getPermissions():Permission[]{
+    return this.user.roles
+      .filter(role=>role.title==="AdminManager")
+      .map(_=>_.permissions)[0];
+    //console.log(a);
+    //return [];
+    //return this.user.roles.filter(role=>role.title==="AdminManager");
   }
 
   onSelect(selected:string){
@@ -38,12 +56,28 @@ export class RoleSelectorComponent implements OnInit {
 
   //template methods
 
-  getDataUser():DataUser{
+
+  getUser():UserInfo{
     return {
       id:1,
-      roles:["AdminManager","ProductManager"],
-      permissions:["create","read","update","delete"]
+      username:"UserMax",
+      firstname:"Max",
+      roles:[{
+        title:"AdminManager",
+        permissions:[{title:"create"},{title:"read"},{title:"update"},{title:"delete"}]
+      },{
+        title:"ProductManager",
+        permissions:[{title:"create"}]
+      }]
     }
   }
+
+  // getDataUser():DataUser{
+  //   return {
+  //     id:1,
+  //     roles:["AdminManager","ProductManager"],
+  //     permissions:["create","read","update","delete"]
+  //   }
+  // }
 
 }

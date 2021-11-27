@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DataUser } from 'src/app/interfaces/dataUser';
+//import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserService } from 'src/app/services/adminPage/user.service';
 import { UserInfo } from 'src/app/interfaces/userInfo';
 import { HeaderTable } from 'src/app/interfaces/header-table';
-
+import { Permission } from 'src/app/interfaces/userInfo';
 
 
 
@@ -20,11 +20,16 @@ import { HeaderTable } from 'src/app/interfaces/header-table';
 })
 export class UsersComponent implements OnInit {
 
-  @Input () dataUser:DataUser={
-    id:null,
-    roles:null,
-    permissions:null
-  }
+  // @Input () dataUser:DataUser={
+  //   id:null,
+  //   roles:null,
+  //   permissions:null
+  // }
+
+  @Input () userId:number=0;
+  @Input () permissions:Permission[]=[];
+  //@Input () userId:number=0;
+  // @Input () permissions:Permission[]=[];
 
   usersInfo:UserInfo[]=[];
 
@@ -51,15 +56,16 @@ export class UsersComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    if (this.dataUser.id !==null) {
-      this.userService.getUsers(this.dataUser.id)
+    this.userService.getUsers(this.userId)
         .subscribe((result)=>{
           this.usersInfo=result;
         },
         ()=>{console.log("getUser failed")})
-    } 
+    // if (this.dataUser.id !==null) {
+      
+    // } 
     this.headersTable=this.getHeadersTable(); 
-    console.log(this.dataUser)   
+    //console.log(this.dataUser)   
   }
 
   isActiveHeader(isActive:Boolean):Boolean{
@@ -150,11 +156,12 @@ export class UsersComponent implements OnInit {
       isActive:true
     }];
 
-    if (this.dataUser?.permissions?.includes("update")){
+    const titles=this.permissions.map(permission=>permission.title);
+    if (titles.includes("update")){
       headers.push({title:"edit",isActive:false})
     }
 
-    if (this.dataUser?.permissions?.includes("delete")){
+    if (titles.includes("delete")){
       headers.push({title:"delete",isActive:false})
     }
     return headers;

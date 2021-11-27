@@ -1,7 +1,7 @@
 <button *ngIf="isSelected" (click)="exit()">❌</button>
 
 
-<div *ngIf="!isSelected else selectItem">
+<!-- <div *ngIf="!isSelected else selectItem">
     <p>role-selector-works</p>
     <div *ngFor="let role of dataUser.roles">
         <button
@@ -13,10 +13,28 @@
             (click)="onSelect('ProductManager')"
         >ProductManager</button>
     </div>
+</div> -->
+
+<div *ngIf="!isSelected else selectItem">
+    <p>role-selector-works</p>
+    <div *ngFor="let role of user.roles">
+        <button
+            *ngIf="role.title==='AdminManager'" 
+            (click)="onSelect('AdminManager')"
+        >AdminManager</button>
+        <button 
+            *ngIf="role.title==='ProductManager'" 
+            (click)="onSelect('ProductManager')"
+        >ProductManager</button>
+    </div>
 </div>
 
 <ng-template #selectItem>
     <div [ngSwitch]='modeSelector'>
-        <app-admin-manager *ngSwitchCase="'AdminManager'" [dataUser]="dataUser"></app-admin-manager>
+        <app-admin-manager 
+            *ngSwitchCase="'AdminManager'"
+             [userId]="user.id"
+             [permissions]="getPermissions()"
+        ></app-admin-manager>
     </div>
 </ng-template>
