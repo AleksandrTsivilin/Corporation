@@ -1,13 +1,19 @@
+<!-- <button (click)="onLoad()">load</button> -->
+
+
 
 <div *ngIf="!editUserMode else toUpdateForm">
     <table class="table">
         <tr>
           <th 
             class="header"
-            *ngFor="let head of tableHeaders"
-            
+            *ngFor="let header of headersTable"
+            (click)=sortCol(header.title)
+            [ngClass]="{'active-header':isActive(header.isActive)}"
           >
-            {{head}}
+            <span >
+              {{header.title}}
+            </span>
           </th>    
         </tr>
         <tr app-user-item 
@@ -22,7 +28,7 @@
     </table>
 </div>
 
-<!-- [editUser]="editUser" -->
+
 <ng-template #toUpdateForm >
     <app-edit-user
         [editUser]="editUser"

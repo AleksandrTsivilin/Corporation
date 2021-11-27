@@ -2,8 +2,16 @@ import { Component, Input, OnInit } from '@angular/core';
 import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserService } from 'src/app/services/adminPage/user.service';
 import { UserInfo } from 'src/app/interfaces/userInfo';
-//import { EditUser } from 'src/app/interfaces/editUser';
+import { HeaderTable } from 'src/app/interfaces/header-table';
 
+
+
+
+
+// interface HeaderActive{
+//   header:string,
+//   isActive:boolean
+// }
 
 @Component({
   selector: 'app-users',
@@ -19,16 +27,14 @@ export class UsersComponent implements OnInit {
   }
 
   usersInfo:UserInfo[]=[];
-  tableHeaders:string[]=["#","username","firstname","edit","delete"];
-  editUserMode:boolean=false;
 
-  // editUser:UserInfo={
-  //   id: null,
-  //   username: null,
-  //   roles: null,
-  //   firstname:null
-  // }
+  headersTable:HeaderTable[]=[];
+
   
+  private _ascDirection = 1;
+  private _sortCriteria="";
+  
+  editUserMode:boolean=false;  
   
   editUser:UserInfo={
     id:null,
@@ -37,17 +43,23 @@ export class UsersComponent implements OnInit {
     roles:[]
   }
   
-  constructor(private readonly userService:UserService) {}
+  constructor(private readonly userService:UserService) {
 
+    this.headersTable=this.getHeadersTable();    
+  }
+  
   ngOnInit(): void {
     if (this.dataUser.id !==null) {
       this.userService.getUsers(this.dataUser.id)
         .subscribe((result)=>{
           this.usersInfo=result;
-          console.log(this.usersInfo)
         },
         ()=>{console.log("getUser failed")})
     }    
+  }
+
+  isActive(isActive:Boolean):Boolean{
+    return isActive;
   }
 
   canEdit():boolean | undefined{
@@ -55,25 +67,42 @@ export class UsersComponent implements OnInit {
   }
 
   canDelete():boolean | undefined{
+    console.log("canDelete")
     return this.dataUser?.permissions?.includes("delete");
   }
 
+  sortCol(criteria:string){
+    console.log("sortBy");
+    criteria===this._sortCriteria
+      ? this._ascDirection *= -1
+      : this._ascDirection = 1;
+    
+    this._sortCriteria=criteria;
+    let orderedUsersInfo= this.usersInfo.sort((a:UserInfo,b:UserInfo)=>{
+      let orderItemFirst=a[criteria];
+      let orderItemSecond=b[criteria];
+      const less = -1 * this._ascDirection;
+      const more = 1 * this._ascDirection;
+
+      if (typeof orderItemFirst === 'string') {
+        return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
+      } else {
+        return orderedUsersInfo <= orderItemSecond ? less : more;
+      }
+      
+    })
+    this.usersInfo=orderedUsersInfo;
+  }
+
+  
+
   edit(rawUserInfo:UserInfo){
-    //console.log(editUser);
     this.editUser={
       id:rawUserInfo.id,
       username:rawUserInfo.username,
       firstname:rawUserInfo.firstname,
       roles:rawUserInfo.roles
     }
-
-    // this.editUser={
-    //   id:1,
-    //   roles:[
-    //     {title:"role 1",permissions:[{title:"per 1",isSelected:false}]},
-    //     {title:"role 2",permissions:[{title:"per 1",isSelected:true},{title:"per 2",isSelected:false}]}
-    //   ]
-    // }
     this.editUserMode=true;
   }
 
@@ -96,5 +125,25 @@ export class UsersComponent implements OnInit {
         console.log("user removed");
       },
       ()=>{})
+  }
+
+  private getHeadersTable():HeaderTable[]{
+    return [{
+      title:'#',
+      isActive:false
+    },
+    {
+      title:"username",
+      isActive:true
+    },{
+      title:"firstname",
+      isActive:true
+    },{
+      title:"edit",
+      isActive:false
+    },{
+      title:"delete",
+      isActive:false
+    }]
   }
 }

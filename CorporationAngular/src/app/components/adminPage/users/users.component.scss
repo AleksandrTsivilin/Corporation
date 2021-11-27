@@ -27,6 +27,15 @@
 
     .header{
         @apply border border-green-600;
+        //@apply w-full;
+        // @apply cursor-pointer;
+
+        
+    }
+
+    .active-header{
+        @apply cursor-pointer;
+        
     }
     .user-item{
         @apply border border-green-600;

@@ -1,4 +1,5 @@
 export interface UserInfo{
+    [x: string]: any;
     id:number | null
     username:string | null,
     firstname:string | null
