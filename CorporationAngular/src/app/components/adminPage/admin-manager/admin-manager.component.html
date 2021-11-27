@@ -19,7 +19,7 @@
     <div
         class="menu-item" 
         *ngIf="canCreate()"
-        (click)="onSelect('addModel')"
+        (click)="onSelect('addModule')"
     >
         <div class="img-area">
             <img src="assets/images/newModule.jpg">
@@ -62,7 +62,12 @@
             *ngSwitchCase="'getUsers'"
             [dataUser]="dataUser"
         ></app-users>
+        <app-add-module
+            *ngSwitchCase="'addModule'"
+            
+        ></app-add-module>
     </div>
+    
 </ng-template>
 
 

@@ -17,6 +17,7 @@ import { UsersComponent } from './components/adminPage/users/users.component';
 import { UserItemComponent } from './components/adminPage/user-item/user-item.component';
 import { EditUserComponent } from './components/adminPage/edit-user/edit-user.component';
 import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info/dialog-user-info.component';
+import { AddModuleComponent } from './components/adminPage/add-module/add-module.component';
 //import { DialogUserInfoComponent } from './compomponents/adminPage/dialog-user-info/dialog-user-info.component';
 
 
@@ -34,6 +35,7 @@ import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info
     UserItemComponent,
     EditUserComponent,
     DialogUserInfoComponent,
+    AddModuleComponent,
     //DialogUserInfoComponent
   ],
   imports: [
