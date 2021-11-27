@@ -58,17 +58,8 @@ export class UsersComponent implements OnInit {
     }    
   }
 
-  isActive(isActive:Boolean):Boolean{
+  isActiveHeader(isActive:Boolean):Boolean{
     return isActive;
-  }
-
-  canEdit():boolean | undefined{
-    return this.dataUser?.permissions?.includes("update");
-  }
-
-  canDelete():boolean | undefined{
-    console.log("canDelete")
-    return this.dataUser?.permissions?.includes("delete");
   }
 
   sortCol(criteria:string){
@@ -128,7 +119,7 @@ export class UsersComponent implements OnInit {
   }
 
   private getHeadersTable():HeaderTable[]{
-    return [{
+    const a= [{
       title:'#',
       isActive:false
     },
@@ -138,12 +129,22 @@ export class UsersComponent implements OnInit {
     },{
       title:"firstname",
       isActive:true
-    },{
-      title:"edit",
-      isActive:false
-    },{
-      title:"delete",
-      isActive:false
-    }]
+    }];
+    // ,{
+    //   title:"edit",
+    //   isActive:false
+    // },{
+    //   title:"delete",
+    //   isActive:false
+    // }
+
+    if (this.dataUser?.permissions?.includes("update")){
+      a.push({title:"edit",isActive:false})
+    }
+
+    if (this.dataUser?.permissions?.includes("delete")){
+      a.push({title:"delete",isActive:false})
+    }
+    return a;
   }
 }

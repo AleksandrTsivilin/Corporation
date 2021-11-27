@@ -1,4 +1,3 @@
-
 <td class="user-counter">
     {{numUser}}
 </td>
@@ -8,12 +7,15 @@
 <td class="user-item">
     {{userInfo.firstname}}
 </td>
-<!-- <td >
-    {{convertToString(userInfo.roles)}}
-</td> -->
-<td class="action-btn ">    
+<td 
+    class="action-btn"
+    *ngIf="canEdit()"    
+>    
     <button class="btn" (click)="editUser()">✏️</button>   
 </td>
-<td class="action-btn">    
+<td 
+    class="action-btn"
+    *ngIf="canDelete()"
+>    
     <button class="btn" (click)="removeUser()">❌</button>       
 </td>

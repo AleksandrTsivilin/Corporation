@@ -9,7 +9,7 @@
             class="header"
             *ngFor="let header of headersTable"
             (click)=sortCol(header.title)
-            [ngClass]="{'active-header':isActive(header.isActive)}"
+            [ngClass]="{'active-header':isActiveHeader(header.isActive)}"
           >
             <span >
               {{header.title}}
@@ -21,6 +21,7 @@
             *ngFor="let userInfo of usersInfo let i=index"    
             [numUser]="i+1"
             [userInfo]="userInfo" 
+            [headers]="headersTable"
             (remove)="remove(userInfo.id)"
             (edit)="edit(userInfo)"
         >  
