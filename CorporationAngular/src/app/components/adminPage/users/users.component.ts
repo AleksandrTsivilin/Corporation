@@ -43,9 +43,8 @@ export class UsersComponent implements OnInit {
     roles:[]
   }
   
-  constructor(private readonly userService:UserService) {
-
-    this.headersTable=this.getHeadersTable();    
+  constructor(private readonly userService:UserService) {   
+       
   }
   
   ngOnInit(): void {
@@ -55,7 +54,9 @@ export class UsersComponent implements OnInit {
           this.usersInfo=result;
         },
         ()=>{console.log("getUser failed")})
-    }    
+    } 
+    this.headersTable=this.getHeadersTable(); 
+    console.log(this.dataUser)   
   }
 
   isActiveHeader(isActive:Boolean):Boolean{
