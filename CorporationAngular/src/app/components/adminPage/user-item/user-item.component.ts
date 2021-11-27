@@ -12,9 +12,9 @@ import { Role} from 'src/app/interfaces/userInfo';
 export class UserItemComponent implements OnInit {
 
   @Input () userInfo:UserInfo={
-    id:null,
-    username:null,
-    firstname:null,
+    id:0,
+    username:"",
+    firstname:"",
     roles:[]
   }
 

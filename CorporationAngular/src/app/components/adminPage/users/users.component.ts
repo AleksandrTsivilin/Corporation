@@ -33,9 +33,9 @@ export class UsersComponent implements OnInit {
   editUserMode:boolean=false;  
   
   editUser:UserInfo={
-    id:null,
-    username:null,
-    firstname:null,
+    id:0,
+    username:"",
+    firstname:"",
     roles:[]
   }
 

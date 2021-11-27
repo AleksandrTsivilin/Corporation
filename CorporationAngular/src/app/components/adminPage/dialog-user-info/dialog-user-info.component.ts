@@ -11,9 +11,9 @@ import { UserInfo } from 'src/app/interfaces/userInfo';
 export class DialogUserInfoComponent implements OnInit {
 
   @Input () userInfo:UserInfo={
-    id:null,
-    username:null,
-    firstname:null,
+    id:0,
+    username:"",
+    firstname:"",
     roles:[]
   }
   @Output() close=new EventEmitter();

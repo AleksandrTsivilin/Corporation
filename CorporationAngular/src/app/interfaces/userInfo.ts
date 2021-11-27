@@ -1,13 +1,13 @@
 export interface UserInfo{
     [x: string]: any;
-    id:number | null
-    username:string | null,
-    firstname:string | null
+    id:number 
+    username:string ,
+    firstname:string 
     roles:Role[] 
 }
 
 export interface Role{
-    title:string | null,
+    title:string ,
     permissions:Permission[] 
 }
 

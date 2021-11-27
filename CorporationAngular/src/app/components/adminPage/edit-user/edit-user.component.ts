@@ -12,7 +12,7 @@ import {Role} from 'src/app/interfaces/userInfo';
 // }
 
 interface AvaiableUser{
-  role:string | null,
+  role:string ,
   permissions:PermissionAction[] 
 }
 
@@ -41,9 +41,9 @@ export class EditUserComponent implements OnInit {
   
 
   @Input () editUser:UserInfo={
-    id:null,
-    username:null,
-    firstname:null,
+    id:0,
+    username:"",
+    firstname:"",
     roles:[]
   }
 
@@ -191,7 +191,7 @@ export class EditUserComponent implements OnInit {
       .filter(permissionAction=>permissionAction.isSelected)
       .map(permission=>permission.title) as string[];
   }
-  getEditRole(role:string | null,permissions:string[]):Role{
+  getEditRole(role:string ,permissions:string[]):Role{
     console.log(role);
     console.log(permissions);
     let newPermissions:Permission[]=[];
