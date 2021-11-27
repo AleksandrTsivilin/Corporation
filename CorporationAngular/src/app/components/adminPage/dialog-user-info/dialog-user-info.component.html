@@ -1,0 +1,51 @@
+<div class="dialog-page">
+    <!-- <span class="bg-green-800 hidden sm:inline-block sm:align-middle " aria-hidden="true">&#8203;</span> -->
+    <div class="dialog">
+        <div class="btn-section">
+            <button 
+                class="btn"
+                (click)="closeUserInfo()"
+            >
+                ❌
+            </button>
+        </div>
+        <div class="header"><h1>user info</h1></div>
+        <div class="user-info">
+            <div class="item-info">
+                <div class="title">username</div>
+                <div class="value">{{userInfo.username}}</div>
+            </div>
+
+            <div class="item-info">
+                <div class="title">firstname</div>
+                <div class="value">{{userInfo.firstname}}</div>
+            </div>
+            
+        </div>
+        <div class="header">avaiables user</div>
+        <div class="user-info">
+            <div class="item-info">
+                <div class="sub-header">Role</div>
+                <div class="sub-header">Permissions</div>
+            </div>
+            <div 
+                class="item-info"
+                *ngFor="let role of userInfo.roles"
+            >               
+                <div class="title">{{role.title}}</div>
+                <div class="value" >
+                    <ul 
+                    
+                        *ngFor="let permission of role.permissions"
+                    >
+                        <li >{{permission.title}}</li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+    </div>
+    
+</div>

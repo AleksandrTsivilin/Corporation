@@ -16,6 +16,8 @@ import { AdminManagerComponent } from './components/adminPage/admin-manager/admi
 import { UsersComponent } from './components/adminPage/users/users.component';
 import { UserItemComponent } from './components/adminPage/user-item/user-item.component';
 import { EditUserComponent } from './components/adminPage/edit-user/edit-user.component';
+import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info/dialog-user-info.component';
+//import { DialogUserInfoComponent } from './compomponents/adminPage/dialog-user-info/dialog-user-info.component';
 
 
 
@@ -30,7 +32,9 @@ import { EditUserComponent } from './components/adminPage/edit-user/edit-user.co
     AdminManagerComponent,
     UsersComponent,
     UserItemComponent,
-    EditUserComponent
+    EditUserComponent,
+    DialogUserInfoComponent,
+    //DialogUserInfoComponent
   ],
   imports: [
     BrowserModule,

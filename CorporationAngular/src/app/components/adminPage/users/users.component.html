@@ -1,33 +1,43 @@
 <!-- <button (click)="onLoad()">load</button> -->
 
+<app-dialog-user-info
+  *ngIf="isOpenUserInfo"
+  [userInfo]="editUser"
+  (close)="closeUserInfo()"
+>
+
+</app-dialog-user-info>
 
 
 <div *ngIf="!editUserMode else toUpdateForm">
-    <table class="table">
-        <tr>
-          <th 
-            class="header"
-            *ngFor="let header of headersTable"
-            (click)=sortCol(header.title)
-            [ngClass]="{'active-header':isActiveHeader(header.isActive)}"
-          >
-            <span >
-              {{header.title}}
-            </span>
-          </th>    
-        </tr>
-        <tr app-user-item 
-            class="user-item"
-            *ngFor="let userInfo of usersInfo let i=index"    
-            [numUser]="i+1"
-            [userInfo]="userInfo" 
-            [headers]="headersTable"
-            (remove)="remove(userInfo.id)"
-            (edit)="edit(userInfo)"
-        >  
-        </tr>
-    </table>
+  <table class="table">
+      <tr>
+        <th 
+          class="header"
+          *ngFor="let header of headersTable"
+          (click)=sortCol(header.title)
+          [ngClass]="{'active-header':isActiveHeader(header.isActive)}"
+        >
+          <span >
+            {{header.title}}
+          </span>
+        </th>    
+      </tr>
+      <tr app-user-item 
+          class="user-item"
+          *ngFor="let userInfo of usersInfo let i=index"    
+          [numUser]="i+1"
+          [userInfo]="userInfo" 
+          [headers]="headersTable"
+          (remove)="remove(userInfo.id)"
+          (edit)="edit(userInfo)"
+          (click)="openUserInfo(userInfo)"
+      >  
+      </tr>
+  </table>
 </div>
+
+
 
 
 <ng-template #toUpdateForm >
@@ -37,4 +47,6 @@
     >
     </app-edit-user>
 </ng-template>
+
+
 

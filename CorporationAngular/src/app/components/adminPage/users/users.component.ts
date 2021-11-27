@@ -30,10 +30,6 @@ export class UsersComponent implements OnInit {
 
   headersTable:HeaderTable[]=[];
 
-  
-  private _ascDirection = 1;
-  private _sortCriteria="";
-  
   editUserMode:boolean=false;  
   
   editUser:UserInfo={
@@ -42,6 +38,13 @@ export class UsersComponent implements OnInit {
     firstname:null,
     roles:[]
   }
+
+  isOpenUserInfo:boolean=false;
+  
+  private _ascDirection = 1;
+  private _sortCriteria="";
+  
+  
   
   constructor(private readonly userService:UserService) {   
        
@@ -119,8 +122,23 @@ export class UsersComponent implements OnInit {
       ()=>{})
   }
 
+  openUserInfo(selectedUser:UserInfo){
+    console.log("open user info");
+    this.isOpenUserInfo=true;
+    this.editUser={
+      id:selectedUser.id,
+      username:selectedUser.username,
+      firstname:selectedUser.firstname,
+      roles:selectedUser.roles
+    }
+  }
+
+  closeUserInfo(){
+    this.isOpenUserInfo=false;
+  }
+
   private getHeadersTable():HeaderTable[]{
-    const a= [{
+    const headers= [{
       title:'#',
       isActive:false
     },
@@ -131,21 +149,14 @@ export class UsersComponent implements OnInit {
       title:"firstname",
       isActive:true
     }];
-    // ,{
-    //   title:"edit",
-    //   isActive:false
-    // },{
-    //   title:"delete",
-    //   isActive:false
-    // }
 
     if (this.dataUser?.permissions?.includes("update")){
-      a.push({title:"edit",isActive:false})
+      headers.push({title:"edit",isActive:false})
     }
 
     if (this.dataUser?.permissions?.includes("delete")){
-      a.push({title:"delete",isActive:false})
+      headers.push({title:"delete",isActive:false})
     }
-    return a;
+    return headers;
   }
 }
