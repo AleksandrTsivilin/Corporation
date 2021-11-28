@@ -6,7 +6,7 @@
 >
     <div 
         class="menu-item" 
-        *ngIf="canGet()"
+        *ngIf="avaiablesPermissions.canRead"
         (click)="onSelect('getUsers')"
     >
         <div class="img-area">
@@ -18,7 +18,7 @@
     </div>
     <div
         class="menu-item" 
-        *ngIf="canCreate()"
+        *ngIf="avaiablesPermissions.canCreate"
         (click)="onSelect('addModule')"
     >
         <div class="img-area">
@@ -31,7 +31,7 @@
     </div>
     <div
         class="menu-item" 
-        *ngIf="canMove()"
+        *ngIf="avaiablesPermissions.canMove"
         (click)="onSelect('addModule')"
     >
         <div class="img-area">
@@ -49,7 +49,7 @@
 
 
 <ng-template #selectItem>
-    <div [ngSwitch]="modeProductPage">
+    <!-- <div [ngSwitch]="modeProductPage">
         <app-users 
             *ngSwitchCase="'getUsers'"
             [userId]="userId"
@@ -59,6 +59,6 @@
             *ngSwitchCase="'addModule'"
             
         ></app-work-modules>
-    </div>
+    </div> -->
     
 </ng-template>

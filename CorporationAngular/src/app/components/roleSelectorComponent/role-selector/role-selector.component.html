@@ -39,7 +39,7 @@
         <app-product-manager
             *ngSwitchCase="'ProductManager'"
             [userId]="user.id"
-            [permissions]="getPermissions('ProductManager')"
+            [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
         ></app-product-manager>
     </div>
 </ng-template>
