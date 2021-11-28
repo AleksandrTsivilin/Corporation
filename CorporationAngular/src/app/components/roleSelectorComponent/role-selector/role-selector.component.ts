@@ -35,9 +35,9 @@ export class RoleSelectorComponent implements OnInit {
     
   }
 
-  getPermissions():Permission[]{
+  getPermissions(selectedRole:string):Permission[]{
     return this.user.roles
-      .filter(role=>role.title==="AdminManager")
+      .filter(role=>role.title===selectedRole)
       .map(_=>_.permissions)[0];
     //console.log(a);
     //return [];

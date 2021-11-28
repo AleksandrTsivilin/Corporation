@@ -34,7 +34,12 @@
         <app-admin-manager 
             *ngSwitchCase="'AdminManager'"
              [userId]="user.id"
-             [permissions]="getPermissions()"
+             [permissions]="getPermissions('AdminManager')"
         ></app-admin-manager>
+        <app-product-manager
+            *ngSwitchCase="'ProductManager'"
+            [userId]="user.id"
+            [permissions]="getPermissions('ProductManager')"
+        ></app-product-manager>
     </div>
 </ng-template>

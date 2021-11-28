@@ -18,6 +18,7 @@ import { UserItemComponent } from './components/adminPage/user-item/user-item.co
 import { EditUserComponent } from './components/adminPage/edit-user/edit-user.component';
 import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info/dialog-user-info.component';
 import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
+import { ProductManagerComponent } from './components/productPage/product-manager/product-manager.component';
 //import { AddModuleComponent } from './components/adminPage/add-module/add-module.component';
 //import { DialogUserInfoComponent } from './compomponents/adminPage/dialog-user-info/dialog-user-info.component';
 
@@ -36,7 +37,8 @@ import { WorkModulesComponent } from './components/adminPage/work-modules/work-m
     UserItemComponent,
     EditUserComponent,
     DialogUserInfoComponent,
-    WorkModulesComponent,    
+    WorkModulesComponent,
+    ProductManagerComponent,    
     //DialogUserInfoComponent
   ],
   imports: [
