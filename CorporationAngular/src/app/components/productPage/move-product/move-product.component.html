@@ -1,0 +1,40 @@
+
+<form
+(ngSubmit)="onSubmit()"         
+
+>  
+    <select 
+        [(ngModel)]=formMovedProducts.to
+        name="to"
+    >
+        <option disabled>to</option>
+        <option>storage 1</option>
+        <option>storage 2</option>
+    </select>
+    <div  *ngFor="let product of formMovedProducts.movedProducts ; let i=index">
+        <div>
+            <input 
+                type="checkbox"
+                [(ngModel)]="product.isChecked"
+                name="{{i}}" 
+                [checked]="product.isChecked"
+                (change)="checkedProduct(i)"
+                
+                
+            >
+            <input 
+                type="text"
+                [(ngModel)]="product.countMoved"
+                name="{{product.countMoved}}+{{i}}"
+                
+                [disabled]="!product.isChecked"             
+            >
+            
+            {{product.title}}
+            {{product.avaiableCount}}
+        </div>
+        
+    </div>
+    <button class="btn-submit" type="submit">submit</button>
+</form>
+

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
+import { ProductsInfo } from 'src/app/interfaces/productsInfo';
 import { Permission } from 'src/app/interfaces/userInfo';
+import { ProductsService } from 'src/app/services/productPage/products.service';
 
 @Component({
   selector: 'app-product-manager',
@@ -21,10 +23,18 @@ export class ProductManagerComponent implements OnInit {
   isSelect:boolean=false;
   modeProductPage:string="";
 
-  constructor() { }
+  productsInfo:ProductsInfo[]=[];
+
+  constructor(private readonly productsService:ProductsService) { }
 
   ngOnInit(): void {
-    console.log(this.avaiablesPermissions);
+    this.productsService.getProducts()
+      .subscribe((result)=>{
+        this.productsInfo=result;
+        console.log(this.productsInfo)
+    },()=>{
+      console.log("failed get products")
+    })
   }
 
   // canGet():Boolean{
@@ -39,7 +49,8 @@ export class ProductManagerComponent implements OnInit {
   // }
 
   onSelect(selected:string){
-
+    this.modeProductPage=selected;
+    this.isSelect=true;
   }
 
 }

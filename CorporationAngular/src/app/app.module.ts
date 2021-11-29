@@ -19,6 +19,7 @@ import { EditUserComponent } from './components/adminPage/edit-user/edit-user.co
 import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info/dialog-user-info.component';
 import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
 import { ProductManagerComponent } from './components/productPage/product-manager/product-manager.component';
+import { MoveProductComponent } from './components/productPage/move-product/move-product.component';
 //import { AddModuleComponent } from './components/adminPage/add-module/add-module.component';
 //import { DialogUserInfoComponent } from './compomponents/adminPage/dialog-user-info/dialog-user-info.component';
 
@@ -38,7 +39,8 @@ import { ProductManagerComponent } from './components/productPage/product-manage
     EditUserComponent,
     DialogUserInfoComponent,
     WorkModulesComponent,
-    ProductManagerComponent,    
+    ProductManagerComponent,
+    MoveProductComponent,    
     //DialogUserInfoComponent
   ],
   imports: [
