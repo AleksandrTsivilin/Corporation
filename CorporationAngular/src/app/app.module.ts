@@ -20,6 +20,10 @@ import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info
 import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
 import { ProductManagerComponent } from './components/productPage/product-manager/product-manager.component';
 import { MoveProductComponent } from './components/productPage/move-product/move-product.component';
+import { ProductsComponent } from './components/productPage/products/products.component';
+import { ProductItemComponent } from './components/productPage/product-item/product-item.component';
+//import { ProductComponent } from './components/productPage/product/product.component';
+//import { ProductsComponent } from './components/products/products.component';
 //import { AddModuleComponent } from './components/adminPage/add-module/add-module.component';
 //import { DialogUserInfoComponent } from './compomponents/adminPage/dialog-user-info/dialog-user-info.component';
 
@@ -40,7 +44,11 @@ import { MoveProductComponent } from './components/productPage/move-product/move
     DialogUserInfoComponent,
     WorkModulesComponent,
     ProductManagerComponent,
-    MoveProductComponent,    
+    MoveProductComponent,
+    ProductsComponent,
+    ProductItemComponent,
+    //ProductComponent,
+    //ProductsComponent,    
     //DialogUserInfoComponent
   ],
   imports: [

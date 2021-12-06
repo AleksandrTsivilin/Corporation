@@ -1,0 +1,21 @@
+.table{
+    @apply w-full;
+    @apply border-collapse border-green-600;
+    @apply bg-gray-300;
+
+    .header{
+        @apply border border-green-600;
+    }
+
+    .active-header{
+        @apply cursor-pointer;
+        
+    }
+    .product-item{
+        @apply border border-green-600;
+    }
+
+    .product-item:hover{
+        @apply bg-gray-500;
+    }
+}

@@ -7,7 +7,7 @@
     <div 
         class="menu-item" 
         *ngIf="avaiablesPermissions.canRead"
-        (click)="onSelect('getUsers')"
+        (click)="onSelect('getProducts')"
     >
         <div class="img-area">
             <img src="assets/images/storage.jpg">
@@ -47,14 +47,19 @@
 
 
 
-
+<!-- [productsInfo]="productsInfo" -->
 <ng-template #selectItem>
     <div [ngSwitch]="modeProductPage">
         <app-move-product
             *ngSwitchCase="'moveProduct'"
-            [productsInfo]="productsInfo"
+            
         ></app-move-product>
+        <app-products
+            *ngSwitchCase="'getProducts'"
+            [avaiablesPermissions]="avaiablesPermissions"
+        ></app-products>
     </div>
+    
     <!-- <div [ngSwitch]="modeProductPage">
         <app-users 
             *ngSwitchCase="'getUsers'"

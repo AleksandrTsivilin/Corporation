@@ -1,0 +1,18 @@
+.product-counter{
+    @apply border border-green-600;
+    @apply text-center;
+}
+
+.product-item{
+    @apply border border-green-600;
+    @apply pl-2;
+}
+
+.action-btn{
+    @apply border border-green-600;    
+
+    .btn{
+        @apply w-full;
+        
+    }
+}

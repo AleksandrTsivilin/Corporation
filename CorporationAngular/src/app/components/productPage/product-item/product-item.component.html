@@ -1,0 +1,21 @@
+<td class="product-counter">
+    {{numProduct}}
+</td>
+<td class="product-item">
+    {{productInfo.title}}
+</td>
+<td class="product-item">
+    {{productInfo.count}}
+</td>
+<td 
+    class="action-btn"
+    *ngIf="avaiablesPermissions.canUpdate"    
+>    
+    <button class="btn" (click)="editProduct()">✏️</button>   
+</td>
+<td 
+    class="action-btn"
+    *ngIf="avaiablesPermissions.canDelete"
+>    
+    <button class="btn" (click)="removeProduct()">❌</button>       
+</td>

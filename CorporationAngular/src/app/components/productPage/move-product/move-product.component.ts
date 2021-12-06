@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
-import { ProductsInfo } from 'src/app/interfaces/productsInfo';
+import { ProductInfo } from 'src/app/interfaces/productsInfo';
 
 @Component({
   selector: 'app-move-product',
@@ -9,7 +9,7 @@ import { ProductsInfo } from 'src/app/interfaces/productsInfo';
 })
 export class MoveProductComponent implements OnInit {
 
-  @Input () productsInfo:ProductsInfo[]=[];
+  @Input () productsInfo:ProductInfo[]=[];
 
   formMovedProducts:FormMoveProducts={
     to:'',

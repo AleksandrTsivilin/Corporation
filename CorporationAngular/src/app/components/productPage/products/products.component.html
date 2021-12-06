@@ -1,0 +1,44 @@
+<p>products works!</p>
+
+
+<div *ngIf="!editProductMode else toUpdateForm">
+    <table class="table">
+        <tr>
+          <th 
+            class="header"
+            *ngFor="let header of headersTable"
+            (click)=sortCol(header.title)
+            [ngClass]="{'active-header':header.isActive}"
+          >
+            <span >
+              {{header.title}}
+            </span>
+          </th>    
+        </tr>
+        <tr app-product-item 
+            class="product-item"
+            *ngFor="let productInfo of productsInfo let i=index"
+            [numProduct]="i+1"
+            [productInfo]="productInfo" 
+            [avaiablesPermissions]="avaiablesPermissions"
+        >  
+        </tr>
+    </table>
+  </div>
+
+    <!-- class="user-item"
+    *ngFor="let userInfo of usersInfo let i=index"    
+    [numUser]="i+1"
+    [userInfo]="userInfo" 
+    [headers]="headersTable"
+    (remove)="remove(userInfo.id)"
+    (edit)="edit(userInfo)"
+    (click)="openUserInfo(userInfo)" -->
+
+  <ng-template #toUpdateForm >
+    <!-- <app-edit-user
+        [editUser]="editUser"
+        (updateUser)="update()"
+    >
+    </app-edit-user> -->
+</ng-template>
