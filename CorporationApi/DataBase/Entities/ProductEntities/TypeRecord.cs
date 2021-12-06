@@ -1,0 +1,15 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DataBase.Entities.ProductEntities
+{
+    public class TypeRecord
+    {
+        public int Id { get; set; }
+        public string Type { get; set; }
+        public ICollection<HistoryProduct> HistoryProducts { get; set; }
+    }
+}
