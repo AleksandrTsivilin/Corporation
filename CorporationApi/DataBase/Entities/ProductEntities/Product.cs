@@ -11,9 +11,12 @@ namespace DataBase.Entities.ProductEntities
         
         public int Id { get; set; }
         public string Title { get; set; }
-        public CategotyProduct Categoty { get; set; }
+        public CategoryProduct Category { get; set; }
+        public int CategoryId { get; set; }
         public UnitProduct Unit { get; set; }
+        public int UnitId { get; set; }
         public ManufactureProduct Manufacture { get; set; }
+        public int ManufactureId { get; set; }
         public decimal Price { get; set; }
         public int AvaiableCount { get; set; }
         public ICollection< HistoryProduct> Histories { get; set; }

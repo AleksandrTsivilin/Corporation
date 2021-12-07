@@ -1,3 +1,4 @@
+using DataBase;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,6 +38,7 @@ namespace CorporationApi
             });
 
             services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<DBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

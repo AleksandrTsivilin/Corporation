@@ -10,6 +10,6 @@ namespace DataBase.Entities.ProductEntities
     {
         public int Id { get; set; }
         public string Type { get; set; }
-        public ICollection<HistoryProduct> HistoryProducts { get; set; }
+        public ICollection<HistoryProduct> Histories { get; set; }
     }
 }
