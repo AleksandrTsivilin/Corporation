@@ -3,3 +3,7 @@ export interface ProductInfo{
     title:string,
     count:number
 }
+
+export interface Manufacturer{
+    title:string
+}

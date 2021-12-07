@@ -36,5 +36,6 @@ export class ProductItemComponent implements OnInit {
   removeProduct(){
     
   }
+  
 
 }

@@ -19,7 +19,7 @@
     <div
         class="menu-item" 
         *ngIf="avaiablesPermissions.canCreate"
-        (click)="onSelect('addModule')"
+        (click)="onSelect('addProduct')"
     >
         <div class="img-area">
             <img src="assets/images/delivery_product.png">
@@ -58,6 +58,9 @@
             *ngSwitchCase="'getProducts'"
             [avaiablesPermissions]="avaiablesPermissions"
         ></app-products>
+        <app-add-product
+            *ngSwitchCase="'addProduct'"
+        ></app-add-product>
     </div>
     
     <!-- <div [ngSwitch]="modeProductPage">

@@ -1,0 +1,22 @@
+<p>add-product works!</p>
+<form
+    class="form-add-product"
+    (ngSubmit)="onSubmit()"         
+
+>  
+    <select 
+        
+    >
+        <option
+        [value]="" selected disabled
+        >choise Manufacturer</option>
+        <option 
+        *ngFor="let manufacturer of manufacturers"
+        [value]="manufacturer"
+        >
+        {{manufacturer}}
+        </option>
+    </select>
+    
+    <button class="btn-submit" type="submit">create product</button>
+</form>
