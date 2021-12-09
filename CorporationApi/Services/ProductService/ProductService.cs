@@ -21,13 +21,26 @@ namespace Services.ProductService
         }
         public List<ProductModel> Get()
         {
-            return  new List<ProductModel>
-            {
-                new ProductModel{Id=1, Title="product 1", Count=3.5},
-                new ProductModel{Id=1, Title="product 2", Count=500},
-                new ProductModel{Id=1, Title="product 3", Count=80.4},
-                new ProductModel{Id=1, Title="product 4", Count=0.5}
-            };
+            return  _context.Products
+                .Include(p => p.Manufacture)
+                .Include(p => p.Category)
+                .Include(p => p.Unit)
+                .Select((product)=>new ProductModel()
+                {
+                    Id=product.Id,
+                    Title=product.Title,
+                    Price=product.Price,
+                    Count=product.AvaiableCount,
+                    Manufacturer=product.Manufacture.Title,
+                    Category=product.Category.Title,
+                    Unit=product.Unit.Title
+                    
+                })
+                .ToList();
+
+            
+            //return new List<ProductModel>();
+            
         }
 
         public List<ManufacturerModel> GetManufacturers()

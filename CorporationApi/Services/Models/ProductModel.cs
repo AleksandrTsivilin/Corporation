@@ -10,6 +10,10 @@ namespace Services.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public double Count { get; set; }
+        public int Count { get; set; }
+        public decimal Price { get; set; }
+        public string Manufacturer { get; set; }
+        public string Category { get; set; }
+        public string Unit { get; set; }
     }
 }
