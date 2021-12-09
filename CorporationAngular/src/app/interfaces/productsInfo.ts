@@ -4,6 +4,3 @@ export interface ProductInfo{
     count:number
 }
 
-export interface Manufacturer{
-    title:string
-}

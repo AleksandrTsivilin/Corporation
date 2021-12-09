@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Manufacturer, ProductInfo } from 'src/app/interfaces/productsInfo';
+import { Category, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
+import { ProductInfo } from 'src/app/interfaces/productsInfo';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,7 +16,17 @@ export class ProductsService {
   }
 
   getManufacturers(){
-    const urlGetManufacturers="";
+    const urlGetManufacturers="https://localhost:5001/api/Product/manufacturer";
     return this.client.get<Manufacturer[]>(urlGetManufacturers);
+  }
+
+  getCategories(){
+    const urlGetCategories="https://localhost:5001/api/Product/category";
+    return this.client.get<Category[]>(urlGetCategories);
+  }
+
+  getUnits(){
+    const urlGetUnits="https://localhost:5001/api/Product/unit";
+    return this.client.get<Unit []>(urlGetUnits);
   }
 }

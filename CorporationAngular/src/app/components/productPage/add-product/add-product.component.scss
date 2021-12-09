@@ -3,6 +3,9 @@
 .form-add-product{
     @apply w-96;
 
+    .form-group{
+        @apply w-full;
+    }
     .btn-submit{
             
         @apply w-full;
