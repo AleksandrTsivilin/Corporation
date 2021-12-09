@@ -14,7 +14,7 @@ namespace DataBase
         public DbSet<CategoryProduct> Categoties { get; set; }
         public DbSet<CreatorRecord> Creators { get; set; }
         public DbSet<HistoryProduct> Histories { get; set; }
-        public DbSet<ManufactureProduct> Manufactures { get; set; }
+        public DbSet<ManufacturerProduct> Manufactures { get; set; }
         public DbSet<TypeRecord> Types { get; set; }
         public DbSet<UnitProduct> Units { get; set; }
 

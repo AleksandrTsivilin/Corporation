@@ -15,7 +15,7 @@ namespace DataBase.Entities.ProductEntities
         public int CategoryId { get; set; }
         public UnitProduct Unit { get; set; }
         public int UnitId { get; set; }
-        public ManufactureProduct Manufacture { get; set; }
+        public ManufacturerProduct Manufacture { get; set; }
         public int ManufactureId { get; set; }
         public decimal Price { get; set; }
         public int AvaiableCount { get; set; }

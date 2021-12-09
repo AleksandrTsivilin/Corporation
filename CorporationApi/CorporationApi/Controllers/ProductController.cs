@@ -24,5 +24,28 @@ namespace CorporationApi.Controllers
             var products = _service.Get();
             return Ok(products);
         }
+
+        [HttpGet("manufacturer")]
+        public IActionResult GetManufacturers()
+        {
+            var manufacturers = _service.GetManufacturers();
+            return Ok(manufacturers);
+        }
+
+        [HttpGet("category")]
+        public IActionResult GetCategories()
+        {
+            var manufacturers = _service.GetCategories();
+            return Ok(manufacturers);
+        }
+
+        [HttpGet("unit")]
+        public IActionResult GetUnits()
+        {
+            var manufacturers = _service.GetUnits();
+            return Ok(manufacturers);
+        }
+
+
     }
 }

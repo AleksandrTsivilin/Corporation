@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities.ProductEntities
 {
-    public class ManufactureProduct
+    public class ManufacturerProduct
     {
         public int Id { get; set; }
         public string Title { get; set; }

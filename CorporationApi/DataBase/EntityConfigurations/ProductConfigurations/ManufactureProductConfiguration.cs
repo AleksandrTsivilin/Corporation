@@ -10,9 +10,9 @@ using System.Threading.Tasks;
 namespace DataBase.EntityConfigurations.ProductConfigurations
 {
     public class ManufactureProductConfiguration
-        : IEntityTypeConfiguration<ManufactureProduct>
+        : IEntityTypeConfiguration<ManufacturerProduct>
     {
-        public void Configure(EntityTypeBuilder<ManufactureProduct> builder)
+        public void Configure(EntityTypeBuilder<ManufacturerProduct> builder)
         {
             builder.ToTable("ManufacturesProduct");
 

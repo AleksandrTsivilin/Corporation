@@ -1,3 +1,4 @@
+using CorporationApi.HubConfig;
 using DataBase;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,6 +38,11 @@ namespace CorporationApi
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "CorporationApi", Version = "v1" });
             });
 
+            services.AddSignalR(options =>
+            {
+                options.EnableDetailedErrors = true;
+            });
+
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<DBContext>();
         }
@@ -61,6 +67,7 @@ namespace CorporationApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<MyHub>("/toastr");
             });
         }
     }
