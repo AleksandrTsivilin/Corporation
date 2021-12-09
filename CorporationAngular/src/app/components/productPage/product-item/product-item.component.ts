@@ -13,7 +13,11 @@ export class ProductItemComponent implements OnInit {
   @Input() productInfo:ProductInfo={
     id:0,
     title:"",
-    count:0
+    count:0,
+    price:0,
+    manufacturer:"",
+    category:"",
+    unit:""
   };
 
   @Input() avaiablesPermissions:AvaiablesPermissions={

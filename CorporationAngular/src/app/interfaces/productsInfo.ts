@@ -1,6 +1,10 @@
 export interface ProductInfo{
     id:number,
     title:string,
-    count:number
+    count:number,
+    price:number,
+    manufacturer:string,
+    category:string,
+    unit:string
 }
 

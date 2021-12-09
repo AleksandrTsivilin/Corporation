@@ -71,7 +71,19 @@ export class ProductsComponent implements OnInit {
       title:"title",
       isActive:true
     },{
+      title:"manufacturer",
+      isActive:true
+    },{
+      title:"category",
+      isActive:true
+    },{
       title:"count",
+      isActive:true
+    },{
+      title:"unit",
+      isActive:true
+    },{
+      title:"price",
       isActive:true
     }];
 
