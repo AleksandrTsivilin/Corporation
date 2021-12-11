@@ -3,6 +3,7 @@ import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
+import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
   selector: 'app-products',
@@ -23,7 +24,9 @@ export class ProductsComponent implements OnInit {
   productsInfo:ProductInfo[]=[];
   editProductMode:boolean=false;
 
-  constructor( private readonly service:ProductsService) { }
+  constructor( 
+    private readonly service:ProductsService,
+    private readonly signalrService:SignalrProductService) { }
 
   ngOnInit(): void {
 
@@ -37,6 +40,21 @@ export class ProductsComponent implements OnInit {
       console.log("failed get products")
     })
 
+    if (!this.signalrService.isConnection)
+      this.signalrService.startConnection();
+
+    this.productOnLis();
+
+  }
+
+
+  productOnLis(): void {
+    console.log("productOnLis")
+    //console.log(this.currentUser.name)
+    this.signalrService.hubConnection?.on("productAdd", (newProduct:ProductInfo) => {
+      console.log(newProduct);
+      this.productsInfo.push(newProduct);
+    });
   }
 
   sortCol(criteria:string){

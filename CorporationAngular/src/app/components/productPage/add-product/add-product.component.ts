@@ -35,7 +35,8 @@ export class AddProductComponent implements OnInit {
     console.log(this.manufacturers);
     this.getCategories();
     this.getUnits();
-    this.signalrService.startConnection();
+    if (!this.signalrService.isConnection)
+      this.signalrService.startConnection();
   }
 
   onSubmit(){

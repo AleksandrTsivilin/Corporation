@@ -9,6 +9,7 @@ import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces
 export class SignalrProductService {
 
   hubConnection:signalR.HubConnection | undefined
+  isConnection:boolean=false;
 
   startConnection=()=>{
     console.log("startConnection signalrService")
@@ -23,6 +24,7 @@ export class SignalrProductService {
         .start()
         .then(()=>{ 
           console.log("hubConnection signalrService")
+          this.isConnection=true;
           //this.ssSubj.next({type:"HubConnStarted"}); 
         })
         .catch(err=>{console.log("some errors")})
