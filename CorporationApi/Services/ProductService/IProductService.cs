@@ -20,6 +20,6 @@ namespace Services.ProductService
 
         List<UnitModel> GetUnits();
 
-        void AddProduct(AddProductModel model);
+        ProductModel AddProduct(AddProductModel model);
     }
 }

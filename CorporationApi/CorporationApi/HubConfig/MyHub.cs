@@ -25,7 +25,9 @@ namespace CorporationApi.HubConfig
 
             
 
-            _service.AddProduct(model);
+            var newProduct=_service.AddProduct(model);
+            if (newProduct is not null)
+                Clients.Others.SendAsync("productAdd", newProduct);
         }
     }
 }

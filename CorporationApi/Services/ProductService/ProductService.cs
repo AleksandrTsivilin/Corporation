@@ -71,22 +71,22 @@ namespace Services.ProductService
                 }).ToList();
         }
 
-        public void AddProduct(AddProductModel model)
+        public ProductModel AddProduct(AddProductModel model)
         {
             var manufacturer = _context.Manufactures
                 .FirstOrDefault(m => m.Title == model.Manufacturer);
 
-            if (manufacturer is null) return;
+            if (manufacturer is null) return null;
 
             var category = _context.Categoties
                 .FirstOrDefault(c => c.Title == model.Category);
 
-            if (category is null) return;
+            if (category is null) return null;
 
             var unit = _context.Units
                 .FirstOrDefault(u => u.Title == model.Unit);
 
-            if (unit is null) return;
+            if (unit is null) return null;
 
             _context.Products.Add(new Product
             {
@@ -98,7 +98,25 @@ namespace Services.ProductService
                 UnitId = unit.Id
             });
 
-            _context.SaveChanges();           
+            _context.SaveChanges();
+
+            var newProduct = _context.Products
+                .Include(p => p.Manufacture)
+                .Include(p => p.Category)
+                .Include(p => p.Unit)
+                .FirstOrDefault(p => p.Title == model.Title);
+
+            return new ProductModel()
+                {
+                    Title= newProduct.Title,
+                    Price= newProduct.Price,
+                    Count= newProduct.AvaiableCount,
+                    Manufacturer=newProduct.Manufacture.Title,
+                    Category=newProduct.Category.Title,
+                    Unit=newProduct.Unit.Title
+
+                };
+                
 
         }
     }
