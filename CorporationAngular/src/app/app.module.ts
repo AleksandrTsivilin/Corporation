@@ -24,6 +24,9 @@ import { ProductsComponent } from './components/productPage/products/products.co
 import { ProductItemComponent } from './components/productPage/product-item/product-item.component';
 import { AddProductComponent } from './components/productPage/add-product/add-product.component';
 import { EditProductComponent } from './components/productPage/edit-product/edit-product.component';
+import { AddManufacturerComponent } from './components/productPage/add-manufacturer/add-manufacturer.component';
+import { AddCategoryComponent } from './components/productPage/add-category/add-category.component';
+import { AddUnitComponent } from './components/productPage/add-unit/add-unit.component';
 //import { ProductComponent } from './components/productPage/product/product.component';
 //import { ProductsComponent } from './components/products/products.component';
 //import { AddModuleComponent } from './components/adminPage/add-module/add-module.component';
@@ -51,6 +54,9 @@ import { EditProductComponent } from './components/productPage/edit-product/edit
     ProductItemComponent,
     AddProductComponent,
     EditProductComponent,
+    AddManufacturerComponent,
+    AddCategoryComponent,
+    AddUnitComponent,
     //ProductComponent,
     //ProductsComponent,    
     //DialogUserInfoComponent

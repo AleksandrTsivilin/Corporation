@@ -1,7 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
+import { PageState } from 'src/app/interfaces/pageState';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
+import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -20,12 +22,19 @@ export class EditProductComponent implements OnInit {
     manufacturer:"",
     unit:""
   }
+
+
   
   @Output() updateProduct=new EventEmitter();
 
+  pageState:PageState={
+    path:"",
+    isActive:true
+  }
   manufacturers:Manufacturer[]=[];
   categories:Category[]=[];
   units:Unit[]=[];
+  //isAddGroup:boolean=false;
 
   formEditProduct:FormAddProduct ={
     title:this.editProduct.title,
@@ -35,7 +44,9 @@ export class EditProductComponent implements OnInit {
     manufacturer:this.editProduct.manufacturer,
     unit:this.editProduct.unit
   }
-  constructor(private readonly service:ProductsService) { 
+  constructor(
+    private readonly service:ProductsService,
+    private readonly signalrService:SignalrProductService) { 
     
   }
 
@@ -51,11 +62,51 @@ export class EditProductComponent implements OnInit {
     this.getManufacturer();
     this.getCategories();
     this.getUnits();
+
+    if (!this.signalrService.isConnection)
+      this.signalrService.startConnection();
+    this.ManufacturerOnLis();
+    this.CategoryOnLis();
+    this.UnitOnLis();
   }
 
   onSubmit(){
     console.log(this.formEditProduct)
     this.updateProduct.emit(this.formEditProduct);
+  }
+
+  addGroup(path:string){
+    this.pageState={
+      path:path,
+      isActive:false
+
+    };
+  }
+
+  addedGroup(){
+    this.pageState={
+      path:"",
+      isActive:true
+    }
+  }
+
+  ManufacturerOnLis(): void {
+    this.signalrService.hubConnection?.on("manufacturerAdd", (newManufacturer:Manufacturer) => {
+      this.manufacturers.push(newManufacturer);
+    });
+  }
+
+  CategoryOnLis(): void {
+    this.signalrService.hubConnection?.on("categoryAdd", (newCategory:Category) => {
+      this.categories.push(newCategory);
+      console.log(this.categories)
+    });
+  }
+
+  UnitOnLis(): void {
+    this.signalrService.hubConnection?.on("unitAdd", (newUnit:Unit) => {
+      this.units.push(newUnit);      
+    });
   }
 
   private getManufacturer() {

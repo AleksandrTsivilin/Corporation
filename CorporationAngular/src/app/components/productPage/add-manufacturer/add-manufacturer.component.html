@@ -1,0 +1,11 @@
+<p>add-manufacturer works!</p>
+<form
+    (ngSubmit)="onSubmit()"  
+>
+    <input
+        [(ngModel)]="formManufacturer.title"
+        name="manufacturer"
+        placeholder="manufacturer"
+    >
+    <button type="submit">add manufacturer</button>
+</form>

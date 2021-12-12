@@ -70,6 +70,22 @@ export class SignalrProductService {
       .catch(err=>console.error(err))
   }
 
+  addManufacturer(manufacturer:Manufacturer){
+    this.hubConnection?.invoke("AddManufacturer",manufacturer)
+      .then()
+      .catch(err=>{console.error(err)})
+  }
+
+  addCategory(category:Category){
+    this.hubConnection?.invoke("AddCategory",category)
+      .then()
+      .catch(err=>{console.error(err)})
+  }
+  addUnit(unit:Unit){
+    this.hubConnection?.invoke("AddUnit",unit)
+      .then()
+      .catch(err=>{console.error(err)})
+  }
   private FormProductConvert(form:FormAddProduct){
     return {
       title:form.title,

@@ -3,6 +3,10 @@
 
     .form-group{
         @apply w-full;
+
+        .section{
+            @apply flex flex-row;
+        }
     }
     .btn-submit{
             

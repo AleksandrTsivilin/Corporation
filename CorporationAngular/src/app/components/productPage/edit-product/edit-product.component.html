@@ -1,62 +1,76 @@
 <p>edit-product works!</p>
 <form
     class="form-add-product"
+    *ngIf="pageState.isActive else toAddGroup"
     (ngSubmit)="onSubmit()"         
 
 >   <div class="form-group">
         <label>manufacturer</label>
-        <select 
-            class="form-group"
-            [(ngModel)]="formEditProduct.manufacturer"
-            name="manufacturer"
-        >
-        
-            <option 
-                *ngFor="let manufacturer of manufacturers"
-                [value]="manufacturer.title"
-                name="manufacturer.title"
+        <div class="section">
+            <select 
+                class="form-group"
+                [(ngModel)]="formEditProduct.manufacturer"
+                name="manufacturer"
             >
-                {{manufacturer.title}}
-            </option>
-        </select>
+            
+                <option 
+                    *ngFor="let manufacturer of manufacturers"
+                    [value]="manufacturer.title"
+                    name="manufacturer.title"
+                >
+                    {{manufacturer.title}}
+                </option>
+                
+            </select>
+            <button type="button" (click)="addGroup('manufacturer')">Add</button>
+        </div>
+        
         
     </div>
     <div class="form-group">
         <label>category</label>
-        <select 
-            class="form-group"
-            [(ngModel)]="formEditProduct.category"
-                
-            name="category"
-        >
-          
-            <option 
-                *ngFor="let category of categories"
-                [value]="category.title"
-                name="category.title"
+        <div class="section">
+            <select 
+                class="form-group"
+                [(ngModel)]="formEditProduct.category"
+                    
+                name="category"
             >
-                {{category.title}}
-            </option>
-        </select>
+            
+                <option 
+                    *ngFor="let category of categories"
+                    [value]="category.title"
+                    name="category.title"
+                >
+                    {{category.title}}
+                </option>
+            </select>
+            <button type="button" (click)="addGroup('category')">Add</button>
+        </div>
+        
         
     </div>
     <div class="form-group">
         <label>unit</label>
-        <select 
-            class="form-group"
-            [(ngModel)]="formEditProduct.unit"
-                
-            name="unit"
-        >
-            
-            <option 
-                *ngFor="let unit of units"
-                [value]="unit.title"
-                name="unit.title"
+        <div class="section">
+            <select 
+                class="form-group"
+                [(ngModel)]="formEditProduct.unit"
+                    
+                name="unit"
             >
-                {{unit.title}}
-            </option>
-        </select>
+                
+                <option 
+                    *ngFor="let unit of units"
+                    [value]="unit.title"
+                    name="unit.title"
+                >
+                    {{unit.title}}
+                </option>
+            </select>
+            <button type="button" (click)="addGroup('unit')">Add</button>
+        </div>
+        
         
     </div>
     <div class="form-group">
@@ -100,3 +114,22 @@
     
     
 </form>
+
+<ng-template #toAddGroup>
+    <div [ngSwitch]="pageState.path">
+        <app-add-manufacturer
+            *ngSwitchCase="'manufacturer'"
+            (addManufacturer)="addedGroup()"
+        ></app-add-manufacturer>
+        <app-add-category
+            *ngSwitchCase="'category'"
+            (addCategory)="addedGroup()"
+        ></app-add-category>
+        <app-add-unit
+            *ngSwitchCase="'unit'"
+            (addUnit)="addedGroup()"
+        ></app-add-unit>
+    </div>
+    
+</ng-template>
+
