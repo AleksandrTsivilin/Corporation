@@ -38,5 +38,24 @@ namespace CorporationApi.HubConfig
 
             Clients.All.SendAsync("updateProduct", updatedProduct);
         }
+
+
+        public void AddManufacturer(ManufacturerModel model)
+        {
+            var newManufacturer = _service.AddManufacturer(model);
+            Clients.All.SendAsync("manufacturerAdd", newManufacturer);
+        }
+
+        public void AddCategory(CategoryModel model)
+        {
+            var newCategory = _service.AddCategory(model);
+            Clients.All.SendAsync("categoryAdd", newCategory);
+        }
+
+        public void AddUnit(UnitModel model)
+        {
+            var newUnit = _service.AddUnit(model);
+            Clients.All.SendAsync("unitAdd", newUnit);
+        }
     }
 }

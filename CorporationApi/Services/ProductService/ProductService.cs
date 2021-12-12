@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ManufacturerModel = Services.Models.ManufacturerModel;
+//using ManufacturerModel = Services.Models.ManufacturerModel;
 
 namespace Services.ProductService
 {
@@ -43,11 +43,11 @@ namespace Services.ProductService
             
         }
 
-        public List<ManufacturerModel> GetManufacturers()
+        public List<Models.ProductModels.ManufacturerModel> GetManufacturers()
         {
             
             return _context.Manufactures                
-                .Select((manufacturer)=>new ManufacturerModel()
+                .Select((manufacturer)=>new Models.ProductModels.ManufacturerModel()
                 {
                    Title=manufacturer.Title
                 }).ToList();
@@ -163,6 +163,64 @@ namespace Services.ProductService
             };
         }
 
+        public ManufacturerModel AddManufacturer(ManufacturerModel model)
+        {
+            _context.Manufactures.Add(new ManufacturerProduct
+            {
+                Title = model.Title
+            });
+
+            _context.SaveChanges();
+
+            var newManufacturer = _context.Manufactures
+                .FirstOrDefault((m) => m.Title == model.Title);
+
+            if (newManufacturer is null) return null;
+
+            return new ManufacturerModel
+            {
+                Title = newManufacturer.Title
+            };
+        }
+
+        public CategoryModel AddCategory(CategoryModel model)
+        {
+            _context.Categoties.Add(new CategoryProduct
+            {
+                Title = model.Title
+            });
+
+            _context.SaveChanges();
+
+            var newCategory = _context.Categoties
+                .FirstOrDefault((c) => c.Title == model.Title);
+
+            if (newCategory is null) return null;
+
+            return new CategoryModel
+            {
+                Title = newCategory.Title
+            };
+        }
+        public UnitModel AddUnit(UnitModel model)
+        {
+            _context.Units.Add(new UnitProduct
+            {
+                Title = model.Title
+            });
+
+            _context.SaveChanges();
+
+            var newUnit = _context.Units
+                .FirstOrDefault((u) => u.Title == model.Title);
+
+            if (newUnit is null) return null;
+
+            return new UnitModel
+            {
+                Title = newUnit.Title
+            };
+        }
         private int? GetIdManufacturer(string title)
         {
             return _context.Manufactures
@@ -182,5 +240,7 @@ namespace Services.ProductService
             return _context.Units
                 .FirstOrDefault(u => u.Title == title)?.Id;
         }
+
+        
     }
 }

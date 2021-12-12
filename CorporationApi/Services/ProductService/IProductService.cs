@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ManufacturerModel = Services.Models.ManufacturerModel;
+
 
 namespace Services.ProductService
 {
@@ -23,5 +23,12 @@ namespace Services.ProductService
         ProductModel AddProduct(AddProductModel model);
 
         ProductModel UpdateProduct(AddProductModel model, int id);
+        ManufacturerModel AddManufacturer(ManufacturerModel model);
+
+        CategoryModel AddCategory(CategoryModel model);
+        UnitModel AddUnit(UnitModel model);
+
+        //ManufacturerModel AddManufacturer(ManufacturerModel model);
+
     }
 }
