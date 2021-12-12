@@ -21,6 +21,7 @@
             [numProduct]="i+1"
             [productInfo]="productInfo" 
             [avaiablesPermissions]="avaiablesPermissions"
+            (edit)="edit(productInfo)"
         >  
         </tr>
     </table>
@@ -36,6 +37,11 @@
     (click)="openUserInfo(userInfo)" -->
 
   <ng-template #toUpdateForm >
+    <app-edit-product
+      [editProduct]="editProduct"
+      (updateProduct)="update($event)"
+    >     
+    </app-edit-product>
     <!-- <app-edit-user
         [editUser]="editUser"
         (updateUser)="update()"

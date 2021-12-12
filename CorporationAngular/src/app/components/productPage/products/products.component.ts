@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
+import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
@@ -23,6 +24,15 @@ export class ProductsComponent implements OnInit {
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
   editProductMode:boolean=false;
+  editProduct:ProductInfo={
+    id:0,
+    title:"",
+    count:0,
+    price:0,
+    category:"",
+    manufacturer:"",
+    unit:""
+  }
 
   constructor( 
     private readonly service:ProductsService,
@@ -44,6 +54,7 @@ export class ProductsComponent implements OnInit {
       this.signalrService.startConnection();
 
     this.productOnLis();
+    this.productOnUpdateLis();
 
   }
 
@@ -55,6 +66,73 @@ export class ProductsComponent implements OnInit {
       console.log(newProduct);
       this.productsInfo.push(newProduct);
     });
+  }
+
+  productOnUpdateLis():void{
+    this.signalrService.hubConnection?.on("updateProduct",(updateProduct:ProductInfo)=>{
+      console.log("productOnUpdateLis")
+      console.log(updateProduct); 
+      //let a:ProductInfo[]=this.productsInfo;
+      this.productsInfo=this.productsInfo.map((p)=>{
+        if (p.id===updateProduct.id)
+        {
+          console.log("compare")
+          return {
+            id:updateProduct.id,
+            title:updateProduct.title,
+            price:updateProduct.price,
+            count:updateProduct.count,
+            category:updateProduct.category,
+            manufacturer:updateProduct.manufacturer,
+            unit:updateProduct.unit
+          }
+        }
+          
+        else return p;
+       })
+       
+      
+      //  let a={
+      //   id:updateProduct.id,
+      //   title:updateProduct.title,
+      //   price:updateProduct.price,
+      //   count:updateProduct.count,
+      //   category:updateProduct.category,
+      //   manufacturer:updateProduct.manufacturer,
+      //   unit:updateProduct.unit
+      // }
+        
+      // a={
+      //   id:updateProduct.id,
+      //   title:updateProduct.title,
+      //   price:updateProduct.price,
+      //   count:updateProduct.count,
+      //   category:updateProduct.category,
+      //   manufacturer:updateProduct.manufacturer,
+      //   unit:updateProduct.unit
+      // }
+    })
+  }
+
+  edit(editProduct:ProductInfo){
+    console.log(editProduct)
+    this.editProduct={
+      id:editProduct.id,
+      title:editProduct.title,
+      count:editProduct.count,
+      price:editProduct.price,
+      category:editProduct.category,
+      manufacturer:editProduct.manufacturer,
+      unit:editProduct.unit
+    }
+    this.editProductMode=true;
+  }
+
+  update(updateProduct:FormAddProduct){
+    console.log(updateProduct)
+    console.log(this.editProduct.id)
+    this.signalrService.updateProduct(updateProduct,this.editProduct.id)
+    this.editProductMode=false;
   }
 
   sortCol(criteria:string){

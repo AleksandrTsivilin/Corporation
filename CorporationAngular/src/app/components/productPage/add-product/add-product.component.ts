@@ -32,7 +32,6 @@ export class AddProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.getManufacturers();
-    console.log(this.manufacturers);
     this.getCategories();
     this.getUnits();
     if (!this.signalrService.isConnection)

@@ -33,7 +33,7 @@ export class SignalrProductService {
 
   
 
-  async addProduct(formAddProduct:FormAddProduct){
+  addProduct(formAddProduct:FormAddProduct){
     console.log(formAddProduct)
     console.log("addProduct")
 
@@ -45,9 +45,39 @@ export class SignalrProductService {
       category:formAddProduct.category,
       unit:formAddProduct.unit
     }
+
     
-    await this.hubConnection?.invoke("AddProduct",addedProduct)
+    
+    this.hubConnection?.invoke("AddProduct",addedProduct)
       .then()
       .catch(err=>{console.error(err)})
+  }
+
+  updateProduct(updateProduct:FormAddProduct,id:number){
+    const convertForm=this.FormProductConvert(updateProduct);
+    // let updatedProductConvert={
+    //   title:updateProduct.title,
+    //   avaiableCount:Number(updateProduct.avaiableCount),
+    //   price:Number(updateProduct.price),
+    //   manufacturere:updateProduct.manufacturer,
+    //   category:updateProduct.category,
+    //   unit:updateProduct.unit
+    // }
+    console.log("convert form")
+    console.log(convertForm);
+    this.hubConnection?.invoke("updateProduct",convertForm,id)
+      .then()
+      .catch(err=>console.error(err))
+  }
+
+  private FormProductConvert(form:FormAddProduct){
+    return {
+      title:form.title,
+      avaiableCount:Number(form.avaiableCount),
+      price:Number(form.price),
+      manufacturer:form.manufacturer,
+      category:form.category,
+      unit:form.unit
+    }
   }
 }

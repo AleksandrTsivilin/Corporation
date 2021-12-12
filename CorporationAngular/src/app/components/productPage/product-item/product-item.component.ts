@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 
@@ -28,13 +28,15 @@ export class ProductItemComponent implements OnInit {
     canMove:false
   }
 
+  @Output() edit=new EventEmitter();
+
   constructor() { }
 
   ngOnInit(): void {
   }
 
   editProduct(){
-
+    this.edit.emit();
   }
 
   removeProduct(){

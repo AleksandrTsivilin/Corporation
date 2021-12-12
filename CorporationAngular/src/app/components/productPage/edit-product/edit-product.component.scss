@@ -1,0 +1,19 @@
+.form-add-product{
+    @apply w-96;
+
+    .form-group{
+        @apply w-full;
+    }
+    .btn-submit{
+            
+        @apply w-full;
+        @apply bg-green-500;
+        @apply rounded;
+        @apply text-white font-bold;
+        @apply py-2;
+    }
+    
+    .btn-submit:hover{
+        @apply bg-green-700;
+    } 
+}

@@ -23,6 +23,7 @@ import { MoveProductComponent } from './components/productPage/move-product/move
 import { ProductsComponent } from './components/productPage/products/products.component';
 import { ProductItemComponent } from './components/productPage/product-item/product-item.component';
 import { AddProductComponent } from './components/productPage/add-product/add-product.component';
+import { EditProductComponent } from './components/productPage/edit-product/edit-product.component';
 //import { ProductComponent } from './components/productPage/product/product.component';
 //import { ProductsComponent } from './components/products/products.component';
 //import { AddModuleComponent } from './components/adminPage/add-module/add-module.component';
@@ -49,6 +50,7 @@ import { AddProductComponent } from './components/productPage/add-product/add-pr
     ProductsComponent,
     ProductItemComponent,
     AddProductComponent,
+    EditProductComponent,
     //ProductComponent,
     //ProductsComponent,    
     //DialogUserInfoComponent
