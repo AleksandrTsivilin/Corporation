@@ -27,7 +27,16 @@ namespace CorporationApi.HubConfig
 
             var newProduct=_service.AddProduct(model);
             if (newProduct is not null)
-                Clients.Others.SendAsync("productAdd", newProduct);
+                 Clients.Others.SendAsync("productAdd", newProduct);
+        }
+
+        public void UpdateProduct(AddProductModel model, int id)
+        {
+            Console.WriteLine(model);
+            Console.WriteLine(id);
+            var updatedProduct= _service.UpdateProduct(model, id);
+
+            Clients.All.SendAsync("updateProduct", updatedProduct);
         }
     }
 }

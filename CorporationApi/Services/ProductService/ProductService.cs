@@ -19,9 +19,9 @@ namespace Services.ProductService
         {
             _context = context;
         }
-        public List<ProductModel> Get()
+        public  List<ProductModel> Get()
         {
-            return  _context.Products
+            return _context.Products
                 .Include(p => p.Manufacture)
                 .Include(p => p.Category)
                 .Include(p => p.Unit)
@@ -71,7 +71,7 @@ namespace Services.ProductService
                 }).ToList();
         }
 
-        public ProductModel AddProduct(AddProductModel model)
+        public  ProductModel AddProduct(AddProductModel model)
         {
             var manufacturer = _context.Manufactures
                 .FirstOrDefault(m => m.Title == model.Manufacturer);
@@ -118,6 +118,69 @@ namespace Services.ProductService
                 };
                 
 
+        }
+
+        public ProductModel UpdateProduct(AddProductModel model, int id)
+        {
+            //var tempProduct = new AddProductModel();
+            var product = _context.Products.FirstOrDefault(p => p.Id == id);
+            if (product is null) return null;
+
+            var manufacturerId = GetIdManufacturer(model.Manufacturer);
+
+            if (manufacturerId is null)
+                return null;
+            else product.ManufactureId =(int) manufacturerId;
+
+            var categoryId = GetIdCategory(model.Category);
+
+            if (categoryId is null)
+                return null;
+            else product.CategoryId = (int)categoryId;
+
+            var unitId = GetIdUnit(model.Unit);
+
+            if (unitId is null)
+                return null;
+            else product.UnitId = (int)unitId;
+
+            product.Title = model.Title;
+            product.Price = model.Price;
+            product.AvaiableCount = model.AvaiableCount;
+            
+            
+
+            _context.SaveChanges();
+            return new ProductModel
+            {
+                Id=id,
+                Title = model.Title,
+                Price = model.Price,
+                Count = model.AvaiableCount,
+                Category = model.Category,
+                Manufacturer = model.Manufacturer,
+                Unit = model.Unit
+            };
+        }
+
+        private int? GetIdManufacturer(string title)
+        {
+            return _context.Manufactures
+                .FirstOrDefault(m => m.Title == title)?.Id;
+           
+                
+        }
+
+        private int? GetIdCategory(string title)
+        {
+            return _context.Categoties
+                .FirstOrDefault(c => c.Title == title)?.Id;
+        }
+
+        private int? GetIdUnit(string title)
+        {
+            return _context.Units
+                .FirstOrDefault(u => u.Title == title)?.Id;
         }
     }
 }

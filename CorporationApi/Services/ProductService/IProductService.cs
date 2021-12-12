@@ -21,5 +21,7 @@ namespace Services.ProductService
         List<UnitModel> GetUnits();
 
         ProductModel AddProduct(AddProductModel model);
+
+        ProductModel UpdateProduct(AddProductModel model, int id);
     }
 }
