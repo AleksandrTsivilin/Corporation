@@ -5,6 +5,7 @@ export interface ProductInfo{
     price:number,
     manufacturer:string,
     category:string,
-    unit:string
+    unit:string,
+    isBanned:boolean
 }
 

@@ -55,20 +55,18 @@ export class SignalrProductService {
 
   updateProduct(updateProduct:FormAddProduct,id:number){
     const convertForm=this.FormProductConvert(updateProduct);
-    // let updatedProductConvert={
-    //   title:updateProduct.title,
-    //   avaiableCount:Number(updateProduct.avaiableCount),
-    //   price:Number(updateProduct.price),
-    //   manufacturere:updateProduct.manufacturer,
-    //   category:updateProduct.category,
-    //   unit:updateProduct.unit
-    // }
-    console.log("convert form")
-    console.log(convertForm);
     this.hubConnection?.invoke("updateProduct",convertForm,id)
       .then()
       .catch(err=>console.error(err))
   }
+
+  removeProduct(id:number){
+    this.hubConnection?.invoke("DeleteProduct",id)
+      .then()
+      .catch(err=>console.error(err));
+  }
+
+  
 
   addManufacturer(manufacturer:Manufacturer){
     this.hubConnection?.invoke("AddManufacturer",manufacturer)

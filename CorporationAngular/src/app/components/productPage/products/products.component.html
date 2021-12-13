@@ -17,11 +17,14 @@
         </tr>
         <tr app-product-item 
             class="product-item"
+            
             *ngFor="let productInfo of productsInfo let i=index"
+            [ngClass]="{'product-item-warning':productInfo.isBanned}"
             [numProduct]="i+1"
             [productInfo]="productInfo" 
             [avaiablesPermissions]="avaiablesPermissions"
             (edit)="edit(productInfo)"
+            (remove)="remove(productInfo)"
         >  
         </tr>
     </table>

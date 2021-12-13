@@ -20,7 +20,9 @@ export class EditProductComponent implements OnInit {
     price:0,
     category:"",
     manufacturer:"",
-    unit:""
+    unit:"",
+    isBanned:false
+    
   }
 
 

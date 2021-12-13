@@ -31,7 +31,8 @@ export class ProductsComponent implements OnInit {
     price:0,
     category:"",
     manufacturer:"",
-    unit:""
+    unit:"",
+    isBanned:false
   }
 
   constructor( 
@@ -55,6 +56,7 @@ export class ProductsComponent implements OnInit {
 
     this.productOnLis();
     this.productOnUpdateLis();
+    this.productOnRemoveLis();
 
   }
 
@@ -84,35 +86,32 @@ export class ProductsComponent implements OnInit {
             count:updateProduct.count,
             category:updateProduct.category,
             manufacturer:updateProduct.manufacturer,
-            unit:updateProduct.unit
+            unit:updateProduct.unit,
+            isBanned:updateProduct.isBanned
           }
         }
           
         else return p;
-       })
-       
-      
-      //  let a={
-      //   id:updateProduct.id,
-      //   title:updateProduct.title,
-      //   price:updateProduct.price,
-      //   count:updateProduct.count,
-      //   category:updateProduct.category,
-      //   manufacturer:updateProduct.manufacturer,
-      //   unit:updateProduct.unit
-      // }
-        
-      // a={
-      //   id:updateProduct.id,
-      //   title:updateProduct.title,
-      //   price:updateProduct.price,
-      //   count:updateProduct.count,
-      //   category:updateProduct.category,
-      //   manufacturer:updateProduct.manufacturer,
-      //   unit:updateProduct.unit
-      // }
+       });
     })
   }
+
+  productOnRemoveLis():void{
+    this.signalrService.hubConnection?.on("removeProduct",(id:number)=>{
+      console.log("id")
+      console.log (id);
+      this.productsInfo=this.productsInfo.map((p)=>{
+        if (p.id===id)
+        {
+          p.isBanned=true;
+          console.log(p)
+        }
+        return p;
+       });
+    })
+  }
+
+
 
   edit(editProduct:ProductInfo){
     console.log(editProduct)
@@ -123,14 +122,21 @@ export class ProductsComponent implements OnInit {
       price:editProduct.price,
       category:editProduct.category,
       manufacturer:editProduct.manufacturer,
-      unit:editProduct.unit
+      unit:editProduct.unit,
+      isBanned:editProduct.isBanned
     }
     this.editProductMode=true;
   }
 
+  remove(removeProduct:ProductInfo){
+    this.signalrService.removeProduct(removeProduct.id);
+  }
+
+  // unLock(unLockProduct:ProductInfo){
+  //   this.signalrService.unLockProduct(unLockProduct.id);
+  // }
+
   update(updateProduct:FormAddProduct){
-    console.log(updateProduct)
-    console.log(this.editProduct.id)
     this.signalrService.updateProduct(updateProduct,this.editProduct.id)
     this.editProductMode=false;
   }

@@ -17,7 +17,8 @@ export class ProductItemComponent implements OnInit {
     price:0,
     manufacturer:"",
     category:"",
-    unit:""
+    unit:"",
+    isBanned:false
   };
 
   @Input() avaiablesPermissions:AvaiablesPermissions={
@@ -29,7 +30,8 @@ export class ProductItemComponent implements OnInit {
   }
 
   @Output() edit=new EventEmitter();
-
+  @Output() remove=new EventEmitter();
+  
   constructor() { }
 
   ngOnInit(): void {
@@ -40,8 +42,10 @@ export class ProductItemComponent implements OnInit {
   }
 
   removeProduct(){
-    
+    this.remove.emit();
   }
+
+  
   
 
 }

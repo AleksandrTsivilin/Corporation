@@ -15,6 +15,10 @@
         @apply border border-green-600;
     }
 
+    .product-item-warning{
+        @apply border-green-600;
+    }
+
     .product-item:hover{
         @apply bg-gray-500;
     }
