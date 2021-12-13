@@ -27,6 +27,7 @@ namespace Services.ProductService
 
         CategoryModel AddCategory(CategoryModel model);
         UnitModel AddUnit(UnitModel model);
+        ProductModel RemoveProduct(int id);
 
         //ManufacturerModel AddManufacturer(ManufacturerModel model);
 

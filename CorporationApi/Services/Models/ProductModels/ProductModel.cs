@@ -15,5 +15,6 @@ namespace Services.Models
         public string Manufacturer { get; set; }
         public string Category { get; set; }
         public string Unit { get; set; }
+        public bool IsBanned { get; set; }
     }
 }

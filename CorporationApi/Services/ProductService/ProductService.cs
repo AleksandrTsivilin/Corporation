@@ -33,7 +33,8 @@ namespace Services.ProductService
                     Count=product.AvaiableCount,
                     Manufacturer=product.Manufacture.Title,
                     Category=product.Category.Title,
-                    Unit=product.Unit.Title
+                    Unit=product.Unit.Title,
+                    IsBanned=product.IsBanned
                     
                 })
                 .ToList();
@@ -43,7 +44,7 @@ namespace Services.ProductService
             
         }
 
-        public List<Models.ProductModels.ManufacturerModel> GetManufacturers()
+        public List<ManufacturerModel> GetManufacturers()
         {
             
             return _context.Manufactures                
@@ -113,7 +114,8 @@ namespace Services.ProductService
                     Count= newProduct.AvaiableCount,
                     Manufacturer=newProduct.Manufacture.Title,
                     Category=newProduct.Category.Title,
-                    Unit=newProduct.Unit.Title
+                    Unit=newProduct.Unit.Title,
+                    IsBanned=newProduct.IsBanned
 
                 };
                 
@@ -162,7 +164,31 @@ namespace Services.ProductService
                 Unit = model.Unit
             };
         }
+        public ProductModel RemoveProduct(int id)
+        {
+            var product = _context.Products
+                .FirstOrDefault(p => p.Id == id);
+            if (product is null) return null;
+            product.IsBanned = !product.IsBanned;
+            _context.SaveChanges();
 
+            var newProduct = _context.Products
+                .Include(p => p.Manufacture)
+                .Include(p => p.Category)
+                .Include(p => p.Unit)
+                .FirstOrDefault(p => p.Id == product.Id);
+            return  new ProductModel
+            {
+                Id = id,
+                Title = newProduct.Title,
+                Price = newProduct.Price,
+                Count = newProduct.AvaiableCount,
+                Category = newProduct.Category.Title,
+                Manufacturer = newProduct.Manufacture.Title,
+                Unit = newProduct.Unit.Title,
+                IsBanned=newProduct.IsBanned
+            }; 
+        }
         public ManufacturerModel AddManufacturer(ManufacturerModel model)
         {
             _context.Manufactures.Add(new ManufacturerProduct

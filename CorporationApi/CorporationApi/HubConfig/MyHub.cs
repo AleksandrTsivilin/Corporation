@@ -32,11 +32,17 @@ namespace CorporationApi.HubConfig
 
         public void UpdateProduct(AddProductModel model, int id)
         {
-            Console.WriteLine(model);
-            Console.WriteLine(id);
             var updatedProduct= _service.UpdateProduct(model, id);
 
             Clients.All.SendAsync("updateProduct", updatedProduct);
+        }
+
+        public void DeleteProduct(int id)
+        {
+            var newProduct = _service.RemoveProduct(id);
+
+            if (newProduct is not null)
+                Clients.All.SendAsync("updateProduct", newProduct);
         }
 
 
