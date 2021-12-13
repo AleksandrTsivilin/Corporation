@@ -21,6 +21,7 @@ namespace DataBase.Entities.ProductEntities
         public int AvaiableCount { get; set; }
         public ICollection< HistoryProduct> Histories { get; set; }
         public bool IsBanned { get; set; }
+        public ICollection<ProductStorage> ProductStorages { get; set; }
             
 
         

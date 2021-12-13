@@ -17,6 +17,8 @@ namespace DataBase
         public DbSet<ManufacturerProduct> Manufactures { get; set; }
         public DbSet<TypeRecord> Types { get; set; }
         public DbSet<UnitProduct> Units { get; set; }
+        public DbSet<Storage> Storages { get; set; }
+        public DbSet<ProductStorage> Product_Storage { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
