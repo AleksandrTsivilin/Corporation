@@ -1,7 +1,6 @@
 
 <form
-(ngSubmit)="onSubmit()"         
-
+    (ngSubmit)="onSubmit()"        
 >  
     <select 
         [(ngModel)]=formMovedProducts.to
@@ -11,30 +10,36 @@
         <option>storage 1</option>
         <option>storage 2</option>
     </select>
-    <div  *ngFor="let product of formMovedProducts.movedProducts ; let i=index">
+    <button class="btn-submit" type="submit">submit</button>
+    <div>
+        <span>{{totalMoved}}</span>
+    </div>
+    <div  >
         <div>
-            <input 
-                type="checkbox"
-                [(ngModel)]="product.isChecked"
-                name="{{i}}" 
-                [checked]="product.isChecked"
-                (change)="checkedProduct(i)"
-                
-                
-            >
-            <input 
-                type="text"
-                [(ngModel)]="product.countMoved"
-                name="{{product.countMoved}}+{{i}}"
-                
-                [disabled]="!product.isChecked"             
-            >
-            
-            {{product.title}}
-            {{product.avaiableCount}}
+            <table class="table">
+                <tr>
+                  <th 
+                    class="header"
+                    *ngFor="let header of headersTable"
+                    [ngClass]="{'active-header':header.isActive}"
+                  >
+                    <span >
+                      {{header.title}}
+                    </span>
+                  </th>    
+                </tr>
+                <tr app-move-product-item 
+                    class="product-item"                    
+                    *ngFor="let product of formMovedProducts.movedProducts let i=index"
+                    [numProduct]="i+1"
+                    [productInfo]="product" 
+                    (onCountMoved)="change()"
+                >  
+                </tr>
+            </table>
         </div>
         
     </div>
-    <button class="btn-submit" type="submit">submit</button>
+    
 </form>
 

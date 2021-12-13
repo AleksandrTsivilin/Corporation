@@ -52,7 +52,7 @@
     <div [ngSwitch]="modeProductPage">
         <app-move-product
             *ngSwitchCase="'moveProduct'"
-            
+            [productsInfo]="productsInfo"
         ></app-move-product>
         <app-products
             *ngSwitchCase="'getProducts'"

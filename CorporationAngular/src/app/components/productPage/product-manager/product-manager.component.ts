@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
-//import { ProductsInfo } from 'src/app/interfaces/productsInfo';
+import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { Permission } from 'src/app/interfaces/userInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 
@@ -13,6 +13,7 @@ export class ProductManagerComponent implements OnInit {
 
   @Input () userId:number=0;
   //@Input () permissions:Permission[]=[];
+  @Output () productsInfo:ProductInfo[]=[];
   @Input () @Output() avaiablesPermissions:AvaiablesPermissions={
     canCreate:false,
     canRead:false,
@@ -23,30 +24,20 @@ export class ProductManagerComponent implements OnInit {
   isSelect:boolean=false;
   modeProductPage:string="";
 
-  //productsInfo:ProductsInfo[]=[];
+  
 
   constructor(private readonly productsService:ProductsService) { }
 
   ngOnInit(): void {
-    // this.productsService.getProducts()
-    //   .subscribe((result)=>{
-    //     this.productsInfo=result;
-    //     console.log(this.productsInfo)
-    // },()=>{
-    //   console.log("failed get products")
-    // })
+    this.productsService.getProducts()
+      .subscribe((result)=>{
+        this.productsInfo=result;
+    },()=>{
+      console.log("failed get products")
+    })
   }
 
-  // canGet():Boolean{
-  //   return true;
-  // }
-  // canCreate():Boolean{
-  //   return true;
-  // }
-
-  // canMove():Boolean{
-  //   return true;
-  // }
+  
 
   onSelect(selected:string){
     this.modeProductPage=selected;
