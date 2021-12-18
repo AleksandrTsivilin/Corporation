@@ -18,7 +18,10 @@ namespace DataBase.Entities.ProductEntities
         public ManufacturerProduct Manufacture { get; set; }
         public int ManufactureId { get; set; }
         public decimal Price { get; set; }
-        public int AvaiableCount { get; set; }
+        //changes for migration MoveColumnCountToProductStorage
+        //public int AvaiableCount { get; set; }
+        
+        
         public ICollection< HistoryProduct> Histories { get; set; }
         public bool IsBanned { get; set; }
         public ICollection<ProductStorage> ProductStorages { get; set; }

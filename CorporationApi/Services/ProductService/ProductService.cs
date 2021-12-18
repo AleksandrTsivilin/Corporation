@@ -30,7 +30,7 @@ namespace Services.ProductService
                     Id=product.Id,
                     Title=product.Title,
                     Price=product.Price,
-                    Count=product.AvaiableCount,
+                    //Count=product.AvaiableCount,
                     Manufacturer=product.Manufacture.Title,
                     Category=product.Category.Title,
                     Unit=product.Unit.Title,
@@ -93,7 +93,7 @@ namespace Services.ProductService
             {
                 Title = model.Title,
                 Price = model.Price,
-                AvaiableCount = model.AvaiableCount,
+                //AvaiableCount = model.AvaiableCount,
                 ManufactureId = manufacturer.Id,                
                 CategoryId = category.Id,
                 UnitId = unit.Id
@@ -111,7 +111,7 @@ namespace Services.ProductService
                 {
                     Title= newProduct.Title,
                     Price= newProduct.Price,
-                    Count= newProduct.AvaiableCount,
+                    //Count= newProduct.AvaiableCount,
                     Manufacturer=newProduct.Manufacture.Title,
                     Category=newProduct.Category.Title,
                     Unit=newProduct.Unit.Title,
@@ -148,7 +148,7 @@ namespace Services.ProductService
 
             product.Title = model.Title;
             product.Price = model.Price;
-            product.AvaiableCount = model.AvaiableCount;
+            //product.AvaiableCount = model.AvaiableCount;
             
             
 
@@ -182,7 +182,7 @@ namespace Services.ProductService
                 Id = id,
                 Title = newProduct.Title,
                 Price = newProduct.Price,
-                Count = newProduct.AvaiableCount,
+                //Count = newProduct.AvaiableCount,
                 Category = newProduct.Category.Title,
                 Manufacturer = newProduct.Manufacture.Title,
                 Unit = newProduct.Unit.Title,

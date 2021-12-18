@@ -38,8 +38,9 @@ namespace DataBase.EntityConfigurations.ProductConfigurations
             builder.Property(_ => _.Price)
                 .IsRequired();
 
-            builder.Property(_ => _.AvaiableCount)
-                .IsRequired();
+            //deleted for migration MoveColumnCountToProductStorage
+            //builder.Property(_ => _.AvaiableCount)
+            //    .IsRequired();
 
             builder.Property(_ => _.IsBanned)
                 .HasDefaultValue(false);

@@ -13,5 +13,8 @@ namespace DataBase.Entities.ProductEntities
         public int StorageId { get; set; }
         public Product Product { get; set; }
         public Storage Storage { get; set; }
+
+        //added for migration MoveColumnCountToProductStorage
+        public int CountProduct { get; set; }
     }
 }

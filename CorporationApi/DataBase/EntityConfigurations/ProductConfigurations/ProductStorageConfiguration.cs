@@ -25,6 +25,10 @@ namespace DataBase.EntityConfigurations.ProductConfigurations
             builder.HasOne(ps => ps.Storage)
                .WithMany(s => s.StorageProducts)
                .HasForeignKey(ps => ps.StorageId);
+
+            builder.Property(_ => _.CountProduct)
+                .IsRequired()
+                .HasDefaultValue(0);
         }
 
     }
