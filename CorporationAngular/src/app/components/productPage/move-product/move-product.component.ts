@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
+import { ProductsService } from 'src/app/services/productPage/products.service';
 
 @Component({
   selector: 'app-move-product',
@@ -19,7 +20,8 @@ export class MoveProductComponent implements OnInit {
 
   headersTable:HeaderTable[]=[];
   totalMoved:number=0;
-  constructor() {
+  storagesInfo:Storage[]=[];
+  constructor(private readonly service:ProductsService) {
     
    }
 
@@ -38,23 +40,29 @@ export class MoveProductComponent implements OnInit {
         unit:product.unit
       })
     }
+
+    this.getStorages();
+
+
   }
 
   
 
   onSubmit(){    
-    let movedProducts=this.formMovedProducts.movedProducts
-      .filter(product=>product.isChecked)
-    console.log(movedProducts);
+    //console.log(this.formMovedProducts)
+    const movedProduct= this.formMovedProducts.movedProducts
+      .filter(product=>product.isChecked);
+    console.log(this.formMovedProducts.to);
+    console.log(movedProduct)
   }
 
   change(){
-    let a =this.formMovedProducts.movedProducts
+    const totalProducts =this.formMovedProducts.movedProducts
       .filter(p=>p.isChecked)
       .map(p=>p.price*p.countMoved);
     
-    this.totalMoved = a.length>0
-      ? a.reduce((a,b)=>a+b)
+    this.totalMoved = totalProducts.length>0
+      ? totalProducts.reduce((a,b)=>a+b)
       : 0;
     
     
@@ -87,16 +95,14 @@ export class MoveProductComponent implements OnInit {
       title:"price",
       isActive:true
     }];
-
-    // if (this.avaiablesPermissions.canUpdate) {
-    //   headers.push({title:"edit",isActive:false});
-    // }
-
-    // if (this.avaiablesPermissions.canDelete) {
-    //   headers.push({title:"delete",isActive:false})
-    // }
-
     return headers;
+  }
+
+  private getStorages() {
+    this.service.getStorages()
+      .subscribe((result)=>{
+        this.storagesInfo=result;
+      },()=>{console.log("failed getStorage")})
   }
 
 }

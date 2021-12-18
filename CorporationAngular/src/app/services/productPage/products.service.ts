@@ -29,4 +29,9 @@ export class ProductsService {
     const urlGetUnits="https://localhost:5001/api/Product/unit";
     return this.client.get<Unit []>(urlGetUnits);
   }
+
+  getStorages(){
+    const urlGetStorage="https://localhost:5001/api/Product/storage";
+    return this.client.get<Storage []>(urlGetStorage);
+  }
 }
