@@ -28,6 +28,7 @@ namespace Services.ProductService
         CategoryModel AddCategory(CategoryModel model);
         UnitModel AddUnit(UnitModel model);
         ProductModel RemoveProduct(int id);
+        List<StorageModel> GetStorages();
 
         //ManufacturerModel AddManufacturer(ManufacturerModel model);
 

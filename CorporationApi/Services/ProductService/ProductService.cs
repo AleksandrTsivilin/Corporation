@@ -247,6 +247,15 @@ namespace Services.ProductService
                 Title = newUnit.Title
             };
         }
+
+        public List<StorageModel> GetStorages()
+        {
+            return _context.Storages
+                .Select((storage) => new StorageModel()
+                {
+                    Title = storage.Title
+                }).ToList();
+        }
         private int? GetIdManufacturer(string title)
         {
             return _context.Manufactures

@@ -46,6 +46,13 @@ namespace CorporationApi.Controllers
             return Ok(manufacturers);
         }
 
+        [HttpGet("storage")]
+        public IActionResult GetStorages()
+        {
+            var storages = _service.GetStorages();
+            return Ok(storages);
+        }
+
 
     }
 }
