@@ -60,6 +60,7 @@
         ></app-products>
         <app-add-product
             *ngSwitchCase="'addProduct'"
+            [storage]="storageUser.title"
         ></app-add-product>
     </div>
     

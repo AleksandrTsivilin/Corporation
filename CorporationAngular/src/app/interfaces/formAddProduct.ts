@@ -1,6 +1,7 @@
 
 
 export interface FormAddProduct{
+    storage:string
     title:string,
     price:number,
     avaiableCount:number,

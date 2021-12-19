@@ -39,6 +39,7 @@ export class EditProductComponent implements OnInit {
   //isAddGroup:boolean=false;
 
   formEditProduct:FormAddProduct ={
+    storage:"",
     title:this.editProduct.title,
     price:this.editProduct.price,
     avaiableCount:this.editProduct.count,
@@ -54,6 +55,7 @@ export class EditProductComponent implements OnInit {
 
   ngOnInit(): void {
     this.formEditProduct={
+      storage:"Storage 1",
       title:this.editProduct.title,
       price:this.editProduct.price,
       avaiableCount:this.editProduct.count,

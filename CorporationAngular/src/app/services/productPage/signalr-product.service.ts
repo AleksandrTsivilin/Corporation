@@ -40,6 +40,7 @@ export class SignalrProductService {
     let addedProduct ={
       price:Number(formAddProduct.price),
       avaiableCount:Number(formAddProduct.avaiableCount),
+      storage:formAddProduct.storage,
       title:formAddProduct.title,
       manufacturer:formAddProduct.manufacturer,
       category:formAddProduct.category,

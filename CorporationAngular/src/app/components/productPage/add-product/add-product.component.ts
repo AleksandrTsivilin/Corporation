@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 //import { Category, Manufacturer, Unit } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
@@ -11,7 +11,9 @@ import { SignalrProductService } from 'src/app/services/productPage/signalr-prod
 })
 export class AddProductComponent implements OnInit {
 
+  @Input() storage:string="";
   formAddProduct:FormAddProduct={
+    storage:this.storage,
     title:"",
     price:0,
     avaiableCount:0,
@@ -31,6 +33,7 @@ export class AddProductComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.formAddProduct.storage=this.storage;
     this.getManufacturers();
     this.getCategories();
     this.getUnits();
@@ -39,7 +42,7 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.formAddProduct);
+    console.log(this.formAddProduct);    
     //this.formAddProduct.avaiableCount=Number(this.formAddProduct.avaiableCount)
     this.signalrService.addProduct(this.formAddProduct);
   }

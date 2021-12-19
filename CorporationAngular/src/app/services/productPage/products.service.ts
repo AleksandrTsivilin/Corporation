@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
+import { StorageInfo } from 'src/app/interfaces/storageInfo';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,12 @@ export class ProductsService {
   getStorages(){
     const urlGetStorage="https://localhost:5001/api/Product/storage";
     return this.client.get<Storage []>(urlGetStorage);
+  }
+
+  getStorageByUser(userId:number){
+    const urlGetStorageByUser="https://localhost:5001/api/Product/storageByUser";
+    let params=new HttpParams();
+    params.append("userId",userId)
+    return this.client.get<StorageInfo>(urlGetStorageByUser,{params})
   }
 }
