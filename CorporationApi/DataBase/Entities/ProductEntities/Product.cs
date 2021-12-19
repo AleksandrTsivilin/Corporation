@@ -26,7 +26,7 @@ namespace DataBase.Entities.ProductEntities
         public bool IsBanned { get; set; }
         public ICollection<ProductStorage> ProductStorages { get; set; }
             
-
+        
         
     }
 }

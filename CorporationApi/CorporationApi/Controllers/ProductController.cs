@@ -53,6 +53,13 @@ namespace CorporationApi.Controllers
             return Ok(storages);
         }
 
+        [HttpGet("storageByUser")]
+        public IActionResult GetStorageByUser(int userId)
+        {
+            var storage = _service.GetStorageByUser(userId);
+            return Ok(storage);
+        }
+
 
     }
 }

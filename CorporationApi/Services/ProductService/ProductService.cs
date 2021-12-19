@@ -25,12 +25,14 @@ namespace Services.ProductService
                 .Include(p => p.Manufacture)
                 .Include(p => p.Category)
                 .Include(p => p.Unit)
+                .Include(p=>p.ProductStorages)
                 .Select((product)=>new ProductModel()
                 {
                     Id=product.Id,
                     Title=product.Title,
                     Price=product.Price,
-                    //Count=product.AvaiableCount,
+                    Count=product.ProductStorages
+                    .Sum(ps=>ps.CountProduct),
                     Manufacturer=product.Manufacture.Title,
                     Category=product.Category.Title,
                     Unit=product.Unit.Title,
@@ -74,6 +76,10 @@ namespace Services.ProductService
 
         public  ProductModel AddProduct(AddProductModel model)
         {
+            var storage = _context.Storages
+                .FirstOrDefault(s => s.Title == model.Storage);
+            if (storage is null) return null;
+
             var manufacturer = _context.Manufactures
                 .FirstOrDefault(m => m.Title == model.Manufacturer);
 
@@ -89,15 +95,28 @@ namespace Services.ProductService
 
             if (unit is null) return null;
 
+            
             _context.Products.Add(new Product
             {
                 Title = model.Title,
                 Price = model.Price,
-                //AvaiableCount = model.AvaiableCount,
-                ManufactureId = manufacturer.Id,                
+                ManufactureId = manufacturer.Id,
                 CategoryId = category.Id,
-                UnitId = unit.Id
+                UnitId = unit.Id,
+                ProductStorages=new List<ProductStorage>
+                {
+                    new ProductStorage
+                    {
+                        StorageId=storage.Id,
+                        CountProduct=model.AvaiableCount
+                    }
+                }
+                
             });
+
+            
+
+            
 
             _context.SaveChanges();
 
@@ -107,18 +126,20 @@ namespace Services.ProductService
                 .Include(p => p.Unit)
                 .FirstOrDefault(p => p.Title == model.Title);
 
-            return new ProductModel()
-                {
-                    Title= newProduct.Title,
-                    Price= newProduct.Price,
-                    //Count= newProduct.AvaiableCount,
-                    Manufacturer=newProduct.Manufacture.Title,
-                    Category=newProduct.Category.Title,
-                    Unit=newProduct.Unit.Title,
-                    IsBanned=newProduct.IsBanned
+            
 
-                };
-                
+            return new ProductModel()
+            {
+                Title = newProduct.Title,
+                Price = newProduct.Price,
+                Manufacturer = newProduct.Manufacture.Title,
+                Category = newProduct.Category.Title,
+                Unit = newProduct.Unit.Title,
+                IsBanned = newProduct.IsBanned
+
+            };
+            
+
 
         }
 
@@ -276,6 +297,12 @@ namespace Services.ProductService
                 .FirstOrDefault(u => u.Title == title)?.Id;
         }
 
-        
+        public StorageModel GetStorageByUser(int userId)
+        {
+            return new StorageModel
+            {
+                Title = "Storage 1"
+            };
+        }
     }
 }

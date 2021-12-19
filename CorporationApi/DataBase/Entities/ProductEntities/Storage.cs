@@ -11,5 +11,6 @@ namespace DataBase.Entities.ProductEntities
         public int Id { get; set; }
         public string Title { get; set; }
         public ICollection<ProductStorage> StorageProducts { get; set; }
+        
     }
 }

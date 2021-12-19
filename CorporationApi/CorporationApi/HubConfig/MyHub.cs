@@ -20,11 +20,8 @@ namespace CorporationApi.HubConfig
         public void AddProduct(AddProductModel model)
         {
             Console.WriteLine("addProduct");
-            //model.Category.Title = "bb";
-            //Console.Write(model);
 
-            
-
+            Console.WriteLine(model.Storage);
             var newProduct=_service.AddProduct(model);
             if (newProduct is not null)
                  Clients.Others.SendAsync("productAdd", newProduct);
