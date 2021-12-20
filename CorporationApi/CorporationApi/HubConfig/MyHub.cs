@@ -41,8 +41,6 @@ namespace CorporationApi.HubConfig
             if (newProduct is not null)
                 Clients.All.SendAsync("updateProduct", newProduct);
         }
-
-
         public void AddManufacturer(ManufacturerModel model)
         {
             var newManufacturer = _service.AddManufacturer(model);
@@ -59,6 +57,17 @@ namespace CorporationApi.HubConfig
         {
             var newUnit = _service.AddUnit(model);
             Clients.All.SendAsync("unitAdd", newUnit);
+        }
+
+        public void MoveProducts(MoveProductModel model)
+        {
+            
+            var products = _service.MovedProducts(model);
+
+            foreach (var product in products)
+            {
+                Clients.All.SendAsync("updateProduct", product);
+            }
         }
     }
 }

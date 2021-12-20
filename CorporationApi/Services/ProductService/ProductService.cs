@@ -169,10 +169,7 @@ namespace Services.ProductService
 
             product.Title = model.Title;
             product.Price = model.Price;
-            //product.AvaiableCount = model.AvaiableCount;
-            
-            
-
+                 
             _context.SaveChanges();
             return new ProductModel
             {
@@ -303,6 +300,80 @@ namespace Services.ProductService
             {
                 Title = "Storage 1"
             };
+        }
+
+        public List<ProductModel> MovedProducts(MoveProductModel model)
+        {
+            var toStorage = _context.Storages
+                .FirstOrDefault(s => s.Title == model.To);
+
+            if (toStorage is null) return null;
+
+            var fromStorage = _context.Storages
+                .FirstOrDefault(s => s.Title == model.From);
+
+            if (fromStorage is null) return null;
+
+            var updateProducts = new List<ProductModel>();
+
+
+
+            foreach (var product in model.MovedProducts)
+            {
+                var product_storage = _context.Product_Storage
+                    .Where(ps => ps.Storage.Id == fromStorage.Id)
+                    .FirstOrDefault(ps => ps.Product.Id == product.Id);
+
+                if (product_storage is null) continue;
+
+
+                var productOnToStorage = _context.Product_Storage
+                    .Where(ps => ps.StorageId == toStorage.Id)
+                    .FirstOrDefault(ps => ps.Product.Id == product.Id);
+                    //?.CountProduct;
+
+                if (productOnToStorage is null)
+                {
+                    _context.Product_Storage.Add(new ProductStorage{
+                        ProductId=product.Id,
+                        StorageId=toStorage.Id,
+                        CountProduct=product.CountMoved
+                    });
+
+                    product_storage.CountProduct -= product.CountMoved;
+                    _context.SaveChanges();
+                }
+                else
+                {
+                    productOnToStorage.CountProduct += product.CountMoved;
+                    product_storage.CountProduct -= product.CountMoved;
+                    _context.SaveChanges();
+                }
+
+                var updatedProduct = _context.Products
+                    .Include(p => p.ProductStorages)
+                    .FirstOrDefault(p => p.Id == product.Id);
+
+                updateProducts.Add(new ProductModel
+                {
+                    Id = updatedProduct.Id,
+                    Title = updatedProduct.Title,
+                    Manufacturer = updatedProduct.Manufacture.Title,
+                    Category = updatedProduct.Category.Title,
+                    Unit = updatedProduct.Unit.Title,
+                    Price = updatedProduct.Price,
+                    IsBanned = updatedProduct.IsBanned,
+                    Count = updatedProduct
+                    .ProductStorages
+                    .FirstOrDefault(p => p.ProductId == updatedProduct.Id)
+                    .CountProduct
+                }); ;
+
+
+            }
+
+            //var movedProducts = new List<ProductModel>();
+            return updateProducts;
         }
     }
 }

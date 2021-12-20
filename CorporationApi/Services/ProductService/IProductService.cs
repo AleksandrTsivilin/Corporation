@@ -30,6 +30,7 @@ namespace Services.ProductService
         ProductModel RemoveProduct(int id);
         List<StorageModel> GetStorages();
         StorageModel GetStorageByUser(int userId);
+        List<ProductModel> MovedProducts(MoveProductModel model);
 
         //ManufacturerModel AddManufacturer(ManufacturerModel model);
 
