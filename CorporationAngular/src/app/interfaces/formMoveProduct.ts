@@ -1,4 +1,5 @@
 export interface FormMoveProducts{
+    from:string,
     to:string,
     movedProducts:MovedProduct[]
 }

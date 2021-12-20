@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@aspnet/signalr'; 
 import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
+import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
 //import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
 
 @Injectable({
@@ -85,6 +86,29 @@ export class SignalrProductService {
       .then()
       .catch(err=>{console.error(err)})
   }
+
+  moveProducts(form:FormMoveProducts){
+    console.log("moveProduct in signalr")
+    console.log(form.movedProducts)
+    const a= form.movedProducts
+    .filter(p=>p.isChecked)
+    .map(p=>({id:p.id, countMoved:p.countMoved})
+        
+    )
+    console.log(a);
+    const movedProducts={
+      from:form.from,
+      to:form.to,
+      movedProducts:form.movedProducts
+        .filter(p=>p.isChecked)
+        .map(p=>({id:p.id, countMoved:Number(p.countMoved)}))
+    }
+    console.log(movedProducts)
+    this.hubConnection?.invoke("MoveProducts",movedProducts)
+      .then()
+      .catch(err=>{console.error(err)}) ;
+  }
+
   private FormProductConvert(form:FormAddProduct){
     return {
       title:form.title,

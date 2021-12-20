@@ -5,6 +5,7 @@ import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { Permission } from 'src/app/interfaces/userInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
+import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
   selector: 'app-product-manager',
@@ -28,22 +29,26 @@ export class ProductManagerComponent implements OnInit {
   }
   
   isSelect:boolean=false;
-  modeProductPage:string="";
+  modeProductPage:string="";  
 
- 
-
-  
-
-  constructor(private readonly productsService:ProductsService) { }
+  constructor(
+    private readonly productsService:ProductsService,
+    private readonly signalrService:SignalrProductService) { }
 
   ngOnInit(): void {
+
+    this.signalrService.startConnection();
+
     this.productsService.getProducts()
       .subscribe((result)=>{
         this.productsInfo=result;
+        console.log("productManager");
+        console.log(this.productsInfo);
     },()=>{
       console.log("failed get products")
     })
-
+    
+    
     this.getStorageUser(1);
   }
 
@@ -57,7 +62,7 @@ export class ProductManagerComponent implements OnInit {
   private getStorageUser(userId:number){
     this.productsService.getStorageByUser(userId)
     .subscribe((result)=>{
-      this.storageUser=result;
+      this.storageUser=result
     },()=>{console.log("failed getStorageUser")});
   }
 

@@ -53,6 +53,7 @@
         <app-move-product
             *ngSwitchCase="'moveProduct'"
             [productsInfo]="productsInfo"
+            [storage]="storageUser.title"
         ></app-move-product>
         <app-products
             *ngSwitchCase="'getProducts'"

@@ -3,6 +3,7 @@ import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
+import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
   selector: 'app-move-product',
@@ -12,8 +13,9 @@ import { ProductsService } from 'src/app/services/productPage/products.service';
 export class MoveProductComponent implements OnInit {
 
   @Input () productsInfo:ProductInfo[]=[];
-
+  @Input () storage:string="";
   formMovedProducts:FormMoveProducts={
+    from:'',
     to:'',
     movedProducts:[]
   }
@@ -21,7 +23,9 @@ export class MoveProductComponent implements OnInit {
   headersTable:HeaderTable[]=[];
   totalMoved:number=0;
   storagesInfo:Storage[]=[];
-  constructor(private readonly service:ProductsService) {
+  constructor(
+    private readonly service:ProductsService,
+    private readonly signalrService:SignalrProductService) {
     
    }
 
@@ -29,6 +33,7 @@ export class MoveProductComponent implements OnInit {
 
     this.headersTable=this.getHeadersTable();
 
+    this.formMovedProducts.from=this.storage;
     for (let product of this.productsInfo){
       this.formMovedProducts.movedProducts.push({
         id:product.id,
@@ -48,12 +53,18 @@ export class MoveProductComponent implements OnInit {
 
   
 
-  onSubmit(){    
-    //console.log(this.formMovedProducts)
-    const movedProduct= this.formMovedProducts.movedProducts
-      .filter(product=>product.isChecked);
-    console.log(this.formMovedProducts.to);
-    console.log(movedProduct)
+  onSubmit(){  
+    // this.formMovedProducts.movedProducts=this.formMovedProducts.movedProducts
+    //   .filter(product=>product.isChecked);
+    // console.log(this.formMovedProducts);
+
+    // const formCheckedProducts={
+    //   from:this.formMovedProducts.from,
+    //   to:this.formMovedProducts.to,
+    //   products:this.formMovedProducts.movedProducts
+    //     .filter((p)=>p.isChecked)
+    // }
+    this.signalrService.moveProducts(this.formMovedProducts);    
   }
 
   change(){
