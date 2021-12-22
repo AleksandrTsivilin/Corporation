@@ -25,6 +25,13 @@ namespace CorporationApi.Controllers
             return Ok(products);
         }
 
+        [HttpGet("productsByUser")]
+        public IActionResult GetProductsByUser(int id)
+        {
+            var products = _service.GetProductsByUser(id);
+            return Ok(products);
+        }
+
         [HttpGet("manufacturer")]
         public IActionResult GetManufacturers()
         {

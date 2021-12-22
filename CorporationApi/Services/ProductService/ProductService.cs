@@ -46,6 +46,28 @@ namespace Services.ProductService
             
         }
 
+        public List<ProductModel> GetProductsByUser(int id)
+        {
+            
+            return _context.Product_Storage
+                .Include(ps => ps.Product)
+                .Where(ps => ps.StorageId == 1)                
+                .Select(ps => new ProductModel()
+                {
+                    Id=ps.Product.Id,
+                    Title=ps.Product.Title,
+                    Price=ps.Product.Price,
+                    Count=ps.CountProduct,
+                    Manufacturer=ps.Product.Manufacture.Title,
+                    Category=ps.Product.Category.Title,
+                    Unit=ps.Product.Unit.Title,
+                    IsBanned=ps.Product.IsBanned
+
+                }).ToList();
+            
+
+        }
+
         public List<ManufacturerModel> GetManufacturers()
         {
             
@@ -302,7 +324,7 @@ namespace Services.ProductService
             };
         }
 
-        public List<ProductModel> MovedProducts(MoveProductModel model)
+        public List<MovementsProductModel> MovedProducts(MoveProductModel model)
         {
             var toStorage = _context.Storages
                 .FirstOrDefault(s => s.Title == model.To);
@@ -314,9 +336,22 @@ namespace Services.ProductService
 
             if (fromStorage is null) return null;
 
-            var updateProducts = new List<ProductModel>();
-
-
+            
+            var movementsFrom = new MovementsProductModel();
+            var movementsTo = new MovementsProductModel();
+            movementsFrom.Storage = fromStorage.Title;
+            movementsTo.Storage = toStorage.Title;
+            var resultMovements = new List<MovementsProductModel>();
+            resultMovements.Add(new MovementsProductModel
+            {
+                Storage = fromStorage.Title,
+                Products=new List<ProductModel>()
+            });
+            resultMovements.Add(new MovementsProductModel
+            {
+                Storage = toStorage.Title,
+                Products=new List<ProductModel>()
+            });
 
             foreach (var product in model.MovedProducts)
             {
@@ -330,8 +365,7 @@ namespace Services.ProductService
                 var productOnToStorage = _context.Product_Storage
                     .Where(ps => ps.StorageId == toStorage.Id)
                     .FirstOrDefault(ps => ps.Product.Id == product.Id);
-                    //?.CountProduct;
-
+                    
                 if (productOnToStorage is null)
                 {
                     _context.Product_Storage.Add(new ProductStorage{
@@ -350,30 +384,49 @@ namespace Services.ProductService
                     _context.SaveChanges();
                 }
 
-                var updatedProduct = _context.Products
-                    .Include(p => p.ProductStorages)
-                    .FirstOrDefault(p => p.Id == product.Id);
-
-                updateProducts.Add(new ProductModel
-                {
-                    Id = updatedProduct.Id,
-                    Title = updatedProduct.Title,
-                    Manufacturer = updatedProduct.Manufacture.Title,
-                    Category = updatedProduct.Category.Title,
-                    Unit = updatedProduct.Unit.Title,
-                    Price = updatedProduct.Price,
-                    IsBanned = updatedProduct.IsBanned,
-                    Count = updatedProduct
-                    .ProductStorages
-                    .FirstOrDefault(p => p.ProductId == updatedProduct.Id)
-                    .CountProduct
-                }); ;
+                
 
 
             }
+            var updatedProductsFrom = _context.Product_Storage
+                .Include(ps => ps.Storage)
+                .Include(ps => ps.Product)
+                .Where(ps => ps.Storage.Id == fromStorage.Id)
+                .Select(ps => new ProductModel
+                {
+                    Id=ps.Product.Id,
+                    Title=ps.Product.Title,
+                    Price=ps.Product.Price,
+                    Count=ps.CountProduct,
+                    Manufacturer=ps.Product.Manufacture.Title,
+                    Category=ps.Product.Category.Title,
+                    Unit=ps.Product.Unit.Title,
+                    IsBanned=ps.Product.IsBanned
+                })
+                .ToList();
 
-            //var movedProducts = new List<ProductModel>();
-            return updateProducts;
+            resultMovements[0].Products = updatedProductsFrom;
+
+            var updatedProductsTo = _context.Product_Storage
+                .Include(ps => ps.Storage)
+                .Include(ps => ps.Product)
+                .Where(ps => ps.Storage.Id == toStorage.Id)
+                .Select(ps => new ProductModel
+                {
+                    Id = ps.Product.Id,
+                    Title = ps.Product.Title,
+                    Price = ps.Product.Price,
+                    Count = ps.CountProduct,
+                    Manufacturer = ps.Product.Manufacture.Title,
+                    Category = ps.Product.Category.Title,
+                    Unit = ps.Product.Unit.Title,
+                    IsBanned = ps.Product.IsBanned
+                })
+                .ToList();
+            resultMovements[1].Products = updatedProductsTo;
+            return resultMovements;
         }
+
+        
     }
 }

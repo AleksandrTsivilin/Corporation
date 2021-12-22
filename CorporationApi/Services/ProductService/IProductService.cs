@@ -13,7 +13,7 @@ namespace Services.ProductService
     public interface IProductService
     {
         List<ProductModel> Get();
-
+        List<ProductModel> GetProductsByUser(int id);
         List<ManufacturerModel> GetManufacturers();
 
         List<CategoryModel> GetCategories();
@@ -27,10 +27,11 @@ namespace Services.ProductService
 
         CategoryModel AddCategory(CategoryModel model);
         UnitModel AddUnit(UnitModel model);
+        
         ProductModel RemoveProduct(int id);
         List<StorageModel> GetStorages();
         StorageModel GetStorageByUser(int userId);
-        List<ProductModel> MovedProducts(MoveProductModel model);
+        List<MovementsProductModel> MovedProducts(MoveProductModel model);
 
         //ManufacturerModel AddManufacturer(ManufacturerModel model);
 

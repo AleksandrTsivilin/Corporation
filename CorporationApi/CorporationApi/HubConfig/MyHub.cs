@@ -61,13 +61,11 @@ namespace CorporationApi.HubConfig
 
         public void MoveProducts(MoveProductModel model)
         {
-            
-            var products = _service.MovedProducts(model);
 
-            foreach (var product in products)
-            {
-                Clients.All.SendAsync("updateProduct", product);
-            }
+            var movements = _service.MovedProducts(model);
+
+            Clients.All.SendAsync("movementsProduct", movements);
+
         }
     }
 }
