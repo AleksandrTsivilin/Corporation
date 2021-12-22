@@ -141,6 +141,7 @@ export class ProductsComponent implements OnInit {
   // }
 
   update(updateProduct:FormAddProduct){
+    updateProduct.storage="Storage 1";
     this.signalrService.updateProduct(updateProduct,this.editProduct.id)
     this.editProductMode=false;
   }

@@ -29,9 +29,9 @@ import { AddCategoryComponent } from './components/productPage/add-category/add-
 import { AddUnitComponent } from './components/productPage/add-unit/add-unit.component';
 //import { MoveProductItemComponent } from './components/productPage/move-product-item/move-product-item.component';
 //import { MovementsProductManagerComponent } from './components/productPage/movementsProductPage/movements-product-manager/movements-product-manager.component';
-import { ProductMovementsComponent } from './components/productPage/moveProductPage/product-movements/product-movements.component';
-import {MovementsProductManagerComponent} from './components/productPage/moveProductPage/movements-product-manager/movements-product-manager.component';
-import { ProductItemMovementsComponent } from './components/productPage/moveProductPage/product-item-movements/product-item-movements.component';
+import { ProductMovementsComponent } from './components/productManagerPage/moveProductPage/product-movements/product-movements.component';
+import {MovementsProductManagerComponent} from './components/productManagerPage/moveProductPage/movements-product-manager/movements-product-manager.component';
+import { ProductItemMovementsComponent } from './components/productManagerPage/moveProductPage/product-item-movements/product-item-movements.component';
 
 
 

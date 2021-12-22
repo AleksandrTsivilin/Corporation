@@ -15,7 +15,7 @@ export class SignalrProductService {
   startConnection=()=>{
     console.log("startConnection signalrService")
     this.hubConnection=new signalR.HubConnectionBuilder()
-      .withUrl('https://localhost:5001/toastr',
+      .withUrl('https://localhost:5001/productHub', //toastr
       {
         skipNegotiation:true,
         transport:signalR.HttpTransportType.WebSockets
@@ -109,6 +109,7 @@ export class SignalrProductService {
 
   private FormProductConvert(form:FormAddProduct){
     return {
+      storage:form.storage,
       title:form.title,
       avaiableCount:Number(form.avaiableCount),
       price:Number(form.price),
