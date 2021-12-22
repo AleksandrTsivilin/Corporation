@@ -123,6 +123,7 @@ export class ProductMovementsComponent implements OnInit {
 
   private setMovedProduct(products:ProductInfo[]) {
     for (let product of products){
+      if (product.isBanned) continue;
       this.formMovedProducts.movedProducts.push({
         id:product.id,
         title:product.title,

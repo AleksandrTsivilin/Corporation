@@ -3,6 +3,7 @@ import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces
 //import { Category, Manufacturer, Unit } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
+import { ProductUpdateService } from 'src/app/services/products/updateServices/product-update.service';
 
 @Component({
   selector: 'app-add-product',
@@ -27,9 +28,10 @@ export class AddProductComponent implements OnInit {
   categories:Category[]=[];// Category[]=[];
   units:Unit[]=[]; // Unit[]=[];
 
+  // private readonly signalrService:SignalrProductService
   constructor(
     private readonly service:ProductsService,
-    private readonly signalrService:SignalrProductService
+    private readonly updateService:ProductUpdateService
     ) { }
 
   ngOnInit(): void {
@@ -37,14 +39,14 @@ export class AddProductComponent implements OnInit {
     this.getManufacturers();
     this.getCategories();
     this.getUnits();
-    if (!this.signalrService.isConnection)
-      this.signalrService.startConnection();
+    // if (!this.signalrService.isConnection)
+    //   this.signalrService.startConnection();
   }
 
   onSubmit(){
     console.log(this.formAddProduct);    
     //this.formAddProduct.avaiableCount=Number(this.formAddProduct.avaiableCount)
-    this.signalrService.addProduct(this.formAddProduct);
+    this.updateService.addProduct(this.formAddProduct);
   }
 
   private getManufacturers(){

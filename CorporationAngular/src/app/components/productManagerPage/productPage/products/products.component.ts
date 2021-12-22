@@ -4,8 +4,10 @@ import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
+import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
+import { ProductUpdateService } from 'src/app/services/products/updateServices/product-update.service';
 
 @Component({
   selector: 'app-products',
@@ -24,6 +26,7 @@ export class ProductsComponent implements OnInit {
 
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
+  currentStorages:StorageInfo[]=[{title:"Storage 1"},{title:"Storage 2"}];
   editProductMode:boolean=false;
   editProduct:ProductInfo={
     id:0,
@@ -36,14 +39,17 @@ export class ProductsComponent implements OnInit {
     isBanned:false
   }
 
-  
+  // private readonly signalrService:SignalrProductService
   constructor( 
     private readonly service:ProductsService,
-    private readonly signalrService:SignalrProductService) { }
+    private readonly updateService:ProductUpdateService
+    ) { }
 
   ngOnInit(): void {
 
     this.headersTable=this.getHeadersTable(); 
+
+    
 
     this.service.getProducts()
       .subscribe((result)=>{
@@ -53,67 +59,81 @@ export class ProductsComponent implements OnInit {
       console.log("failed get products")
     })
 
-    if (!this.signalrService.isConnection)
-      this.signalrService.startConnection();
+    // if (!this.signalrService.isConnection)
+    //   this.signalrService.startConnection();
 
-    this.productOnLis();
-    this.productOnUpdateLis();
-    this.productOnRemoveLis();
+    // this.productOnLis();
+    // this.productOnUpdateLis();
+    // this.productOnRemoveLis();
+    this.updateService.changesProductStorage$
+      .subscribe((changes)=>{
+        console.log(changes);
+      if (changes.length===0) return;
+      changes.forEach(ch=>{
+        if (this.currentStorages
+          .map(st=>st.title).includes(ch.storage))
+          {
+            this.productsInfo=ch.movedProducts;
 
-  }
+          }
+      })
+      
+
+  })
+}
 
 
-  productOnLis(): void {
-    console.log("productOnLis")
-    //console.log(this.currentUser.name)
-    this.signalrService.hubConnection?.on("productAdd", (newProduct:ProductInfo) => {
-      console.log(newProduct);
-      this.productsInfo.push(newProduct);
-    });
-  }
+  // productOnLis(): void {
+  //   console.log("productOnLis")
+    
+  //   this.signalrService.hubConnection?.on("productAdd", (newProduct:ProductInfo) => {
+  //     console.log(newProduct);
+  //     this.productsInfo.push(newProduct);
+  //   });
+  // }
 
-  productOnUpdateLis():void{
-    this.signalrService.hubConnection?.on("updateProduct",(updateProduct:ProductInfo)=>{
-      console.log("productOnUpdateLis")
-      console.log(updateProduct); 
+  // productOnUpdateLis():void{
+  //   this.signalrService.hubConnection?.on("updateProduct",(updateProduct:ProductInfo)=>{
+  //     console.log("productOnUpdateLis")
+  //     console.log(updateProduct); 
 
       
-      //let a:ProductInfo[]=this.productsInfo;
-      this.productsInfo=this.productsInfo.map((p)=>{
-        if (p.id===updateProduct.id)
-        {
-          console.log("compare")
-          return {
-            id:updateProduct.id,
-            title:updateProduct.title,
-            price:updateProduct.price,
-            count:updateProduct.count,
-            category:updateProduct.category,
-            manufacturer:updateProduct.manufacturer,
-            unit:updateProduct.unit,
-            isBanned:updateProduct.isBanned
-          }
-        }
+      
+  //     this.productsInfo=this.productsInfo.map((p)=>{
+  //       if (p.id===updateProduct.id)
+  //       {
+  //         console.log("compare")
+  //         return {
+  //           id:updateProduct.id,
+  //           title:updateProduct.title,
+  //           price:updateProduct.price,
+  //           count:updateProduct.count,
+  //           category:updateProduct.category,
+  //           manufacturer:updateProduct.manufacturer,
+  //           unit:updateProduct.unit,
+  //           isBanned:updateProduct.isBanned
+  //         }
+  //       }
           
-        else return p;
-       });
-    })
-  }
+  //       else return p;
+  //      });
+  //   })
+  // }
 
-  productOnRemoveLis():void{
-    this.signalrService.hubConnection?.on("removeProduct",(id:number)=>{
-      console.log("id")
-      console.log (id);
-      this.productsInfo=this.productsInfo.map((p)=>{
-        if (p.id===id)
-        {
-          p.isBanned=true;
-          console.log(p)
-        }
-        return p;
-       });
-    })
-  }
+  // productOnRemoveLis():void{
+  //   this.signalrService.hubConnection?.on("removeProduct",(id:number)=>{
+  //     console.log("id")
+  //     console.log (id);
+  //     this.productsInfo=this.productsInfo.map((p)=>{
+  //       if (p.id===id)
+  //       {
+  //         p.isBanned=true;
+  //         console.log(p)
+  //       }
+  //       return p;
+  //      });
+  //   })
+  // }
 
 
 
@@ -133,7 +153,8 @@ export class ProductsComponent implements OnInit {
   }
 
   remove(removeProduct:ProductInfo){
-    this.signalrService.removeProduct(removeProduct.id);
+    this.updateService.remove(removeProduct.id);
+    //this.signalrService.removeProduct(removeProduct.id);
   }
 
   // unLock(unLockProduct:ProductInfo){
@@ -142,7 +163,7 @@ export class ProductsComponent implements OnInit {
 
   update(updateProduct:FormAddProduct){
     updateProduct.storage="Storage 1";
-    this.signalrService.updateProduct(updateProduct,this.editProduct.id)
+    //this.signalrService.updateProduct(updateProduct,this.editProduct.id)
     this.editProductMode=false;
   }
 
@@ -204,5 +225,7 @@ export class ProductsComponent implements OnInit {
 
     return headers;
   }
+
+  
 
 }

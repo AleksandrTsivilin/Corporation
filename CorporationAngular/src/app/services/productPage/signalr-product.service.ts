@@ -32,26 +32,26 @@ export class SignalrProductService {
   }
   constructor() { console.log ("constr signal")}  
 
-  addProduct(formAddProduct:FormAddProduct){
-    console.log(formAddProduct)
-    console.log("addProduct")
+  // addProduct(formAddProduct:FormAddProduct){
+  //   console.log(formAddProduct)
+  //   console.log("addProduct")
 
-    let addedProduct ={
-      price:Number(formAddProduct.price),
-      avaiableCount:Number(formAddProduct.avaiableCount),
-      storage:formAddProduct.storage,
-      title:formAddProduct.title,
-      manufacturer:formAddProduct.manufacturer,
-      category:formAddProduct.category,
-      unit:formAddProduct.unit
-    }
+  //   let addedProduct ={
+  //     price:Number(formAddProduct.price),
+  //     avaiableCount:Number(formAddProduct.avaiableCount),
+  //     storage:formAddProduct.storage,
+  //     title:formAddProduct.title,
+  //     manufacturer:formAddProduct.manufacturer,
+  //     category:formAddProduct.category,
+  //     unit:formAddProduct.unit
+  //   }
 
     
     
-    this.hubConnection?.invoke("AddProduct",addedProduct)
-      .then()
-      .catch(err=>{console.error(err)})
-  }
+  //   this.hubConnection?.invoke("AddProduct",addedProduct)
+  //     .then()
+  //     .catch(err=>{console.error(err)})
+  // }
 
   updateProduct(updateProduct:FormAddProduct,id:number){
     const convertForm=this.FormProductConvert(updateProduct);
