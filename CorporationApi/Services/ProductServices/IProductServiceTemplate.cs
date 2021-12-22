@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Services.ProductService
 {
-    public interface IProductService
+    public interface IProductServiceTemplate
     {
         List<ProductModel> Get();
         List<ProductModel> GetProductsByUser(int id);

@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Services.ProductService;
 using Services.ProductService.MovementsService;
+using Services.ProductServices.ProductService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,6 +45,8 @@ namespace CorporationApi
                 options.EnableDetailedErrors = true;
             });
 
+            services.AddScoped<IProductServiceTemplate, ProductServiceTemplate>();
+
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IMovementsServive, MovementsService>();
             services.AddScoped<DBContext>();
@@ -70,6 +73,7 @@ namespace CorporationApi
             {
                 endpoints.MapControllers();
                 endpoints.MapHub<MyHub>("/toastr");
+                endpoints.MapHub<ProductHub>("productHub");
                 endpoints.MapHub<MovementsHub>("/movementsHub");
             });
         }

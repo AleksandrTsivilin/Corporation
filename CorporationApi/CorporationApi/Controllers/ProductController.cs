@@ -12,8 +12,8 @@ namespace CorporationApi.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        private readonly IProductService _service;
-        public ProductController(IProductService service)
+        private readonly IProductServiceTemplate _service;
+        public ProductController(IProductServiceTemplate service)
         {
             _service = service;
         }

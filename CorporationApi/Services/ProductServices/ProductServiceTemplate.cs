@@ -12,10 +12,10 @@ using System.Threading.Tasks;
 
 namespace Services.ProductService
 {
-    public class ProductService : IProductService
+    public class ProductServiceTemplate : IProductServiceTemplate
     {
         private readonly DBContext _context;
-        public ProductService(DBContext context)
+        public ProductServiceTemplate(DBContext context)
         {
             _context = context;
         }

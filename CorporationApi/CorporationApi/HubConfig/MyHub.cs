@@ -10,9 +10,9 @@ namespace CorporationApi.HubConfig
 {
     public class MyHub:Hub
     {
-        private readonly IProductService _service;
+        private readonly IProductServiceTemplate _service;
 
-        public MyHub(IProductService service)
+        public MyHub(IProductServiceTemplate service)
         {
             _service = service;
         }
@@ -30,6 +30,8 @@ namespace CorporationApi.HubConfig
         public void UpdateProduct(AddProductModel model, int id)
         {
             var updatedProduct= _service.UpdateProduct(model, id);
+
+            if (updatedProduct is null) return;
 
             Clients.All.SendAsync("updateProduct", updatedProduct);
         }
