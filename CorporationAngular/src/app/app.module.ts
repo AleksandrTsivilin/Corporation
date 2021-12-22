@@ -19,7 +19,7 @@ import { EditUserComponent } from './components/adminPage/edit-user/edit-user.co
 import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info/dialog-user-info.component';
 import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
 import { ProductManagerComponent } from './components/productPage/product-manager/product-manager.component';
-import { MoveProductComponent } from './components/productPage/move-product/move-product.component';
+//import { MoveProductComponent } from './components/productPage/move-product/move-product.component';
 import { ProductsComponent } from './components/productPage/products/products.component';
 import { ProductItemComponent } from './components/productPage/product-item/product-item.component';
 import { AddProductComponent } from './components/productPage/add-product/add-product.component';
@@ -27,7 +27,7 @@ import { EditProductComponent } from './components/productPage/edit-product/edit
 import { AddManufacturerComponent } from './components/productPage/add-manufacturer/add-manufacturer.component';
 import { AddCategoryComponent } from './components/productPage/add-category/add-category.component';
 import { AddUnitComponent } from './components/productPage/add-unit/add-unit.component';
-import { MoveProductItemComponent } from './components/productPage/move-product-item/move-product-item.component';
+//import { MoveProductItemComponent } from './components/productPage/move-product-item/move-product-item.component';
 //import { MovementsProductManagerComponent } from './components/productPage/movementsProductPage/movements-product-manager/movements-product-manager.component';
 import { ProductMovementsComponent } from './components/productPage/moveProductPage/product-movements/product-movements.component';
 import {MovementsProductManagerComponent} from './components/productPage/moveProductPage/movements-product-manager/movements-product-manager.component';
@@ -50,7 +50,7 @@ import { ProductItemMovementsComponent } from './components/productPage/moveProd
     DialogUserInfoComponent,
     WorkModulesComponent,
     ProductManagerComponent,
-    MoveProductComponent,
+    //MoveProductComponent,
     ProductsComponent,
     ProductItemComponent,
     AddProductComponent,
@@ -58,7 +58,7 @@ import { ProductItemMovementsComponent } from './components/productPage/moveProd
     AddManufacturerComponent,
     AddCategoryComponent,
     AddUnitComponent,
-    MoveProductItemComponent,
+    //MoveProductItemComponent,
     MovementsProductManagerComponent,
     ProductMovementsComponent,
     ProductItemMovementsComponent,
