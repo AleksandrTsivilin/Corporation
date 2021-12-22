@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
@@ -35,6 +36,7 @@ export class ProductsComponent implements OnInit {
     isBanned:false
   }
 
+  
   constructor( 
     private readonly service:ProductsService,
     private readonly signalrService:SignalrProductService) { }
@@ -74,6 +76,8 @@ export class ProductsComponent implements OnInit {
     this.signalrService.hubConnection?.on("updateProduct",(updateProduct:ProductInfo)=>{
       console.log("productOnUpdateLis")
       console.log(updateProduct); 
+
+      
       //let a:ProductInfo[]=this.productsInfo;
       this.productsInfo=this.productsInfo.map((p)=>{
         if (p.id===updateProduct.id)

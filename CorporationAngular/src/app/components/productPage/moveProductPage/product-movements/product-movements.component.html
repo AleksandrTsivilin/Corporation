@@ -1,0 +1,56 @@
+<p>product-movements works!</p>
+
+
+
+<form
+    (ngSubmit)="onSubmit()"        
+> 
+    <div>
+        <span>from</span>
+        <h1>{{formMovedProducts.from}}</h1>
+    </div> 
+    <select 
+        [(ngModel)]=formMovedProducts.to
+        name="to"
+    >
+        <option
+            *ngFor="let storage of avaiableStorages" 
+            [value]="storage.title"
+            name="storage.title"                   
+        >
+            {{storage.title}}
+        </option>
+    </select>
+    <button class="btn-submit" type="submit">submit</button>
+    <div>
+        <span>{{totalMoved}}</span>
+    </div>
+    <div  >
+        <div>
+            <table class="table">
+                <tr>
+                  <th 
+                    class="header"
+                    *ngFor="let header of headersTable"
+                    [ngClass]="{'active-header':header.isActive}"
+                  >
+                    <span >
+                      {{header.title}}
+                    </span>
+                  </th>    
+                </tr>
+                <tr app-move-product-item 
+                    class="product-item"                    
+                    *ngFor="let product of formMovedProducts.movedProducts let i=index"
+                    [numProduct]="i+1"
+                    [productInfo]="product" 
+                    (onCountMoved)="change()"
+                >  
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+    
+</form>
+

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
+import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
@@ -20,9 +21,10 @@ export class MoveProductComponent implements OnInit {
     movedProducts:[]
   }
 
+  
   headersTable:HeaderTable[]=[];
   totalMoved:number=0;
-  storagesInfo:Storage[]=[];
+  storagesInfo:StorageInfo[]=[];
   constructor(
     private readonly service:ProductsService,
     private readonly signalrService:SignalrProductService) {

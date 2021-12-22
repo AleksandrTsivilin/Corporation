@@ -28,10 +28,10 @@ import { AddManufacturerComponent } from './components/productPage/add-manufactu
 import { AddCategoryComponent } from './components/productPage/add-category/add-category.component';
 import { AddUnitComponent } from './components/productPage/add-unit/add-unit.component';
 import { MoveProductItemComponent } from './components/productPage/move-product-item/move-product-item.component';
-//import { ProductComponent } from './components/productPage/product/product.component';
-//import { ProductsComponent } from './components/products/products.component';
-//import { AddModuleComponent } from './components/adminPage/add-module/add-module.component';
-//import { DialogUserInfoComponent } from './compomponents/adminPage/dialog-user-info/dialog-user-info.component';
+//import { MovementsProductManagerComponent } from './components/productPage/movementsProductPage/movements-product-manager/movements-product-manager.component';
+import { ProductMovementsComponent } from './components/productPage/moveProductPage/product-movements/product-movements.component';
+import {MovementsProductManagerComponent} from './components/productPage/moveProductPage/movements-product-manager/movements-product-manager.component';
+import { ProductItemMovementsComponent } from './components/productPage/moveProductPage/product-item-movements/product-item-movements.component';
 
 
 
@@ -59,9 +59,10 @@ import { MoveProductItemComponent } from './components/productPage/move-product-
     AddCategoryComponent,
     AddUnitComponent,
     MoveProductItemComponent,
-    //ProductComponent,
-    //ProductsComponent,    
-    //DialogUserInfoComponent
+    MovementsProductManagerComponent,
+    ProductMovementsComponent,
+    ProductItemMovementsComponent,
+    
   ],
   imports: [
     BrowserModule,

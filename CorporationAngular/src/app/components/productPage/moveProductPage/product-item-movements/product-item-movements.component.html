@@ -1,0 +1,43 @@
+
+<!-- title:"",
+    avaiableCount:0,
+    countMoved:0,
+    isChecked:false, -->
+
+
+    <td class="product-counter">
+        {{numProduct}}
+    </td>
+    <td class="product-item">
+        <input 
+            type="checkbox"                  
+            [(ngModel)]="productInfo.isChecked"
+            name="'checkbox'+{{numProduct}}" 
+            [checked]="productInfo.isChecked" 
+            (change)="checkedProduct(productInfo)"      
+        > 
+        
+    </td>
+    <td class="product-item">
+        <input 
+            type="text"
+            [(ngModel)]="productInfo.countMoved"
+            name="'countMoved'+{{numProduct}}"        
+            [disabled]="!productInfo.isChecked" 
+            (change)="changeCount()"            
+        >
+    </td>
+    <td class="product-item">
+        {{productInfo.title}}
+    </td>
+    <td class="product-item">
+        {{productInfo.avaiableCount}}
+    </td>
+    <td class="product-item">
+        {{productInfo.unit}}
+    </td>
+    <td class="product-item">
+        {{productInfo.price}}
+    </td>
+    
+    

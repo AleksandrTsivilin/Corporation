@@ -17,6 +17,11 @@ export class ProductsService {
     return this.client.get<ProductInfo[]>(urlGetProducts);
   }
 
+  getProductsByUser(){
+    const urlGetProducts="https://localhost:5001/api/Product/productsByUser";
+    return this.client.get<ProductInfo[]>(urlGetProducts);
+  }
+
   getManufacturers(){
     const urlGetManufacturers="https://localhost:5001/api/Product/manufacturer";
     return this.client.get<Manufacturer[]>(urlGetManufacturers);
@@ -34,7 +39,7 @@ export class ProductsService {
 
   getStorages(){
     const urlGetStorage="https://localhost:5001/api/Product/storage";
-    return this.client.get<Storage []>(urlGetStorage);
+    return this.client.get<StorageInfo []>(urlGetStorage);
   }
 
   getStorageByUser(userId:number){

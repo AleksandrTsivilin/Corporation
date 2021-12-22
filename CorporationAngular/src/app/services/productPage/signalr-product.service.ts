@@ -30,9 +30,7 @@ export class SignalrProductService {
         })
         .catch(err=>{console.log("some errors")})
   }
-  constructor() { console.log ("constr signal")}
-
-  
+  constructor() { console.log ("constr signal")}  
 
   addProduct(formAddProduct:FormAddProduct){
     console.log(formAddProduct)

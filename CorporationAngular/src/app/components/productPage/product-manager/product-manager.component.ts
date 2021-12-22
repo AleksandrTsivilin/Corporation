@@ -3,7 +3,7 @@ import { Component, OnInit, Input, Output } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
-import { Permission } from 'src/app/interfaces/userInfo';
+//import { Permission } from 'src/app/interfaces/userInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 

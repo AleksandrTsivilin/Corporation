@@ -1,3 +1,5 @@
+import { ProductInfo } from "./productsInfo";
+
 export interface FormMoveProducts{
     from:string,
     to:string,
@@ -12,4 +14,14 @@ export interface MovedProduct{
     isChecked:false,
     price:number,
     unit:string
+}
+
+export interface MovementsProduct{
+    storage:string,
+    products:ProductInfo[]
+}
+
+export interface ProductStorage{
+    storage:string,
+    movedProducts:ProductInfo[]
 }

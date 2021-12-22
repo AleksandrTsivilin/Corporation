@@ -50,11 +50,15 @@
 <!-- [productsInfo]="productsInfo" -->
 <ng-template #selectItem>
     <div [ngSwitch]="modeProductPage">
-        <app-move-product
+        <!-- <app-move-product
             *ngSwitchCase="'moveProduct'"
             [productsInfo]="productsInfo"
             [storage]="storageUser.title"
-        ></app-move-product>
+        ></app-move-product> -->
+
+        <app-movements-product-manager
+            *ngSwitchCase="'moveProduct'"
+        ></app-movements-product-manager>
         <app-products
             *ngSwitchCase="'getProducts'"
             [avaiablesPermissions]="avaiablesPermissions"
