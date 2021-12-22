@@ -22,7 +22,7 @@ import { ProductManagerComponent } from './components/productManagerPage/product
 //import { MoveProductComponent } from './components/productPage/move-product/move-product.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
 import { ProductItemComponent } from './components/productManagerPage/productPage/product-item/product-item.component';
-import { AddProductComponent } from './components/productPage/add-product/add-product.component';
+import { AddProductComponent } from './components/productManagerPage/productPage/add-product/add-product.component';
 import { EditProductComponent } from './components/productManagerPage/productPage/edit-product/edit-product.component';
 import { AddManufacturerComponent } from './components/productPage/add-manufacturer/add-manufacturer.component';
 import { AddCategoryComponent } from './components/productPage/add-category/add-category.component';
