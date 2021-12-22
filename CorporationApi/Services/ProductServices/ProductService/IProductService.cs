@@ -12,7 +12,7 @@ namespace Services.ProductServices.ProductService
     {
         List<ProductModel> Get();
         List<ProductModel> GetProductsByUser(int id);
-        ProductModel AddProduct(AddProductModel model);
+        List<MovementsProductModel> AddProduct(AddProductModel model);
         ProductModel UpdateProduct(AddProductModel model, int id);
         ProductModel RemoveProduct(int id);
     }

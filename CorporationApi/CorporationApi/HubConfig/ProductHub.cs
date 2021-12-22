@@ -20,9 +20,9 @@ namespace CorporationApi.HubConfig
 
         public void AddProduct(AddProductModel model)
         {
-            var newProduct = _service.AddProduct(model);
-            if (newProduct is not null)
-                Clients.Others.SendAsync("productAdd", newProduct);
+            var changedProducts = _service.AddProduct(model);
+            if (changedProducts is not null)
+                Clients.Others.SendAsync("changeProducts", changedProducts);
         }
 
         public void UpdateProduct(AddProductModel model, int id)

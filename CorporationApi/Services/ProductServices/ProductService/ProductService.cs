@@ -40,7 +40,7 @@ namespace Services.ProductServices.ProductService
                 })
                 .ToList();
         }
-        public ProductModel AddProduct(AddProductModel model)
+        public List<MovementsProductModel> /*ProductModel*/ AddProduct(AddProductModel model)
         {
             var storage = GetStorageByTitle(model.Storage);            
 
@@ -77,7 +77,19 @@ namespace Services.ProductServices.ProductService
 
             _context.SaveChanges();
 
-            return CreateProductModel(model.Title);
+            //return CreateProductModel(model.Title);
+            var addProductModel = CreateProductModel(model.Title);
+            return new List<MovementsProductModel>
+            {
+                new MovementsProductModel
+                {
+                    Storage=model.Storage,
+                    Products=new List<ProductModel>
+                    {
+                        addProductModel
+                    }
+                }
+            };
 
         }
         public List<ProductModel> GetProductsByUser(int id)
