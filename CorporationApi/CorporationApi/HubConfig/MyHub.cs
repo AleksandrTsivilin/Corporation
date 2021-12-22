@@ -59,13 +59,5 @@ namespace CorporationApi.HubConfig
             Clients.All.SendAsync("unitAdd", newUnit);
         }
 
-        public void MoveProducts(MoveProductModel model)
-        {
-
-            var movements = _service.MovedProducts(model);
-
-            Clients.All.SendAsync("movementsProduct", movements);
-
-        }
     }
 }
