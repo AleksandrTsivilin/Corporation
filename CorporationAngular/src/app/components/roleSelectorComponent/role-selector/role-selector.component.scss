@@ -1,0 +1,52 @@
+.page-info{
+    @apply flex flex-wrap  gap-4;
+    
+    .role-section{
+
+        @apply flex flex-wrap justify-items-center gap-4;  
+        
+        .permissions-section{
+            @apply flex flex-col ;
+            @apply border border-green-600;
+            @apply  w-32;         
+            @apply text-center;       
+            
+            .img-area{
+                @apply flex  justify-center ;            
+
+                .img{
+                    @apply w-20;
+                    @apply h-20;
+                    @apply flex;                
+                    
+                    .img{
+                        @apply object-scale-down h-full;                     
+                    }  
+                }
+            }    
+        }
+        .permissions-section:hover{
+            @apply border-4 border-green-500  ;
+            @apply justify-items-center;
+        }
+    }
+}
+
+.tabs{
+    @apply flex;
+
+    .tab{
+        @apply bg-blue-500 text-white font-bold py-2  rounded
+    }
+
+    .tab:hover{
+        @apply bg-blue-700
+    } 
+    
+    .btn-tab{
+        @apply pr-4;
+    }
+
+}
+
+

@@ -1,21 +1,245 @@
-<button *ngIf="isSelected" (click)="exit()">❌</button>
-
-
-<!-- <div *ngIf="!isSelected else selectItem">
-    <p>role-selector-works</p>
-    <div *ngFor="let role of dataUser.roles">
-        <button
-            *ngIf="role==='AdminManager'" 
-            (click)="onSelect('AdminManager')"
-        >AdminManager</button>
-        <button 
-            *ngIf="role==='ProductManager'" 
-            (click)="onSelect('ProductManager')"
-        >ProductManager</button>
+<!-- <button *ngIf="isSelected" (click)="exit()">❌</button> -->
+<div 
+    class="tabs"
+    *ngIf="openedTabs.length>0"
+>
+    <div class="tab">
+        <button class="btn-tab" (click)="returnToSelector()">
+            ↩
+        </button>
     </div>
+    <div 
+        *ngFor="let tab of openedTabs"            
+    >
+        <div class="tab">
+            <button 
+                class="btn-tab"
+                (click)="moveToTab(tab)"
+            >
+                {{tab}}                
+            </button>
+            <button class="btn-close" (click)="closeTab(tab)">❌</button>
+        </div>
+        
+    </div>
+</div>
+<div 
+    class="page-info"
+    *ngIf="pageState.isActive else toMoveNextPage"
+>
+    <div 
+        class="role-section"
+        *ngIf="checkRole('ProductManager')"
+    >
+        <div 
+            class="permissions-section"
+            (click)="changeModePage('products')"
+            *ngIf="getAvaiablesPermissions('ProductManager').canRead"
+        >
+            <div class="img-area">
+                <div class="img">
+                    <img src="assets/images/storage.jpg">
+                </div>
+            </div>
+            
+            <div >
+                products
+            </div>
+        </div>
+        <div 
+            class="permissions-section"
+            (click)="changeModePage('addProduct')"
+            *ngIf="getAvaiablesPermissions('ProductManager').canCreate"
+        >
+            <div class="img-area">
+                <div class="img">            
+                    <img src="assets/images/add-product.png">
+                </div>
+            </div>
+            
+            <div >
+                add product
+            </div>
+        </div>
+    </div>
+    <div 
+        class="role-section"
+        *ngIf="checkRole('AdminManager')"    
+    >
+        <div 
+            class="permissions-section" 
+            (click)="changeModePage('users')"
+            *ngIf="getAvaiablesPermissions('AdminManager').canRead"
+        >
+            <div class="img-area">
+                <div class="img">
+                    <img src="assets/images/users.png">
+                </div>
+            </div>
+            
+            <div >
+                users
+            </div>
+        </div>
+        <div 
+            class="permissions-section" 
+            (click)="changeModePage('addUser')"
+            *ngIf="getAvaiablesPermissions('ProductManager').canCreate"
+        >
+            <div class="img-area">
+                <div class="img">            
+                    <img src="assets/images/add-user.png">
+                </div>
+            </div>
+            
+            <div >
+                add user
+            </div>
+        </div>
+    </div>
+    <div 
+        class="role-section"
+        *ngIf="checkRole('MovementsProductManager')"
+    >
+        <div 
+            class="permissions-section" 
+            (click)="changeModePage('movementsProducts')"
+            *ngIf="getAvaiablesPermissions('MovementsProductManager').canRead"
+        >
+            <div class="img-area">
+                <div class="img">
+                    <img src="assets/images/move_to_product.png">
+                </div>
+            </div>
+            
+            <div >
+                movements products
+            </div>
+        </div>
+        <div 
+            class="permissions-section" 
+            (click)="changeModePage('addMovements')"
+            *ngIf="getAvaiablesPermissions('ProductManager').canCreate"
+        >
+            <div class="img-area">
+                <div class="img">            
+                    <img src="assets/images/addMovements.png">
+                </div>
+            </div>
+            
+            <div >
+                add movements
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #toMoveNextPage>
+    <div [ngSwitch]='pageState.path'>
+        
+        <app-products 
+            *ngSwitchCase="'products'"
+            [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
+        ></app-products>
+        
+        <app-add-product
+            *ngSwitchCase="'addProduct'"
+        ></app-add-product>
+        *ngSwitchCase="'users'"
+        <app-users
+            *ngSwitchCase="'users'"
+        >
+        </app-users>
+        <h1
+            *ngSwitchCase="'addUser'"
+            
+        >{{pageState.path}}</h1>
+        <h1 
+            
+             
+        >{{pageState.path}}</h1>
+        
+        <app-product-movements
+            *ngSwitchCase="'addMovements'"
+        >
+        </app-product-movements>
+    </div>
+    
+    
+</ng-template>
+
+<!-- <h1>aaaaaaaaaaa</h1>
+<div >
+    <div class="role-section">
+        <div class="permissions-section"
+            (click)="changeModePage('products')"
+        >        
+            <div class="img">
+                <img src="assets/images/storage.jpg">
+            </div>
+            <div class="flex-basis-1/5">
+                storage
+            </div>
+        </div>
+        <div class="permissions-section">        
+            <div class="img">            
+                <img src="assets/images/add-product.png">
+            </div>
+            <div class="flex-basis-1/5">
+                add product
+            </div>
+        </div>    
+    </div>
+    
+    <div class="permissions-section">
+        <div class="img">
+            <img src="assets/images/move_to_product.png">
+        </div>
+        <div class="flex-basis-1/5">
+            movements product
+        </div>
+    </div>
+    <div class="permissions-section">
+        <div class="img">
+            <img src="assets/images/delivery_product.png">
+        </div>
+        <div class="flex-basis-1/5">
+            create movements
+        </div>
+    </div>
+    <div class="permissions-section">
+        <div class="img">
+            <img  src="assets/images/users.png">
+        </div>
+        <div class="flex-basis-1/5">
+            users
+        </div>
+    </div>
+    
+    <div class="permissions-section">
+        <div class="img">
+            <img src="assets/images/add-user.png">
+        </div>
+        <div class="flex-basis-1/5">
+            add user
+        </div>
+    </div>
+</div>
+
+
+    
+     -->
+
+
+
+
+<!--  -->
+<!-- <div>
+    <app-admin-manager></app-admin-manager>
 </div> -->
 
-<div *ngIf="!isSelected else selectItem">
+<!-- <div *ngIf="!isSelected else selectItem">
     <p>role-selector-works</p>
     <div *ngFor="let role of user.roles">
         <button
@@ -42,4 +266,5 @@
             [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
         ></app-product-manager>
     </div>
-</ng-template>
+</ng-template> -->
+

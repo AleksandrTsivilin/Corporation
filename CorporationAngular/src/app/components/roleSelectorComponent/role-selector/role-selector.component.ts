@@ -1,5 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
+import { PageState } from 'src/app/interfaces/pageState';
 //import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserInfo } from 'src/app/interfaces/userInfo';
 import { Permission } from 'src/app/interfaces/userInfo';
@@ -26,22 +27,38 @@ export class RoleSelectorComponent implements OnInit {
     canMove:false
   }
 
+  pageState:PageState={
+    path:"",
+    isActive:true
+  }
+
+  openedTabs:string []=[];
+
   // dataUser:DataUser={
   //   id:null,
   //   roles:null,
   //   permissions:null
   // } 
 
-  isSelected:boolean=false;
-  modeSelector:string="";
+  //isSelected:boolean=false;
+  //modeSelector:string="";
   constructor() { }
 
   ngOnInit(): void {
-    this.isSelected=false;
+    //this.isSelected=false;
     //this.dataUser=this.getDataUser();
 
     this.user=this.getUser();    
   }
+
+  checkRole(title:string){    
+    return this.user.roles
+      .map(r=>r.title)
+      .includes(title);
+    
+  }
+
+  
 
   getAvaiablesPermissions(selectedRole:string):AvaiablesPermissions{
     const permissionTitles=this.user.roles
@@ -58,7 +75,45 @@ export class RoleSelectorComponent implements OnInit {
       canMove:permissionTitles.includes("move")
     }
   }
+  changeModePage(path:string){
+    this.pageState={
+      path:path,
+      isActive:false
+    }
+    if (!this.openedTabs.includes(path))
+        this.openedTabs.push(path);
+  }
 
+  returnToSelector(){
+    this.pageState={
+      path:"",
+      isActive:true
+    }
+  }
+  moveToTab(title:string){
+    console.log(title)
+    this.pageState={
+      path:title,
+      isActive:false
+    }
+  }
+  closeTab(title:string){
+    const indexTab=this.openedTabs.indexOf(title);
+    this.openedTabs=this.openedTabs.filter(tab=>tab!==title);
+    if (this.openedTabs.length===0) 
+    {
+      this.returnToSelector();
+      return;
+    }
+    console.log(indexTab)
+    console.log(this.openedTabs.lastIndexOf)
+    console.log(this.openedTabs.length)
+    indexTab === this.openedTabs.length
+      ?this.moveToTab( this.openedTabs[(this.openedTabs.length-1)])
+      :this.moveToTab(this.openedTabs[indexTab]);     
+    
+    
+  }
   // canCreate():boolean {       
   //   return this.permissions
   //     .map(permission=>permission.title)
@@ -67,24 +122,21 @@ export class RoleSelectorComponent implements OnInit {
   // }
   onSelect(selected:string){
     console.log("onSelectedService");
-    this.modeSelector=selected;
-    this.isSelected=true;
+    //this.modeSelector=selected;
+    //this.isSelected=true;
   }
   
   getPermissions(selectedRole:string):Permission[]{
     return this.user.roles
       .filter(role=>role.title===selectedRole)
-      .map(_=>_.permissions)[0];
-    //console.log(a);
-    //return [];
-    //return this.user.roles.filter(role=>role.title==="AdminManager");
+      .map(_=>_.permissions)[0];    
   }
 
   
 
-  exit(){
-    this.isSelected=false;
-  }
+  // exit(){
+  //   this.isSelected=false;
+  // }
 
   //template methods
 
@@ -99,6 +151,9 @@ export class RoleSelectorComponent implements OnInit {
         permissions:[{title:"create"},{title:"read"},{title:"update"},{title:"delete"}]
       },{
         title:"ProductManager",
+        permissions:[{title:"create"},{title:"read"},{title:"update"},{title:"delete"},{title:"move"}]
+      },{
+        title:"MovementsProductManager",
         permissions:[{title:"create"},{title:"read"},{title:"update"},{title:"delete"},{title:"move"}]
       }]
     }
