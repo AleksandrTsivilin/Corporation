@@ -44,7 +44,8 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.formAddProduct);    
+    console.log(this.formAddProduct);   
+    this.formAddProduct.storage="Storage 1" 
     //this.formAddProduct.avaiableCount=Number(this.formAddProduct.avaiableCount)
     this.updateService.addProduct(this.formAddProduct);
   }

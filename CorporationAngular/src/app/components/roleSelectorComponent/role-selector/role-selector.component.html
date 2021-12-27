@@ -136,17 +136,18 @@
 
 
 <ng-template #toMoveNextPage>
-    <div [ngSwitch]='pageState.path'>
+    <div [ngSwitch]='pageState.path' class="h-full   pb-16 ">
         
         <app-products 
             *ngSwitchCase="'products'"
             [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
+            
         ></app-products>
         
         <app-add-product
             *ngSwitchCase="'addProduct'"
         ></app-add-product>
-        *ngSwitchCase="'users'"
+        
         <app-users
             *ngSwitchCase="'users'"
         >
@@ -155,9 +156,8 @@
             *ngSwitchCase="'addUser'"
             
         >{{pageState.path}}</h1>
-        <h1 
-            
-             
+        <h1            
+            *ngSwitchCase="'movementsProducts'"
         >{{pageState.path}}</h1>
         
         <app-product-movements

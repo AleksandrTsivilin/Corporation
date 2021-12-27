@@ -46,3 +46,52 @@
 <ng-template #unLock>
     <button class="btn"  (click)="removeProduct()">🔓</button>
 </ng-template>
+
+
+<!-- <td class="flex-auto"  [ngClass]="{'warning':productInfo.isBanned}">
+    {{numProduct}}
+</td>
+<td class="flex-auto"  [ngClass]="{'warning':productInfo.isBanned}">
+    {{productInfo.title}}
+</td>
+<td class="flex-auto"  [ngClass]="{'warning':productInfo.isBanned}">
+    {{productInfo.manufacturer}}
+</td>
+<td class="flex-auto"  [ngClass]="{'warning':productInfo.isBanned}">
+    {{productInfo.category}}
+</td>
+<td class="flex-auto"  [ngClass]="{'warning':productInfo.isBanned}">
+    {{productInfo.count}}
+</td>
+<td class="flex-auto"  [ngClass]="{'warning':productInfo.isBanned}">
+    {{productInfo.unit}}
+</td>
+<td class="flex-auto"  [ngClass]="{'warning':productInfo.isBanned}">
+    {{productInfo.price}}
+</td>
+<td 
+    class=" action-btn"
+    *ngIf="avaiablesPermissions.canUpdate"    
+>    
+    <button 
+        class="btn"
+        [ngClass]="{'warning':productInfo.isBanned}"
+        *ngIf="!productInfo.isBanned" 
+        (click)="editProduct()"
+    >✏️</button>   
+</td>
+<td 
+    class="action-btn"
+    *ngIf="avaiablesPermissions.canDelete"
+>    
+    <button 
+        class="btn"
+        (click)="removeProduct()"
+        *ngIf="!productInfo.isBanned else unLock"
+    >❌</button>    
+       
+</td>
+
+<ng-template #unLock>
+    <button class="btn"  (click)="removeProduct()">🔓</button>
+</ng-template> -->

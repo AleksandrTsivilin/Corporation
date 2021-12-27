@@ -1,10 +1,13 @@
 .table{
     @apply w-full;
+    
+    
     @apply border-collapse border-green-600;
     @apply bg-gray-300;
 
     .header{
         @apply border border-green-600;
+        
     }
 
     .active-header{
