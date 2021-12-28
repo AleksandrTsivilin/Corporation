@@ -12,7 +12,7 @@ import { ProductSignalrService } from '../signalrServices/product-signalr.servic
 })
 export class ProductUpdateService {
 
-  changesProductStorage$=new BehaviorSubject<ProductStorageChanges[]>([]);
+  changesProductStorage$=new BehaviorSubject<string[]>([]);
   constructor(private readonly signalr:ProductSignalrService) { 
     if (!signalr.isConnection)
       signalr.startConnection();
@@ -50,7 +50,7 @@ export class ProductUpdateService {
 
   private productChangesOnLis() {
     this.signalr.hubConnection
-      ?.on("changeProducts",(changes:ProductStorageChanges[])=>{
+      ?.on("changeProducts",(changes:string[])=>{
         this.changesProductStorage$.next(changes);
     })
   }

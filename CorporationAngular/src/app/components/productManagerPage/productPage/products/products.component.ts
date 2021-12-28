@@ -65,16 +65,10 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
 
     this.headersTable=this.getHeadersTable(); 
-
+    this.getProducts();
     
 
-    this.service.getProducts()
-      .subscribe((result)=>{
-        this.productsInfo=result;
-        console.log(this.productsInfo)
-    },()=>{
-      console.log("failed get products")
-    })
+    
 
     // if (!this.signalrService.isConnection)
     //   this.signalrService.startConnection();
@@ -86,12 +80,13 @@ export class ProductsComponent implements OnInit {
       .subscribe((changes)=>{
         console.log(changes);
       if (changes.length===0) return;
-      changes.forEach(ch=>{
+      changes.forEach(storage=>{
         if (this.currentStorages
-          .map(st=>st.title).includes(ch.storage))
+          .map(st=>st.title).includes(storage))
           {
-            this.productsInfo=ch.movedProducts;
-
+            //this.productsInfo=ch.movedProducts;
+            console.log("changes product")
+            this.getProducts();
           }
       })
       
@@ -263,6 +258,16 @@ export class ProductsComponent implements OnInit {
     }
 
     return headers;
+  }
+
+  private async getProducts(){
+    await this.service.getProducts()
+      .subscribe((result)=>{
+        this.productsInfo=result;
+        console.log(this.productsInfo)
+    },()=>{
+      console.log("failed get products")
+    })
   }
 
   
