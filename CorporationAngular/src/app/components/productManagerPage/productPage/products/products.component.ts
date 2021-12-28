@@ -1,8 +1,9 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
+import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
@@ -24,20 +25,36 @@ export class ProductsComponent implements OnInit {
     canMove:false
   }
 
+  //@Output() editPage=new EventEmitter();
+
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
   currentStorages:StorageInfo[]=[{title:"Storage 1"},{title:"Storage 2"}];
   editProductMode:boolean=false;
-  editProduct:ProductInfo={
-    id:0,
+
+  newProductForm:NewProductForm={
+    storage:"",
     title:"",
-    count:0,
     price:0,
-    category:"",
+    count:0,
     manufacturer:"",
+    category:"",
     unit:"",
     isBanned:false
   }
+
+  private editedProductId:number=0;
+
+  // editProduct:ProductInfo={
+  //   id:0,
+  //   title:"",
+  //   count:0,
+  //   price:0,
+  //   category:"",
+  //   manufacturer:"",
+  //   unit:"",
+  //   isBanned:false
+  // }
 
   // private readonly signalrService:SignalrProductService
   constructor( 
@@ -137,19 +154,34 @@ export class ProductsComponent implements OnInit {
 
 
 
-  edit(editProduct:ProductInfo){
-    console.log(editProduct)
-    this.editProduct={
-      id:editProduct.id,
+  startEdit(editProduct:ProductInfo){
+    
+    // this.editProduct={
+    //   id:editProduct.id,
+    //   title:editProduct.title,
+    //   count:editProduct.count,
+    //   price:editProduct.price,
+    //   category:editProduct.category,
+    //   manufacturer:editProduct.manufacturer,
+    //   unit:editProduct.unit,
+    //   isBanned:editProduct.isBanned
+    // }
+
+    console.log('edit product')
+    this.editedProductId=editProduct.id;
+    this.newProductForm={
+      storage:"Storage 1",
       title:editProduct.title,
-      count:editProduct.count,
       price:editProduct.price,
-      category:editProduct.category,
+      count:editProduct.count,
       manufacturer:editProduct.manufacturer,
+      category:editProduct.category,
       unit:editProduct.unit,
       isBanned:editProduct.isBanned
     }
+    //this.editPage.emit();
     this.editProductMode=true;
+    
   }
 
   remove(removeProduct:ProductInfo){
@@ -161,10 +193,17 @@ export class ProductsComponent implements OnInit {
   //   this.signalrService.unLockProduct(unLockProduct.id);
   // }
 
-  update(updateProduct:FormAddProduct){
+  update(updateProduct:NewProductForm){
     updateProduct.storage="Storage 1";
+    this.updateService.updateProduct(updateProduct,this.editedProductId);
     //this.signalrService.updateProduct(updateProduct,this.editProduct.id)
     this.editProductMode=false;
+  }
+
+  closeEditPage(){
+    console.log("closeEditPage")
+    this.editProductMode=false;
+    this.editedProductId=0;
   }
 
   sortCol(criteria:string){

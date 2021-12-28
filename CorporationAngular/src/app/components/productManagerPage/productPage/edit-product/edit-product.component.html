@@ -1,4 +1,5 @@
-<p>edit-product works!</p>
+
+<!-- <p>edit-product works!</p>
 <form
     class="form-add-product"
     *ngIf="pageState.isActive else toAddGroup"
@@ -9,7 +10,7 @@
         <div class="section">
             <select 
                 class="form-group"
-                [(ngModel)]="formEditProduct.manufacturer"
+                [(ngModel)]="newProductForm.manufacturer"
                 name="manufacturer"
             >
             
@@ -32,7 +33,7 @@
         <div class="section">
             <select 
                 class="form-group"
-                [(ngModel)]="formEditProduct.category"
+                [(ngModel)]="newProductForm.category"
                     
                 name="category"
             >
@@ -55,7 +56,7 @@
         <div class="section">
             <select 
                 class="form-group"
-                [(ngModel)]="formEditProduct.unit"
+                [(ngModel)]="newProductForm.unit"
                     
                 name="unit"
             >
@@ -78,7 +79,7 @@
         <input 
             class="form-group"
             type="text"
-            [(ngModel)]="formEditProduct.title"
+            [(ngModel)]="newProductForm.title"
             name="formAddProduct.title" 
             
         >
@@ -89,7 +90,7 @@
         <input
             class="form-group"
             type="text"
-            [(ngModel)]="formEditProduct.price"
+            [(ngModel)]="newProductForm.price"
             name="price"
         >
         
@@ -99,7 +100,7 @@
         <input
             class="form-group"
             type="text"
-            [(ngModel)]="formEditProduct.avaiableCount"
+            [(ngModel)]="newProductForm.count"
             name="avaiableCount"
         >
         
@@ -113,9 +114,9 @@
     
     
     
-</form>
+</form>--> 
 
-<ng-template #toAddGroup>
+ <ng-template #toAddGroup>
     <div [ngSwitch]="pageState.path">
         <app-add-manufacturer
             *ngSwitchCase="'manufacturer'"
@@ -131,5 +132,143 @@
         ></app-add-unit>
     </div>
     
-</ng-template>
+</ng-template> 
+
+<div class="dialog-page">
+    
+    <div class="dialog" *ngIf="pageState.isActive else toAddGroup">
+        <div class="btn-section">
+            <button 
+                class="btn"
+                (click)="closeEditPage()"
+            >
+                ❌
+            </button>
+        </div>
+        
+            
+        <div class="header"><h1>edit product</h1></div>
+        <div class=""> 
+        <form
+            class="form-add-product "
+            
+            (ngSubmit)="onSubmit()"         
+
+        > 
+    
+        <div class="form-group">
+            <label>manufacturer</label>
+                <div class="section">
+                    <select 
+                        class="form-group"
+                        [(ngModel)]="newProductForm.manufacturer"
+                        name="manufacturer"
+                    >
+                    
+                        <option 
+                            *ngFor="let manufacturer of manufacturers"
+                            [value]="manufacturer.title"
+                            name="manufacturer.title"
+                        >
+                            {{manufacturer.title}}
+                        </option>
+                        
+                    </select>
+                    <button type="button" (click)="startAddGroup('manufacturer')">Add</button>
+                </div>
+        
+        
+            </div>
+            <div class="form-group">
+                <label>category</label>
+                <div class="section">
+                    <select 
+                        class="form-group"
+                        [(ngModel)]="newProductForm.category"
+                            
+                        name="category"
+                    >
+            
+                        <option 
+                            *ngFor="let category of categories"
+                            [value]="category.title"
+                            name="category.title"
+                        >
+                            {{category.title}}
+                        </option>
+                    </select>
+                    <button type="button" (click)="startAddGroup('category')">Add</button>
+                </div>
+        
+            
+                </div>
+                <div class="form-group">
+                <label>unit</label>
+                <div class="section">
+                    <select 
+                        class="form-group"
+                        [(ngModel)]="newProductForm.unit"
+                            
+                        name="unit"
+                    >
+                    
+                        <option 
+                            *ngFor="let unit of units"
+                            [value]="unit.title"
+                            name="unit.title"
+                        >
+                            {{unit.title}}
+                        </option>
+                    </select>
+                    <button type="button" (click)="startAddGroup('unit')">Add</button>
+                </div>
+            
+            
+            </div>
+            <div class="form-group">
+                <label>title</label>
+                <input 
+                    class="form-group"
+                    type="text"
+                    [(ngModel)]="newProductForm.title"
+                    name="formAddProduct.title" 
+                    
+                >
+                
+            </div>
+            <div class="form-group">
+                <label>price</label>
+                <input
+                    class="form-group"
+                    type="text"
+                    [(ngModel)]="newProductForm.price"
+                    name="price"
+                >
+            
+            </div>
+            <div class="form-group">
+                <label>count</label>
+                <input
+                    class="form-group"
+                    type="text"
+                    [(ngModel)]="newProductForm.count"
+                    name="avaiableCount"
+                >
+                
+            </div>
+            <div class="form-group">
+                <button 
+                    class="btn-submit" 
+                    type="submit"
+                >save changes</button>
+            </div>      
+    
+        </form>
+       </div>
+        
+        
+        
+    </div>
+    
+</div>
 

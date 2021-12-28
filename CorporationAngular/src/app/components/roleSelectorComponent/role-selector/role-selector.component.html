@@ -33,8 +33,10 @@
     >
         <div 
             class="permissions-section"
-            (click)="changeModePage('products')"
             *ngIf="getAvaiablesPermissions('ProductManager').canRead"
+            (click)="changeModePage('products')"
+            
+            
         >
             <div class="img-area">
                 <div class="img">
@@ -164,6 +166,11 @@
             *ngSwitchCase="'addMovements'"
         >
         </app-product-movements>
+        <!-- <app-products
+            *ngSwitchCase="'editProduct'"
+            [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
+        >
+        </app-products> -->
     </div>
     
     

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { PageState } from 'src/app/interfaces/pageState';
+import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
@@ -13,21 +14,34 @@ import { SignalrProductService } from 'src/app/services/productPage/signalr-prod
 export class EditProductComponent implements OnInit {
 
 
-  @Input () editProduct:ProductInfo={
-    id:0,
+  // @Input () editProduct:ProductInfo={
+  //   id:0,
+  //   title:"",
+  //   count:0,
+  //   price:0,
+  //   category:"",
+  //   manufacturer:"",
+  //   unit:"",
+  //   isBanned:false
+    
+  // }
+
+  @Input() newProductForm:NewProductForm={
+    storage:"",
     title:"",
-    count:0,
     price:0,
-    category:"",
+    count:0,
     manufacturer:"",
+    category:"",
     unit:"",
     isBanned:false
-    
   }
 
 
   
   @Output() updateProduct=new EventEmitter();
+  @Output() close=new EventEmitter();
+
 
   pageState:PageState={
     path:"",
@@ -38,15 +52,15 @@ export class EditProductComponent implements OnInit {
   units:Unit[]=[];
   //isAddGroup:boolean=false;
 
-  formEditProduct:FormAddProduct ={
-    storage:"",
-    title:this.editProduct.title,
-    price:this.editProduct.price,
-    avaiableCount:this.editProduct.count,
-    category:this.editProduct.category,
-    manufacturer:this.editProduct.manufacturer,
-    unit:this.editProduct.unit
-  }
+  // formEditProduct:FormAddProduct ={
+  //   storage:"",
+  //   title:this.editProduct.title,
+  //   price:this.editProduct.price,
+  //   avaiableCount:this.editProduct.count,
+  //   category:this.editProduct.category,
+  //   manufacturer:this.editProduct.manufacturer,
+  //   unit:this.editProduct.unit
+  // }
   constructor(
     private readonly service:ProductsService,
     private readonly signalrService:SignalrProductService) { 
@@ -54,15 +68,16 @@ export class EditProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.formEditProduct={
-      storage:"Storage 1",
-      title:this.editProduct.title,
-      price:this.editProduct.price,
-      avaiableCount:this.editProduct.count,
-      category:this.editProduct.category,
-      manufacturer:this.editProduct.manufacturer,
-      unit:this.editProduct.unit
-    }
+    // console.log(this.editProduct)
+    // this.formEditProduct={
+    //   storage:"Storage 1",
+    //   title:this.editProduct.title,
+    //   price:this.editProduct.price,
+    //   avaiableCount:this.editProduct.count,
+    //   category:this.editProduct.category,
+    //   manufacturer:this.editProduct.manufacturer,
+    //   unit:this.editProduct.unit
+    // }
     this.getManufacturer();
     this.getCategories();
     this.getUnits();
@@ -75,11 +90,15 @@ export class EditProductComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.formEditProduct)
-    this.updateProduct.emit(this.formEditProduct);
+    //console.log(this.formEditProduct)
+    this.updateProduct.emit(this.newProductForm);
   }
 
-  addGroup(path:string){
+  closeEditPage(){
+    this.close.emit();
+  }
+
+  startAddGroup(path:string){
     this.pageState={
       path:path,
       isActive:false

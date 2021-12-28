@@ -1,8 +1,10 @@
+import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 //import { ProductStorage } from 'src/app/interfaces/formMoveProduct';
 import { ProductStorageChanges } from 'src/app/interfaces/productManagerPage/changesProducts';
+import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { ProductSignalrService } from '../signalrServices/product-signalr.service';
 
 @Injectable({
@@ -35,6 +37,11 @@ export class ProductUpdateService {
       .catch(err=>{console.error(err)})
   }
 
+  updateProduct(newProductForm:NewProductForm,id:number){
+    const product=this.convertFormToModel(newProductForm);
+    this.signalr.hubConnection?.invoke("UpdateProduct",product,id)
+  }
+
   remove(id:number){
     this.signalr.hubConnection?.invoke("DeleteProduct",id)
       .then()
@@ -46,5 +53,17 @@ export class ProductUpdateService {
       ?.on("changeProducts",(changes:ProductStorageChanges[])=>{
         this.changesProductStorage$.next(changes);
     })
+  }
+
+  private convertFormToModel(newProductForm:NewProductForm){
+    return {      
+      storage:newProductForm.storage,
+      title:newProductForm.title,
+      price:Number(newProductForm.price),
+      avaiableCount:Number(newProductForm.count),
+      manufacturer:newProductForm.manufacturer,
+      category:newProductForm.category,
+      unit:newProductForm.unit
+    } 
   }
 }

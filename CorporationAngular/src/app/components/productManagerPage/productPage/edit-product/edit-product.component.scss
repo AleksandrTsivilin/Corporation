@@ -1,23 +1,118 @@
-.form-add-product{
-    @apply w-96;
+// .form-add-product{
+//     @apply w-96;
 
-    .form-group{
-        @apply w-full;
+//     .form-group{
+//         @apply w-full;
 
-        .section{
-            @apply flex flex-row;
-        }
-    }
-    .btn-submit{
+//         .section{
+//             @apply flex flex-row;
+//         }
+//     }
+//     .btn-submit{
             
-        @apply w-full;
-        @apply bg-green-500;
-        @apply rounded;
-        @apply text-white font-bold;
-        @apply py-2;
-    }
+//         @apply w-full;
+//         @apply bg-green-500;
+//         @apply rounded;
+//         @apply text-white font-bold;
+//         @apply py-2;
+//     }
     
-    .btn-submit:hover{
-        @apply bg-green-700;
-    } 
+//     .btn-submit:hover{
+//         @apply bg-green-700;
+//     } 
+// }
+
+.dialog-page{
+    
+    @apply h-screen;
+    @apply fixed inset-0;
+    @apply flex justify-center items-center;
+    @apply bg-gray-300 bg-opacity-80;
+
+
+
+    .dialog{
+        @media screen {
+            width: 500px;
+        }
+        @apply flex-col justify-items-center;
+        @apply border-2 border-red-600;
+        @apply rounded;
+        
+        
+
+
+        .header{
+            @apply bg-gray-500;
+            @apply text-center;
+        }
+
+        .form-add-product{
+            @apply w-96;
+            
+            // @apply flex-col justify-items-center;
+
+        .form-group{
+            @apply w-full;
+            
+
+            .section{
+                @apply flex flex-row;
+            }
+        }
+        .btn-submit{
+                
+            @apply w-full;
+            @apply bg-green-500;
+            @apply rounded;
+            @apply text-white font-bold;
+            @apply py-2;
+        }
+        
+        .btn-submit:hover{
+            @apply bg-green-700;
+        } 
+    }
+
+        // .sub-header{
+        //     @apply flex-1;
+        //     @apply text-center;
+        // }
+
+        // .user-info{
+        //     @apply flex flex-col;
+
+        //     .item-info{
+        //         @apply flex flex-row;
+
+        //         .title{
+        //             @apply flex-1;
+        //             @apply pl-1;
+        //         }
+
+        //         .value{
+        //             @apply flex-1;
+        //         }
+        //     }
+        // }
+
+        .btn-section{
+            @apply flex;
+            @apply justify-end;
+
+
+            .btn{
+                @apply bg-red-400;
+                @apply rounded;
+                @apply text-white font-bold
+            }
+
+            .btn:hover{
+                @apply bg-red-700;
+            }
+        }
+        
+
+        
+    }
 }

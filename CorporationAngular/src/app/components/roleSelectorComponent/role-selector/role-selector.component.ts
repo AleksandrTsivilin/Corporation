@@ -84,6 +84,11 @@ export class RoleSelectorComponent implements OnInit {
         this.openedTabs.push(path);
   }
 
+  // addTab(title:string){
+  //   if (!this.openedTabs.includes(title))
+  //       this.openedTabs.push(title);
+  // }
+
   returnToSelector(){
     this.pageState={
       path:"",
@@ -105,9 +110,7 @@ export class RoleSelectorComponent implements OnInit {
       this.returnToSelector();
       return;
     }
-    console.log(indexTab)
-    console.log(this.openedTabs.lastIndexOf)
-    console.log(this.openedTabs.length)
+    
     indexTab === this.openedTabs.length
       ?this.moveToTab( this.openedTabs[(this.openedTabs.length-1)])
       :this.moveToTab(this.openedTabs[indexTab]);     
