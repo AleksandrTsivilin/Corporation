@@ -20,9 +20,9 @@ namespace Services.ProductService
 
         List<UnitModel> GetUnits();
 
-        ProductModel AddProduct(AddProductModel model);
+        ProductModel AddProduct(NewProductModel model);
 
-        ProductModel UpdateProduct(AddProductModel model, int id);
+        ProductModel UpdateProduct(NewProductModel model, int id);
         ManufacturerModel AddManufacturer(ManufacturerModel model);
 
         CategoryModel AddCategory(CategoryModel model);

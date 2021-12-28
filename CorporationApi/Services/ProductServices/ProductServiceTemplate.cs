@@ -96,7 +96,7 @@ namespace Services.ProductService
                 }).ToList();
         }
 
-        public  ProductModel AddProduct(AddProductModel model)
+        public  ProductModel AddProduct(NewProductModel model)
         {
             var storage = _context.Storages
                 .FirstOrDefault(s => s.Title == model.Storage);
@@ -165,7 +165,7 @@ namespace Services.ProductService
 
         }
 
-        public ProductModel UpdateProduct(AddProductModel model, int id)
+        public ProductModel UpdateProduct(NewProductModel model, int id)
         {
             //var tempProduct = new AddProductModel();
             var product = _context.Products.FirstOrDefault(p => p.Id == id);

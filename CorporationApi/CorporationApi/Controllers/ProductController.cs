@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace CorporationApi.Controllers
 {
     [Route("api/[controller]")]
@@ -19,10 +20,10 @@ namespace CorporationApi.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var products = _service.Get();
-            return Ok(products);
+            var product = await Task.Run(() => _service.Get());
+            return Ok(product);
         }
 
         [HttpGet("productsByUser")]

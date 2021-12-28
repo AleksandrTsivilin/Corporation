@@ -18,9 +18,9 @@ namespace Services.ProductServices.ProductService
         {
             _context = context;
         }        
-        public List<ProductModel> Get()
+        public async Task<List<ProductModel>> Get()
         {
-            return _context.Products
+            return await ( _context.Products
                 .Include(p => p.Manufacture)
                 .Include(p => p.Category)
                 .Include(p => p.Unit)
@@ -37,18 +37,18 @@ namespace Services.ProductServices.ProductService
                     Unit = product.Unit.Title,
                     IsBanned = product.IsBanned
 
-                })
-                .ToList();
+                }))
+                .ToListAsync();
         }
-        public List<MovementsProductModel> /*ProductModel*/ AddProduct(AddProductModel model)
+        public async Task<List<string>> AddProduct(NewProductModel model)
         {
-            var storage = GetStorageByTitle(model.Storage);            
+            var storage = await GetStorageByTitle(model.Storage);            
 
-            var manufacturer = GetManufacturerByTitle(model.Manufacturer);
+            var manufacturer = await GetManufacturerByTitle(model.Manufacturer);
 
-            var category = GetCategoryByTitle(model.Category);
+            var category = await GetCategoryByTitle(model.Category);
 
-            var unit = GetUnitByTitle(model.Unit);
+            var unit = await GetUnitByTitle(model.Unit);
 
 
 
@@ -57,14 +57,16 @@ namespace Services.ProductServices.ProductService
                 || category is null
                 || unit is null) return null;         
 
-            _context.Products.Add(new Product
+            try
             {
-                Title = model.Title,
-                Price = model.Price,
-                ManufactureId = manufacturer.Id,
-                CategoryId = category.Id,
-                UnitId = unit.Id,
-                ProductStorages = new List<ProductStorage>
+                 _context.Products.Add(new Product
+                {
+                    Title = model.Title,
+                    Price = model.Price,
+                    ManufactureId = manufacturer.Id,
+                    CategoryId = category.Id,
+                    UnitId = unit.Id,
+                    ProductStorages = new List<ProductStorage>
                 {
                     new ProductStorage
                     {
@@ -73,23 +75,30 @@ namespace Services.ProductServices.ProductService
                     }
                 }
 
-            });
+                });
 
-            _context.SaveChanges();
-
-            //return CreateProductModel(model.Title);
-            var addProductModel = CreateProductModel(model.Title);
-            return new List<MovementsProductModel>
+                await _context.SaveChangesAsync();
+                return new List<string> { model.Storage };
+            }
+            catch
             {
-                new MovementsProductModel
-                {
-                    Storage=model.Storage,
-                    Products=new List<ProductModel>
-                    {
-                        addProductModel
-                    }
-                }
-            };
+                return null;
+            }
+            
+            //return new List<string> { model.Storage };
+            //return CreateProductModel(model.Title);
+            //var addProductModel = CreateProductModel(model.Title);
+            //return new List<MovementsProductModel>
+            //{
+            //    new MovementsProductModel
+            //    {
+            //        Storage=model.Storage,
+            //        Products=new List<ProductModel>
+            //        {
+            //            addProductModel
+            //        }
+            //    }
+            //};
 
         }
         public List<ProductModel> GetProductsByUser(int id)
@@ -110,27 +119,31 @@ namespace Services.ProductServices.ProductService
 
                 }).ToList();
         }
-        public ProductModel RemoveProduct(int id)
+        public async Task<List<string>> RemoveProduct(int id)
         {
-            var product = GetProductById(id);
+            var product = await GetProductById(id);
 
             if (product is null) return null;
 
             product.IsBanned = !product.IsBanned;
-            _context.SaveChanges();
-            return CreateProductModel(product.Title);
+            await _context.SaveChangesAsync();
+            var storage = await _context.Product_Storage
+                .Include(ps => ps.Storage)
+                .FirstOrDefaultAsync(ps => ps.ProductId == id);
+            return new List<string> { storage.Storage.Title };
+            //return CreateProductModel(product.Title);
         }
-        public ProductModel UpdateProduct(AddProductModel model, int id)
+        public async Task<List<string>> UpdateProduct(NewProductModel model, int id)
         {
-            var storage = GetStorageByTitle(model.Storage);
+            var storage = await GetStorageByTitle(model.Storage);
 
-            var productPrev = GetProductById(id);             
+            var productPrev = await GetProductById(id);             
 
-            var manufacturer = GetManufacturerByTitle(model.Manufacturer);
+            var manufacturer = await GetManufacturerByTitle(model.Manufacturer);
 
-            var category = GetCategoryByTitle(model.Category);
+            var category = await GetCategoryByTitle(model.Category);
 
-            var unit = GetUnitByTitle(model.Unit);
+            var unit = await GetUnitByTitle(model.Unit);
 
             if ( storage is null
                 || productPrev is null
@@ -139,23 +152,31 @@ namespace Services.ProductServices.ProductService
                 || unit is null) return null;
 
 
-
-            productPrev.Title = model.Title;
-            productPrev.Price = model.Price;
-            productPrev.ManufactureId = manufacturer.Id;
-            productPrev.CategoryId=category.Id;
-            productPrev.UnitId = unit.Id;
+            try
+            {
+                productPrev.Title = model.Title;
+                productPrev.Price = model.Price;
+                productPrev.ManufactureId = manufacturer.Id;
+                productPrev.CategoryId=category.Id;
+                productPrev.UnitId = unit.Id;
             
 
-
-            _context.SaveChanges();
-            return CreateProductModel(model.Title);               
+            
+                await _context.SaveChangesAsync();
+                return new List<string> { model.Storage };
+            }
+            catch
+            {
+                return null;
+            }
+            
+            //return CreateProductModel(model.Title);               
             
         }
-        private Storage GetStorageByTitle(string title)
+        private async Task<Storage> GetStorageByTitle(string title)
         {
-            return _context.Storages
-                .FirstOrDefault(s => s.Title == title);
+            return await _context.Storages
+                .FirstOrDefaultAsync(s => s.Title == title);
         }
         private ProductModel CreateProductModel(string title)
         {
@@ -188,25 +209,25 @@ namespace Services.ProductServices.ProductService
                 .Include(p => p.ProductStorages)
                 .FirstOrDefault(p => p.Title == title);
         }
-        private Product GetProductById(int id)
+        private async Task< Product> GetProductById(int id)
         {
-            return _context.Products
-                .FirstOrDefault(p => p.Id == id);
+            return await _context.Products
+                .FirstOrDefaultAsync(p => p.Id == id);
         }
-        private ManufacturerProduct GetManufacturerByTitle(string title)
+        private async Task<ManufacturerProduct> GetManufacturerByTitle(string title)
         {
-            return _context.Manufactures
-                .FirstOrDefault(m => m.Title == title);
+            return await _context.Manufactures
+                .FirstOrDefaultAsync(m => m.Title == title);
         }
-        private CategoryProduct GetCategoryByTitle(string title)
+        private async Task<CategoryProduct> GetCategoryByTitle(string title)
         {
-            return _context.Categoties
-                .FirstOrDefault(c => c.Title == title);
+            return await _context.Categoties
+                .FirstOrDefaultAsync(c => c.Title == title);
         }
-        private UnitProduct GetUnitByTitle(string title)
+        private async Task <UnitProduct> GetUnitByTitle(string title)
         {
-            return _context.Units
-                .FirstOrDefault(u => u.Title == title);
+            return await _context.Units
+                .FirstOrDefaultAsync(u => u.Title == title);
         }
         
     }

@@ -17,7 +17,7 @@ namespace CorporationApi.HubConfig
             _service = service;
         }
 
-        public void AddProduct(AddProductModel model)
+        public void AddProduct(NewProductModel model)
         {
             Console.WriteLine("addProduct");
 
@@ -27,7 +27,7 @@ namespace CorporationApi.HubConfig
                  Clients.Others.SendAsync("productAdd", newProduct);
         }
 
-        public void UpdateProduct(AddProductModel model, int id)
+        public void UpdateProduct(NewProductModel model, int id)
         {
             var updatedProduct= _service.UpdateProduct(model, id);
 

@@ -18,27 +18,37 @@ namespace CorporationApi.HubConfig
             _service = service;
         }
 
-        public void AddProduct(AddProductModel model)
+        public async Task AddProduct(NewProductModel model)
         {
-            var changedProducts = _service.AddProduct(model);
-            if (changedProducts is not null)
-                Clients.Others.SendAsync("changeProducts", changedProducts);
+            //var changedProducts = _service.AddProduct(model);
+            var storages = await Task.Run(() => _service.AddProduct(model));
+            if (storages is not null)
+                await Clients.Others.SendAsync("changeProducts", storages);
         }
 
-        public void UpdateProduct(AddProductModel model, int id)
+        public async Task UpdateProduct(NewProductModel model, int id)
+        {            
+            //var updatedProduct = _service.UpdateProduct(model, id);
+
+            //if (updatedProduct is null) return;
+            //Clients.All.SendAsync("updateProduct", updatedProduct);
+
+            var storages = await Task.Run(() => _service.UpdateProduct(model, id));
+            if (storages is not null)
+                await Clients.All.SendAsync("changeProducts", storages);
+        }    
+                
+
+        public async Task DeleteProduct(int id)
         {
-            var updatedProduct = _service.UpdateProduct(model, id);
+            //var newProduct = _service.RemoveProduct(id);
 
-            if (updatedProduct is null) return;
-            Clients.All.SendAsync("updateProduct", updatedProduct);
-        }
+            //if (newProduct is not null)
+            //    await Clients.All.SendAsync("updateProduct", newProduct);
 
-        public void DeleteProduct(int id)
-        {
-            var newProduct = _service.RemoveProduct(id);
-
-            if (newProduct is not null)
-                Clients.All.SendAsync("updateProduct", newProduct);
+            var storages = await Task.Run(() => _service.RemoveProduct(id));
+            if (storages is not null )
+                await Clients.All.SendAsync("changeProducts", storages);
         }
     }
 }
