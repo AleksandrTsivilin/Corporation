@@ -51,6 +51,7 @@ export class ProductUpdateService {
   private productChangesOnLis() {
     this.signalr.hubConnection
       ?.on("changeProducts",(changes:string[])=>{
+        console.log("changeProductsLis")
         this.changesProductStorage$.next(changes);
     })
   }

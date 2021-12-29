@@ -8,7 +8,7 @@ import { MovementsSignalrService } from '../signalrServices/movements-signalr.se
 })
 export class MovementsUpdateService {
 
-  movementsProduct$=new BehaviorSubject<MovementsProduct []>([]);
+  movementsProduct$=new BehaviorSubject<string []>([]);
 
   constructor(private readonly signalr:MovementsSignalrService) { 
     if (!signalr.isConnection)
@@ -34,7 +34,7 @@ export class MovementsUpdateService {
   
   private productStorageOnLis() {
     this.signalr.hubConnection
-      ?.on("movementsProduct",(movements:MovementsProduct[])=>{
+      ?.on("movementsProduct",(movements:string[])=>{
         this.movementsProduct$.next(movements);
     })
   }

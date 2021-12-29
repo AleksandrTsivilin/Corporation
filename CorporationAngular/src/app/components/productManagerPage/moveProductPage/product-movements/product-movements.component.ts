@@ -7,6 +7,7 @@ import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 import { MovementsUpdateService } from 'src/app/services/products/updateServices/movements-update.service';
+import { ProductUpdateService } from 'src/app/services/products/updateServices/product-update.service';
 import { UpdateService } from 'src/app/services/update.service';
 
 @Component({
@@ -36,6 +37,7 @@ export class ProductMovementsComponent implements OnInit {
   constructor(
       private service:ProductsService,
       private readonly updateService:MovementsUpdateService,
+      private readonly updateServiceProduct:ProductUpdateService
       //private readonly serviceUpdate:UpdateService,
       //private readonly signalrService:SignalrProductService
       ) { }
@@ -51,15 +53,35 @@ export class ProductMovementsComponent implements OnInit {
     
     this.updateService.movementsProduct$.subscribe((result)=>{
       console.log("sub productstorage")
-      if (result.length===0) return;
-      const storageFrom=result[0];
-      const storageTo=result[1];
-      if (storageFrom.storage===this.currentStorage.title){
-        this.updateMovedProduct(storageFrom.products);
-      }
-      if (storageTo.storage==this.currentStorage.title)
-        this.updateMovedProduct(storageTo.products);
+      result.forEach(r=>{
+        if (r===this.currentStorage.title){
+          console.log("compare")
+          this.setFormMovedProduct();
+
+        }
+          
+      })
+      // if (result.length===0) return;
+      // const storageFrom=result[0];
+      // const storageTo=result[1];
+      // if (storageFrom.storage===this.currentStorage.title){
+      //   this.updateMovedProduct(storageFrom.products);
+      // }
+      // if (storageTo.storage==this.currentStorage.title)
+      //   this.updateMovedProduct(storageTo.products);
     })
+
+
+  this.updateServiceProduct.changesProductStorage$.subscribe((result)=>{
+    result.forEach(r=>{
+      if (r===this.currentStorage.title){
+        console.log("compare")
+        this.setFormMovedProduct();
+
+      }
+        
+    })
+  })
 
   }
 
@@ -110,6 +132,7 @@ export class ProductMovementsComponent implements OnInit {
   private setFormMovedProduct(){
     this.service.getProductsByUser()
       .subscribe((products)=>{
+        console.log(products)
         this.setMovedProduct(products);        
       })
   }
@@ -122,6 +145,7 @@ export class ProductMovementsComponent implements OnInit {
   }
 
   private setMovedProduct(products:ProductInfo[]) {
+    this.formMovedProducts.movedProducts=[];
     for (let product of products){
       if (product.isBanned) continue;
       this.formMovedProducts.movedProducts.push({
@@ -134,6 +158,7 @@ export class ProductMovementsComponent implements OnInit {
         unit:product.unit
       })
     }
+    console.log(this.formMovedProducts.movedProducts)
   }
   private getCurrentStorage(){
     console.log("get current")

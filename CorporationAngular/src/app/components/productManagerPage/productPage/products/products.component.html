@@ -234,16 +234,14 @@
         </tr>
       </thead>
       <tbody class="divide-y bg-red-100">
-        <tr app-product-item 
-        
-        
-        *ngFor="let productInfo of productsInfo let i=index"
-        [ngClass]="{'product-item-warning':productInfo.isBanned}"
-        [numProduct]="i+1"
-        [productInfo]="productInfo" 
-        [avaiablesPermissions]="avaiablesPermissions"
-        (edit)="startEdit(productInfo)"
-        (remove)="remove(productInfo)"        
+        <tr app-product-item       
+          *ngFor="let productInfo of productsInfo let i=index"
+          [ngClass]="{'product-item-warning':productInfo.isBanned}"
+          [numProduct]="i+1"
+          [productInfo]="productInfo" 
+          [avaiablesPermissions]="avaiablesPermissions"
+          (edit)="startEdit(productInfo)"
+          (remove)="remove(productInfo)"        
         >  
         </tr>    
       </tbody>
