@@ -9,6 +9,6 @@ namespace Services.ProductService.MovementsService
 {
     public interface IMovementsServive
     {
-        List<MovementsProductModel> MovedProducts(MoveProductModel model);
+        Task<List<string>> MovedProducts(MoveProductModel model);
     }
 }

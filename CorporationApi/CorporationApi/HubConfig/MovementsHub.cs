@@ -16,12 +16,13 @@ namespace CorporationApi.HubConfig
         {
             _service = service;
         }
-        public void MoveProducts(MoveProductModel model)
+        public async Task MoveProducts(MoveProductModel model)
         {
 
-            var movements = _service.MovedProducts(model);
-
-            Clients.All.SendAsync("movementsProduct", movements);
+            //var movements = _service.MovedProducts(model);
+            var storages = await Task.Run(() => _service.MovedProducts(model));
+            if (storages is not null)
+                await Clients.All.SendAsync("movementsProduct", storages);
 
         }
     }

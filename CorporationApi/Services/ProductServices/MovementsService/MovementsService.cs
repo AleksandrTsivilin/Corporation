@@ -18,7 +18,7 @@ namespace Services.ProductService.MovementsService
         {
             _context = context;
         }
-        public List<MovementsProductModel> MovedProducts(MoveProductModel model)
+        public async Task<List<string>> MovedProducts(MoveProductModel model)
         {          
             var storageFrom = GetStorageByTitle(model.From);
             var storageTo = GetStorageByTitle(model.To);
@@ -62,8 +62,9 @@ namespace Services.ProductService.MovementsService
 
             resultMovements[0].Products = GetProductsByStorage(storageFrom);   
        
-            resultMovements[1].Products = GetProductsByStorage(storageTo); 
-            return resultMovements;
+            resultMovements[1].Products = GetProductsByStorage(storageTo);
+            //return resultMovements;
+            return new List<string> { storageFrom.Title, storageTo.Title };
         }
 
         private List<ProductModel> GetProductsByStorage(Storage storage)
