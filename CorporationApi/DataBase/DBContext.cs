@@ -21,6 +21,7 @@ namespace DataBase
         public DbSet<Storage> Storages { get; set; }
         public DbSet<ProductStorage> Product_Storage { get; set; }
         public DbSet<Department> Departments { get; set; }
+        public DbSet<Factory> Factories { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -7,24 +7,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DataBase.EntityConfigurations
+namespace DataBase.EntityConfigurations.ProductConfigurations
 {
-    public class DepartmentConfiguration
-        : IEntityTypeConfiguration<Department>
+    class FactoryConfiguration
+        : IEntityTypeConfiguration<Factory>
     {
-        public void Configure(EntityTypeBuilder<Department> builder)
+        public void Configure(EntityTypeBuilder<Factory> builder)
         {
-            builder.ToTable("Departments");
+            builder.ToTable("Factories");
 
             builder.HasKey(_ => _.Id);
 
             builder.Property(_ => _.Title)
                 .IsRequired()
                 .HasMaxLength(255);
-
-            builder.HasOne(_ => _.Factory)
-                .WithMany(_ => _.Departments)
-                .HasForeignKey(_ => _.FactoryId);
         }
     }
 }
