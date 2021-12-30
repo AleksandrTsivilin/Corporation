@@ -1,4 +1,5 @@
-﻿using DataBase.Entities.ProductEntities;
+﻿using DataBase.Entities;
+using DataBase.Entities.ProductEntities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace DataBase
         public DbSet<UnitProduct> Units { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<ProductStorage> Product_Storage { get; set; }
+        public DbSet<Department> Departments { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -21,6 +21,10 @@ namespace DataBase.EntityConfigurations.ProductConfigurations
             builder.Property(_ => _.Title)
                 .IsRequired()
                 .HasMaxLength(255);
+
+            builder.HasOne(_ => _.Department)
+                .WithOne(_ => _.Storage)
+                .HasForeignKey<Storage>(_ => _.DepartmentId);
         }
     }
 }
