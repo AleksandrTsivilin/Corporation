@@ -34,7 +34,10 @@
       <button type="submit" >Submit</button>
   </form>
 </div> -->
-<div class="edit-user-page">
+
+
+
+<!-- <div class="edit-user-page">
   <div class="edit-user-card">
     <div class="info-user">
       <div class="header">user info</div>
@@ -103,7 +106,111 @@
       </div>
     </div>
   </div>
+</div> -->
+
+
+
+
+<div class="dialog-page">
+    
+  <div class="dialog" >
+      <div class="btn-section">
+          <button 
+              class="btn"
+              (click)="close()"
+          >
+              ❌
+          </button>
+      </div>
+      
+          
+      
+<div class="edit-user-page">
+  <div class="edit-user-card">
+    <div class="info-user">
+      <div class="header">user info</div>
+      <div class="info-user-row">
+        <div class="title">username</div>
+        <div class="value">{{editUser.username}}</div>
+      </div>
+      <div class="info-user-row">
+        <div class="title">firstname</div>
+        <div class="value">{{editUser.firstname}}</div>
+      </div>
+    </div>
+    <div class="info-user">
+      <div class="header">avaiables user</div>
+      <div class="add-role">
+        <select 
+          class="select-role"
+          (change)="onSelectRole($event)"
+        >
+          <option
+            [value]="" selected disabled
+          >choise role</option>
+          <option 
+            *ngFor="let item of allRoles"
+            [value]="item"
+          >
+            {{item}}
+          </option>
+        </select>
+        <button 
+          class="btn"
+          type="button"
+          (click)="addRole()"
+        >
+          add role
+        </button>
+      </div>
+      <div class="">        
+        <form
+          class=" "
+          (ngSubmit)="onSubmit()"         
+
+        >  
+        <div class="max-h-48 overflow-auto">
+          
+        
+          <div class="avaiables-user " *ngFor="let avaiable of avaiablesUser ; let j=index">
+            <div class="role">
+              <h1>{{avaiable.role}}</h1>
+            </div>
+            <div class="permission">
+              <div  *ngFor="let permission of avaiable.permissions; let i=index">
+                <input 
+                  type="checkbox"
+                  [(ngModel)]="permission.isSelected"
+                  name="{{avaiable.role}}+{{i}}" 
+                  [checked]="permission.isSelected"
+                  
+                >
+                <label>{{permission.title}}</label>
+                <h1>{{permission.isSelected}}</h1>
+              </div>
+            </div>
+            <div class="btn-remove-role">
+              <button class="btn" type="button" (click)="removeRole(j)">❌</button>
+            </div>        
+          </div>
+        </div>
+          <div class="">
+            <button class="btn-submit" type="submit">submit</button>
+          </div>
+          
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+      
+      
+  </div>
+  
+</div>
+
+
+
 <!-- <div class="inline-block">
   <select 
     class="block bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"

@@ -48,6 +48,8 @@ export class EditUserComponent implements OnInit {
   }
 
   @Output() updateUser=new EventEmitter();
+  @Output() closeDialog=new EventEmitter();
+
 
   // userAvaiables:FormGroup;
   // permissionsForm:FormGroup;
@@ -168,6 +170,9 @@ export class EditUserComponent implements OnInit {
     return permissionsAction;
   }
 
+  close(){
+    this.closeDialog.emit();
+  }
   onSubmit(){
     let editRoles:Role[]=[];
     for (let avaiable of this.avaiablesUser){

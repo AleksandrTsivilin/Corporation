@@ -1,99 +1,143 @@
-.edit-user-page{
-    // @apply bg-gray-300;
 
-    // @apply h-screen;
-    // @apply fixed inset-0;
 
-    .edit-user-card{
-        @apply border-2 border-gray-900;
+.dialog-page{
+    
+    @apply h-screen;
+    @apply fixed inset-0;
+    @apply flex justify-center items-center;
+    @apply bg-gray-300 bg-opacity-80;
+
+
+
+    .dialog{
+        @media screen {
+            width: 500px;
+        }
+        @apply flex-col justify-items-center;
+        @apply border-2 border-red-600;
+        @apply rounded;
         
-
-        .header{
-            @apply text-center;
-            @apply bg-gray-400;
-            @apply font-bold;
-        }
-
-        .info-user-row{
-            @apply flex flex-row;
-            @apply bg-gray-300;
-            
-            .title{
-                @apply flex flex-1
-            }
-
-            .value{
-                @apply flex flex-1
-            }
-        }
-
-        .add-role{
-            @apply flex;           
-
-            
-            .select-role{
-                @apply flex-1;
-                @apply px-4  pr-8 rounded;
-                @apply text-center;
-
-            }
-
-            .select-role:hover{
-                 @apply border-2 border-blue-900;
-            }
-
-            
-                
-            .btn{
-                @apply flex-none;
-                @apply bg-blue-400;
-                @apply rounded;
-                @apply text-white font-bold
-            }
-
-            .btn:hover{
-                @apply bg-blue-700;
-            }           
-            
-        }
-
-        .avaiables-user{
-            @apply flex flex-row;
-            @apply bg-gray-300;
-            @apply border-b-2 border-gray-900;
-
-            .role{
-                @apply flex-1; 
-                @apply flex justify-center items-center;
-
-            }
-
-            .permission{
-                @apply flex-1;
-            }
-
             .btn-section{
-                @apply flex-none;
+                @apply flex;
+                @apply justify-end;
 
+
+                .btn{
+                    @apply bg-red-400;
+                    @apply rounded;
+                    @apply text-white font-bold
+                }
+
+                .btn:hover{
+                    @apply bg-red-700;
+                }
+            } 
+        .edit-user-page{
+            .edit-user-card{
+                @apply border-2 border-gray-900;
+                
+        
+                .header{
+                    @apply text-center;
+                    @apply bg-gray-400;
+                    @apply font-bold;
+                }
+        
+                .info-user-row{
+                    @apply flex flex-row;
+                    @apply bg-gray-300;
+                    
+                    .title{
+                        @apply flex flex-1
+                    }
+        
+                    .value{
+                        @apply flex flex-1
+                    }
+                }
+        
+                .add-role{
+                    @apply flex;           
+        
+                    
+                    .select-role{
+                        @apply flex-1;
+                        @apply px-4  pr-8 rounded;
+                        @apply text-center;
+        
+                    }
+        
+                    .select-role:hover{
+                         @apply border-2 border-blue-900;
+                    }
+        
+                    
+                        
+                    .btn{
+                        @apply flex-none;
+                        @apply bg-blue-400;
+                        @apply rounded;
+                        @apply text-white font-bold
+                    }
+        
+                    .btn:hover{
+                        @apply bg-blue-700;
+                    }           
+                    
+                }
+        
+                .avaiables-user{
+                    
+                    @apply flex flex-row;
+                    @apply bg-gray-300;
+                    @apply border-b-2 border-gray-900;
+        
+                    .role{
+                        @apply flex-1; 
+                        @apply flex justify-center items-center;
+        
+                    }
+        
+                    .permission{
+                        @apply flex-1;
+                        
+                    }
+        
+                    .btn-remove-role{
+                        @apply flex-none;
+                        
+                        .btn{
+                            @apply bg-red-400;
+                            @apply rounded;
+                            @apply text-white font-bold
+                        }
+            
+                        .btn:hover{
+                            @apply bg-red-700;
+                        }
+                    }
+                }
+        
+                .btn-submit{
+                    
+                    @apply w-full;
+                    @apply bg-green-500;
+                    @apply rounded;
+                    @apply text-white font-bold;
+                    @apply py-2;
+                }
+        
+                .btn-submit:hover{
+                    @apply bg-green-700;
+                }
             }
         }
+                
 
-        .btn-submit{
+
             
-            @apply w-full;
-            @apply bg-green-500;
-            @apply rounded;
-            @apply text-white font-bold;
-            @apply py-2;
-        }
-
-        .btn-submit:hover{
-            @apply bg-green-700;
-        }
+        
     }
 }
-
-
-
 
 

@@ -19,7 +19,7 @@ export class UserItemComponent implements OnInit {
   }
 
   @Input () numUser:number=0;
-  @Input () headers:HeaderTable[]=[];
+  //@Input () headers:HeaderTable[]=[];
 
   @Output() remove =new EventEmitter();
   @Output() edit=new EventEmitter();
@@ -41,12 +41,12 @@ export class UserItemComponent implements OnInit {
     this.edit.emit();
   }
 
-  canEdit():Boolean{
-    return this.headers.map(_=>_.title).includes("edit");     
-  }
+  // canEdit():Boolean{
+  //   return this.headers.map(_=>_.title).includes("edit");     
+  // }
 
-  canDelete():Boolean{
-    return this.headers.map(_=>_.title).includes("delete"); 
-  }
+  // canDelete():Boolean{
+  //   return this.headers.map(_=>_.title).includes("delete"); 
+  // }
 
 }

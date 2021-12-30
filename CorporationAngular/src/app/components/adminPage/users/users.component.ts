@@ -1,9 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 //import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserService } from 'src/app/services/adminPage/user.service';
 import { UserInfo } from 'src/app/interfaces/userInfo';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { Permission } from 'src/app/interfaces/userInfo';
+import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
+import { PageState } from 'src/app/interfaces/pageState';
 
 
 
@@ -27,7 +29,15 @@ export class UsersComponent implements OnInit {
   // }
 
   @Input () userId:number=0;
-  @Input () permissions:Permission[]=[];
+  //@Input () permissions:Permission[]=[];
+
+  @Input() @Output() avaiablesPermissions:AvaiablesPermissions={
+    canCreate:false,
+    canRead:false,
+    canUpdate:false,
+    canDelete:false,
+    canMove:false
+  }
   //@Input () userId:number=0;
   // @Input () permissions:Permission[]=[];
 
@@ -35,7 +45,12 @@ export class UsersComponent implements OnInit {
 
   headersTable:HeaderTable[]=[];
 
-  editUserMode:boolean=false;  
+  pageState:PageState={
+    path:"",
+    isActive:true
+  }
+
+  //editUserMode:boolean=false;  
   
   editUser:UserInfo={
     id:0,
@@ -44,7 +59,7 @@ export class UsersComponent implements OnInit {
     roles:[]
   }
 
-  isOpenUserInfo:boolean=false;
+  //isOpenUserInfo:boolean=false;
   
   private _ascDirection = 1;
   private _sortCriteria="";
@@ -97,24 +112,33 @@ export class UsersComponent implements OnInit {
 
   
 
-  edit(rawUserInfo:UserInfo){
+  startEdit(rawUserInfo:UserInfo){
     this.editUser={
       id:rawUserInfo.id,
       username:rawUserInfo.username,
       firstname:rawUserInfo.firstname,
       roles:rawUserInfo.roles
     }
-    this.editUserMode=true;
+    //this.editUserMode=true;
+    this.pageState={
+      path:"editUser",
+      isActive:false
+    }
   }
 
   update(){
     console.log("update in usersComponent")
     console.log(this.editUser);
+    this.closeDialog();
     // this.userService.update(this.editUser)
     //   .subscribe(()=>{
         
     //   })
-    // this.editUserMode=false;
+    //this.editUserMode=false;
+    // this.pageState={
+    //   path:"",
+    //   isActive:true
+    // }
 
   }
 
@@ -129,8 +153,11 @@ export class UsersComponent implements OnInit {
   }
 
   openUserInfo(selectedUser:UserInfo){
-    console.log("open user info");
-    this.isOpenUserInfo=true;
+    //this.isOpenUserInfo=true;
+    this.pageState={
+      path:"dialogUserInfo",
+      isActive:false
+    }
     this.editUser={
       id:selectedUser.id,
       username:selectedUser.username,
@@ -139,10 +166,19 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  closeUserInfo(){
-    this.isOpenUserInfo=false;
-  }
+  // closeUserInfo(){
+  //   this.pageState={
+  //     path:"",
+  //     isActive:true
+  //   }
+  // }
 
+  closeDialog(){
+    this.pageState={
+      path:"",
+      isActive:true
+    }
+  }
   private getHeadersTable():HeaderTable[]{
     const headers= [{
       title:'#',
@@ -156,12 +192,11 @@ export class UsersComponent implements OnInit {
       isActive:true
     }];
 
-    const titles=this.permissions.map(permission=>permission.title);
-    if (titles.includes("update")){
-      headers.push({title:"edit",isActive:false})
+    if (this.avaiablesPermissions.canUpdate) {
+      headers.push({title:"edit",isActive:false});
     }
 
-    if (titles.includes("delete")){
+    if (this.avaiablesPermissions.canDelete) {
       headers.push({title:"delete",isActive:false})
     }
     return headers;

@@ -152,6 +152,7 @@
         
         <app-users
             *ngSwitchCase="'users'"
+            [avaiablesPermissions]="getAvaiablesPermissions('AdminManager')"
         >
         </app-users>
         <h1

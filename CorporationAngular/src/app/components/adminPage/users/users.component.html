@@ -1,15 +1,15 @@
 <!-- <button (click)="onLoad()">load</button> -->
 
-<app-dialog-user-info
+<!-- <app-dialog-user-info
   *ngIf="isOpenUserInfo"
   [userInfo]="editUser"
   (close)="closeUserInfo()"
 >
 
-</app-dialog-user-info>
+</app-dialog-user-info> -->
 
 
-<div *ngIf="!editUserMode else toUpdateForm">
+<div *ngIf="pageState.isActive else toMoveNextPage">
   <table class="table">
       <tr>
         <th 
@@ -28,9 +28,9 @@
           *ngFor="let userInfo of usersInfo let i=index"    
           [numUser]="i+1"
           [userInfo]="userInfo" 
-          [headers]="headersTable"
+          
           (remove)="remove(userInfo.id)"
-          (edit)="edit(userInfo)"
+          (edit)="startEdit(userInfo)"
           (click)="openUserInfo(userInfo)"
       >  
       </tr>
@@ -46,7 +46,26 @@
         (updateUser)="update()"
     >
     </app-edit-user>
+    
 </ng-template>
 
 
+<ng-template #toMoveNextPage>
+  <div [ngSwitch]='pageState.path'>
+    <app-edit-user 
+      *ngSwitchCase="'editUser'"
+      [editUser]="editUser"
+      (updateUser)="update()"
+      (closeDialog)="closeDialog()"
+    >
+    </app-edit-user>
+    <app-dialog-user-info
+      *ngSwitchCase="'dialogUserInfo'"
+      [userInfo]="editUser"
+      (close)="closeDialog()"
+    ></app-dialog-user-info>
+  </div>
+  
+</ng-template>
 
+  
