@@ -21,6 +21,9 @@ namespace DataBase.EntityConfigurations.ProductConfigurations
             builder.Property(_ => _.Title)
                 .IsRequired()
                 .HasMaxLength(255);
+            builder.HasOne(_ => _.Region)
+                .WithMany(_ => _.Factories)
+                .HasForeignKey(_ => _.RegionId);
         }
     }
 }

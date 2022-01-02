@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities
 {
-    public class Factory
+    public class Region
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public ICollection<Department> Departments { get; set; }
-        public Region Region { get; set; }
-        public int RegionId { get; set; }
+        public ICollection<Factory> Factories { get; set; }
     }
 }
