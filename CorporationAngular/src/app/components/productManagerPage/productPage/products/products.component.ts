@@ -7,7 +7,7 @@ import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProduct
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
-import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
+//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 import { ProductUpdateService } from 'src/app/services/products/updateServices/product-update.service';
 
 @Component({

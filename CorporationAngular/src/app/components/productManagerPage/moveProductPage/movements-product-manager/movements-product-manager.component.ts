@@ -4,7 +4,7 @@ import { HeaderTable } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
-import { UpdateService } from 'src/app/services/update.service';
+//import { UpdateService } from 'src/app/services/update.service';
 
 @Component({
   selector: 'app-movements-product-manager',

@@ -4,7 +4,7 @@ import { PageState } from 'src/app/interfaces/pageState';
 import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
-import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
+//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -63,7 +63,7 @@ export class EditProductComponent implements OnInit {
   // }
   constructor(
     private readonly service:ProductsService,
-    private readonly signalrService:SignalrProductService) { 
+    ) { 
     
   }
 
@@ -82,11 +82,11 @@ export class EditProductComponent implements OnInit {
     this.getCategories();
     this.getUnits();
 
-    if (!this.signalrService.isConnection)
-      this.signalrService.startConnection();
-    this.ManufacturerOnLis();
-    this.CategoryOnLis();
-    this.UnitOnLis();
+    // if (!this.signalrService.isConnection)
+    //   this.signalrService.startConnection();
+    //this.ManufacturerOnLis();
+    //this.CategoryOnLis();
+    //this.UnitOnLis();
   }
 
   onSubmit(){
@@ -113,24 +113,24 @@ export class EditProductComponent implements OnInit {
     }
   }
 
-  ManufacturerOnLis(): void {
-    this.signalrService.hubConnection?.on("manufacturerAdd", (newManufacturer:Manufacturer) => {
-      this.manufacturers.push(newManufacturer);
-    });
-  }
+  // ManufacturerOnLis(): void {
+  //   this.signalrService.hubConnection?.on("manufacturerAdd", (newManufacturer:Manufacturer) => {
+  //     this.manufacturers.push(newManufacturer);
+  //   });
+  // }
 
-  CategoryOnLis(): void {
-    this.signalrService.hubConnection?.on("categoryAdd", (newCategory:Category) => {
-      this.categories.push(newCategory);
-      console.log(this.categories)
-    });
-  }
+  // CategoryOnLis(): void {
+  //   this.signalrService.hubConnection?.on("categoryAdd", (newCategory:Category) => {
+  //     this.categories.push(newCategory);
+  //     console.log(this.categories)
+  //   });
+  // }
 
-  UnitOnLis(): void {
-    this.signalrService.hubConnection?.on("unitAdd", (newUnit:Unit) => {
-      this.units.push(newUnit);      
-    });
-  }
+  // UnitOnLis(): void {
+  //   this.signalrService.hubConnection?.on("unitAdd", (newUnit:Unit) => {
+  //     this.units.push(newUnit);      
+  //   });
+  // }
 
   private getManufacturer() {
     this.service.getManufacturers()

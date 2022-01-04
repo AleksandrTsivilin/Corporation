@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 //import { Category, Manufacturer, Unit } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
-import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
+//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 import { ProductUpdateService } from 'src/app/services/products/updateServices/product-update.service';
 
 @Component({

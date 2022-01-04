@@ -18,7 +18,7 @@ import { UserItemComponent } from './components/adminPage/user-item/user-item.co
 import { EditUserComponent } from './components/adminPage/edit-user/edit-user.component';
 import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info/dialog-user-info.component';
 import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
-import { ProductManagerComponent } from './components/productManagerPage/productPage/product-manager/product-manager.component';
+//import { ProductManagerComponent } from './components/productManagerPage/productPage/product-manager/product-manager.component';
 //import { MoveProductComponent } from './components/productPage/move-product/move-product.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
 import { ProductItemComponent } from './components/productManagerPage/productPage/product-item/product-item.component';
@@ -49,7 +49,7 @@ import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
     EditUserComponent,
     DialogUserInfoComponent,
     WorkModulesComponent,
-    ProductManagerComponent,
+    //ProductManagerComponent,
     //MoveProductComponent,
     ProductsComponent,
     ProductItemComponent,

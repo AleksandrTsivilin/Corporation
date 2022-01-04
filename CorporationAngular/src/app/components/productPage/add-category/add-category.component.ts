@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Category } from 'src/app/interfaces/formAddProduct';
-import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
+//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
   selector: 'app-add-category',
@@ -14,14 +14,14 @@ export class AddCategoryComponent implements OnInit {
   }
 
   @Output() addCategory=new EventEmitter();
-  constructor(private readonly signalrService:SignalrProductService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   onSubmit(){
     console.log(this.formCategory);
-    this.signalrService.addCategory(this.formCategory);
+    //this.signalrService.addCategory(this.formCategory);
     this.addCategory.emit();
 
   } 

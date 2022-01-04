@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Unit } from 'src/app/interfaces/formAddProduct';
-import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
+//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
   selector: 'app-add-unit',
@@ -14,13 +14,13 @@ export class AddUnitComponent implements OnInit {
   }
 
   @Output() addUnit=new EventEmitter();
-  constructor(private readonly signalrService:SignalrProductService) { }
+  constructor() { }
 
   ngOnInit(): void {
   }
 
   onSubmit(){
-    this.signalrService.addUnit(this.formUnit);
+    //this.signalrService.addUnit(this.formUnit);
     this.addUnit.emit();
 
   } 
