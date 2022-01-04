@@ -14,31 +14,36 @@ namespace Services.ProductServices.ProductService
     public class ProductService : IProductService
     {
         private readonly DBContext _context;
+        //private readonly AccessService _access;
         public ProductService(DBContext context)
         {
             _context = context;
-        }        
-        public async Task<List<ProductModel>> Get()
+        }
+        public async Task<List<ProductModel>> GetProductsByAccess(string access)
         {
-            return await ( _context.Products
+            var accessService = new AccessService(access);
+            return await _context.Products
                 .Include(p => p.Manufacture)
                 .Include(p => p.Category)
                 .Include(p => p.Unit)
                 .Include(p => p.ProductStorages)
+                .ThenInclude(ps => ps.Storage)
+                .ThenInclude(s => s.Department)
+                .ThenInclude(d => d.Factory)
+                .ThenInclude(f => f.Region)
+                .Where(accessService.Expression)
                 .Select((product) => new ProductModel()
                 {
                     Id = product.Id,
                     Title = product.Title,
                     Price = product.Price,
                     Count = product.ProductStorages
-                    .Sum(ps => ps.CountProduct),
+                            .Sum(ps => ps.CountProduct),
                     Manufacturer = product.Manufacture.Title,
                     Category = product.Category.Title,
                     Unit = product.Unit.Title,
                     IsBanned = product.IsBanned
-
-                }))
-                .ToListAsync();
+                }).ToListAsync();
         }
         public async Task<List<string>> AddProduct(NewProductModel model)
         {
@@ -229,6 +234,7 @@ namespace Services.ProductServices.ProductService
             return await _context.Units
                 .FirstOrDefaultAsync(u => u.Title == title);
         }
-        
     }
+
+
 }

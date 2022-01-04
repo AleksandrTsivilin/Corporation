@@ -10,7 +10,7 @@ namespace Services.ProductServices.ProductService
 {
     public interface IProductService
     {
-        Task<List<ProductModel>> Get();
+        Task<List<ProductModel>> GetProductsByAccess(string access);
         List<ProductModel> GetProductsByUser(int id);
         Task<List<string>> AddProduct(NewProductModel model);
         Task <List<string>> UpdateProduct(NewProductModel model, int id);
