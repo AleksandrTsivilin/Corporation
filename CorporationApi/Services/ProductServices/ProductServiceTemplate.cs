@@ -68,33 +68,33 @@ namespace Services.ProductService
 
         }
 
-        public List<ManufacturerModel> GetManufacturers()
-        {
+        //public List<ManufacturerModel> GetManufacturers()
+        //{
             
-            return _context.Manufactures                
-                .Select((manufacturer)=>new Models.ProductModels.ManufacturerModel()
-                {
-                   Title=manufacturer.Title
-                }).ToList();
-        }
+        //    return _context.Manufactures                
+        //        .Select((manufacturer)=>new Models.ProductModels.ManufacturerModel()
+        //        {
+        //           Title=manufacturer.Title
+        //        }).ToList();
+        //}
 
-        public List<CategoryModel> GetCategories()
-        {
-            return _context.Categoties
-                .Select((category) => new CategoryModel()
-                {
-                    Title = category.Title
-                }).ToList();
-        }
+        //public List<CategoryModel> GetCategories()
+        //{
+        //    return _context.Categoties
+        //        .Select((category) => new CategoryModel()
+        //        {
+        //            Title = category.Title
+        //        }).ToList();
+        //}
 
-        public List<UnitModel> GetUnits()
-        {
-            return _context.Units
-                .Select((unit) => new UnitModel()
-                {
-                    Title = unit.Title
-                }).ToList();
-        }
+        //public List<UnitModel> GetUnits()
+        //{
+        //    return _context.Units
+        //        .Select((unit) => new UnitModel()
+        //        {
+        //            Title = unit.Title
+        //        }).ToList();
+        //}
 
         public  ProductModel AddProduct(NewProductModel model)
         {
@@ -229,64 +229,64 @@ namespace Services.ProductService
                 IsBanned=newProduct.IsBanned
             }; 
         }
-        public ManufacturerModel AddManufacturer(ManufacturerModel model)
-        {
-            _context.Manufactures.Add(new ManufacturerProduct
-            {
-                Title = model.Title
-            });
+        //public ManufacturerModel AddManufacturer(ManufacturerModel model)
+        //{
+        //    _context.Manufactures.Add(new ManufacturerProduct
+        //    {
+        //        Title = model.Title
+        //    });
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
 
-            var newManufacturer = _context.Manufactures
-                .FirstOrDefault((m) => m.Title == model.Title);
+        //    var newManufacturer = _context.Manufactures
+        //        .FirstOrDefault((m) => m.Title == model.Title);
 
-            if (newManufacturer is null) return null;
+        //    if (newManufacturer is null) return null;
 
-            return new ManufacturerModel
-            {
-                Title = newManufacturer.Title
-            };
-        }
+        //    return new ManufacturerModel
+        //    {
+        //        Title = newManufacturer.Title
+        //    };
+        //}
 
-        public CategoryModel AddCategory(CategoryModel model)
-        {
-            _context.Categoties.Add(new CategoryProduct
-            {
-                Title = model.Title
-            });
+        //public CategoryModel AddCategory(CategoryModel model)
+        //{
+        //    _context.Categoties.Add(new CategoryProduct
+        //    {
+        //        Title = model.Title
+        //    });
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
 
-            var newCategory = _context.Categoties
-                .FirstOrDefault((c) => c.Title == model.Title);
+        //    var newCategory = _context.Categoties
+        //        .FirstOrDefault((c) => c.Title == model.Title);
 
-            if (newCategory is null) return null;
+        //    if (newCategory is null) return null;
 
-            return new CategoryModel
-            {
-                Title = newCategory.Title
-            };
-        }
-        public UnitModel AddUnit(UnitModel model)
-        {
-            _context.Units.Add(new UnitProduct
-            {
-                Title = model.Title
-            });
+        //    return new CategoryModel
+        //    {
+        //        Title = newCategory.Title
+        //    };
+        //}
+        //public UnitModel AddUnit(UnitModel model)
+        //{
+        //    _context.Units.Add(new UnitProduct
+        //    {
+        //        Title = model.Title
+        //    });
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
 
-            var newUnit = _context.Units
-                .FirstOrDefault((u) => u.Title == model.Title);
+        //    var newUnit = _context.Units
+        //        .FirstOrDefault((u) => u.Title == model.Title);
 
-            if (newUnit is null) return null;
+        //    if (newUnit is null) return null;
 
-            return new UnitModel
-            {
-                Title = newUnit.Title
-            };
-        }
+        //    return new UnitModel
+        //    {
+        //        Title = newUnit.Title
+        //    };
+        //}
 
         public List<StorageModel> GetStorages()
         {

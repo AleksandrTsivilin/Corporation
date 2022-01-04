@@ -14,19 +14,19 @@ namespace Services.ProductService
     {
         List<ProductModel> Get();
         List<ProductModel> GetProductsByUser(int id);
-        List<ManufacturerModel> GetManufacturers();
+        //List<ManufacturerModel> GetManufacturers();
 
-        List<CategoryModel> GetCategories();
+        //List<CategoryModel> GetCategories();
 
-        List<UnitModel> GetUnits();
+        //List<UnitModel> GetUnits();
 
         ProductModel AddProduct(NewProductModel model);
 
         ProductModel UpdateProduct(NewProductModel model, int id);
-        ManufacturerModel AddManufacturer(ManufacturerModel model);
+        //ManufacturerModel AddManufacturer(ManufacturerModel model);
 
-        CategoryModel AddCategory(CategoryModel model);
-        UnitModel AddUnit(UnitModel model);
+        //CategoryModel AddCategory(CategoryModel model);
+        //UnitModel AddUnit(UnitModel model);
         
         ProductModel RemoveProduct(int id);
         List<StorageModel> GetStorages();

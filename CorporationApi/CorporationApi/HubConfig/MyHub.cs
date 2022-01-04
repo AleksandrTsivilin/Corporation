@@ -43,23 +43,23 @@ namespace CorporationApi.HubConfig
             if (newProduct is not null)
                 Clients.All.SendAsync("updateProduct", newProduct);
         }
-        public void AddManufacturer(ManufacturerModel model)
-        {
-            var newManufacturer = _service.AddManufacturer(model);
-            Clients.All.SendAsync("manufacturerAdd", newManufacturer);
-        }
+        //public void AddManufacturer(ManufacturerModel model)
+        //{
+        //    var newManufacturer = _service.AddManufacturer(model);
+        //    Clients.All.SendAsync("manufacturerAdd", newManufacturer);
+        //}
 
-        public void AddCategory(CategoryModel model)
-        {
-            var newCategory = _service.AddCategory(model);
-            Clients.All.SendAsync("categoryAdd", newCategory);
-        }
+        //public void AddCategory(CategoryModel model)
+        //{
+        //    var newCategory = _service.AddCategory(model);
+        //    Clients.All.SendAsync("categoryAdd", newCategory);
+        //}
 
-        public void AddUnit(UnitModel model)
-        {
-            var newUnit = _service.AddUnit(model);
-            Clients.All.SendAsync("unitAdd", newUnit);
-        }
+        //public void AddUnit(UnitModel model)
+        //{
+        //    var newUnit = _service.AddUnit(model);
+        //    Clients.All.SendAsync("unitAdd", newUnit);
+        //}
 
     }
 }
