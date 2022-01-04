@@ -3,7 +3,7 @@ import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces
 //import { Category, Manufacturer, Unit } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
-import { ProductUpdateService } from 'src/app/services/products/updateServices/product-update.service';
+import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
 
 @Component({
   selector: 'app-add-product',

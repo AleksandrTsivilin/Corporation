@@ -6,8 +6,8 @@ import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
-import { MovementsUpdateService } from 'src/app/services/products/updateServices/movements-update.service';
-import { ProductUpdateService } from 'src/app/services/products/updateServices/product-update.service';
+import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
+import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
 //import { UpdateService } from 'src/app/services/update.service';
 
 @Component({
