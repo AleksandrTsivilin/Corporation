@@ -5,6 +5,7 @@ import { HeaderTable } from 'src/app/interfaces/header-table';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
+import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
@@ -25,9 +26,7 @@ export class ProductMovementsComponent implements OnInit {
 
   
 
-  currentStorage:StorageInfo={
-    title:""
-  }
+  currentStorage:string="";
 
   avaiableStorages:StorageInfo[]=[];
 
@@ -37,7 +36,8 @@ export class ProductMovementsComponent implements OnInit {
   constructor(
       private service:ProductsService,
       private readonly updateService:MovementsUpdateService,
-      private readonly updateServiceProduct:ProductUpdateService
+      private readonly updateServiceProduct:ProductUpdateService,
+      private readonly storageService:StorageService
       //private readonly serviceUpdate:UpdateService,
       //private readonly signalrService:SignalrProductService
       ) { }
@@ -54,7 +54,7 @@ export class ProductMovementsComponent implements OnInit {
     this.updateService.movementsProduct$.subscribe((result)=>{
       console.log("sub productstorage")
       result.forEach(r=>{
-        if (r===this.currentStorage.title){
+        if (r===this.currentStorage){
           console.log("compare")
           this.setFormMovedProduct();
 
@@ -74,7 +74,7 @@ export class ProductMovementsComponent implements OnInit {
 
   this.updateServiceProduct.changesProductStorage$.subscribe((result)=>{
     result.forEach(r=>{
-      if (r===this.currentStorage.title){
+      if (r===this.currentStorage){
         console.log("compare")
         this.setFormMovedProduct();
 
@@ -161,20 +161,18 @@ export class ProductMovementsComponent implements OnInit {
     console.log(this.formMovedProducts.movedProducts)
   }
   private getCurrentStorage(){
-    console.log("get current")
-    this.service.getStorageByUser(1)
+    this.storageService.getStorageByUser()
     .subscribe((result)=>{
-      this.currentStorage=result;
-      this.formMovedProducts.from=this.currentStorage.title;
-      console.log(this.currentStorage)
+      this.currentStorage=result.title;
+      this.formMovedProducts.from=this.currentStorage;
     },()=>{console.log("failed getStorageUser")});
   }
 
   private getAvaiableStorages(){
-    this.service.getStorages()
+    this.storageService.getStoragesByAccess()
       .subscribe((result)=>{
         this.avaiableStorages=result
-        .filter(storage=>storage.title!==this.currentStorage.title);
+        .filter(storage=>storage.title!==this.currentStorage);
       },()=>{console.log("failed getStorage")})
   }
 

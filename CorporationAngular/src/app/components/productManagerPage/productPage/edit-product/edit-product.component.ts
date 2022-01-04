@@ -3,7 +3,10 @@ import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces
 import { PageState } from 'src/app/interfaces/pageState';
 import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
+import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
+import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
 import { ProductsService } from 'src/app/services/productPage/products.service';
+import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
@@ -63,6 +66,9 @@ export class EditProductComponent implements OnInit {
   // }
   constructor(
     private readonly service:ProductsService,
+    private readonly manufacturerService:ManufacturerService,
+    private readonly categoryServie:CategoryService,
+    private readonly unitService:UnitService
     ) { 
     
   }
@@ -133,21 +139,21 @@ export class EditProductComponent implements OnInit {
   // }
 
   private getManufacturer() {
-    this.service.getManufacturers()
+    this.manufacturerService.getManufacturers()
       .subscribe((result)=>{
         this.manufacturers=result;
       },()=>{console.log("failed getManufacturer editProduct")})
   }
 
   private getCategories() {
-    this.service.getCategories()
+    this.categoryServie.getCategories()
       .subscribe((result)=>{
         this.categories=result;
       },()=>{console.log("failed getCategories editProduct")})
   }
 
   private getUnits() {
-    this.service.getUnits()
+    this.unitService.getUnits()
       .subscribe((result)=>{
         this.units=result;
       },()=>{console.log("failed getUnits editProduct")})

@@ -31,7 +31,7 @@ export class ProductUpdateService {
       category:formAddProduct.category,
       unit:formAddProduct.unit
     } 
-    
+    console.log('addProduct')
     this.signalr.hubConnection?.invoke("AddProduct",addedProduct)
       .then()
       .catch(err=>{console.error(err)})

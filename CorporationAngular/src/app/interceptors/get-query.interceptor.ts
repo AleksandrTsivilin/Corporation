@@ -16,20 +16,38 @@ export class GetQueryInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler)
     : Observable<HttpEvent<unknown>> {
     
+    const userId=1;
     const isGetMethod=request.method.includes("GET");
     const isContainByAccess=request.url.includes("ByAccess");
-    console.log(isContainByAccess);
-    if (!isGetMethod || !isContainByAccess)
+    const isContainByUser=request.url.includes("ByUser")
+    
+    if (!isGetMethod)
       return next.handle(request);
-    
-    
-    console.log("includes get")
-    const copy= request.clone({
-      headers: new HttpHeaders({
-        "access":"department"
+
+    if (!isContainByAccess && !isContainByUser)
+      return next.handle(request);
+      
+    if (isContainByAccess){
+      console.log("get + byAccess");
+      const copy= request.clone({
+        headers: new HttpHeaders({
+          "access":"department"
+        })
       })
-    })
-    return next.handle(copy);
+      return next.handle(copy);
+    }
+    else {
+      console.log("get + byUser")
+      const copy=request.clone({
+        headers:new HttpHeaders({
+          "userId":userId.toString()
+        })
+      })
+      return next.handle(copy);
+    }
+    
+    
+    
     
     
   }
