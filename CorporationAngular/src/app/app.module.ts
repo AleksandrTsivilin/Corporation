@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -32,7 +32,7 @@ import { AddUnitComponent } from './components/productPage/add-unit/add-unit.com
 import { ProductMovementsComponent } from './components/productManagerPage/moveProductPage/product-movements/product-movements.component';
 import {MovementsProductManagerComponent} from './components/productManagerPage/moveProductPage/movements-product-manager/movements-product-manager.component';
 import { ProductItemMovementsComponent } from './components/productManagerPage/moveProductPage/product-item-movements/product-item-movements.component';
-
+import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
 
 
 
@@ -75,7 +75,13 @@ import { ProductItemMovementsComponent } from './components/productManagerPage/m
     //FormBuilder,
     //FormArray
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: GetQueryInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
