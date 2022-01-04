@@ -20,8 +20,8 @@ namespace CorporationApi.Controllers
             _service = service;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromHeader] string access)
+        [HttpGet("productsByAccess")]
+        public async Task<IActionResult> GetProductsByAccess([FromHeader] string access)
         {
             var product = await Task.Run(() => _service.GetProductsByAccess(access));
             return Ok(product);
