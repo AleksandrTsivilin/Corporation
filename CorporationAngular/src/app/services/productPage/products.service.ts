@@ -12,8 +12,8 @@ export class ProductsService {
 
   constructor(private readonly client:HttpClient) { }
 
-  getProducts(){
-    const urlGetProducts="https://localhost:5001/api/Product";
+  getProductsByAccess(){
+    const urlGetProducts="https://localhost:5001/api/Product/productsByAccess";
     return this.client.get<ProductInfo[]>(urlGetProducts);
   }
 

@@ -261,7 +261,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private async getProducts(){
-    await this.service.getProducts()
+    await this.service.getProductsByAccess()
       .subscribe((result)=>{
         this.productsInfo=result;
         console.log(this.productsInfo)
