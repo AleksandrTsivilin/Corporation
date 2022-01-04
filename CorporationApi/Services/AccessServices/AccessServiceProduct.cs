@@ -1,26 +1,20 @@
 ﻿using DataBase.Entities.ProductEntities;
-using Services.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace Services.AccessServices
 {
-    public class AccessService
+    public class AccessServiceProduct : AccessServiceBase<Product>
     {
-        //public Expression<Func<ProductModel, bool>> Expression { get; set; }
-        public Expression<Func<Product, bool>> Expression { get; set; }
-        public AccessService(string access)
+        public AccessServiceProduct(string access)
         {
             switch (access)
             {
                 case "full":
                     Expression = product => true;
-                    //Expression = product => product.ProductStorages
-                    //.Any<ProductStorage>(ps => ps.Storage.Department.Title == "12");
                     break;
                 case "region":
                     Expression = product => product.ProductStorages
@@ -36,6 +30,5 @@ namespace Services
                     break;
             }
         }
-
     }
 }

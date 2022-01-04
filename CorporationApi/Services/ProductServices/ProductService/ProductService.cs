@@ -1,6 +1,7 @@
 ﻿using DataBase;
 using DataBase.Entities.ProductEntities;
 using Microsoft.EntityFrameworkCore;
+using Services.AccessServices;
 using Services.Models;
 using Services.Models.ProductModels;
 using System;
@@ -21,7 +22,7 @@ namespace Services.ProductServices.ProductService
         }
         public async Task<List<ProductModel>> GetProductsByAccess(string access)
         {
-            var accessService = new AccessService(access);
+            var accessService = new AccessServiceProduct(access);
             return await _context.Products
                 .Include(p => p.Manufacture)
                 .Include(p => p.Category)
