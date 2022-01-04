@@ -32,7 +32,7 @@ namespace Services
                     break;
                 case "department":
                     Expression = product => product.ProductStorages
-                        .Any<ProductStorage>(ps => ps.Storage.DepartmentId == 15);
+                        .Any<ProductStorage>(ps => ps.Storage.DepartmentId == 1);
                     break;
             }
         }

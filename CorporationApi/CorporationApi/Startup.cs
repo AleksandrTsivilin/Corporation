@@ -11,7 +11,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Services.ProductService;
 using Services.ProductService.MovementsService;
+using Services.ProductServices.CategoriesService;
+using Services.ProductServices.ManufacturerService;
+using Services.ProductServices.ManufacturersService;
 using Services.ProductServices.ProductService;
+using Services.ProductServices.StoragesService;
+using Services.ProductServices.UnitsService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,10 +50,14 @@ namespace CorporationApi
                 options.EnableDetailedErrors = true;
             });
 
-            services.AddScoped<IProductServiceTemplate, ProductServiceTemplate>();
+            //services.AddScoped<IProductServiceTemplate, ProductServiceTemplate>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IMovementsServive, MovementsService>();
+            services.AddScoped<IManufacturerService, ManufacturerService>();
+            services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<IUnitService, UnitService>();
+            services.AddScoped<IStorageService, StorageService>();
             services.AddScoped<DBContext>();
         }
 
@@ -72,7 +81,7 @@ namespace CorporationApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<MyHub>("/toastr");
+                //endpoints.MapHub<MyHub>("/toastr");
                 endpoints.MapHub<ProductHub>("productHub");
                 endpoints.MapHub<MovementsHub>("/movementsHub");
             });

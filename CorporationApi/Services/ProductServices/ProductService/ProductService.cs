@@ -47,7 +47,7 @@ namespace Services.ProductServices.ProductService
         }
         public async Task<List<string>> AddProduct(NewProductModel model)
         {
-            var storage = await GetStorageByTitle(model.Storage);            
+            var storage = await GetStorageByTitle(model.Storage);
 
             var manufacturer = await GetManufacturerByTitle(model.Manufacturer);
 
@@ -60,11 +60,11 @@ namespace Services.ProductServices.ProductService
             if (storage is null
                 || manufacturer is null
                 || category is null
-                || unit is null) return null;         
+                || unit is null) return null;
 
             try
             {
-                 _context.Products.Add(new Product
+                _context.Products.Add(new Product
                 {
                     Title = model.Title,
                     Price = model.Price,

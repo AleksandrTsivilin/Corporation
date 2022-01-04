@@ -18,18 +18,18 @@ namespace Services.Models.ProductModels
         
     }
 
-    public class ManufacturerModel
-    {
-        public string Title { get; set; }
-    }
+    //public class ManufacturerModel
+    //{
+    //    public string Title { get; set; }
+    //}
 
-    public class CategoryModel
-    {
-        public string Title { get; set; }
-    }
+    //public class CategoryModel
+    //{
+    //    public string Title { get; set; }
+    //}
 
-    public class UnitModel
-    {
-        public string Title { get; set; }
-    }
+    //public class UnitModel
+    //{
+    //    public string Title { get; set; }
+    //}
 }
