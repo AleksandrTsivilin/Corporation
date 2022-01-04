@@ -1,5 +1,6 @@
 ﻿using DataBase;
 using Microsoft.EntityFrameworkCore;
+using Services.AccessServices;
 using Services.Models.ProductModels;
 using System;
 using System.Collections.Generic;
@@ -17,9 +18,22 @@ namespace Services.ProductServices.StoragesService
             _context = context;
         }
 
-        public Task<List<StorageModel>> GetStorageByAccess(string access)
+        public async Task<List<StorageModel>> GetStorageByAccess(string access)
         {
-            throw new NotImplementedException();
+            var accessStorages = new AccessServiceStorage("factory");
+
+            return await _context.Storages
+                .Include(s => s.Department)
+                .ThenInclude(d => d.Factory)
+                .ThenInclude(f => f.Region)
+                .Where(accessStorages.Expression)
+                .Select((storage) => new StorageModel()
+                {
+                    Title = storage.Title
+                }).ToListAsync();
+
+            //Console.WriteLine(a);
+            //return new List<StorageModel>();
         }
 
         public async Task<StorageModel> GetStorageByUser(int userId)
