@@ -4,9 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-//import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule } from '@angular/forms';
-//import {  FormArray, FormBuilder, FormControl, FormGroup, FormsModule } from '@angular/forms';
-
 import { AppComponent } from './components/appComponent/app.component';
 import { MainPageComponent } from './components/mainPageComponent/main-page/main-page.component';
 import { RoleSelectorComponent } from './components/roleSelectorComponent/role-selector/role-selector.component';
@@ -18,8 +15,6 @@ import { UserItemComponent } from './components/adminPage/user-item/user-item.co
 import { EditUserComponent } from './components/adminPage/edit-user/edit-user.component';
 import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info/dialog-user-info.component';
 import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
-//import { ProductManagerComponent } from './components/productManagerPage/productPage/product-manager/product-manager.component';
-//import { MoveProductComponent } from './components/productPage/move-product/move-product.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
 import { ProductItemComponent } from './components/productManagerPage/productPage/product-item/product-item.component';
 import { AddProductComponent } from './components/productManagerPage/productPage/add-product/add-product.component';
@@ -27,10 +22,7 @@ import { EditProductComponent } from './components/productManagerPage/productPag
 import { AddManufacturerComponent } from './components/productPage/add-manufacturer/add-manufacturer.component';
 import { AddCategoryComponent } from './components/productPage/add-category/add-category.component';
 import { AddUnitComponent } from './components/productPage/add-unit/add-unit.component';
-//import { MoveProductItemComponent } from './components/productPage/move-product-item/move-product-item.component';
-//import { MovementsProductManagerComponent } from './components/productPage/movementsProductPage/movements-product-manager/movements-product-manager.component';
 import { ProductMovementsComponent } from './components/productManagerPage/moveProductPage/product-movements/product-movements.component';
-import {MovementsProductManagerComponent} from './components/productManagerPage/moveProductPage/movements-product-manager/movements-product-manager.component';
 import { ProductItemMovementsComponent } from './components/productManagerPage/moveProductPage/product-item-movements/product-item-movements.component';
 import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
 
@@ -49,8 +41,6 @@ import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
     EditUserComponent,
     DialogUserInfoComponent,
     WorkModulesComponent,
-    //ProductManagerComponent,
-    //MoveProductComponent,
     ProductsComponent,
     ProductItemComponent,
     AddProductComponent,
@@ -58,8 +48,6 @@ import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
     AddManufacturerComponent,
     AddCategoryComponent,
     AddUnitComponent,
-    //MoveProductItemComponent,
-    MovementsProductManagerComponent,
     ProductMovementsComponent,
     ProductItemMovementsComponent,
     
@@ -70,10 +58,6 @@ import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    //FormControl,
-    //FormGroup,
-    //FormBuilder,
-    //FormArray
   ],
   providers: [
     {

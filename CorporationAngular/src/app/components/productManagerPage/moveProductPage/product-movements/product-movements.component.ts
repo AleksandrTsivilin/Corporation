@@ -37,7 +37,8 @@ export class ProductMovementsComponent implements OnInit {
       private service:ProductsService,
       private readonly updateService:MovementsUpdateService,
       private readonly updateServiceProduct:ProductUpdateService,
-      private readonly storageService:StorageService
+      private readonly storageService:StorageService,
+      private readonly productService:ProductsService
       //private readonly serviceUpdate:UpdateService,
       //private readonly signalrService:SignalrProductService
       ) { }
@@ -130,7 +131,7 @@ export class ProductMovementsComponent implements OnInit {
   }
 
   private setFormMovedProduct(){
-    this.service.getProductsByUser()
+    this.productService.getProductsByUser()
       .subscribe((products)=>{
         console.log(products)
         this.setMovedProduct(products);        
