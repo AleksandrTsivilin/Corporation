@@ -1,5 +1,7 @@
 ﻿using DataBase;
+using DataBase.Entities.ProductEntities;
 using Microsoft.EntityFrameworkCore;
+using Repositories.ProductRepositories;
 using Services.AccessServices;
 using Services.Models.ProductModels;
 using System;
@@ -13,9 +15,11 @@ namespace Services.ProductServices.StoragesService
     public class StorageService : IStorageService
     {
         private readonly DBContext _context;
-        public StorageService(DBContext context)
+        private readonly IRepository<Storage> _repository;
+        public StorageService(DBContext context, IRepository<Storage> repository)
         {
             _context = context;
+            _repository = repository;
         }
 
         public async Task<List<StorageModel>> GetStorageByAccess(string access)
@@ -31,9 +35,6 @@ namespace Services.ProductServices.StoragesService
                 {
                     Title = storage.Title
                 }).ToListAsync();
-
-            //Console.WriteLine(a);
-            //return new List<StorageModel>();
         }
 
         public async Task<StorageModel> GetStorageByUser(int userId)
@@ -50,11 +51,18 @@ namespace Services.ProductServices.StoragesService
 
         public async Task<List<StorageModel>> GetStorages()
         {
-            return await _context.Storages
-                .Select((storage) => new StorageModel()
-                {
-                    Title = storage.Title
-                }).ToListAsync();
+            //return await _context.Storages
+            //    .Select((storage) => new StorageModel()
+            //    {
+            //        Title = storage.Title
+            //    }).ToListAsync();
+            var storages = await _repository.Get();
+            return storages.Select((s) => new StorageModel()
+            {
+                Title = s.Title
+            }).ToList();
+            //Console.WriteLine(b);
+            //return b;
         }
     }
 }

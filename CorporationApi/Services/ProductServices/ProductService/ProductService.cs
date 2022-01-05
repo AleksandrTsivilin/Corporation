@@ -111,7 +111,7 @@ namespace Services.ProductServices.ProductService
         {
             return _context.Product_Storage
                 .Include(ps => ps.Product)
-                .Where(ps => ps.StorageId == 1)
+                .Where(ps => ps.StorageId == 5)
                 .Select(ps => new ProductModel()
                 {
                     Id = ps.Product.Id,
@@ -186,7 +186,6 @@ namespace Services.ProductServices.ProductService
         }
         private ProductModel CreateProductModel(string title)
         {
-            
             var newProduct = GetProduct(title);
 
             if (newProduct is null) return null;

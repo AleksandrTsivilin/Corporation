@@ -1,5 +1,6 @@
 using CorporationApi.HubConfig;
 using DataBase;
+using DataBase.Entities.ProductEntities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Repositories.ProductRepositories;
 using Services.ProductService;
 using Services.ProductService.MovementsService;
 using Services.ProductServices.CategoriesService;
@@ -58,6 +60,10 @@ namespace CorporationApi
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitService, UnitService>();
             services.AddScoped<IStorageService, StorageService>();
+            services.AddScoped<IRepository<Storage>, Repository<Storage>>();
+            services.AddScoped<IRepository<CategoryProduct>, Repository<CategoryProduct>>();
+            services.AddScoped<IRepository<ManufacturerProduct>, Repository<ManufacturerProduct>>();
+            services.AddScoped<IRepository<UnitProduct>, Repository<UnitProduct>>();
             services.AddScoped<DBContext>();
         }
 

@@ -6,12 +6,20 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CorporationApi", "CorporationApi\CorporationApi.csproj", "{6DF9914E-7E71-43AB-92C6-DAF0FC37A619}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Services", "Services\Services.csproj", "{118E18B3-B0E1-4ED9-927F-071F34730DE1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{21CAB6B6-CC5C-4DD9-8DE1-80FD31293D66} = {21CAB6B6-CC5C-4DD9-8DE1-80FD31293D66}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataBase", "DataBase\DataBase.csproj", "{8EE6A827-E66B-4BE2-9C49-54BECA97B272}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{7957FACF-BD8D-46DE-B956-0EEACE4874E2}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Repositories", "Repositories\Repositories.csproj", "{21CAB6B6-CC5C-4DD9-8DE1-80FD31293D66}"
+	ProjectSection(ProjectDependencies) = postProject
+		{8EE6A827-E66B-4BE2-9C49-54BECA97B272} = {8EE6A827-E66B-4BE2-9C49-54BECA97B272}
 	EndProjectSection
 EndProject
 Global
@@ -32,6 +40,10 @@ Global
 		{8EE6A827-E66B-4BE2-9C49-54BECA97B272}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EE6A827-E66B-4BE2-9C49-54BECA97B272}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8EE6A827-E66B-4BE2-9C49-54BECA97B272}.Release|Any CPU.Build.0 = Release|Any CPU
+		{21CAB6B6-CC5C-4DD9-8DE1-80FD31293D66}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{21CAB6B6-CC5C-4DD9-8DE1-80FD31293D66}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{21CAB6B6-CC5C-4DD9-8DE1-80FD31293D66}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{21CAB6B6-CC5C-4DD9-8DE1-80FD31293D66}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
