@@ -5,13 +5,13 @@ export interface TokenData{
 }
 
 export interface RoleUser{
-    title:string,
-    permissions:PermissionUser[],
+    Title:string,
+    Permissions:PermissionUser[],
     access:Access
 }
 
 export interface PermissionUser{
-    title:string
+    Title:string
 }
 
 export interface Access{

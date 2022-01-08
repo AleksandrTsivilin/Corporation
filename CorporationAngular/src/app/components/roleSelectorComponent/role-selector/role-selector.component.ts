@@ -1,9 +1,11 @@
 import { Component, OnInit, Output } from '@angular/core';
+import { TokenData } from 'src/app/interfaces/auth/tokenData';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';
 //import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserInfo } from 'src/app/interfaces/userInfo';
 import { Permission } from 'src/app/interfaces/userInfo';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-role-selector',
@@ -12,19 +14,10 @@ import { Permission } from 'src/app/interfaces/userInfo';
 })
 export class RoleSelectorComponent implements OnInit {
 
-  user:UserInfo={
-    id:0,
-    username:"",
-    firstname:"",
+  tokenData:TokenData={
+    userId:0,
+    fullname:"",
     roles:[]
-  }
-
-  private avaiablesPermissions:AvaiablesPermissions={
-    canCreate:false,
-    canRead:false,
-    canUpdate:false,
-    canDelete:false,
-    canMove:false
   }
 
   pageState:PageState={
@@ -34,44 +27,38 @@ export class RoleSelectorComponent implements OnInit {
 
   openedTabs:string []=[];
 
-  // dataUser:DataUser={
-  //   id:null,
-  //   roles:null,
-  //   permissions:null
-  // } 
-
-  //isSelected:boolean=false;
-  //modeSelector:string="";
-  constructor() { }
+  
+  constructor(private readonly authService : AuthService) { }
 
   ngOnInit(): void {
-    //this.isSelected=false;
-    //this.dataUser=this.getDataUser();
-
-    this.user=this.getUser();    
+    this.authService.tokenData$.subscribe(tokenData=>{
+      if (tokenData !==null) {
+        this.tokenData=tokenData;
+      }  
+    })  
   }
 
   checkRole(title:string){    
-    return this.user.roles
-      .map(r=>r.title)
-      .includes(title);
-    
+    return this.tokenData.roles
+      .map(r=>r.Title)
+      .includes(title);    
   }
 
   
 
   getAvaiablesPermissions(selectedRole:string):AvaiablesPermissions{
-    const permissionTitles=this.user.roles
-      .filter(role=>role.title===selectedRole)
-      .map(role=>role.permissions)[0]
-      .map(permission=>permission.title);
+    const permissionTitles=this.tokenData.roles
+      .filter(role=>role.Title===selectedRole)
+      .map(r=>r.Permissions)[0]
+      .map(p=>p.Title);      
+     
     return {
-      canCreate:permissionTitles.includes("create"),
-      canRead:permissionTitles.includes("read") || 
-        permissionTitles.includes("update") ||
-        permissionTitles.includes("delete"),
-      canUpdate:permissionTitles.includes("update"),
-      canDelete:permissionTitles.includes("delete"),
+      canCreate:permissionTitles.includes("Create"),
+      canRead:permissionTitles.includes("Read") || 
+        permissionTitles.includes("Update") ||
+        permissionTitles.includes("Delete"),
+      canUpdate:permissionTitles.includes("Update"),
+      canDelete:permissionTitles.includes("Delete"),
       canMove:permissionTitles.includes("move")
     }
   }
@@ -84,10 +71,6 @@ export class RoleSelectorComponent implements OnInit {
         this.openedTabs.push(path);
   }
 
-  // addTab(title:string){
-  //   if (!this.openedTabs.includes(title))
-  //       this.openedTabs.push(title);
-  // }
 
   returnToSelector(){
     this.pageState={
@@ -113,61 +96,6 @@ export class RoleSelectorComponent implements OnInit {
     
     indexTab === this.openedTabs.length
       ?this.moveToTab( this.openedTabs[(this.openedTabs.length-1)])
-      :this.moveToTab(this.openedTabs[indexTab]);     
-    
-    
+      :this.moveToTab(this.openedTabs[indexTab]); 
   }
-  // canCreate():boolean {       
-  //   return this.permissions
-  //     .map(permission=>permission.title)
-  //     .includes("create");
-    
-  // }
-  onSelect(selected:string){
-    console.log("onSelectedService");
-    //this.modeSelector=selected;
-    //this.isSelected=true;
-  }
-  
-  getPermissions(selectedRole:string):Permission[]{
-    return this.user.roles
-      .filter(role=>role.title===selectedRole)
-      .map(_=>_.permissions)[0];    
-  }
-
-  
-
-  // exit(){
-  //   this.isSelected=false;
-  // }
-
-  //template methods
-
-
-  getUser():UserInfo{
-    return {
-      id:1,
-      username:"UserMax",
-      firstname:"Max",
-      roles:[{
-        title:"AdminManager",
-        permissions:[{title:"create"},{title:"read"},{title:"update"},{title:"delete"}]
-      },{
-        title:"ProductManager",
-        permissions:[{title:"create"},{title:"read"},{title:"update"},{title:"delete"},{title:"move"}]
-      },{
-        title:"MovementsProductManager",
-        permissions:[{title:"create"},{title:"read"},{title:"update"},{title:"delete"},{title:"move"}]
-      }]
-    }
-  }
-
-  // getDataUser():DataUser{
-  //   return {
-  //     id:1,
-  //     roles:["AdminManager","ProductManager"],
-  //     permissions:["create","read","update","delete"]
-  //   }
-  // }
-
 }

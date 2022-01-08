@@ -86,7 +86,7 @@
         <div 
             class="permissions-section" 
             (click)="changeModePage('addUser')"
-            *ngIf="getAvaiablesPermissions('ProductManager').canCreate"
+            *ngIf="getAvaiablesPermissions('AdminManager').canCreate"
         >
             <div class="img-area">
                 <div class="img">            
@@ -121,7 +121,7 @@
         <div 
             class="permissions-section" 
             (click)="changeModePage('addMovements')"
-            *ngIf="getAvaiablesPermissions('ProductManager').canCreate"
+            *ngIf="getAvaiablesPermissions('MovementsProductManager').canCreate"
         >
             <div class="img-area">
                 <div class="img">            
