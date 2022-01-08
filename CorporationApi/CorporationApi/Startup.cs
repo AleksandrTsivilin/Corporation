@@ -1,6 +1,7 @@
 using CorporationApi.HubConfig;
 using DataBase;
 using DataBase.Entities.ProductEntities;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -9,8 +10,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories.ProductRepositories;
+using Services.AuthServices;
 using Services.ProductService;
 using Services.ProductService.MovementsService;
 using Services.ProductServices.CategoriesService;
@@ -19,9 +22,11 @@ using Services.ProductServices.ManufacturersService;
 using Services.ProductServices.ProductService;
 using Services.ProductServices.StoragesService;
 using Services.ProductServices.UnitsService;
+using Services.UserServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace CorporationApi
@@ -56,6 +61,8 @@ namespace CorporationApi
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IMovementsServive, MovementsService>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitService, UnitService>();
@@ -65,6 +72,22 @@ namespace CorporationApi
             services.AddScoped<IRepository<ManufacturerProduct>, Repository<ManufacturerProduct>>();
             services.AddScoped<IRepository<UnitProduct>, Repository<UnitProduct>>();
             services.AddScoped<DBContext>();
+
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters =
+                        new TokenValidationParameters
+                        {
+                            IssuerSigningKey = new SymmetricSecurityKey(
+                                Encoding.UTF8.GetBytes(Configuration["SignignKey"])),
+                            ValidateIssuerSigningKey = true,
+                            ValidateLifetime = true,
+                            ValidateIssuer = false,
+                            ValidateAudience = false,
+
+                        };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +106,8 @@ namespace CorporationApi
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
             {
