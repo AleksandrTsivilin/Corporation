@@ -41,6 +41,18 @@ namespace Services.UserServices
                         },
                         RoleAccess = new Access{Title = "Factory"}
                     },
+                    new Role
+                    {
+                        Title = "MovementsProductManager",
+                        Permissions = new List<Permission>
+                        {
+                            new Permission{Title="Create"},
+                            new Permission{Title = "Read"},
+                            new Permission{Title = "Update"},
+                            new Permission{Title = "Delete"}
+                        },
+                        RoleAccess = new Access{Title = "Factory"}
+                    },
 
                 }
             };
