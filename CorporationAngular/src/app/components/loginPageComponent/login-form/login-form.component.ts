@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RegistrationForm } from 'src/app/interfaces/registrationForm';
+import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-login-form',
   templateUrl: './login-form.component.html',
@@ -7,11 +8,11 @@ import { RegistrationForm } from 'src/app/interfaces/registrationForm';
 })
 export class LoginFormComponent implements OnInit {
 
-  private registrationForm:RegistrationForm={
+  registrationForm:RegistrationForm={
     username:"",
     password:""
   }
-  constructor() { }
+  constructor(private readonly authService:AuthService) { }
 
   ngOnInit(): void {
   }
@@ -21,6 +22,11 @@ export class LoginFormComponent implements OnInit {
       password:"admin"
     }
     console.log(this.registrationForm);
+    this.authService.login(this.registrationForm)
+      .subscribe(result=>{
+        console.log(result.fullname)
+
+      },()=>console.log("error auth"))
   }
 
 }
