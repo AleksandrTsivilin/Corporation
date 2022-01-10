@@ -9,19 +9,14 @@
 </td>
 <td 
     class="action-btn"
-       
+    *ngIf="avaiablePermissions.canUpdate"  
 >    
     <button class="btn" (click)="editUser()">✏️</button>   
 </td>
-<!-- <td 
-    class="action-btn"
-    *ngIf="canEdit()"    
->    
-    <button class="btn" (click)="editUser()">✏️</button>   
-</td> -->
+
 <td 
     class="action-btn"
-    
+    *ngIf="avaiablePermissions.canDelete"
 >    
     <button class="btn" (click)="removeUser()">❌</button>       
 </td>

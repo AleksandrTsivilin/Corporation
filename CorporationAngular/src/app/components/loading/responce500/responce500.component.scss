@@ -1,0 +1,21 @@
+
+.page-responce500{
+    @apply h-screen;
+    @apply flex  justify-center;
+    
+
+    .page-responce-container{
+        @apply w-96;  
+
+        .login-form{
+            
+            .img-responce{
+                @apply w-96 h-96; 
+                            
+                .img{
+                    @apply w-full;
+                }
+              }          
+        }
+    }
+}

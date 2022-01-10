@@ -1,5 +1,8 @@
 <p>product-movements works!</p>
-<div class="flex flex-col h-full ">
+<div 
+    class="flex flex-col h-full "
+    *ngIf="pageState.isActive else toMoveNextPage"
+>
     <form
         class="h-full"
         (ngSubmit)="onSubmit()"        
@@ -57,7 +60,23 @@
         
     </form>
 </div> 
-           
+ 
+<ng-template #toMoveNextPage>
+    <div [ngSwitch]="pageState.path"
+    class="h-full" >
+       
+      <app-loading-page
+        *ngSwitchCase="'loadingPage'"
+        [title]="'products for moving'"
+      >
+      </app-loading-page> 
+      <app-responce500
+        *ngSwitchCase="'responce500'"
+        
+      >
+      </app-responce500>
+    </div>
+  </ng-template>
 <!-- <div class="flex flex-col h-full ">
     <div class="flex overflow-auto">
         <table class="table relative w-full">

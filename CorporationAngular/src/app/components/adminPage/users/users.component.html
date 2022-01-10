@@ -1,12 +1,4 @@
-<!-- <button (click)="onLoad()">load</button> -->
 
-<!-- <app-dialog-user-info
-  *ngIf="isOpenUserInfo"
-  [userInfo]="editUser"
-  (close)="closeUserInfo()"
->
-
-</app-dialog-user-info> -->
 
 
 <div *ngIf="pageState.isActive else toMoveNextPage">
@@ -28,7 +20,7 @@
           *ngFor="let userInfo of usersInfo let i=index"    
           [numUser]="i+1"
           [userInfo]="userInfo" 
-          
+          [avaiablePermissions]="avaiablesPermissions"
           (remove)="remove(userInfo.id)"
           (edit)="startEdit(userInfo)"
           (click)="openUserInfo(userInfo)"
@@ -38,16 +30,6 @@
 </div>
 
 
-
-
-<ng-template #toUpdateForm >
-    <app-edit-user
-        [editUser]="editUser"
-        (updateUser)="update()"
-    >
-    </app-edit-user>
-    
-</ng-template>
 
 
 <ng-template #toMoveNextPage>
@@ -64,6 +46,16 @@
       [userInfo]="editUser"
       (close)="closeDialog()"
     ></app-dialog-user-info>
+    <app-loading-page
+      *ngSwitchCase="'loadingPage'"
+      [title]="'users'"
+    >
+    </app-loading-page> 
+    <app-responce500
+      *ngSwitchCase="'responce500'"
+      
+    >
+    </app-responce500>
   </div>
   
 </ng-template>

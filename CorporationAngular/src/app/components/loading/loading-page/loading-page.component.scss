@@ -1,0 +1,38 @@
+.dialog-page{
+    
+    @apply h-screen;
+    
+    @apply flex justify-center items-center;
+    
+
+
+
+    .dialog{
+        @apply h-96 w-96;
+        @media screen {
+            width: 500px;
+        }
+        @apply justify-center items-center;
+        @apply m-auto;
+        @apply flex-col ;
+        
+    }
+}
+
+// .login-page{
+//     @apply h-full;
+//     @apply flex items-center justify-center;
+//     @apply py-12 px-4;
+    
+
+//     .login-form-container{
+//         @apply flex;
+//         @apply w-96 h-96; 
+//         @apply bg-green-200;
+
+//         .login-form{
+//             @apply bg-green-200
+//         }
+        
+//     }
+// }

@@ -1,221 +1,45 @@
-
-<!--  -->
-<!-- <div  *ngIf="!editProductMode else toUpdateForm" class="h-full w-full overflow-scroll">
-  
-    <table class="table ">
-      <tr >
-        <th 
-          class="header "
-          *ngFor="let header of headersTable"
-          (click)=sortCol(header.title)
-          [ngClass]="{'active-header':header.isActive}"
-        >
-          
-            {{header.title}}
-          
-        </th>    
-      </tr>
-      <tr class="relative">
-        <td
-          *ngFor="let header of headersTable"
-          class="sticky"
-        >
-
-        </td>
-      </tr>
-      
-      <tr app-product-item 
-        class="product-item"
-        
-        *ngFor="let productInfo of productsInfo let i=index"
-        [ngClass]="{'product-item-warning':productInfo.isBanned}"
-        [numProduct]="i+1"
-        [productInfo]="productInfo" 
-        [avaiablesPermissions]="avaiablesPermissions"
-        (edit)="edit(productInfo)"
-        (remove)="remove(productInfo)"
-      >  
-      </tr>
-      
-      
-  </table>
-
-</div> -->
-    
-
-    <!-- class="user-item"
-    *ngFor="let userInfo of usersInfo let i=index"    
-    [numUser]="i+1"
-    [userInfo]="userInfo" 
-    [headers]="headersTable"
-    (remove)="remove(userInfo.id)"
-    (edit)="edit(userInfo)"
-    (click)="openUserInfo(userInfo)" -->
-
-  <ng-template #toUpdateForm >
+<ng-template #toMoveNextPage>
+  <div [ngSwitch]="pageState.path"
+  class="h-full" >
     <app-edit-product
+      *ngSwitchCase="'editProduct'"
       [newProductForm]="newProductForm"
       (updateProduct)="update($event)"
       (close)="closeEditPage()"
     >     
-    </app-edit-product>
-    <!-- <app-edit-user
-        [editUser]="editUser"
-        (updateUser)="update()"
+    </app-edit-product> 
+    <app-loading-page
+      *ngSwitchCase="'loadingPage'"
+      [title]="'products'"
     >
-    </app-edit-user> -->
+    </app-loading-page> 
+    <app-responce500
+      *ngSwitchCase="'responce500'"
+      
+    >
+    </app-responce500>
+  </div>
 </ng-template>
 
 
-<!-- component -->
-<!-- <div class="container">
-	<h1 class="mb-8">
-    Scrollable Table Fixed Height
-  </h1>
-
-	<table class="text-left w-full">
-		<thead class="bg-black flex text-white w-full">
-			<tr class="flex w-full mb-4">
-        <th
-          class="flex-1 header"
-          *ngFor="let header of headersTable"
-          (click)=sortCol(header.title)
-          [ngClass]="{'active-header':header.isActive}"
-        >{{header.title}}</th>
-				
-			</tr>
-		</thead>
-    
-		<tbody class="overflow-scroll">
-			<tr app-product-item 
-        class="bg-grey-light flex  items-center justify-between  w-full"
-        *ngFor="let productInfo of productsInfo let i=index"
-        [ngClass]="{'product-item-warning':productInfo.isBanned}"
-        [numProduct]="i+1"
-        [productInfo]="productInfo" 
-        [avaiablesPermissions]="avaiablesPermissions"
-        (edit)="edit(productInfo)"
-        (remove)="remove(productInfo)"
-      >
-				
-			</tr>			
-		</tbody>
-	</table>
-</div> -->
-
-<!-- component -->
-<!-- <div class="container">
-	<h1 class="mb-8">
-    Scrollable Table Fixed Height
-  </h1>
-
-	<table class="text-left w-full">
-		<thead class="bg-black flex text-white w-full">
-			<tr class="flex w-full mb-4">
-        <th 
-          class="p-4 flex-1"
-          *ngFor="let header of headersTable"
-          (click)=sortCol(header.title)
-          [ngClass]="{'active-header':header.isActive}"
-        >
-          {{header.title}}
-        </th>
-			</tr>
-		</thead>
-   
-		<tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full" style="height: 50vh;">
-			<tr app-product-item 
-        class="flex w-full mb-4"
-        *ngFor="let productInfo of productsInfo let i=index"
-        [ngClass]="{'product-item-warning':productInfo.isBanned}"
-        [numProduct]="i+1"
-        [productInfo]="productInfo" 
-        [avaiablesPermissions]="avaiablesPermissions"
-        (edit)="edit(productInfo)"
-        (remove)="remove(productInfo)"
-      >
-				
-			</tr>
-			
-		</tbody>
-	</table>
-</div> -->
 
 
 
 
-<!-- <div  *ngIf="!editProductMode else toUpdateForm">
-  
-    <table class="table">
-      <tr >
-        <th 
-          class="header "
-          *ngFor="let header of headersTable"
-          (click)=sortCol(header.title)
-          [ngClass]="{'active-header':header.isActive}"
-        >
-          
-            {{header.title}}
-          
-        </th>    
-      </tr>
-      <tbody class="overflow-scroll h-full">
-        <tr app-product-item 
-        class="product-item "
-        
-        *ngFor="let productInfo of productsInfo let i=index"
-        [ngClass]="{'product-item-warning':productInfo.isBanned}"
-        [numProduct]="i+1"
-        [productInfo]="productInfo" 
-        [avaiablesPermissions]="avaiablesPermissions"
-        (edit)="edit(productInfo)"
-        (remove)="remove(productInfo)"
-        >  
-        </tr>
-      </tbody>
-      
-      
-      
-  </table>
 
-</div> -->
+<!-- <ng-template #toUpdateForm >
+  <app-edit-product
+    [newProductForm]="newProductForm"
+    (updateProduct)="update($event)"
+    (close)="closeEditPage()"
+  >     
+  </app-edit-product>
+</ng-template> -->
 
 
-<!-- <body class="flex  h-full ">
 
-	
-	<div class="flex flex-col w-full border-t border-r border-black">
-		<div class="flex flex-shrink-0 bg-black text-white">
-			<div 
-        class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"
-        *ngFor="let header of headersTable"
-        (click)=sortCol(header.title)
-        [ngClass]="{'active-header':header.isActive}"
-      ><span>{{header.title}}</span></div>
-			
-		</div>
-		<div class="overflow-auto">
-			<div class="flex flex-shrink-0" *ngFor="let productInfo of productsInfo let i=index">
-				<div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-				<div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-				<div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-				<div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-				<div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-				<div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-        <div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-				<div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-				<div class="flex items-center flex-grow w-0 h-10 px-2 border-b border-l border-black"><span>Item</span></div>
-			</div>
-    </div>
-			
-			
-			
-	</div>
-	
-</body> -->
 
-<!-- component -->
-<div class="flex flex-col h-full " *ngIf="!editProductMode else toUpdateForm">
+<div class="flex flex-col h-full " *ngIf="pageState.isActive else toMoveNextPage">
   <div class="flex overflow-auto">
     <table class="relative w-full border table">
       <thead>

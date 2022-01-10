@@ -46,8 +46,8 @@ export class UsersComponent implements OnInit {
   headersTable:HeaderTable[]=[];
 
   pageState:PageState={
-    path:"",
-    isActive:true
+    path:"loadingPage",
+    isActive:false
   }
 
   //editUserMode:boolean=false;  
@@ -71,17 +71,14 @@ export class UsersComponent implements OnInit {
   }
   
   ngOnInit(): void {
-    this.userService.getUsers(this.userId)
-        .subscribe((result)=>{
-          this.usersInfo=result;
-        },
-        ()=>{console.log("getUser failed")})
-    // if (this.dataUser.id !==null) {
-      
-    // } 
+    this.getUsers();
+    console.log(this.avaiablesPermissions)
+    
+    
     this.headersTable=this.getHeadersTable(); 
     //console.log(this.dataUser)   
   }
+  
 
   isActiveHeader(isActive:Boolean):Boolean{
     return isActive;
@@ -166,19 +163,25 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  // closeUserInfo(){
-  //   this.pageState={
-  //     path:"",
-  //     isActive:true
-  //   }
-  // }
-
+  
   closeDialog(){
     this.pageState={
       path:"",
       isActive:true
     }
   }
+
+  private getUsers() {
+    this.userService.getUsers(this.userId)
+        .subscribe((result)=>{
+          this.usersInfo=result;
+          this.setStatePage("",true);
+        },
+        ()=>{
+          this.setStatePage("responce500",false)
+      })
+  }
+
   private getHeadersTable():HeaderTable[]{
     const headers= [{
       title:'#',
@@ -200,5 +203,12 @@ export class UsersComponent implements OnInit {
       headers.push({title:"delete",isActive:false})
     }
     return headers;
+  }
+
+  private setStatePage(path:string, isActive:boolean){
+    this.pageState={
+      path:path,
+      isActive:isActive
+    }
   }
 }

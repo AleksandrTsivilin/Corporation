@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
+import { PageState } from 'src/app/interfaces/pageState';
 import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
@@ -30,7 +31,7 @@ export class ProductsComponent implements OnInit {
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
   currentStorages:StorageInfo[]=[{title:"Storage 1"},{title:"Storage 2"}];
-  editProductMode:boolean=false;
+  //editProductMode:boolean=false;
 
   newProductForm:NewProductForm={
     storage:"",
@@ -45,6 +46,14 @@ export class ProductsComponent implements OnInit {
 
   private editedProductId:number=0;
 
+
+  //load : string ="";
+  //loading:boolean=false;
+
+  pageState:PageState={
+    path:"loadingPage",
+    isActive:false
+  }
   // editProduct:ProductInfo={
   //   id:0,
   //   title:"",
@@ -163,6 +172,7 @@ export class ProductsComponent implements OnInit {
     // }
 
     console.log('edit product')
+
     this.editedProductId=editProduct.id;
     this.newProductForm={
       storage:"Storage 1",
@@ -174,8 +184,9 @@ export class ProductsComponent implements OnInit {
       unit:editProduct.unit,
       isBanned:editProduct.isBanned
     }
-    //this.editPage.emit();
-    this.editProductMode=true;
+    
+    this.setStatePage("editProduct",false);
+    
     
   }
 
@@ -184,21 +195,23 @@ export class ProductsComponent implements OnInit {
     //this.signalrService.removeProduct(removeProduct.id);
   }
 
-  // unLock(unLockProduct:ProductInfo){
-  //   this.signalrService.unLockProduct(unLockProduct.id);
-  // }
-
   update(updateProduct:NewProductForm){
     updateProduct.storage="Storage 1";
     this.updateService.updateProduct(updateProduct,this.editedProductId);
-    //this.signalrService.updateProduct(updateProduct,this.editProduct.id)
-    this.editProductMode=false;
+    //this.editProductMode=false;
   }
 
   closeEditPage(){
     console.log("closeEditPage")
-    this.editProductMode=false;
+    this.setStatePage("",true)
+    //this.editProductMode=false;
     this.editedProductId=0;
+  }
+  private setStatePage(path: string, isActive: boolean) {
+    this.pageState={
+      path:path,
+      isActive:isActive
+    }
   }
 
   sortCol(criteria:string){
@@ -262,12 +275,12 @@ export class ProductsComponent implements OnInit {
 
   private async getProducts(){
     await this.service.getProductsByAccess()
-      .subscribe((result)=>{
-        
+      .subscribe((result)=>{        
         this.productsInfo=result;
-        console.log(this.productsInfo)
-    },()=>{
-      console.log("failed get products")
+        this.setStatePage("",true)
+        
+    },(err)=>{
+      this.setStatePage("responce500",false);
     })
   }
 

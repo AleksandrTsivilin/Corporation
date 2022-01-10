@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
+import { PageState } from 'src/app/interfaces/pageState';
 import { ProductInfo } from 'src/app/interfaces/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
@@ -33,8 +34,13 @@ export class ProductMovementsComponent implements OnInit {
   headersTable:HeaderTable[]=[];
   totalMoved:number=0;
 
+  pageState:PageState={
+    path:"loadingPage",
+    isActive:false
+  }
+
   constructor(
-      private service:ProductsService,
+      //private service:ProductsService,
       private readonly updateService:MovementsUpdateService,
       private readonly updateServiceProduct:ProductUpdateService,
       private readonly storageService:StorageService,
@@ -133,9 +139,17 @@ export class ProductMovementsComponent implements OnInit {
   private setFormMovedProduct(){
     this.productService.getProductsByUser()
       .subscribe((products)=>{
-        console.log(products)
+        this.setStatePage("",true);
         this.setMovedProduct(products);        
+      },()=>{
+        this.setStatePage("responce500",false);
       })
+  }
+  private setStatePage(path: string, isActive: boolean) {
+    this.pageState={
+      path:path,
+      isActive:isActive
+    }
   }
 
   private updateMovedProduct(products:ProductInfo[]){

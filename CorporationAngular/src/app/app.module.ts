@@ -25,6 +25,8 @@ import { AddUnitComponent } from './components/productPage/add-unit/add-unit.com
 import { ProductMovementsComponent } from './components/productManagerPage/moveProductPage/product-movements/product-movements.component';
 import { ProductItemMovementsComponent } from './components/productManagerPage/moveProductPage/product-item-movements/product-item-movements.component';
 import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
+import { LoadingPageComponent } from './components/loading/loading-page/loading-page.component';
+import { Responce500Component } from './components/loading/responce500/responce500.component';
 
 
 
@@ -50,6 +52,8 @@ import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
     AddUnitComponent,
     ProductMovementsComponent,
     ProductItemMovementsComponent,
+    LoadingPageComponent,
+    Responce500Component,
     
   ],
   imports: [
