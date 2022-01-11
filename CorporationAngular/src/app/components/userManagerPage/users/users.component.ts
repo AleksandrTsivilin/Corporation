@@ -1,19 +1,14 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-//import { DataUser } from 'src/app/interfaces/dataUser';
 import { UserService } from 'src/app/services/adminPage/user.service';
 import { UserInfo } from 'src/app/interfaces/userInfo';
 import { HeaderTable } from 'src/app/interfaces/header-table';
-import { Permission } from 'src/app/interfaces/userInfo';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';
 
 
 
 
-// interface HeaderActive{
-//   header:string,
-//   isActive:boolean
-// }
+
 
 @Component({
   selector: 'app-users',
@@ -22,14 +17,10 @@ import { PageState } from 'src/app/interfaces/pageState';
 })
 export class UsersComponent implements OnInit {
 
-  // @Input () dataUser:DataUser={
-  //   id:null,
-  //   roles:null,
-  //   permissions:null
-  // }
+  
 
   @Input () userId:number=0;
-  //@Input () permissions:Permission[]=[];
+  
 
   @Input() @Output() avaiablesPermissions:AvaiablesPermissions={
     canCreate:false,
@@ -38,8 +29,7 @@ export class UsersComponent implements OnInit {
     canDelete:false,
     canMove:false
   }
-  //@Input () userId:number=0;
-  // @Input () permissions:Permission[]=[];
+  
 
   usersInfo:UserInfo[]=[];
 
@@ -50,7 +40,6 @@ export class UsersComponent implements OnInit {
     isActive:false
   }
 
-  //editUserMode:boolean=false;  
   
   editUser:UserInfo={
     id:0,
@@ -59,7 +48,6 @@ export class UsersComponent implements OnInit {
     roles:[]
   }
 
-  //isOpenUserInfo:boolean=false;
   
   private _ascDirection = 1;
   private _sortCriteria="";
@@ -72,11 +60,8 @@ export class UsersComponent implements OnInit {
   
   ngOnInit(): void {
     this.getUsers();
-    console.log(this.avaiablesPermissions)
-    
-    
     this.headersTable=this.getHeadersTable(); 
-    //console.log(this.dataUser)   
+     
   }
   
 
@@ -116,27 +101,11 @@ export class UsersComponent implements OnInit {
       firstname:rawUserInfo.firstname,
       roles:rawUserInfo.roles
     }
-    //this.editUserMode=true;
-    this.pageState={
-      path:"editUser",
-      isActive:false
-    }
+    this.setStatePage("editUser",false);
   }
 
   update(){
-    console.log("update in usersComponent")
-    console.log(this.editUser);
     this.closeDialog();
-    // this.userService.update(this.editUser)
-    //   .subscribe(()=>{
-        
-    //   })
-    //this.editUserMode=false;
-    // this.pageState={
-    //   path:"",
-    //   isActive:true
-    // }
-
   }
 
   remove(userId:number | null){
@@ -150,11 +119,11 @@ export class UsersComponent implements OnInit {
   }
 
   openUserInfo(selectedUser:UserInfo){
-    //this.isOpenUserInfo=true;
-    this.pageState={
-      path:"dialogUserInfo",
-      isActive:false
-    }
+    this.setStatePage("dialogUserInfo",false)
+    // this.pageState={
+    //   path:"dialogUserInfo",
+    //   isActive:false
+    // }
     this.editUser={
       id:selectedUser.id,
       username:selectedUser.username,
@@ -165,10 +134,7 @@ export class UsersComponent implements OnInit {
 
   
   closeDialog(){
-    this.pageState={
-      path:"",
-      isActive:true
-    }
+    this.setStatePage("",true);
   }
 
   private getUsers() {
