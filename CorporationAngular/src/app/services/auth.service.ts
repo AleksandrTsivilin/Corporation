@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Token } from '../interfaces/auth/authToken';
-import { RegistrationForm } from '../interfaces/registrationForm';
 import {map, tap} from 'rxjs/operators'
 import { TokenData } from '../interfaces/auth/tokenData';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { LoginForm } from '../interfaces/auth/loginForm';
+import { NewUser } from '../interfaces/auth/newUser';
 @Injectable({
   providedIn: 'root'
 })
@@ -19,11 +20,11 @@ export class AuthService {
   token$=new BehaviorSubject<Token | null>(null);
   constructor(private readonly client:HttpClient) { }
 
-  login(registrationForm:RegistrationForm):Observable<TokenData>{
+  login(loginForm:LoginForm):Observable<TokenData>{
     const urlLogin = "https://localhost:5001/api/AuthToken";
    
     return this.client
-      .post<Token>(urlLogin,registrationForm)
+      .post<Token>(urlLogin,loginForm)
       .pipe(
         tap(_=>console.log(_)),
         map(t=>
@@ -35,15 +36,11 @@ export class AuthService {
         })
         
       )
-      // .pipe(
-      //   tap(t=>this.token$.next(t.token)),
-      //   map(t=>{
-      //     const tokenData=this.readToken(t);
-      //     this.tokenData$.next(this.readToken(t));
-      //     return tokenData;
-      //   })
-        
-      // );
+      
+  }
+
+  addUser(newUser:NewUser){
+    console.log(newUser);
   }
 
   private readToken(token: any):TokenData {

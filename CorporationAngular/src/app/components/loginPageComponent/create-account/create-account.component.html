@@ -1,0 +1,76 @@
+
+<div class="login-page">
+    <div class="login-form-container">
+        <form
+            class="login-form"
+            (ngSubmit)="onSubmit(); newUserForm.resetForm();"
+            #newUserForm="ngForm" 
+        >
+            <div>
+                <span 
+                    class="warning-message"
+                    *ngIf="login.touched && login.invalid"
+                >
+                    ⚠️ input username
+                </span>
+                <input 
+                    class="input-data"
+                    [(ngModel)]="newUser.username" 
+                    placeholder="username"
+                    name="username" 
+                    required
+                    #login="ngModel"
+                >
+                
+            </div>
+            <div>
+                <span 
+                    class="warning-message"
+                    *ngIf="password.touched && password.invalid"
+                >
+                    ⚠️ input password
+                </span>   
+                <input 
+                    class="input-data"
+                    type="password"
+                    [(ngModel)]="newUser.password" 
+                    placeholder="Password" 
+                    name="password"
+                    required
+                    #password="ngModel"
+                    
+                >
+                
+            </div>
+            <div>
+                <span 
+                    class="warning-message"
+                    *ngIf="email.touched && email.invalid"
+                >
+                ⚠️ incorrect email                
+                </span>
+                <input 
+                    class="input-data"
+                    type="email"
+                    [(ngModel)]="newUser.email" 
+                    placeholder="example@gmail.com"
+                    name="email" 
+                    required
+                    ngModel [email] = "true"
+                    #email="ngModel"
+                >
+                
+            </div>
+
+            <button 
+                [ngClass]="newUserForm.invalid ? 'btn-disabled' : 'btn-submit'"
+                
+                type="submit"
+                [disabled]="newUserForm.invalid"
+            >
+                    Login
+            </button>
+        </form>
+    </div>
+</div>
+

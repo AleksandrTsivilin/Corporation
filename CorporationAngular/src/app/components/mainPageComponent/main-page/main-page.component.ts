@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageState } from 'src/app/interfaces/pageState';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -13,26 +12,18 @@ export class MainPageComponent implements OnInit {
   isLogin:boolean=false;  
 
   constructor(private readonly router:Router,
-    private readonly authService:AuthService) {
-    
+    private readonly authService:AuthService) {    
    }
 
   ngOnInit(): void {
     this.authService.token$.subscribe(result=>{
-      if (result === null) {
-        this.router.navigate([""])
-        this.isLogin=false;
-      }
-      else {
-        this.router.navigate(["roleSelector"]);
-        this.isLogin=true;
-      }
-        
-      
+      this.isLogin = result ===null
+        ? false
+        : true;           
     })
   }
 
-  toLogin(){
+  toLogin(){    
     this.router.navigate(["loginForm"]);
   }
 

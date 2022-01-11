@@ -27,6 +27,7 @@ import { ProductItemMovementsComponent } from './components/productManagerPage/m
 import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
 import { LoadingPageComponent } from './components/loading/loading-page/loading-page.component';
 import { Responce500Component } from './components/loading/responce500/responce500.component';
+import { CreateAccountComponent } from './components/loginPageComponent/create-account/create-account.component';
 
 
 
@@ -54,6 +55,7 @@ import { Responce500Component } from './components/loading/responce500/responce5
     ProductItemMovementsComponent,
     LoadingPageComponent,
     Responce500Component,
+    CreateAccountComponent,
     
   ],
   imports: [

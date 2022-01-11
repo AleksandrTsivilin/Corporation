@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RegistrationForm } from 'src/app/interfaces/registrationForm';
+import { Router } from '@angular/router';
+import { LoginForm } from 'src/app/interfaces/auth/loginForm';
 import { AuthService } from 'src/app/services/auth.service';
 @Component({
   selector: 'app-login-form',
@@ -8,23 +9,26 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginFormComponent implements OnInit {
 
-  registrationForm:RegistrationForm={
+  
+  loginForm:LoginForm={
     username:"",
     password:""
   }
-  constructor(private readonly authService:AuthService) { }
+  constructor(private readonly authService:AuthService,
+    private readonly router:Router) { }
 
   ngOnInit(): void {
   }
   onSubmit(){
-    this.registrationForm={
+    this.loginForm={
       username:"admin",
       password:"admin"
     }
-    console.log(this.registrationForm);
-    this.authService.login(this.registrationForm)
+    
+    this.authService.login(this.loginForm)
       .subscribe(result=>{
-        console.log(result.fullname)
+        console.log(result.fullname);
+        this.router.navigate(['roleSelector']);
 
       },()=>console.log("error auth"))
   }

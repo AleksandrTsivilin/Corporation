@@ -3,8 +3,8 @@
     <div class="login-form-container">
         <form
             class="login-form"
-            (ngSubmit)="onSubmit(); loginForm.resetForm();"
-            #loginForm="ngForm" 
+            (ngSubmit)="onSubmit(); logForm.resetForm();"
+            #logForm="ngForm" 
         >
             <div>
                 <span *ngIf="login.touched && login.invalid">
@@ -12,7 +12,7 @@
                 </span>
                 <input 
                     class="input-data"
-                    [(ngModel)]="registrationForm.username" 
+                    [(ngModel)]="loginForm.username" 
                     placeholder="username"
                     name="username" 
                     required
@@ -26,7 +26,7 @@
                 </span>   
                 <input 
                     class="input-data"
-                    [(ngModel)]="registrationForm.password" 
+                    [(ngModel)]="loginForm.password" 
                     placeholder="Password" 
                     name="password"
                     required
@@ -37,59 +37,14 @@
             </div>
 
             <button 
-                [ngClass]="loginForm.invalid ? 'btn-disabled' : 'btn-submit'"
+                [ngClass]="logForm.invalid ? 'btn-disabled' : 'btn-submit'"
                 
                 type="submit"
-                [disabled]="loginForm.invalid"
+                [disabled]="logForm.invalid"
             >
                     Login
             </button>
         </form>
     </div>
 </div>
-<!-- <div class="login-page">
-    <div class="w-full">
-        <div class="login-form-container">
-            <form
-                class="login-form"
-                (ngSubmit)="onSubmit(); loginForm.resetForm();"
-                #loginForm="ngForm"    
-            >
-                <div>
-                    <input 
-                        [(ngModel)]="registrationForm.username" 
-                        placeholder="username"
-                        name="username" 
-                        required
-                        #login="ngModel"
-                    >
-                    <span *ngIf="login.touched && login.invalid">
-                        login is invalid
-                    </span>
-                </div>
-                <div>
-                    
-                    <input 
-                        [(ngModel)]="registrationForm.password" 
-                        placeholder="Password" 
-                        name="password"
-                        required
-                        #password="ngModel"
-                        
-                    >
-                    <span *ngIf="password.touched && password.invalid">
-                        password is invalid
-                    </span>
-                </div>
-                <button 
-                    type="submit"
-                    [disabled]="loginForm.invalid"
-                >
-                    Login
-                </button>
-            </form>
-        </div>
-    </div>
-    
-    
-</div> -->
+
