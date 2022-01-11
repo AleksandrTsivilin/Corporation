@@ -9,12 +9,12 @@ import { MainPageComponent } from './components/mainPageComponent/main-page/main
 import { RoleSelectorComponent } from './components/roleSelectorComponent/role-selector/role-selector.component';
 import { InformationPageComponent } from './components/mainPageComponent/information-page/information-page.component';
 import { LoginFormComponent } from './components/loginPageComponent/login-form/login-form.component';
-import { AdminManagerComponent } from './components/adminPage/admin-manager/admin-manager.component';
-import { UsersComponent } from './components/adminPage/users/users.component';
-import { UserItemComponent } from './components/adminPage/user-item/user-item.component';
-import { EditUserComponent } from './components/adminPage/edit-user/edit-user.component';
-import { DialogUserInfoComponent } from './components/adminPage/dialog-user-info/dialog-user-info.component';
-import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
+//import { AdminManagerComponent } from './components/adminPage/admin-manager/admin-manager.component';
+import { UsersComponent } from './components/userManagerPage/users/users.component';
+import { UserItemComponent } from './components/userManagerPage/user-item/user-item.component';
+import { EditUserComponent } from './components/userManagerPage/edit-user/edit-user.component';
+import { DialogUserInfoComponent } from './components/userManagerPage/dialog-user-info/dialog-user-info.component';
+//import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
 import { ProductItemComponent } from './components/productManagerPage/productPage/product-item/product-item.component';
 import { AddProductComponent } from './components/productManagerPage/productPage/add-product/add-product.component';
@@ -38,12 +38,12 @@ import { CreateAccountComponent } from './components/loginPageComponent/create-a
     RoleSelectorComponent,
     InformationPageComponent,
     LoginFormComponent,
-    AdminManagerComponent,
+    //AdminManagerComponent,
     UsersComponent,
     UserItemComponent,
     EditUserComponent,
     DialogUserInfoComponent,
-    WorkModulesComponent,
+    //WorkModulesComponent,
     ProductsComponent,
     ProductItemComponent,
     AddProductComponent,
