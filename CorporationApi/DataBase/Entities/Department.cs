@@ -1,4 +1,6 @@
-﻿using DataBase.Entities.ProductEntities;
+﻿using DataBase.Entities.EmployeeEntities;
+using DataBase.Entities.ProductEntities;
+using DataBase.Entities.UserEntities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,5 +16,7 @@ namespace DataBase.Entities
         public Storage Storage { get; set; }
         public Factory Factory { get; set; }
         public int FactoryId { get; set; }
+        public ICollection<Employee> Employees { get; set; }
+        public ICollection<User> Users { get; set; }
     }
 }

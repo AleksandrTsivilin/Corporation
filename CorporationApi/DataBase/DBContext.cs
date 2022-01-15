@@ -1,5 +1,7 @@
 ﻿using DataBase.Entities;
+using DataBase.Entities.EmployeeEntities;
 using DataBase.Entities.ProductEntities;
+using DataBase.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -23,7 +25,8 @@ namespace DataBase
         public DbSet<Department> Departments { get; set; }
         public DbSet<Factory> Factories { get; set; }
         public DbSet<Region> Regions { get; set; }
-
+        public DbSet<User> Users { get; set; }
+        public DbSet<Employee> Employees { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = @"Data Source=DESKTOP-ABUB89D\SQLEXPRESS;Initial Catalog=Coorporation;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
