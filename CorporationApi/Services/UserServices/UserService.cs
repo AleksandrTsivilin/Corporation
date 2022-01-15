@@ -25,7 +25,8 @@ namespace Services.UserServices
                         Permissions = new List<Permission>
                         {
                             new Permission{Title="Create"},
-                            new Permission{Title = "Read"}
+                            new Permission{Title = "Read"},
+                            new Permission{Title ="Update"}
                         },
                         RoleAccess = new Access{Title = "Region"}
                     },

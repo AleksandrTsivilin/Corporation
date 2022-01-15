@@ -11,7 +11,8 @@ namespace Services.AccessServices
     {
         public AccessServiceProduct(string access)
         {
-            switch (access)
+            var a = "region";
+            switch (a)
             {
                 case "full":
                     Expression = product => true;
