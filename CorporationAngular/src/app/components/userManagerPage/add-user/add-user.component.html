@@ -1,0 +1,467 @@
+<!-- 
+<div class="login-page">
+    <div class="login-form-container">
+        
+        <form
+            class="login-form"
+            (ngSubmit)="onSubmit(); "
+            #newUserWithRoleForm="ngForm" 
+        >   
+            <span 
+                class="warning-message"
+                *ngIf="fullname.invalid">⚠️ select fullname
+            </span>
+            <select 
+                class="input-data"
+                
+                [(ngModel)]=newUserWithRole.fullname
+                name="fullname"
+                #fullname="ngModel"
+                required
+            >                
+                <option
+                    *ngFor="let employee of employees" 
+                    [value]="employee"
+                    name="employee"                   
+                >
+                    {{employee}}
+                </option>
+            </select>
+            <div>
+                <span 
+                    class="warning-message"
+                    *ngIf="login.touched && login.invalid"
+                >
+                    ⚠️ input username
+                </span>
+                <input 
+                    class="input-data"
+                    [(ngModel)]="newUserWithRole.username" 
+                    placeholder="username"
+                    name="username" 
+                    required
+                    #login="ngModel"
+                >
+                
+            </div>
+            <div>
+                <span 
+                    class="warning-message"
+                    *ngIf="password.touched && password.invalid"
+                >
+                    ⚠️ input password
+                </span>   
+                <input 
+                    class="input-data"
+                    type="password"
+                    [(ngModel)]="newUserWithRole.password" 
+                    placeholder="Password" 
+                    name="password"
+                    required
+                    #password="ngModel"
+                    
+                >
+                
+            </div>
+            <div>
+                <span 
+                    class="warning-message"
+                    *ngIf="password.touched && !checkPassword()"
+                >
+                    ⚠️ confirm password incorrect
+                </span>   
+                <input 
+                    class="input-data"
+                    type="password"
+                    name="confirm"
+                    placeholder="Confirm password" 
+                    [(ngModel)]="confirmPassword"              
+                >
+                
+            </div>
+            <div>
+                <span 
+                    class="warning-message"
+                    *ngIf="email.touched && email.invalid"
+                >
+                ⚠️ incorrect email                
+                </span>
+                <input 
+                    class="input-data"
+                    type="email"
+                    [(ngModel)]="newUserWithRole.email" 
+                    placeholder="example@gmail.com"
+                    name="email" 
+                    required
+                    ngModel [email] = "true"
+                    #email="ngModel"
+                >
+                
+            </div>
+            <div>
+                
+                <span 
+                    class="warning-message"
+                    *ngIf="newUserWithRole.roles.length===0"
+                    >⚠️ add role
+                </span>
+                <select 
+                    class="input-data"
+                    (change)="onSelectRole($event)"
+                    
+                    
+                >   
+                    <option
+                        [value]="" selected disabled
+                        >add role
+                    </option>
+                            
+                    <option
+                        *ngFor="let role of avaiableRoles" 
+                        [value]="role"
+                        name="role"                   
+                    >
+                        {{role}}
+                    </option>
+                </select>
+            </div>
+            <div 
+                class="section-avaiables"
+                *ngIf="avaiablesUser.role!==''"
+            >   
+                <div class="btn-section">
+                    <button 
+                        class="btn-ok"
+                        *ngIf="isValidPermissions() && isValidAccess()"
+                        type="button"
+                        (click)="addRole()"
+                    >
+                        ✔️
+                    </button>
+                    <button 
+                        class="btn"
+                        type="button"
+                        (click)="close()"
+                    >
+                        ❌
+                    </button>
+                </div>
+                
+                <span>{{avaiablesUser.role}}</span>
+                <div class="section-avaiables-warning">
+                    <div class="avaiables-warning">
+                        <span class="warning-message" *ngIf="!isValidPermissions()" >⚠️ add permissions</span>
+                    </div>
+                    <div class="avaiables-warning">
+                        <span class="warning-message" *ngIf="!isValidAccess()" >⚠️ add access</span>
+                    </div>
+                </div>
+                <div class="flex">
+                    <div class="flex-1">
+                        <div  *ngFor="let permission of avaiablesUser.permissions; let i=index">
+                            <input 
+                            type="checkbox"
+                            [(ngModel)]="permission.isSelected"
+                            name="{{avaiablesUser.role}}+{{permission.title}}+{{i}}" 
+                            [checked]="permission.isSelected"
+                            
+                            >
+                            <label>{{permission.title}}</label>
+                        </div>
+                    </div>
+                    <div class="flex-1">
+                        <div 
+                            class="custom-control custom-radio"
+                            *ngFor="let access of avaiablesUser.access; let i=index"
+                        >
+                            <input 
+                                class="custom-control-input"
+                                type="radio"
+                                [(ngModel)]="access.isSelected"
+                                value="{{avaiablesUser.role}}+{{access.title}}+{{i}}"
+                                name="access" 
+                                [checked]="access.isSelected"
+                            
+                            >
+                            <label>{{access.title}}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button 
+                [ngClass]="newUserWithRoleForm.invalid || !checkPassword() || !isValidRole() ? 'btn-disabled' : 'btn-submit'"
+                
+                type="submit"
+                [disabled]="newUserWithRoleForm.invalid || !checkPassword() || !isValidRole()"
+            >
+                    Login
+            </button>
+        </form>
+    </div>
+</div>
+
+ -->
+<div class="add-user-page">
+    <div class="section-page">
+        <div class="title-section">
+            <span >User info</span>
+        </div>
+        <div>
+            <form
+                class="registration-form"
+                (ngSubmit)="onSubmit(); "
+                #newUserWithRoleForm="ngForm" 
+            >   
+                <div class="body-form">
+                    <div class="warning-message">
+                        <span                             
+                            *ngIf="fullname.invalid">⚠️ select fullname
+                        </span>
+                    </div>
+                    <div>
+                        <select 
+                            class="input-data"
+                            
+                            [(ngModel)]=newUserWithRole.fullname
+                            name="fullname"
+                            #fullname="ngModel"
+                            required
+                        >                
+                            <option
+                                *ngFor="let employee of employees" 
+                                [value]="employee"
+                                name="employee"                   
+                            >
+                                {{employee}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="warning-message">
+                        <span                             
+                            *ngIf="login.touched && login.invalid"
+                        >
+                            ⚠️ input username
+                        </span>
+                        <input 
+                            class="input-data"
+                            [(ngModel)]="newUserWithRole.username" 
+                            placeholder="username"
+                            name="username" 
+                            required
+                            #login="ngModel"
+                        >
+                        
+                    </div>
+                    <div>
+                        <span 
+                            class="warning-message"
+                            *ngIf="password.touched && password.invalid"
+                        >
+                            ⚠️ input password
+                        </span>   
+                        <input 
+                            class="input-data"
+                            type="password"
+                            [(ngModel)]="newUserWithRole.password" 
+                            placeholder="Password" 
+                            name="password"
+                            required
+                            #password="ngModel"
+                            
+                        >
+                        
+                    </div>
+                    <div>
+                        <span 
+                            class="warning-message"
+                            *ngIf="password.touched && !checkPassword()"
+                        >
+                            ⚠️ confirm password incorrect
+                        </span>   
+                        <input 
+                            class="input-data"
+                            type="password"
+                            name="confirm"
+                            placeholder="Confirm password" 
+                            [(ngModel)]="confirmPassword"              
+                        >
+                        
+                    </div>
+                    <div>
+                        <span 
+                            class="warning-message"
+                            *ngIf="email.touched && email.invalid"
+                        >
+                        ⚠️ incorrect email                
+                        </span>
+                        <input 
+                            class="input-data"
+                            type="email"
+                            [(ngModel)]="newUserWithRole.email" 
+                            placeholder="example@gmail.com"
+                            name="email" 
+                            required
+                            ngModel [email] = "true"
+                            #email="ngModel"
+                        >
+                        
+                    </div>
+                    <button 
+                        [ngClass]="newUserWithRoleForm.invalid || !checkPassword() || !isValidRole() ? 'btn-disabled' : 'btn-submit'"
+                        
+                        type="submit"
+                        [disabled]="newUserWithRoleForm.invalid || !checkPassword() || !isValidRole()"
+                    >
+                            create user
+                    </button>
+                </div>           
+            </form>
+        </div>        
+    </div>
+    <div class="section-page">
+        <div class="title-section">
+            <span >Avaibles user</span>
+        </div>
+        <form
+            class="registration-form"
+            (ngSubmit)="onSubmit(); "
+            #avaiableUserForm="ngForm" 
+        >
+            <div class="body-form"> 
+                <div class="warning-message">
+                    <span                         
+                        *ngIf="newUserWithRole.roles.length===0"
+                        >⚠️ add role
+                    </span>
+                </div>                   
+                <div class="select-role-body">
+                    <div class="select-role">
+                        <select 
+                            class="input-data"
+                            (change)="onSelectRole($event)"
+                                            
+                        >   
+                            <option
+                                [value]="" selected disabled
+                                >add role
+                            </option>
+                                    
+                            <option
+                                *ngFor="let role of avaiableRoles" 
+                                [value]="role"
+                                name="role"                   
+                            >
+                                {{role}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="btn-add-role">
+                       <button 
+                            class="btn"
+                            type="button"
+                            (click)="addRole()"
+                            >add
+                        </button> 
+                    </div>                    
+                </div>
+                <div 
+                    class="role-info"
+                    *ngIf="newUserWithRole.roles.length>0 && !isOpenRoleUserInfo">
+                    <div >
+                        <h1>{{newUserWithRole.roles.length}} added roles </h1>
+                    </div>
+                    <div >
+                        <button type="button" (click)="openRole()">➡️</button>
+                    </div>
+                    
+                </div>
+                <div  *ngIf="isOpenRoleUserInfo">
+                    <div class="role-info-description" *ngFor="let role of newUserWithRole.roles let i=index">
+                        <div class="role-info-description-item" *ngIf="checkHiddenRoleUserInfoItem(i)">
+                            <div class="role-info-description-item-title"><h1 class="role-title">{{role.title}} {{role.access.title}}</h1></div>
+                            <div class="role-info-description-item-btn">
+                                <button class="btn-ok" type="button" (click)="closeRoleUserInfoItem(i)">✔️</button>
+                                <button class="btn-delete" type="button" (click)="removeRoleUserInfoItem(i)">❌</button>
+                            </div>
+                        </div>
+                        
+                        <div >
+                            <div  *ngFor="let permission of role.permissions; let i=index">
+                                <h1 class="permission-title">{{permission.title}}</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div 
+                    class="section-avaiables"
+                    *ngIf="avaiablesUser.role!==''"
+                >   
+                    <div class="btn-section">
+                        <button 
+                            class="btn-ok"
+                            *ngIf="isValidPermissions() && isValidAccess()"
+                            type="button"
+                            (click)="saveRole()"
+                        >
+                            ✔️
+                        </button>
+                        <button 
+                            class="btn"
+                            type="button"
+                            (click)="close()"
+                        >
+                            ❌
+                        </button>
+                    </div>
+                    <div>
+                        <span>{{avaiablesUser.role}}</span>
+                    </div>
+                    <div class="section-avaiables-warning">
+                        <div class="avaiables-warning">
+                            <span class="warning-message" *ngIf="!isValidPermissions()" >⚠️ add permissions</span>
+                        </div>
+                        <div class="avaiables-warning">
+                            <span class="warning-message" *ngIf="!isValidAccess()" >⚠️ add access</span>
+                        </div>
+                    </div>
+                    <div class="flex">
+                        <div class="flex-1">
+                            <div  *ngFor="let permission of avaiablesUser.permissions; let i=index">
+                                <input 
+                                type="checkbox"
+                                [(ngModel)]="permission.isSelected"
+                                name="{{avaiablesUser.role}}+{{permission.title}}+{{i}}" 
+                                [checked]="permission.isSelected"
+                                
+                                >
+                                <label>{{permission.title}}</label>
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div 
+                                class="custom-control custom-radio"
+                                *ngFor="let access of avaiablesUser.access; let i=index"
+                            >
+                                <input 
+                                    class="custom-control-input"
+                                    type="radio"
+                                    [(ngModel)]="access.isSelected"
+                                    value="{{avaiablesUser.role}}+{{access.title}}+{{i}}"
+                                    name="access" 
+                                    [checked]="access.isSelected"
+                                
+                                >
+                                <label>{{access.title}}</label>
+                            </div>
+                        </div>
+                    </div>                
+                </div>
+            </div>            
+        </form>       
+    </div>
+</div>
+ 
+
+<ng-template #btnCloseUserRoleInfo>
+    <button>❌</button>
+</ng-template>

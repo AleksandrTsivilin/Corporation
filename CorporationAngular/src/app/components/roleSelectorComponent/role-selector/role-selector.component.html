@@ -156,10 +156,11 @@
             [avaiablesPermissions]="getAvaiablesPermissions('AdminManager')"
         >
         </app-users>
-        <h1
+        <app-add-user
             *ngSwitchCase="'addUser'"
-            
-        >you should make new component</h1>
+        >                        
+        </app-add-user>
+       
         <h1            
             *ngSwitchCase="'movementsProducts'"
         >{{pageState.path}}</h1>

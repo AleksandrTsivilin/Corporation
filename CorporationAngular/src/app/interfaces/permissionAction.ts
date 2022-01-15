@@ -9,7 +9,7 @@
 // }
 
 export interface PermissionAction{
-    title:string | null,
-    isSelected:boolean | null
+    title:string ,
+    isSelected:boolean 
 }
 

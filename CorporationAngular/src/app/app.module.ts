@@ -28,6 +28,8 @@ import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
 import { LoadingPageComponent } from './components/loading/loading-page/loading-page.component';
 import { Responce500Component } from './components/loading/responce500/responce500.component';
 import { CreateAccountComponent } from './components/loginPageComponent/create-account/create-account.component';
+import { AddUserComponent } from './components/userManagerPage/add-user/add-user.component';
+import { AddRolesUserComponent } from './components/userManagerPage/add-roles-user/add-roles-user.component';
 
 
 
@@ -56,6 +58,8 @@ import { CreateAccountComponent } from './components/loginPageComponent/create-a
     LoadingPageComponent,
     Responce500Component,
     CreateAccountComponent,
+    AddUserComponent,
+    AddRolesUserComponent,
     
   ],
   imports: [

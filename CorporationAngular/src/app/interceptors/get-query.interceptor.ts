@@ -31,7 +31,7 @@ export class GetQueryInterceptor implements HttpInterceptor {
       console.log("get + byAccess");
       const copy= request.clone({
         headers: new HttpHeaders({
-          "access":"department"
+          "access":"region"
         })
       })
       return next.handle(copy);

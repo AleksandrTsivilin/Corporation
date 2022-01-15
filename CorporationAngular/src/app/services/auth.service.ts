@@ -6,6 +6,7 @@ import { TokenData } from '../interfaces/auth/tokenData';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginForm } from '../interfaces/auth/loginForm';
 import { NewUser } from '../interfaces/auth/newUser';
+import { NewUserWithRoles } from '../interfaces/userManagerPage/newUserWithRoles';
 @Injectable({
   providedIn: 'root'
 })
@@ -41,6 +42,10 @@ export class AuthService {
 
   addUser(newUser:NewUser){
     console.log(newUser);
+  }
+
+  addUserWithRole(newUser:NewUserWithRoles){
+    console.log(newUser)
   }
 
   private readToken(token: any):TokenData {

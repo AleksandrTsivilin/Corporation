@@ -1,3 +1,5 @@
+import { Access } from "./userManagerPage/access";
+
 export interface UserInfo{
     [x: string]: any;
     id:number 
@@ -8,13 +10,11 @@ export interface UserInfo{
 
 export interface Role{
     title:string ,
-    permissions:Permission[] 
+    permissions:Permission[],
+    access:Access 
 }
 
-// export interface PermissionAction{
-//     title:string | null,
-//     isSelected:boolean | null
-// }
+
 
 export interface Permission{
     title:string 

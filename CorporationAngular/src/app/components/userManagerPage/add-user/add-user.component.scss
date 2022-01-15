@@ -1,0 +1,284 @@
+// .login-page{
+//     @apply h-full;
+//     @apply flex items-center justify-center;
+//     @apply py-12 px-4;
+    
+
+//     .login-form-container{
+//         @apply w-96;  
+
+//         .login-form{
+//             .warning-message{
+//                 @apply text-red-600;
+//                 @apply font-bold;
+//             }
+//             .input-data{
+//                 @apply appearance-none;
+//                 @apply rounded;
+//                 @apply w-full;
+//                 @apply px-3 py-2 my-2;
+//                 @apply border border-blue-600;
+//                 @apply placeholder-gray-500;
+//                 @apply text-gray-900;
+                
+//             }
+
+//             .input-data:hover{
+//                 @apply border-2 border-blue-900;
+//             }
+
+//             .section-avaiables{
+//                 @apply border border-blue-600;
+//                 @apply px-3 py-2 my-2;
+//                 @apply rounded;
+
+//                 .section-avaiables-warning{
+//                     @apply flex;
+
+//                     .avaiables-warning{
+//                         @apply flex flex-1;
+//                         @apply p-2;
+//                     }
+//                 }   
+                
+//                 .btn-section{
+//                     @apply flex;
+//                     @apply justify-end;
+    
+    
+//                     .btn{
+//                         @apply bg-red-400;
+//                         @apply rounded;
+//                         @apply text-white font-bold;
+//                     }
+    
+//                     .btn:hover{
+//                         @apply bg-red-700;
+//                     }
+
+//                     .btn-ok:hover{
+//                         @apply border-2 border-green-700;
+//                     }
+//                 } 
+                
+//             }
+
+//             .section-avaiables:hover{
+//                 @apply border-2 border-blue-900;
+//             }
+            
+
+//             .btn-submit{
+//                 @apply rounded;
+//                 @apply w-full;
+//                 @apply px-3 py-2 my-2;
+//                 @apply bg-green-500;
+//                 @apply text-white font-bold;
+
+//             }
+
+//             .btn-submit:hover{
+//                 @apply bg-green-700;
+//             } 
+
+//             .btn-disabled{
+//                 @apply rounded;
+//                 @apply w-full;
+//                 @apply px-3 py-2 my-2;
+//                 @apply bg-green-200;
+//                 @apply text-white font-bold;
+//             }
+//         }
+//     }
+// }
+
+.add-user-page{
+    @apply flex;
+    @apply p-4;
+
+    .section-page{
+        @apply flex-1 ;
+        @apply rounded;
+        @apply border-2 border-blue-600;
+        @apply m-2;
+
+        .title-section{
+            @apply font-bold;
+            @apply text-center;
+            @apply text-2xl;
+            @apply p-2;
+            
+        }
+    }
+
+    .section-page:hover{
+        @apply border-2 border-blue-800;
+    }
+
+    .registration-form{
+        @apply flex justify-center;
+
+        .body-form{
+            @apply flex flex-col justify-center;
+            @apply w-96;
+
+            .warning-message{
+                @apply text-red-600;
+                @apply font-bold;
+            }
+            .input-data{
+                @apply appearance-none;
+                @apply rounded;
+                @apply w-full;
+                @apply px-3 py-2 my-2;
+                @apply border border-blue-600;
+                @apply placeholder-gray-500;
+                @apply text-gray-900;
+            }
+
+            .input-data:hover{
+                @apply border-2 border-blue-900;
+            }
+            .select-role-body{
+                @apply flex;
+
+                .select-role{
+                    @apply flex-1;
+                }
+
+                .btn-add-role{
+                    @apply flex-none;
+                    @apply my-2;
+
+                    .btn{
+                        @apply bg-blue-500;
+                        @apply px-3 py-2;
+                        @apply rounded;
+                        @apply text-white;
+                        @apply font-bold;
+                        @apply border-2 border-blue-700;
+                    }     
+                    .btn:hover{
+                        @apply bg-blue-700;
+                        @apply border-2 border-blue-900;
+                    }                    
+                }                
+            }
+
+            .role-info{
+                @apply flex;
+            }
+            .role-info-description{
+                @apply border border-blue-600;
+                @apply rounded;
+                @apply pb-2;
+                @apply mb-2;
+
+            .role-info-description-item{
+                @apply flex;
+                @apply p-2;
+
+                .role-info-description-item-title{
+                    @apply flex flex-1;
+                }
+                .role-info-description-item-btn{
+                    @apply flex flex-none;
+
+                    .btn-delete{
+                        @apply bg-red-500;
+                        @apply rounded;
+                    }
+                    .btn-delete:hover{
+                        @apply bg-red-700;
+                    }
+                    .btn-ok{
+                        @apply rounded;
+                        @apply border-2 border-green-400;
+                    }
+                    .btn-ok:hover{
+                        @apply border-2 border-green-700;
+                        @apply rounded;
+                    }
+                }
+            }
+                .role-title{
+                    @apply flex flex-1;
+                    @apply pl-2;
+                }
+                .permission-title{
+                    @apply pl-4;
+                }
+            }
+
+            .role-info-description:hover{
+                @apply border-2 border-blue-900;
+            }
+            .section-avaiables{
+                @apply border border-blue-600;
+                @apply px-3 py-2 my-2;
+                @apply rounded;
+
+                .section-avaiables-warning{
+                    @apply flex;
+
+                    .avaiables-warning{
+                        @apply flex flex-1;
+                        @apply p-2;
+                    }
+                }   
+                
+                .btn-section{
+                    @apply flex;
+                    @apply justify-end;
+    
+    
+                    .btn{
+                        @apply bg-red-400;
+                        @apply rounded;
+                        @apply text-white font-bold;
+                    }
+    
+                    .btn:hover{
+                        @apply bg-red-700;
+                    }
+
+                    .btn-ok{
+                        @apply rounded;
+                        @apply border-2 border-green-400;  
+                    }
+                    .btn-ok:hover{
+                        @apply border-2 border-green-700;
+                    }
+                } 
+                
+            }
+
+            .section-avaiables:hover{
+                @apply border-2 border-blue-900;
+            }
+
+            .btn-submit{
+                @apply rounded;
+                @apply w-full;
+                @apply px-3 py-2 my-2;
+                @apply bg-green-500;
+                @apply text-white font-bold;
+
+            }
+
+            .btn-submit:hover{
+                @apply bg-green-700;
+                @apply border-2 border-green-800;
+            } 
+
+            .btn-disabled{
+                @apply rounded;
+                @apply w-full;
+                @apply px-3 py-2 my-2;
+                @apply bg-green-200;
+                @apply text-white font-bold;
+            }
+
+        }
+    }
+}

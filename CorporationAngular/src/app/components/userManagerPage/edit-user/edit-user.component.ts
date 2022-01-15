@@ -4,22 +4,8 @@ import { Permission, UserInfo } from 'src/app/interfaces/userInfo';
 //import { EditUser} from 'src/app/interfaces/editUser';
 import { PermissionAction} from 'src/app/interfaces/permissionAction';
 import {Role} from 'src/app/interfaces/userInfo';
-//import { title } from 'process';
-//import { Permission} from 'src/app/interfaces/userInfo';
-// interface Avaiables{
-//   roles:RolesExample[]
+import { AvaiableUser } from 'src/app/interfaces/userManagerPage/avaiableUser';
 
-// }
-
-interface AvaiableUser{
-  role:string ,
-  permissions:PermissionAction[] 
-}
-
-// interface PermissionsAction{
-//   permission:string,
-//   isChecked:boolean
-// }
 
 // interface RolesExample{
 //   title:string,
@@ -141,7 +127,8 @@ export class EditUserComponent implements OnInit {
         //console.log(role.permissions);
         this.avaiablesUser.push({
           role:role.title,
-          permissions:this.createPermissionsAction(role.permissions)
+          permissions:this.createPermissionsAction(role.permissions),
+          access:[]
         })
       }
     }
@@ -206,7 +193,8 @@ export class EditUserComponent implements OnInit {
     
     return {
       title:role,
-      permissions:newPermissions
+      permissions:newPermissions,
+      access: {title:""}
     };
   }
 
@@ -228,7 +216,7 @@ export class EditUserComponent implements OnInit {
     for (let permission of this.getAllPermissions()){
       permissionsAction.push({title:permission, isSelected:false})
     }
-    this.avaiablesUser.push({role:this.selectedRole,permissions:permissionsAction})
+    this.avaiablesUser.push({role:this.selectedRole,permissions:permissionsAction,access:[]})
   }
 
   removeRole(index:number){
