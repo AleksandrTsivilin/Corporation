@@ -9,12 +9,10 @@ import { MainPageComponent } from './components/mainPageComponent/main-page/main
 import { RoleSelectorComponent } from './components/roleSelectorComponent/role-selector/role-selector.component';
 import { InformationPageComponent } from './components/mainPageComponent/information-page/information-page.component';
 import { LoginFormComponent } from './components/loginPageComponent/login-form/login-form.component';
-//import { AdminManagerComponent } from './components/adminPage/admin-manager/admin-manager.component';
 import { UsersComponent } from './components/userManagerPage/users/users.component';
 import { UserItemComponent } from './components/userManagerPage/user-item/user-item.component';
 import { EditUserComponent } from './components/userManagerPage/edit-user/edit-user.component';
 import { DialogUserInfoComponent } from './components/userManagerPage/dialog-user-info/dialog-user-info.component';
-//import { WorkModulesComponent } from './components/adminPage/work-modules/work-modules.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
 import { ProductItemComponent } from './components/productManagerPage/productPage/product-item/product-item.component';
 import { AddProductComponent } from './components/productManagerPage/productPage/add-product/add-product.component';
@@ -29,7 +27,7 @@ import { LoadingPageComponent } from './components/loading/loading-page/loading-
 import { Responce500Component } from './components/loading/responce500/responce500.component';
 import { CreateAccountComponent } from './components/loginPageComponent/create-account/create-account.component';
 import { AddUserComponent } from './components/userManagerPage/add-user/add-user.component';
-import { AddRolesUserComponent } from './components/userManagerPage/add-roles-user/add-roles-user.component';
+
 
 
 
@@ -40,12 +38,10 @@ import { AddRolesUserComponent } from './components/userManagerPage/add-roles-us
     RoleSelectorComponent,
     InformationPageComponent,
     LoginFormComponent,
-    //AdminManagerComponent,
     UsersComponent,
     UserItemComponent,
     EditUserComponent,
     DialogUserInfoComponent,
-    //WorkModulesComponent,
     ProductsComponent,
     ProductItemComponent,
     AddProductComponent,
@@ -58,8 +54,7 @@ import { AddRolesUserComponent } from './components/userManagerPage/add-roles-us
     LoadingPageComponent,
     Responce500Component,
     CreateAccountComponent,
-    AddUserComponent,
-    AddRolesUserComponent,
+    AddUserComponent
     
   ],
   imports: [
