@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Models.UserManagerModels;
 using Services.AuthServices;
 using Services.Models;
 using Services.UserServices;
@@ -14,14 +15,14 @@ namespace CorporationApi.Controllers
     [ApiController]
     public class AuthTokenController : ControllerBase
     {
-        private readonly IUserService _service;
+        private readonly IUserService _userService;
         private readonly IAuthService _authService;
 
 
         public AuthTokenController
-            (IUserService service, IAuthService authService)
+            (IUserService userService, IAuthService authService)
         {
-            _service = service;
+            _userService = userService;
             _authService = authService;
 
         }
@@ -29,7 +30,7 @@ namespace CorporationApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginModel model)
         {
-            var user = await _service
+            var user = await _userService
                 .TryGetUser(model);
 
             if (user is null)

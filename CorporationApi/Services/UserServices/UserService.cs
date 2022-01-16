@@ -1,4 +1,6 @@
-﻿using Services.Models;
+﻿using Repositories.Models.UserManagerModels;
+using Repositories.UserRepositories;
+using Services.Models;
 using Services.Models.UserModels;
 using System;
 using System.Collections.Generic;
@@ -10,8 +12,15 @@ namespace Services.UserServices
 {
     public class UserService : IUserService
     {
+        private readonly IUserRepository _repository;
+
+        public UserService(IUserRepository repository)
+        {
+            _repository = repository;
+        }
         public async Task<UserModel> TryGetUser(LoginModel model)
         {
+            _repository.GetTryUser(model);
             return new UserModel
             {
                 Id = 1,

@@ -1,4 +1,5 @@
-﻿using Services.Models;
+﻿using Repositories.Models.UserManagerModels;
+using Services.Models;
 using Services.Models.UserModels;
 using System;
 using System.Collections.Generic;

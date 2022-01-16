@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Models
+namespace Repositories.Models.UserManagerModels
 {
     public class LoginModel
     {

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories.ProductRepositories;
+using Repositories.UserRepositories;
 using Services.AuthServices;
 using Services.ProductService;
 using Services.ProductService.MovementsService;
@@ -71,6 +72,7 @@ namespace CorporationApi
             services.AddScoped<IRepository<CategoryProduct>, Repository<CategoryProduct>>();
             services.AddScoped<IRepository<ManufacturerProduct>, Repository<ManufacturerProduct>>();
             services.AddScoped<IRepository<UnitProduct>, Repository<UnitProduct>>();
+            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<DBContext>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
