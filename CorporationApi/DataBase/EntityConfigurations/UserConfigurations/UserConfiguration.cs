@@ -20,9 +20,7 @@ namespace DataBase.EntityConfigurations.UserConfigurations
             builder.Property(_ => _.Username)
                 .IsRequired()
                 .HasMaxLength(255);
-            builder.Property(_ => _.Email)
-                .IsRequired()
-                .HasMaxLength(255);
+
             builder.Property(_ => _.Salt)
                 .IsRequired();
 

@@ -19,9 +19,16 @@ namespace DataBase.EntityConfigurations.EmployeeConfigurations
             builder.Property(_ => _.Lastname)
                 .IsRequired()
                 .HasMaxLength(255);
+
             builder.Property(_ => _.Firstname)
                 .IsRequired()
                 .HasMaxLength(255);
+
+            builder.Property(_ => _.Email)
+                .IsRequired()
+                .HasMaxLength(255);
+
+            builder.Property(_ => _.RegistrationToken);
 
             builder.HasOne(_ => _.Department)
                 .WithMany(_ => _.Employees)
