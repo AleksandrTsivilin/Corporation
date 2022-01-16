@@ -27,6 +27,10 @@ namespace DataBase
         public DbSet<Region> Regions { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<AvaiableUser> AvaiablesUser { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        public DbSet<Access> Accesses { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = @"Data Source=DESKTOP-ABUB89D\SQLEXPRESS;Initial Catalog=Coorporation;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";

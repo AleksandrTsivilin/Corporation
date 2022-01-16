@@ -18,5 +18,6 @@ namespace DataBase.Entities.UserEntities
         public Employee Employee { get; set; }
         public int DepartmentId { get; set; }
         public Department Department { get; set; }
+        public ICollection<AvaiableUser> Avaiables { get; set; }
     }
 }
