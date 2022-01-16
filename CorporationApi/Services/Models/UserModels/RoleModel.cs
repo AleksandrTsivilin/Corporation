@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Services.Models.UserModels
 {
-    //public class Permission
-    //{
-    //    public string Title { get; set; }
-    //}
+    public class RoleModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+    }
 }

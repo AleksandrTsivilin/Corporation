@@ -11,6 +11,6 @@ namespace DataBase.Entities.UserEntities
         public int Id { get; set; }
         public string Title { get; set; }
         public AvaiableUser AvaiableUser { get; set; }
-        public int AvaiableUserId { get; set; }
+        public int? AvaiableUserId { get; set; }
     }
 }

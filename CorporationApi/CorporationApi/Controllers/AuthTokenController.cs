@@ -33,7 +33,7 @@ namespace CorporationApi.Controllers
             var user = await _userService
                 .TryGetUser(model);
 
-            if (user is null)
+            if (user is null) 
                 return Unauthorized();
 
             var encodedJwt = _authService.CreateJWT(user);

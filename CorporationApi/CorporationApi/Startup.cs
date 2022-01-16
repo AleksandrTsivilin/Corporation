@@ -1,6 +1,9 @@
+using CorporationApi.Controllers;
 using CorporationApi.HubConfig;
 using DataBase;
+using DataBase.Entities.EmployeeEntities;
 using DataBase.Entities.ProductEntities;
+using DataBase.Entities.UserEntities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using Repositories.ProductRepositories;
 using Repositories.UserRepositories;
 using Services.AuthServices;
+using Services.EmployeeServices;
 using Services.ProductService;
 using Services.ProductService.MovementsService;
 using Services.ProductServices.CategoriesService;
@@ -24,6 +28,8 @@ using Services.ProductServices.ProductService;
 using Services.ProductServices.StoragesService;
 using Services.ProductServices.UnitsService;
 using Services.UserServices;
+using Services.UserServices.PermissionServices;
+using Services.UserServices.RoleServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,6 +81,10 @@ namespace CorporationApi
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<DBContext>();
 
+            AddEmployee(services);
+            AddRole(services);
+            AddPermission(services);
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
@@ -92,6 +102,8 @@ namespace CorporationApi
                 });
         }
 
+
+
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
@@ -108,7 +120,7 @@ namespace CorporationApi
             app.UseRouting();
 
             app.UseAuthorization();
-            
+
             app.UseAuthentication();
 
             app.UseEndpoints(endpoints =>
@@ -118,6 +130,24 @@ namespace CorporationApi
                 endpoints.MapHub<ProductHub>("productHub");
                 endpoints.MapHub<MovementsHub>("/movementsHub");
             });
+        }
+
+        private void AddEmployee(IServiceCollection services)
+        {
+            services.AddScoped<IEmployeeService, EmployeeService>();
+            services.AddScoped<IRepository<Employee>, Repository<Employee>>();
+        }
+
+        private void AddRole(IServiceCollection services)
+        {
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IRepository<Role>, Repository<Role>>();
+        }
+
+        private void AddPermission(IServiceCollection services)
+        {
+            services.AddScoped<IPermissionService, PermissionService>();
+            services.AddScoped<IRepository<Permission>, Repository<Permission>>();
         }
     }
 }
