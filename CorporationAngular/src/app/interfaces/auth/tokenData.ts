@@ -17,3 +17,7 @@ export interface PermissionUser{
 export interface Access{
     title:string
 }
+
+// export interface TokenData{
+//     userId:number
+// }

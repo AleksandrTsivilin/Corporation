@@ -1,7 +1,7 @@
 import { Role } from "../userInfo";
 
 export interface NewUserWithRoles {
-    fullname:string,
+    employeeId:number,
     username:string,
     password:string,
     email:string,

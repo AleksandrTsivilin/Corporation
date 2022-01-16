@@ -19,15 +19,10 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onSubmit(){
-    this.loginForm={
-      username:"admin",
-      password:"admin"
-    }
-    
+  onSubmit(){    
     this.authService.login(this.loginForm)
       .subscribe(result=>{
-        console.log(result.fullname);
+        //console.log(result.fullname);
         this.router.navigate(['roleSelector']);
 
       },()=>console.log("error auth"))

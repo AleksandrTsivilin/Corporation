@@ -7,7 +7,7 @@
         <div>
             <form
                 class="registration-form"
-                (ngSubmit)="onSubmit(); "
+                (ngSubmit)="onSubmit(); newUserWithRoleForm.resetForm();"
                 #newUserWithRoleForm="ngForm" 
             >   
                 <div class="body-form">
@@ -20,17 +20,17 @@
                         <select 
                             class="input-data"
                             
-                            [(ngModel)]=newUserWithRole.fullname
+                            [(ngModel)]=newUserWithRole.employeeId
                             name="fullname"
                             #fullname="ngModel"
                             required
-                        >                
+                        >             
                             <option
                                 *ngFor="let employee of employees" 
-                                [value]="employee"
+                                [value]="employee.id"
                                 name="employee"                   
                             >
-                                {{employee}}
+                                {{employee.fullname}}
                             </option>
                         </select>
                     </div>
@@ -146,10 +146,10 @@
                                     
                             <option
                                 *ngFor="let role of avaiableRoles" 
-                                [value]="role"
+                                [value]="role.title"
                                 name="role"                   
                             >
-                                {{role}}
+                                {{role.title}}
                             </option>
                         </select>
                     </div>

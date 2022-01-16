@@ -1,5 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
+import { EmployeeInfo } from 'src/app/interfaces/employee/employeeInfo';
 
 
 import { PermissionAction } from 'src/app/interfaces/permissionAction';
@@ -9,7 +10,10 @@ import { Access } from 'src/app/interfaces/userManagerPage/access';
 import { AccessAction } from 'src/app/interfaces/userManagerPage/accessAction';
 import { AvaiableUser } from 'src/app/interfaces/userManagerPage/avaiableUser';
 import { NewUserWithRoles } from 'src/app/interfaces/userManagerPage/newUserWithRoles';
+import { RoleInfo } from 'src/app/interfaces/userManagerPage/roleInfo';
 import { AuthService } from 'src/app/services/auth.service';
+import { EmployeeService } from 'src/app/services/employeeManager/employee.service';
+import { RoleService } from 'src/app/services/userManager/roleServices/role.service';
 
 @Component({
   selector: 'app-add-user',
@@ -20,15 +24,15 @@ export class AddUserComponent implements OnInit {
 
   
   newUserWithRole:NewUserWithRoles={
-    fullname:"",
+    employeeId:0,
     username:"",
     password:"",
     email:"",
     roles:[]
   }
   
-  employees:string [] = [];
-  avaiableRoles:string [] = [];
+  employees:EmployeeInfo [] = [];
+  avaiableRoles:RoleInfo[] = [];
   avaiableAccess:string [] = [];
   avaiablesUser:AvaiableUser={
     role:"",
@@ -46,7 +50,11 @@ export class AddUserComponent implements OnInit {
   };
   private hiddenRoleInfo:number[]=[];
 
-  constructor(private readonly authService:AuthService) { }
+  constructor(
+    private readonly authService:AuthService,
+    private readonly employeeService:EmployeeService,
+    private readonly roleService:RoleService
+    ) { }
 
   ngOnInit(): void {
     this.getAllEmployees();
@@ -58,13 +66,12 @@ export class AddUserComponent implements OnInit {
   onSubmit(){
     //console.log(this.newUserWithRole);
     this.authService.addUserWithRole(this.newUserWithRole);
+    
   }
 
   checkPassword():boolean{
     return this.newUserWithRole.password===this.confirmPassword;
   }
-
-
 
   onSelectRole(event:any){
     this.selectedRole=event.target.value;
@@ -165,11 +172,19 @@ export class AddUserComponent implements OnInit {
   }
 
   private getAllEmployees() {
-    this.employees=["Vasya Pupkin", "Oleg Titov"]
+    this.employeeService.getEmployees()
+      .subscribe(employee=>{
+        this.employees=employee;
+      },()=>{
+        console.log("error loading employee ")
+      })
   }
 
   private getAllRoles(){
-    this.avaiableRoles=["AdminManager","ProductManager"]
+    this.roleService.getRoles()
+      .subscribe(roles=>{
+        this.avaiableRoles=roles;
+      },()=>{ console.log ("error loading role ")})
   }
 
   private getAllAccess():Access[]{

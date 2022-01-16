@@ -38,28 +38,36 @@ export class RoleSelectorComponent implements OnInit {
     })  
   }
 
-  checkRole(title:string){    
-    return this.tokenData.roles
-      .map(r=>r.Title)
-      .includes(title);    
+  checkRole(title:string){ 
+    return true;   
+    // return this.tokenData.roles
+    //   .map(r=>r.Title)
+    //   .includes(title);    
   }
 
   
 
   getAvaiablesPermissions(selectedRole:string):AvaiablesPermissions{
-    const permissionTitles=this.tokenData.roles
-      .filter(role=>role.Title===selectedRole)
-      .map(r=>r.Permissions)[0]
-      .map(p=>p.Title);      
+    // const permissionTitles=this.tokenData.roles
+    //   .filter(role=>role.Title===selectedRole)
+    //   .map(r=>r.Permissions)[0]
+    //   .map(p=>p.Title);      
      
+    // return {
+    //   canCreate:permissionTitles.includes("Create"),
+    //   canRead:permissionTitles.includes("Read") || 
+    //     permissionTitles.includes("Update") ||
+    //     permissionTitles.includes("Delete"),
+    //   canUpdate:permissionTitles.includes("Update"),
+    //   canDelete:permissionTitles.includes("Delete"),
+    //   canMove:permissionTitles.includes("move")
+    // }
     return {
-      canCreate:permissionTitles.includes("Create"),
-      canRead:permissionTitles.includes("Read") || 
-        permissionTitles.includes("Update") ||
-        permissionTitles.includes("Delete"),
-      canUpdate:permissionTitles.includes("Update"),
-      canDelete:permissionTitles.includes("Delete"),
-      canMove:permissionTitles.includes("move")
+      canCreate:true,
+      canRead:true,
+      canUpdate:true,
+      canDelete:true,
+      canMove:true
     }
   }
   changeModePage(path:string){

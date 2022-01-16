@@ -17,6 +17,9 @@ export class AuthService {
     fullname:"",
     roles:[]
   }
+  // tokenData:TokenData={
+  //   userId:0
+  // }
   tokenData$=new BehaviorSubject<TokenData | null>(null);
   token$=new BehaviorSubject<Token | null>(null);
   constructor(private readonly client:HttpClient) { }
@@ -58,17 +61,20 @@ export class AuthService {
       
       const userId = idStr ? parseInt(idStr):0;
   
-      const fullname = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+      // const fullname = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
       
-      const rolesString = dataJson["roles"];
+      // const rolesString = dataJson["roles"];
   
-      const roles = JSON.parse(rolesString);
+      // const roles = JSON.parse(rolesString);
       
       return {
         userId:userId,
-        fullname:fullname,
-        roles:roles
+        fullname:"fullname",
+        roles:[]
       }
+      // return {
+      //   userId:userId
+      // }
   }
   
 }
