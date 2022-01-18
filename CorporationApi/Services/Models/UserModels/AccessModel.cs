@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace Services.Models.UserModels
 {
-    //public class Access
-    //{
-    //    public string Title { get; set; }
-    //}
+    public class AccessModel
+    {
+        public int Id { get; set; }
+        public string Title { get; set; }
+    }
 }

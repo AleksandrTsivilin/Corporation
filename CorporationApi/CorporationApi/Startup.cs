@@ -28,6 +28,7 @@ using Services.ProductServices.ProductService;
 using Services.ProductServices.StoragesService;
 using Services.ProductServices.UnitsService;
 using Services.UserServices;
+using Services.UserServices.AccessServices;
 using Services.UserServices.PermissionServices;
 using Services.UserServices.RoleServices;
 using System;
@@ -84,6 +85,7 @@ namespace CorporationApi
             AddEmployee(services);
             AddRole(services);
             AddPermission(services);
+            AddAccess(services);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -148,6 +150,12 @@ namespace CorporationApi
         {
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IRepository<Permission>, Repository<Permission>>();
+        }
+
+        private void AddAccess(IServiceCollection services)
+        {
+            services.AddScoped<IAccessService, AccessService>();
+            services.AddScoped<IRepository<Access>, Repository<Access>>();
         }
     }
 }
