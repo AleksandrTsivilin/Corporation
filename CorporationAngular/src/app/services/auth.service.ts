@@ -7,6 +7,8 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginForm } from '../interfaces/auth/loginForm';
 import { NewUser } from '../interfaces/auth/newUser';
 import { NewUserWithRoles } from '../interfaces/userManagerPage/newUserWithRoles';
+import { NewUserWithAvaiables } from '../interfaces/userManagerPage/newUserWithAvaiables';
+//import { NewUserWithAvaiables } from '../interfaces/userManagerPage/newUserWithAvaiables';
 @Injectable({
   providedIn: 'root'
 })
@@ -47,8 +49,12 @@ export class AuthService {
     console.log(newUser);
   }
 
-  addUserWithRole(newUser:NewUserWithRoles){
-    console.log(newUser)
+  // addUserWithRole(newUser:NewUserWithRoles){
+  //   console.log(newUser)
+  // }
+
+  addUserWithAvaiables(newUser:NewUserWithAvaiables){
+    console.log(newUser);
   }
 
   private readToken(token: any):TokenData {

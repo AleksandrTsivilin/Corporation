@@ -54,7 +54,8 @@ import { AddUserComponent } from './components/userManagerPage/add-user/add-user
     LoadingPageComponent,
     Responce500Component,
     CreateAccountComponent,
-    AddUserComponent
+    AddUserComponent,
+    
     
   ],
   imports: [

@@ -1,229 +1,203 @@
 
 import { Component, OnInit } from '@angular/core';
+import { AvaiableUserN } from 'src/app/interfaces/auth/avaiablesUserN';
 import { EmployeeInfo } from 'src/app/interfaces/employee/employeeInfo';
-
-
 import { PermissionAction } from 'src/app/interfaces/permissionAction';
-
-import { Permission, Role } from 'src/app/interfaces/userInfo';
-import { Access } from 'src/app/interfaces/userManagerPage/access';
 import { AccessAction } from 'src/app/interfaces/userManagerPage/accessAction';
-import { AvaiableUser } from 'src/app/interfaces/userManagerPage/avaiableUser';
-import { NewUserWithRoles } from 'src/app/interfaces/userManagerPage/newUserWithRoles';
+import { AccessInfo } from 'src/app/interfaces/userManagerPage/accessInfo';
+import { NewUserWithAvaiables } from 'src/app/interfaces/userManagerPage/newUserWithAvaiables';
+import { PermissionInfo } from 'src/app/interfaces/userManagerPage/permissionInfo';
 import { RoleInfo } from 'src/app/interfaces/userManagerPage/roleInfo';
+
 import { AuthService } from 'src/app/services/auth.service';
 import { EmployeeService } from 'src/app/services/employeeManager/employee.service';
+import { AccessService } from 'src/app/services/userManager/accessServices/access.service';
+import { PermissionService } from 'src/app/services/userManager/permissionServices/permission.service';
 import { RoleService } from 'src/app/services/userManager/roleServices/role.service';
+
+interface CurrentAvaiables{
+  role:string,
+  access:string,
+  permissions:string[]
+}
 
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.scss']
 })
-export class AddUserComponent implements OnInit {
+export class AddUserComponent implements OnInit {  
 
-  
-  newUserWithRole:NewUserWithRoles={
-    employeeId:0,
+
+  newUserWithAvaiables:NewUserWithAvaiables={
+    employeeId:null,
     username:"",
     password:"",
     email:"",
-    roles:[]
+    avaiables:[]
   }
-  
-  employees:EmployeeInfo [] = [];
-  avaiableRoles:RoleInfo[] = [];
-  avaiableAccess:string [] = [];
-  avaiablesUser:AvaiableUser={
-    role:"",
-    permissions:[],
-    access:[]
-  }
-  
+
   confirmPassword:string="";
-  isOpenRoleUserInfo:boolean=false;
 
-  private selectedRole:string="";
-  private permissions : Permission [] = [];
-  private access : Access ={
+  employees:EmployeeInfo[]=[];
+
+  avaiableUser:AvaiableUserN={
+    roleId:null,
+    accessId:0,
+    permissionsId:[]
+  }
+
+  currentAvaiables:CurrentAvaiables[]=[];
+  
+
+  permissionsAction:PermissionAction[] =[];
+  accessesAction:AccessAction[] = [];
+
+  isCreateAvaiables:boolean=false;
+  isOpenAvaiablesInfo:boolean=false;
+  selectedRole:RoleInfo={
+    id: 0,
     title:""
-  };
-  private hiddenRoleInfo:number[]=[];
 
+  }
+
+  allRoles:RoleInfo [] = [];
+  private allPermissions:PermissionInfo[]=[];
+  private allAccesses:AccessInfo[]=[];
   constructor(
     private readonly authService:AuthService,
     private readonly employeeService:EmployeeService,
-    private readonly roleService:RoleService
+    private readonly roleService:RoleService,
+    private readonly permissionService:PermissionService,
+    private readonly accessService:AccessService
     ) { }
 
   ngOnInit(): void {
     this.getAllEmployees();
     this.getAllRoles();
-    console.log(this.newUserWithRole.roles)
+    this.getAllPermissions();
+    this.getAllAccess();
   }
 
-
-  onSubmit(){
-    //console.log(this.newUserWithRole);
-    this.authService.addUserWithRole(this.newUserWithRole);
-    
+  checkPassword(){
+    return this.newUserWithAvaiables.password===this.confirmPassword;
   }
 
-  checkPassword():boolean{
-    return this.newUserWithRole.password===this.confirmPassword;
+  isValidAvaiables(){
+    return this.newUserWithAvaiables.avaiables.length>0;
   }
 
   onSelectRole(event:any){
-    this.selectedRole=event.target.value;
-    // console.log("onSelectRole")
-    // console.log(event);
-    // if (event.target.value==="add role") return;
-    // console.log("go on")
-    // const newRole = event.target.value;
-    // this.createAvaiableUser(newRole);
-    
+    const index = Number ( event.target.value);
+    this.selectedRole = this.allRoles.filter(r=>r.id===index)[0];
+    this.isExistRole(index);
+    if (this.isExistRole(index)) return;
+    this.createAvaiablesUser();
+
+  }
+  onSubmit(){
+    this.authService.addUserWithAvaiables(this.newUserWithAvaiables)
   }
 
-  isValidRole(){
-    return this.newUserWithRole.roles.length>0;
-  }
   isValidPermissions(){
-    return  this.avaiablesUser.permissions
-    .filter(_=>_.isSelected===true)
-    .length >0;
-  }
-
-  isValidAccess(){
-    return this.avaiablesUser.access
-      .filter(_=>_.isSelected)
+    return this.permissionsAction
+      .filter(p=>p.isSelected)
       .length>0;
   }
 
-  addRole(){
-    console.log("addRole")
-    console.log(this.newUserWithRole)
-    if (this.newUserWithRole.roles.map(r=>r.title).includes(this.selectedRole)) return;
-    this.createAvaiableUser(this.selectedRole);    
+  isValidAccess(){
+    return this.accessesAction
+      .filter(a=>a.isSelected)
+      .length>0;
   }
-
-  close(){
-    this.clearAvaiablesUser();
-    console.log(this.newUserWithRole.roles)
-    //this.getAllRoles();
-    // this.avaiablesUser={
-    //   role:"",
-    //   permissions:[],
-    //   access:[]
-    // }
-  }
-
   saveRole(){
-    const selectedAvaiables : AvaiableUser={
-      role:this.avaiablesUser.role,
-      permissions:this.avaiablesUser.permissions.filter(p=>p.isSelected),
-      access:this.avaiablesUser.access.filter(a=>a.isSelected)
-    }
-    this.permissions=[];
-    for (let permission of selectedAvaiables.permissions){
-      this.permissions.push({title:permission.title})
-    }
+    this.isCreateAvaiables=false;
+    const selectedAccess = this.accessesAction.filter(a=>a.isSelected)[0];
+    const selectedPermissions=this.permissionsAction.filter(p=>p.isSelected);
+    this.newUserWithAvaiables.avaiables
+      .push({
+        roleId:this.selectedRole.id,
+        accessId:selectedAccess.id,
+        permissionsId:selectedPermissions.map(p=>p.id)
+      });
 
-    this.access.title= selectedAvaiables.access[0].title;
-    
-    console.log(this.newUserWithRole.roles);
-    console.log(selectedAvaiables)
-    this.newUserWithRole.roles.push({
-      title:selectedAvaiables.role,
-      permissions:this.permissions,
-      access:this.access
+    this.currentAvaiables.push({
+      role:this.selectedRole.title,
+      access:selectedAccess.title,
+      permissions:selectedPermissions.map(p=>p.title)
     })
-
-    console.log(this.newUserWithRole.roles);
-    this.clearAvaiablesUser();
-    // this.avaiablesUser={
-    //   role:"",
-    //   permissions:[],
-    //   access:[]
-    //}
+  }
+  closeCreateRole(){
+    this.isCreateAvaiables=false;
   }
 
-  openRole(){
-    this.isOpenRoleUserInfo=true;
+  openAvaiablesInfo(){
+    this.isOpenAvaiablesInfo=true;
   }
 
-  closeRoleUserInfoItem(index:number){
-    console.log("closeRoleUser")
-    this.hiddenRoleInfo.push(5);
+  closeAvaiablesInfo(){
+    this.isOpenAvaiablesInfo=false;
   }
 
-  checkHiddenRoleUserInfoItem(index:number){
-    return !this.hiddenRoleInfo.includes(index);
+  removeAvaiable(role:string){    
+    this.currentAvaiables=this.currentAvaiables.filter(a=>a.role!==role);
+    const id = this.allRoles.filter(r=>r.title===role).map(r=>r.id)[0];
+    this.newUserWithAvaiables.avaiables = this.newUserWithAvaiables.avaiables.filter(a=>a.roleId!==id);
   }
 
-  removeRoleUserInfoItem(index:number){
-    console.log("removeUserRole")
-    console.log(this.newUserWithRole)
-    const role=this.newUserWithRole.roles[index];
-    console.log(role)
-    this.newUserWithRole.roles=this.newUserWithRole.roles.filter(r=>r.title!==role.title);
-    console.log(this.newUserWithRole)
+  private createAvaiablesUser(){
+    
+    this.isCreateAvaiables=true;
+    //this.createdRole=role.title;
 
-    if (this.newUserWithRole.roles.length===0) this.isOpenRoleUserInfo=false;
+    this.permissionsAction=[];
+    for (let permission of this.allPermissions){
+      this.permissionsAction.push({
+        id:permission.id,
+        title: permission.title,
+        isSelected:false
+      })
+    }
+
+    this.accessesAction = [];
+    for (let access of this.allAccesses){
+      this.accessesAction.push({
+        id:access.id,
+        title:access.title,
+        isSelected:false
+      })
+    }
   }
 
-  private getAllEmployees() {
+  private isExistRole(roleId:number){
+    return this.newUserWithAvaiables.avaiables
+      .map(a=>a.roleId)
+      .includes(roleId);
+  }
+  private getAllEmployees(){
     this.employeeService.getEmployees()
-      .subscribe(employee=>{
-        this.employees=employee;
-      },()=>{
-        console.log("error loading employee ")
+      .subscribe(employees=>{
+        this.employees=employees;
       })
   }
 
   private getAllRoles(){
     this.roleService.getRoles()
       .subscribe(roles=>{
-        this.avaiableRoles=roles;
-      },()=>{ console.log ("error loading role ")})
+        this.allRoles=roles;
+      })
+  }
+  private getAllPermissions(){
+    this.permissionService.getPermissions().
+      subscribe(permission=>{
+        this.allPermissions=permission;
+      })
   }
 
-  private getAllAccess():Access[]{
-    return [{title:"Region"},{title:"Factory"}]
+  private getAllAccess(){
+    this.accessService.getAccesses()
+      .subscribe(accesses=>{
+        this.allAccesses=accesses;
+      })
   }
-
-  private createAvaiableUser(addedRole:string) {
-    
-    const permissions = this.getAllPermissions();
-    const access = this.getAllAccess();
-    let permissionsAction:PermissionAction[]=[];
-    for (let permission of permissions){
-      permissionsAction.push({title:permission.title, isSelected:false})
-    }
-    let accessAction:AccessAction[] = [];
-    for (let acc of access ) {
-      accessAction.push({title: acc.title, isSelected:false})
-    }
-    console.log(permissionsAction)
-    
-    this.avaiablesUser=
-      {
-        role:addedRole,
-        permissions:permissionsAction,
-        access:accessAction
-    }
-    console.log(this.newUserWithRole)
-  }
-
-  private getAllPermissions():Permission []{
-    return [{title:"Create"},{title:"Read"},{title:"Update"},{title:"Delete"}]
-  }
-
-  private clearAvaiablesUser(){
-    this.avaiablesUser={
-      role:"",
-      permissions:[],
-      access:[]
-    }
-  }
-
 }
