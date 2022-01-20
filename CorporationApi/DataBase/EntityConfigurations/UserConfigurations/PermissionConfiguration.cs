@@ -21,9 +21,7 @@ namespace DataBase.EntityConfigurations.UserConfigurations
                 .HasMaxLength(255);
 
 
-            builder.HasOne(_ => _.AvaiableUser)
-                .WithMany(_ => _.Permissions)
-                .HasForeignKey(_ => _.AvaiableUserId);
+
         }
     }
 }

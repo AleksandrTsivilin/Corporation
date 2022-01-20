@@ -15,6 +15,6 @@ namespace DataBase.Entities.UserEntities
         public int RoleId { get; set; }
         public Access Access { get; set; }
         public int AccessId { get; set; }
-        public ICollection<Permission> Permissions { get; set; }
+        public ICollection<AvaiablesUserPermission> AvaiablesUser_Permissions { get; set; }
     }
 }
