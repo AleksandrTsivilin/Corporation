@@ -14,6 +14,7 @@ import { EmployeeService } from 'src/app/services/employeeManager/employee.servi
 import { AccessService } from 'src/app/services/userManager/accessServices/access.service';
 import { PermissionService } from 'src/app/services/userManager/permissionServices/permission.service';
 import { RoleService } from 'src/app/services/userManager/roleServices/role.service';
+import { UserUpdateService } from 'src/app/services/userManager/user-update.service';
 
 interface CurrentAvaiables{
   role:string,
@@ -69,7 +70,8 @@ export class AddUserComponent implements OnInit {
     private readonly employeeService:EmployeeService,
     private readonly roleService:RoleService,
     private readonly permissionService:PermissionService,
-    private readonly accessService:AccessService
+    private readonly accessService:AccessService,
+    private readonly updateService:UserUpdateService
     ) { }
 
   ngOnInit(): void {
@@ -96,7 +98,9 @@ export class AddUserComponent implements OnInit {
 
   }
   onSubmit(){
-    this.authService.addUserWithAvaiables(this.newUserWithAvaiables)
+    this.updateService.addUserWithAvaiables(this.newUserWithAvaiables);
+    this.newUserWithAvaiables.avaiables=[];
+    this.isOpenAvaiablesInfo=false;
   }
 
   isValidPermissions(){
@@ -148,7 +152,7 @@ export class AddUserComponent implements OnInit {
   private createAvaiablesUser(){
     
     this.isCreateAvaiables=true;
-    //this.createdRole=role.title;
+    
 
     this.permissionsAction=[];
     for (let permission of this.allPermissions){
