@@ -12,5 +12,6 @@ namespace Services.UserServices
     public interface IUserService
     {
         Task<UserModel> TryGetUser(LoginModel model);
+        Task AddUserWithAvaiables(NewUser model);
     }
 }

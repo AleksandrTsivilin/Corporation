@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Repositories.UserRepositories
 {
-    public interface IUserRepository : IUserManagerRepository<User>
+    public interface IUserRepository 
     {
         Task<UserModelRep> GetTryUser(LoginModel model);
+        Task AddUserWithAvaiables(NewUser model);
     }
 }

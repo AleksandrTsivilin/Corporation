@@ -1,4 +1,5 @@
 ﻿using Repositories.Models.UserManagerModels;
+
 using Repositories.UserRepositories;
 using Services.Models;
 using Services.Models.UserModels;
@@ -18,6 +19,14 @@ namespace Services.UserServices
         {
             _repository = repository;
         }
+
+        public async Task AddUserWithAvaiables(NewUser model)
+        {
+            await _repository.AddUserWithAvaiables(model);
+            //var spec = new EmployeeSpecification();
+            //spec.Criteria
+        }
+
         public async Task<UserModel> TryGetUser(LoginModel model)
         {
             _repository.GetTryUser(model);
@@ -27,51 +36,6 @@ namespace Services.UserServices
                 Firstname = "Vasya",
                 Lastname = "Turok"
             };
-            //return new UserModel
-            //{
-            //    Id = 1,
-            //    Lastname = "Dubinin",
-            //    Firstname = "Vasya",
-            //    Roles = new List<Role>
-            //    {
-            //        new Role
-            //        {
-            //            Title = "AdminManager",
-            //            Permissions = new List<Permission>
-            //            {
-            //                new Permission{Title="Create"},
-            //                new Permission{Title = "Read"},
-            //                new Permission{Title ="Update"}
-            //            },
-            //            RoleAccess = new Access{Title = "Region"}
-            //        },
-            //        new Role
-            //        {
-            //            Title = "ProductManager",
-            //            Permissions = new List<Permission>
-            //            {
-            //                new Permission{Title="Create"},
-            //                new Permission{Title = "Read"},
-            //                new Permission{Title = "Update"},
-            //                new Permission{Title = "Delete"}
-            //            },
-            //            RoleAccess = new Access{Title = "Factory"}
-            //        },
-            //        new Role
-            //        {
-            //            Title = "MovementsProductManager",
-            //            Permissions = new List<Permission>
-            //            {
-            //                new Permission{Title="Create"},
-            //                new Permission{Title = "Read"},
-            //                new Permission{Title = "Update"},
-            //                new Permission{Title = "Delete"}
-            //            },
-            //            RoleAccess = new Access{Title = "Factory"}
-            //        },
-
-            //    }
-            //};
         }
     }
 }

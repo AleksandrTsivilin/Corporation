@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Repositories.UserRepositories
+namespace Repositories
 {
-    public interface IUserManagerRepository<T>
+    public interface IRepository<T>
     {
+        Task<IEnumerable<T>> Get();
     }
 }

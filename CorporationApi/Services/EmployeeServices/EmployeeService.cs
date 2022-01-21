@@ -1,5 +1,6 @@
 ﻿using DataBase.Entities.EmployeeEntities;
-using Repositories.ProductRepositories;
+using Repositories;
+using Repositories.EmployeeRepositories;
 using Services.Models.EmployeeModels;
 using System;
 using System.Collections.Generic;
@@ -11,9 +12,9 @@ namespace Services.EmployeeServices
 {
     public class EmployeeService : IEmployeeService
     {
-        private readonly IRepository<Employee> _repository;
+        private readonly IEmployeeRepository _repository;
 
-        public EmployeeService(IRepository<Employee> repository)
+        public EmployeeService(IEmployeeRepository repository)
         {
             _repository = repository;
         }

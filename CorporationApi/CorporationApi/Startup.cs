@@ -15,7 +15,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Repositories.ProductRepositories;
+using Repositories;
+using Repositories.BaseRepositories;
+using Repositories.EmployeeRepositories;
 using Repositories.UserRepositories;
 using Services.AuthServices;
 using Services.EmployeeServices;
@@ -34,6 +36,7 @@ using Services.UserServices.RoleServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -78,9 +81,10 @@ namespace CorporationApi
             services.AddScoped<IRepository<Storage>, Repository<Storage>>();
             services.AddScoped<IRepository<CategoryProduct>, Repository<CategoryProduct>>();
             services.AddScoped<IRepository<ManufacturerProduct>, Repository<ManufacturerProduct>>();
-            services.AddScoped<IRepository<UnitProduct>, Repository<UnitProduct>>();
+            services.AddScoped<IRepository<UnitProduct>,Repository<UnitProduct>>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<DBContext>();
+            services.AddSingleton<RNGCryptoServiceProvider>();
 
             AddEmployee(services);
             AddRole(services);
@@ -131,13 +135,14 @@ namespace CorporationApi
                 //endpoints.MapHub<MyHub>("/toastr");
                 endpoints.MapHub<ProductHub>("productHub");
                 endpoints.MapHub<MovementsHub>("/movementsHub");
+                endpoints.MapHub<UserHub>("/userHub");
             });
         }
 
         private void AddEmployee(IServiceCollection services)
         {
             services.AddScoped<IEmployeeService, EmployeeService>();
-            services.AddScoped<IRepository<Employee>, Repository<Employee>>();
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
 
         private void AddRole(IServiceCollection services)

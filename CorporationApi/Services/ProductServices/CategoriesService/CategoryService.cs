@@ -1,7 +1,7 @@
 ﻿using DataBase;
 using DataBase.Entities.ProductEntities;
 using Microsoft.EntityFrameworkCore;
-using Repositories.ProductRepositories;
+using Repositories;
 using Services.Models.ProductModels;
 using System;
 using System.Collections.Generic;
