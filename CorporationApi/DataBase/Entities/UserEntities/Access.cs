@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities.UserEntities
 {
-    public class Access
+    public class Access : BaseEntity
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public ICollection<AvaiableUser> AvaiablesUser { get; set; }
     }

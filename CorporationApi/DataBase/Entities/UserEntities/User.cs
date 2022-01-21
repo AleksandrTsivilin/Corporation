@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities.UserEntities
 {
-    public class User
+    public class User : BaseEntity
     {
-        public int Id { get; set; }
         public string Username { get; set;}
         public byte [] Salt { get; set; }
         public string HashedPassword { get; set; }

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities.EmployeeEntities
 {
-    public class Employee
+    public class Employee : BaseEntity
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         public string Lastname { get; set; }
         public string Firstname { get; set; }
         public string Email { get; set; }

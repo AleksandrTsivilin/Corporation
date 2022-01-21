@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities.UserEntities
 {
-    public class Permission
+    public class Permission : BaseEntity
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public ICollection<AvaiablesUserPermission> AvaiablesUser_Permission { get; set; }
     }
