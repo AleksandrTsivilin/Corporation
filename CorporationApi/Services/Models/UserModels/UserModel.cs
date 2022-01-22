@@ -11,7 +11,7 @@ namespace Services.Models.UserModels
     public class UserModel
     {
         public int Id { get; set; }
-        public string Fullname { get; set; }
+        public string Username { get; set; }
         public ICollection<AvaiableUserModel> Avaiables { get; set; }
         //public string Lastname { get; set; }
         //public string Firstname { get; set; }

@@ -35,25 +35,38 @@ namespace Services.UserServices
                 : new UserModel
                 {
                     Id = user.Id,
-                    Fullname = user.Lastname + " " + user.Firtsname,
+                    Username = user.Username,
+                    //Fullname = user.Lastname + " " + user.Firtsname,
                     Avaiables = CreateAvaiables(user)
                 };
         }
 
-        private List<AvaiableUserModel> CreateAvaiables(UserModelRep user)
+        private List<AvaiableUserModel> CreateAvaiables(User user)
         {
             var avaiables = new List<AvaiableUserModel>();
             foreach (var avaiable in user.Avaiables)
             {
-                var permissions = new List<string>();
+                var permissions = new List<PermissionModel>();
                 foreach (var permission in avaiable.AvaiablesUser_Permissions)
                 {
-                    permissions.Add(permission.Permission.Title);
+                    permissions.Add(new PermissionModel()
+                    {
+                        Id = permission.Id,
+                        Title = permission.Permission.Title
+                    });
                 }
                 avaiables.Add(new AvaiableUserModel()
                 {
-                    Role = avaiable.Role.Title,
-                    Access = avaiable.Access.Title,
+                    Role = new RoleModel
+                    {
+                        Id = avaiable.Role.Id,
+                        Title = avaiable.Role.Title
+                    },
+                    Access = new AccessModel
+                    {
+                        Id = avaiable.Access.Id,
+                        Title = avaiable.Access.Title
+                    },
                     Permissions = permissions
                 });
             }

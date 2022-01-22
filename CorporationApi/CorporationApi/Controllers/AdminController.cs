@@ -56,58 +56,25 @@ namespace CorporationApi.Controllers
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             if (identity != null)
             {
-                //IEnumerable<Claim> claims = identity.Claims;
-                // or
-                var a = identity.FindFirst("avaiables");
-                var b = a.Value;
-                var c = b.Remove(0, 1);
-                c = c.Remove(c.Length - 1, 1);
-                var length = c.Length;
-                var jsonObj = JObject.Parse(c);
-                var avaiable = JsonConvert.DeserializeObject<AvaiableUserModel>(c);
+                
+                //var a = identity.FindFirst("avaiables");
+                //var b = a.Value;
+                //var c = b.Remove(0, 1);
+                //c = c.Remove(c.Length - 1, 1);
+                //var length = c.Length;
+                //var jsonObj = JObject.Parse(c);
+                //var avaiable = JsonConvert.DeserializeObject<AvaiableUserModel>(c);
 
-                IEnumerable<Claim> claims = identity.Claims;
+                //IEnumerable<Claim> claims = identity.Claims;
 
             }
-            //var avaiables = claims
-
-            //    .FirstOrDefault();
-            //Console.WriteLine(avaiables);
+            
 
 
 
 
 
-            //var permissions1 = new List<Permission>
-            //{
-            //    new Permission { Title="create"},
-            //    new Permission { Title="read"}
-
-            //};
-            //var roles1 = new List<Role>
-            //{
-            //    new Role{Title="AdminManager",Permissions=permissions1}
-            //};
-
-            //var userInfos = new List<UserInfo>{
-            //    new UserInfo
-            //    {
-            //        Id=1,
-            //        Username="VasyaUser",
-            //        Firstname="Vasya",
-            //        Roles=roles1
-
-            //    },
-            //    new UserInfo
-            //    {
-            //        Id=2,
-            //        Username="OlegUser",
-            //        Firstname="Oleg",
-            //        Roles=roles1
-            //    }
-
-
-            //};
+            
 
             return Ok();
         }

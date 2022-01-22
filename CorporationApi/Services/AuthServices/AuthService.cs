@@ -43,7 +43,7 @@ namespace Services.AuthServices
             return new List<Claim>
             {
                new Claim(ClaimTypes.NameIdentifier,model.Id.ToString()),
-               new Claim(ClaimTypes.Name,model.Fullname)
+               new Claim(ClaimTypes.Name,model.Username)
             };
         }
 

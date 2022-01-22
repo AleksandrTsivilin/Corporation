@@ -114,7 +114,7 @@ namespace Repositories.UserRepositories
 
 
 
-        public async Task<UserModelRep> GetTryUser(LoginModel model)
+        public async Task<User> GetTryUser(LoginModel model)
         {
             var user = await _context.Users
                 .Include(user => user.Employee)
@@ -133,13 +133,14 @@ namespace Repositories.UserRepositories
 
             return !hashedPassword.Equals(user.HashedPassword)
                 ? null
-                : new UserModelRep
-                {
-                    Id = user.Id,
-                    Lastname = user.Employee.Lastname,
-                    Firtsname = user.Employee.Firstname,
-                    Avaiables = user.Avaiables
-                };
+                : user;
+                //: new UserModelRep
+                //{
+                //    Id = user.Id,
+                //    Lastname = user.Employee.Lastname,
+                //    Firtsname = user.Employee.Firstname,
+                //    Avaiables = user.Avaiables
+                //};
 
         }
 

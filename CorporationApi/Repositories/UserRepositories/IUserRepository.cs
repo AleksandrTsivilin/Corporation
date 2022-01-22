@@ -10,7 +10,7 @@ namespace Repositories.UserRepositories
 {
     public interface IUserRepository 
     {
-        Task<UserModelRep> GetTryUser(LoginModel model);
+        Task<User> GetTryUser(LoginModel model);
         Task AddUserWithAvaiables(NewUser model);
     }
 }
