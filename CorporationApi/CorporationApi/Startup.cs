@@ -68,6 +68,8 @@ namespace CorporationApi
                 options.EnableDetailedErrors = true;
             });
 
+
+
             //services.AddScoped<IProductServiceTemplate, ProductServiceTemplate>();
 
             services.AddScoped<IProductService, ProductService>();

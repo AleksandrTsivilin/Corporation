@@ -33,12 +33,9 @@ namespace Services.AuthServices
         {
             var userClaim = CreateUserClaims(model);
 
-            //List<Claim> roleClaims = new();
-            //roleClaims.Add(new Claim("roles", JsonConvert.SerializeObject(model.Roles)));
-            
-            
-           
-            return userClaim/*.Concat(roleClaims)*/.ToList();//.Concat(rolesClaim).ToList();
+            var avaiablesClaims = new List<Claim>();
+            avaiablesClaims.Add(new Claim("avaiables", JsonConvert.SerializeObject(model.Avaiables)));
+            return userClaim.Concat(avaiablesClaims).ToList();
         }
 
         private List<Claim> CreateUserClaims(UserModel model)
@@ -46,7 +43,7 @@ namespace Services.AuthServices
             return new List<Claim>
             {
                new Claim(ClaimTypes.NameIdentifier,model.Id.ToString()),
-               //new Claim(ClaimTypes.Name,model.Firstname)
+               new Claim(ClaimTypes.Name,model.Fullname)
             };
         }
 

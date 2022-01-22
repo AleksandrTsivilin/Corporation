@@ -13,5 +13,6 @@ namespace Services.UserServices
     {
         Task<UserModel> TryGetUser(LoginModel model);
         Task AddUserWithAvaiables(NewUser model);
+        
     }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace DataBase.Entities.EmployeeEntities
@@ -14,7 +15,9 @@ namespace DataBase.Entities.EmployeeEntities
         public string Firstname { get; set; }
         public string Email { get; set; }
         public Guid RegistrationToken { get; set; }
+        [JsonIgnore]
         public User User { get; set; }
+        [JsonIgnore]
         public Department Department { get; set; }
         public int DepartmentId { get; set; }
     }

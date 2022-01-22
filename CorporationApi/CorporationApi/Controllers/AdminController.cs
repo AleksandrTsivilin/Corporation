@@ -1,8 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using Repositories.Models.UserManagerModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace CorporationApi.Controllers
@@ -47,8 +51,33 @@ namespace CorporationApi.Controllers
         //}
 
         [HttpGet("users")]
-        public IActionResult GetUsersByUser()
+        public async Task<IActionResult> GetUsersByUser()
         {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null)
+            {
+                //IEnumerable<Claim> claims = identity.Claims;
+                // or
+                var a = identity.FindFirst("avaiables");
+                var b = a.Value;
+                var c = b.Remove(0, 1);
+                c = c.Remove(c.Length - 1, 1);
+                var length = c.Length;
+                var jsonObj = JObject.Parse(c);
+                var avaiable = JsonConvert.DeserializeObject<AvaiableUserModel>(c);
+
+                IEnumerable<Claim> claims = identity.Claims;
+
+            }
+            //var avaiables = claims
+
+            //    .FirstOrDefault();
+            //Console.WriteLine(avaiables);
+
+
+
+
+
             //var permissions1 = new List<Permission>
             //{
             //    new Permission { Title="create"},
@@ -67,7 +96,7 @@ namespace CorporationApi.Controllers
             //        Username="VasyaUser",
             //        Firstname="Vasya",
             //        Roles=roles1
-                    
+
             //    },
             //    new UserInfo
             //    {

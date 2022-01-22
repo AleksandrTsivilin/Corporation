@@ -1,4 +1,5 @@
-﻿using Repositories.Models.UserManagerModels;
+﻿using DataBase.Entities.UserEntities;
+using Repositories.Models.UserManagerModels;
 
 using Repositories.UserRepositories;
 using Services.Models;
@@ -23,19 +24,40 @@ namespace Services.UserServices
         public async Task AddUserWithAvaiables(NewUser model)
         {
             await _repository.AddUserWithAvaiables(model);
-            //var spec = new EmployeeSpecification();
-            //spec.Criteria
         }
 
         public async Task<UserModel> TryGetUser(LoginModel model)
         {
-            _repository.GetTryUser(model);
-            return new UserModel()
+            var user = await _repository.GetTryUser(model);
+
+            return (user is null)
+                ? null
+                : new UserModel
+                {
+                    Id = user.Id,
+                    Fullname = user.Lastname + " " + user.Firtsname,
+                    Avaiables = CreateAvaiables(user)
+                };
+        }
+
+        private List<AvaiableUserModel> CreateAvaiables(UserModelRep user)
+        {
+            var avaiables = new List<AvaiableUserModel>();
+            foreach (var avaiable in user.Avaiables)
             {
-                Id = 5,
-                Firstname = "Vasya",
-                Lastname = "Turok"
-            };
+                var permissions = new List<string>();
+                foreach (var permission in avaiable.AvaiablesUser_Permissions)
+                {
+                    permissions.Add(permission.Permission.Title);
+                }
+                avaiables.Add(new AvaiableUserModel()
+                {
+                    Role = avaiable.Role.Title,
+                    Access = avaiable.Access.Title,
+                    Permissions = permissions
+                });
+            }
+            return avaiables;
         }
     }
 }

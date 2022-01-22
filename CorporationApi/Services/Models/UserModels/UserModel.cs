@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DataBase.Entities.UserEntities;
+using Repositories.Models.UserManagerModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,8 +11,10 @@ namespace Services.Models.UserModels
     public class UserModel
     {
         public int Id { get; set; }
-        public string Lastname { get; set; }
-        public string Firstname { get; set; }
-        //public ICollection<Role> Roles { get; set; }
+        public string Fullname { get; set; }
+        public ICollection<AvaiableUserModel> Avaiables { get; set; }
+        //public string Lastname { get; set; }
+        //public string Firstname { get; set; }
+
     }
 }

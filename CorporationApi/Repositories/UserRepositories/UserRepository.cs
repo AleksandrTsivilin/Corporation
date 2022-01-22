@@ -33,7 +33,7 @@ namespace Repositories.UserRepositories
         public async Task AddUserWithAvaiables(NewUser model)
         {
             var employee = await GetEntityById<Employee>(model.EmployeeId);
-            
+
             var salt = new byte[512 / 8];
             _cryptoServiceProvider.GetNonZeroBytes(salt);
 
@@ -98,14 +98,16 @@ namespace Repositories.UserRepositories
 
                     await _context.AddRangeAsync(avaiablesUserPermissions);
                     await _context.SaveChangesAsync();
-                    transaction.Commit();
+
 
                 }
-
+                transaction.Commit();
 
             }
             catch (Exception ex)
             {
+                Console.Write(ex.Message);
+                Console.WriteLine(ex.InnerException.Message);
                 transaction.Rollback();
             }
         }
@@ -114,10 +116,30 @@ namespace Repositories.UserRepositories
 
         public async Task<UserModelRep> GetTryUser(LoginModel model)
         {
-            var a = _context.Users
-                .Include(u => u.Employee)
-                .Include(u => u.Avaiables);
-            return null;
+            var user = await _context.Users
+                .Include(user => user.Employee)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiable => avaiable.Access)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiables => avaiables.Role)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiables => avaiables.AvaiablesUser_Permissions)
+                        .ThenInclude(ap => ap.Permission)
+                .FirstOrDefaultAsync(user => user.Username == model.Username);
+
+            if (user is null) return null;
+
+            var hashedPassword = GetHashedPassword(model.Password, user.Salt);
+
+            return !hashedPassword.Equals(user.HashedPassword)
+                ? null
+                : new UserModelRep
+                {
+                    Id = user.Id,
+                    Lastname = user.Employee.Lastname,
+                    Firtsname = user.Employee.Firstname,
+                    Avaiables = user.Avaiables
+                };
 
         }
 
@@ -134,21 +156,6 @@ namespace Repositories.UserRepositories
 
         }
 
-        //private async Task<Employee> GetEmployeeById(int id)
-        //{
-        //    return await _context.Employees
-        //        .FirstOrDefaultAsync(e => e.Id == id);
-        //}
-        //private async Task<Department> GetDepartmentById(int id)
-        //{
-        //    return await _context.Departments
-        //        .FirstOrDefaultAsync(d => d.Id == id);
-        //}
-        //private async Task<Access> GetAccessById(int id)
-        //{
-        //    return await _context.Accesses
-        //        .FirstOrDefaultAsync(a => a.Id == id);
-        //}
         private async Task<T> GetEntityById<T>(int id) where T : BaseEntity
         {
             return await _context.Set<T>()
@@ -166,7 +173,7 @@ namespace Repositories.UserRepositories
             return await _context.AvaiablesUser
                 .FirstOrDefaultAsync(a => a.UserId == userId && a.RoleId == roleId);
         }
-        //private async T
+       
     }
 }
 
