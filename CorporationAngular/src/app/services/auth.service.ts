@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Token } from '../interfaces/auth/authToken';
 import {map, tap} from 'rxjs/operators'
-import { TokenData } from '../interfaces/auth/tokenData';
+import { Avaiable, TokenData } from '../interfaces/auth/tokenData';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginForm } from '../interfaces/auth/loginForm';
 import { NewUser } from '../interfaces/auth/newUser';
@@ -17,13 +17,13 @@ export class AuthService {
   tokenData : TokenData={
     userId:0,
     fullname:"",
-    roles:[]
+    avaiables:[]
   }
   // tokenData:TokenData={
   //   userId:0
   // }
   tokenData$=new BehaviorSubject<TokenData | null>(null);
-  token$=new BehaviorSubject<Token | null>(null);
+  token$=new BehaviorSubject<string | null>(null);
   constructor(private readonly client:HttpClient) { }
 
   login(loginForm:LoginForm):Observable<TokenData>{
@@ -35,7 +35,8 @@ export class AuthService {
         tap(_=>console.log(_)),
         map(t=>
           {
-            this.token$.next(t);
+            console.log(t)
+            this.token$.next(t.token);
             const tokenData= this.readToken(t);
             this.tokenData$.next(tokenData);
             return tokenData;
@@ -58,29 +59,27 @@ export class AuthService {
   }
 
   private readToken(token: any):TokenData {
+    console.log("readToken")
     const dataPart=token.token?.split('.')[1];
       const dataJsonString=atob(dataPart);
-      
+      console.log(dataJsonString)
       const dataJson=JSON.parse(dataJsonString);
       
       const idStr = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
       
       const userId = idStr ? parseInt(idStr):0;
-  
-      // const fullname = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
       
-      // const rolesString = dataJson["roles"];
-  
-      // const roles = JSON.parse(rolesString);
+      const fullname = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
       
+      const avaiablesJson = dataJson["avaiables"];
+      const avaiables = JSON.parse(avaiablesJson);
+      console.log(avaiables)
       return {
         userId:userId,
         fullname:"fullname",
-        roles:[]
+        avaiables:avaiables as Avaiable[]
       }
-      // return {
-      //   userId:userId
-      // }
+      
   }
   
 }

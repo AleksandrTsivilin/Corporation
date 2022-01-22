@@ -1,4 +1,4 @@
-<!-- <button *ngIf="isSelected" (click)="exit()">❌</button> -->
+
 <div 
     class="tabs"
     *ngIf="openedTabs.length>0"
@@ -66,12 +66,12 @@
     </div>
     <div 
         class="role-section"
-        *ngIf="checkRole('AdminManager')"    
+        *ngIf="checkRole('UserManager')"    
     >
         <div 
             class="permissions-section" 
             (click)="changeModePage('users')"
-            *ngIf="getAvaiablesPermissions('AdminManager').canRead"
+            *ngIf="getAvaiablesPermissions('UserManager').canRead"
         >
             <div class="img-area">
                 <div class="img">
@@ -86,7 +86,7 @@
         <div 
             class="permissions-section" 
             (click)="changeModePage('addUser')"
-            *ngIf="getAvaiablesPermissions('AdminManager').canCreate"
+            *ngIf="getAvaiablesPermissions('UserManager').canCreate"
         >
             <div class="img-area">
                 <div class="img">            

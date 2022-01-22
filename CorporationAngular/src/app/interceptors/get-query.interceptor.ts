@@ -16,6 +16,7 @@ export class GetQueryInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler)
     : Observable<HttpEvent<unknown>> {
     
+    
     const userId=1;
     const isGetMethod=request.method.includes("GET");
     const isContainByAccess=request.url.includes("ByAccess");

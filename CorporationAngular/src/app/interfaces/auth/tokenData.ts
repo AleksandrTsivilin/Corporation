@@ -1,9 +1,14 @@
 export interface TokenData{
     userId:number,
     fullname:string,
-    roles:RoleUser[]
+    avaiables:Avaiable[]
 }
 
+export interface Avaiable{
+    Role:string,
+    Access:string,
+    Permissions:string[]
+}
 export interface RoleUser{
     Title:string,
     Permissions:PermissionUser[],

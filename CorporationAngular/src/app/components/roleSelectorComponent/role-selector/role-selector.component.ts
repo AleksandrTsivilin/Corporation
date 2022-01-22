@@ -17,7 +17,7 @@ export class RoleSelectorComponent implements OnInit {
   tokenData:TokenData={
     userId:0,
     fullname:"",
-    roles:[]
+    avaiables:[]
   }
 
   pageState:PageState={
@@ -34,15 +34,14 @@ export class RoleSelectorComponent implements OnInit {
     this.authService.tokenData$.subscribe(tokenData=>{
       if (tokenData !==null) {
         this.tokenData=tokenData;
-      }  
+      }
     })  
   }
 
   checkRole(title:string){ 
-    return true;   
-    // return this.tokenData.roles
-    //   .map(r=>r.Title)
-    //   .includes(title);    
+    
+    return this.tokenData.avaiables.map(a=>a.Role)
+      .includes(title);     
   }
 
   

@@ -27,6 +27,7 @@ import { LoadingPageComponent } from './components/loading/loading-page/loading-
 import { Responce500Component } from './components/loading/responce500/responce500.component';
 import { CreateAccountComponent } from './components/loginPageComponent/create-account/create-account.component';
 import { AddUserComponent } from './components/userManagerPage/add-user/add-user.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
 
@@ -69,6 +70,11 @@ import { AddUserComponent } from './components/userManagerPage/add-user/add-user
     {
       provide: HTTP_INTERCEPTORS,
       useClass: GetQueryInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
       multi: true
     }
   ],

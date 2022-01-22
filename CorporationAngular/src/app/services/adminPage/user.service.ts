@@ -10,9 +10,9 @@ export class UserService {
   constructor(private readonly client:HttpClient) { }
 
   getUsers(userId:number){
-    const urlGetUsers="https://localhost:5001/api/Admin/users";
-    let params = new HttpParams().set("userId",userId);
-    return this.client.get<UserInfo[]>(urlGetUsers,{params});
+    const urlGetUsers="https://localhost:5001/api/User/byAccess";
+    //let params = new HttpParams().set("userId",userId);
+    return this.client.get<UserInfo[]>(urlGetUsers);
   }
 
   update(updateUser:UserInfo){
