@@ -1,10 +1,10 @@
 import { Component, OnInit, Output } from '@angular/core';
+
+import { AvaiableUser } from 'src/app/interfaces/auth/avaiablesUserT';
 import { TokenData } from 'src/app/interfaces/auth/tokenData';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';
-//import { DataUser } from 'src/app/interfaces/dataUser';
-import { UserInfo } from 'src/app/interfaces/userInfo';
-import { Permission } from 'src/app/interfaces/userInfo';
+
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -16,10 +16,14 @@ export class RoleSelectorComponent implements OnInit {
 
   tokenData:TokenData={
     userId:0,
-    fullname:"",
+    username:"",
     avaiables:[]
   }
-
+  avaiables : AvaiableUser={
+    role: {id:0,title:""},
+    access: {id:0,title:""},
+    permissions:[]
+  }
   pageState:PageState={
     path:"",
     isActive:true
@@ -34,14 +38,13 @@ export class RoleSelectorComponent implements OnInit {
     this.authService.tokenData$.subscribe(tokenData=>{
       if (tokenData !==null) {
         this.tokenData=tokenData;
+        console.log(this.tokenData)
       }
     })  
   }
 
   checkRole(title:string){ 
-    
-    return this.tokenData.avaiables.map(a=>a.Role)
-      .includes(title);     
+    return this.tokenData.avaiables.map(a=>a.role.title).includes(title);
   }
 
   

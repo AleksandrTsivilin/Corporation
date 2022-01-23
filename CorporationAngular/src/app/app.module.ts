@@ -22,7 +22,6 @@ import { AddCategoryComponent } from './components/productPage/add-category/add-
 import { AddUnitComponent } from './components/productPage/add-unit/add-unit.component';
 import { ProductMovementsComponent } from './components/productManagerPage/moveProductPage/product-movements/product-movements.component';
 import { ProductItemMovementsComponent } from './components/productManagerPage/moveProductPage/product-item-movements/product-item-movements.component';
-import { GetQueryInterceptor } from './interceptors/get-query.interceptor';
 import { LoadingPageComponent } from './components/loading/loading-page/loading-page.component';
 import { Responce500Component } from './components/loading/responce500/responce500.component';
 import { CreateAccountComponent } from './components/loginPageComponent/create-account/create-account.component';
@@ -67,11 +66,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ReactiveFormsModule,
   ],
   providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: GetQueryInterceptor,
-      multi: true
-    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

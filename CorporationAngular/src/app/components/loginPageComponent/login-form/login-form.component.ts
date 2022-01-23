@@ -22,10 +22,13 @@ export class LoginFormComponent implements OnInit {
   onSubmit(){    
     this.authService.login(this.loginForm)
       .subscribe(result=>{
-        //console.log(result.fullname);
+        //console.log(result);
         this.router.navigate(['roleSelector']);
 
-      },()=>console.log("error auth"))
+      },(result)=>{
+        console.log("error auth")
+        console.log(result)
+      })
   }
 
 }

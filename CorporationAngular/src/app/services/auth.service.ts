@@ -1,14 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Token } from '../interfaces/auth/authToken';
-import {map, tap} from 'rxjs/operators'
-import { Avaiable, TokenData } from '../interfaces/auth/tokenData';
+import { map } from 'rxjs/operators'
+import { TokenData } from '../interfaces/auth/tokenData';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginForm } from '../interfaces/auth/loginForm';
 import { NewUser } from '../interfaces/auth/newUser';
-import { NewUserWithRoles } from '../interfaces/userManagerPage/newUserWithRoles';
 import { NewUserWithAvaiables } from '../interfaces/userManagerPage/newUserWithAvaiables';
-//import { NewUserWithAvaiables } from '../interfaces/userManagerPage/newUserWithAvaiables';
+import { AvaiableUser } from '../interfaces/auth/avaiablesUserT';
+import { PermissionInfo } from '../interfaces/userManagerPage/permissionInfo';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,12 +18,14 @@ export class AuthService {
 
   tokenData : TokenData={
     userId:0,
-    fullname:"",
+    username:"",
     avaiables:[]
   }
-  // tokenData:TokenData={
-  //   userId:0
-  // }
+
+  //private avaiablesUser : AvaiableUser []=[];
+  //private permissions:PermissionInfo []=[];
+
+  
   tokenData$=new BehaviorSubject<TokenData | null>(null);
   token$=new BehaviorSubject<string | null>(null);
   constructor(private readonly client:HttpClient) { }
@@ -32,10 +36,8 @@ export class AuthService {
     return this.client
       .post<Token>(urlLogin,loginForm)
       .pipe(
-        tap(_=>console.log(_)),
         map(t=>
           {
-            console.log(t)
             this.token$.next(t.token);
             const tokenData= this.readToken(t);
             this.tokenData$.next(tokenData);
@@ -50,36 +52,53 @@ export class AuthService {
     console.log(newUser);
   }
 
-  // addUserWithRole(newUser:NewUserWithRoles){
-  //   console.log(newUser)
-  // }
-
   addUserWithAvaiables(newUser:NewUserWithAvaiables){
     console.log(newUser);
   }
 
   private readToken(token: any):TokenData {
-    console.log("readToken")
+    
     const dataPart=token.token?.split('.')[1];
       const dataJsonString=atob(dataPart);
-      console.log(dataJsonString)
+      
       const dataJson=JSON.parse(dataJsonString);
       
       const idStr = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
       
       const userId = idStr ? parseInt(idStr):0;
       
-      const fullname = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+      const username = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
       
       const avaiablesJson = dataJson["avaiables"];
-      const avaiables = JSON.parse(avaiablesJson);
-      console.log(avaiables)
+      
+      const jsonAvaiables = JSON.parse(avaiablesJson);
+      const avaiables = this.createAvaiables(jsonAvaiables);
       return {
         userId:userId,
-        fullname:"fullname",
-        avaiables:avaiables as Avaiable[]
+        username:username,
+        avaiables:avaiables
       }
       
+  }
+
+  private createAvaiables(jsonAvaiables:any){
+    let avaiables= [] as AvaiableUser [];
+    let permissions = [] as PermissionInfo [];
+    for(let avaiable of jsonAvaiables){
+      
+      for (let permission of avaiable.Permissions){
+        permissions.push({
+          id:permission.Id,
+          title:permission.Title
+        })
+      }
+      avaiables.push({
+        role:{id:avaiable.Role.Id,title:avaiable.Role.Title},
+        access:{id:avaiable.Access.Id,title:avaiable.Access.Title},
+        permissions:permissions
+      })
+    }
+    return avaiables;
   }
   
 }
