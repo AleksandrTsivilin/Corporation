@@ -3,7 +3,10 @@ using Repositories.Models.UserManagerModels;
 
 using Repositories.UserRepositories;
 using Services.Models;
+using Services.Models.DepartmentModels;
+using Services.Models.EmployeeModels;
 using Services.Models.UserModels;
+using Services.Models.UserModels.UserModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +29,28 @@ namespace Services.UserServices
             await _repository.AddUserWithAvaiables(model);
         }
 
+        public async Task<List<UserModelFull>> GetByAccess(List<string> avaiablesString)
+        {
+            var users = await _repository.GetByAccess();
+            return users.Select(u => new UserModelFull
+            {
+                Id = u.Id,
+                Username = u.Username,
+                Employee = new EmployeeModel
+                {
+                    Id = u.Employee.Id,
+                    Lastname = u.Employee.Lastname,
+                    Firsname = u.Employee.Firstname
+                },
+                Department = new DepartmentModel
+                {
+                    Id = u.Department.Id,
+                    Title = u.Department.Title
+                },
+                Avaiables = CreateAvaiables(u)
+            }).ToList();
+        }
+
         public async Task<UserModel> TryGetUser(LoginModel model)
         {
             var user = await _repository.GetTryUser(model);
@@ -36,7 +61,6 @@ namespace Services.UserServices
                 {
                     Id = user.Id,
                     Username = user.Username,
-                    //Fullname = user.Lastname + " " + user.Firtsname,
                     Avaiables = CreateAvaiables(user)
                 };
         }

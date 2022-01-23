@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Services.Models.EmployeeModels
 {
-    public class EmployeeModelShort
+    public class EmployeeModel
     {
         public int Id { get; set; }
         public string Lastname { get; set; }

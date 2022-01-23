@@ -134,17 +134,23 @@ namespace Repositories.UserRepositories
             return !hashedPassword.Equals(user.HashedPassword)
                 ? null
                 : user;
-                //: new UserModelRep
-                //{
-                //    Id = user.Id,
-                //    Lastname = user.Employee.Lastname,
-                //    Firtsname = user.Employee.Firstname,
-                //    Avaiables = user.Avaiables
-                //};
 
         }
 
-
+        public async Task<List<User>> GetByAccess()
+        {
+            return await _context.Users
+                .Include(user => user.Department)
+                .Include(user => user.Employee)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiable => avaiable.Access)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiables => avaiables.Role)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiables => avaiables.AvaiablesUser_Permissions)
+                        .ThenInclude(ap => ap.Permission)
+                .ToListAsync();
+        }
         private string GetHashedPassword(string password, byte[] salt)
         {
 
@@ -174,7 +180,8 @@ namespace Repositories.UserRepositories
             return await _context.AvaiablesUser
                 .FirstOrDefaultAsync(a => a.UserId == userId && a.RoleId == roleId);
         }
-       
+
+        
     }
 }
 

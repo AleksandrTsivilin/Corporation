@@ -25,7 +25,8 @@ namespace CorporationApi.Controllers.UserControllers
         public async Task<IActionResult> Get()
         {
             var avaiablesString = GetAvaiables();
-            return Ok();
+            var users = await _service.GetByAccess(avaiablesString);
+            return Ok(users);
         }
 
         private List<string> GetAvaiables()

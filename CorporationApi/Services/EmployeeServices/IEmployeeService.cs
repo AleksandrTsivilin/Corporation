@@ -11,6 +11,6 @@ namespace Services.EmployeeServices
 {
     public interface IEmployeeService
     {
-        Task<List<EmployeeModelShort>> GetEmployeesShort();
+        Task<List<EmployeeModel>> GetEmployeesShort();
     }
 }

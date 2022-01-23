@@ -18,10 +18,10 @@ namespace Services.EmployeeServices
         {
             _repository = repository;
         }
-        public async Task<List<EmployeeModelShort>> GetEmployeesShort()
+        public async Task<List<EmployeeModel>> GetEmployeesShort()
         {
             var employees = await _repository.Get();
-            var model = employees.Select(employee => new EmployeeModelShort()
+            var model = employees.Select(employee => new EmployeeModel()
             {
                 Id = employee.Id,
                 Fullname = employee.Lastname + " " + employee.Firstname
