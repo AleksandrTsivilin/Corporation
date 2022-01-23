@@ -13,8 +13,8 @@ export class DialogUserInfoComponent implements OnInit {
   @Input () userInfo:UserInfo={
     id:0,
     username:"",
-    firstname:"",
-    roles:[]
+    employee:{id:0,lastname:"",firstname:""},
+    avaiables:[]
   }
   @Output() close=new EventEmitter();
 
@@ -24,6 +24,7 @@ export class DialogUserInfoComponent implements OnInit {
   }
 
   closeUserInfo(){
+    console.log(this.userInfo.avaiables)
     this.close.emit();
   }
 

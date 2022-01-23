@@ -1,9 +1,9 @@
-import { ThrowStmt } from '@angular/compiler';
+
 import { Component, Input, OnInit, Output , EventEmitter } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
-import { HeaderTable } from 'src/app/interfaces/header-table';
+
 import { UserInfo } from 'src/app/interfaces/userInfo';
-import { Role} from 'src/app/interfaces/userInfo';
+
 
 @Component({
   selector: 'tr[app-user-item]',
@@ -15,8 +15,8 @@ export class UserItemComponent implements OnInit {
   @Input () userInfo:UserInfo={
     id:0,
     username:"",
-    firstname:"",
-    roles:[]
+    employee:{id:0,lastname:"",firstname:""},
+    avaiables:[]
   }
 
   @Input () numUser:number=0;
@@ -35,7 +35,6 @@ export class UserItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.avaiablePermissions)
   }
 
   

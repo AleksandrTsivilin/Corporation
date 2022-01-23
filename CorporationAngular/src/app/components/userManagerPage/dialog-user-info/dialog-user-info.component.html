@@ -17,8 +17,12 @@
             </div>
 
             <div class="item-info">
-                <div class="title">firstname</div>
-                <div class="value">{{userInfo.firstname}}</div>
+                <div class="title">fullname</div>
+                <div 
+                    class="value"
+                >
+                    {{userInfo.employee.lastname}} {{userInfo.employee.firstname}}
+                </div>
             </div>
             
         </div>
@@ -30,13 +34,14 @@
             </div>
             <div 
                 class="item-info"
-                *ngFor="let role of userInfo.roles"
+                *ngFor="let avaiable of userInfo.avaiables"
             >               
-                <div class="title">{{role.title}}</div>
+                <div class="title">{{avaiable.role.title}}</div>
+                <div class="title">{{avaiable.access.title}}</div>
                 <div class="value" >
                     <ul 
                     
-                        *ngFor="let permission of role.permissions"
+                        *ngFor="let permission of avaiable.permissions"
                     >
                         <li >{{permission.title}}</li>
                     </ul>

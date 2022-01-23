@@ -38,7 +38,6 @@ export class RoleSelectorComponent implements OnInit {
     this.authService.tokenData$.subscribe(tokenData=>{
       if (tokenData !==null) {
         this.tokenData=tokenData;
-        console.log(this.tokenData)
       }
     })  
   }

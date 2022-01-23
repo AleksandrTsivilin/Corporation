@@ -1,11 +1,13 @@
+import { AvaiableUser } from "./auth/avaiablesUserT";
+import { EmployeeInfo } from "./employee/employeeInfo";
 import { Access } from "./userManagerPage/access";
 
 export interface UserInfo{
     [x: string]: any;
     id:number 
     username:string ,
-    firstname:string 
-    roles:Role[] 
+    employee:EmployeeInfo,
+    avaiables:AvaiableUser[] 
 }
 
 export interface Role{

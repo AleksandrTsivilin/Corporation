@@ -42,10 +42,10 @@ export class UsersComponent implements OnInit {
 
   
   editUser:UserInfo={
-    id:0,
-    username:"",
-    firstname:"",
-    roles:[]
+    id: 0,
+    username: "",
+    employee:{id:0,lastname:"",firstname:""},
+    avaiables: []
   }
 
   
@@ -98,8 +98,8 @@ export class UsersComponent implements OnInit {
     this.editUser={
       id:rawUserInfo.id,
       username:rawUserInfo.username,
-      firstname:rawUserInfo.firstname,
-      roles:rawUserInfo.roles
+      employee:rawUserInfo.employee,
+      avaiables:[]
     }
     this.setStatePage("editUser",false);
   }
@@ -127,8 +127,8 @@ export class UsersComponent implements OnInit {
     this.editUser={
       id:selectedUser.id,
       username:selectedUser.username,
-      firstname:selectedUser.firstname,
-      roles:selectedUser.roles
+      employee:selectedUser.employee,
+      avaiables:selectedUser.avaiables
     }
   }
 
@@ -140,7 +140,10 @@ export class UsersComponent implements OnInit {
   private getUsers() {
     this.userService.getUsers(this.userId)
         .subscribe((result)=>{
+          console.log(result)
           this.usersInfo=result;
+          
+          console.log(this.usersInfo[0].employee)
           this.setStatePage("",true);
         },
         ()=>{

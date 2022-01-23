@@ -5,17 +5,10 @@ import { Permission, UserInfo } from 'src/app/interfaces/userInfo';
 import { PermissionAction} from 'src/app/interfaces/permissionAction';
 import {Role} from 'src/app/interfaces/userInfo';
 import { AvaiableUser } from 'src/app/interfaces/userManagerPage/avaiableUser';
+import { RoleService } from 'src/app/services/userManager/roleServices/role.service';
+import { RoleInfo } from 'src/app/interfaces/userManagerPage/roleInfo';
 
 
-// interface RolesExample{
-//   title:string,
-//   permissions:PermissionsExample[]
-// }
-
-// interface PermissionsExample{
-//   title:string,
-//   isChecked:boolean
-// }
 
 @Component({
   selector: 'app-edit-user',
@@ -29,8 +22,8 @@ export class EditUserComponent implements OnInit {
   @Input () editUser:UserInfo={
     id:0,
     username:"",
-    firstname:"",
-    roles:[]
+    employee:{id:0,lastname:"",firstname:""},
+    avaiables:[]
   }
 
   @Output() updateUser=new EventEmitter();
@@ -40,37 +33,16 @@ export class EditUserComponent implements OnInit {
   
 
   avaiablesUser:AvaiableUser[]=[];
-  allRoles:string[]=[];
+  allRoles:RoleInfo [] = [];
   selectedRole:string="";
   
 
-  constructor(private readonly formBuilder:FormBuilder) { 
-    
-    
-
-    this.allRoles=this.getAllRoles();
-
-    
-    
-  }
-
- 
-  
-  
+  constructor(private readonly roleService:RoleService) {   
+   
+  } 
 
   ngOnInit(): void {
-    
-    if (this.editUser.roles!==null){
-      for (let role of this.editUser.roles){
-        
-        // this.avaiablesUser.push({
-        //   role:role.title,
-        //   permissions:this.createPermissionsAction(role.permissions),
-        //   access:[]
-        // })
-      }
-    }
-    
+    this.getAllRoles();
     
   }
 
@@ -97,6 +69,7 @@ export class EditUserComponent implements OnInit {
   }
 
   close(){
+    console.log(this.editUser)
     this.closeDialog.emit();
   }
   onSubmit(){
@@ -153,8 +126,11 @@ export class EditUserComponent implements OnInit {
     this.avaiablesUser.splice(index,1);
   }
   //template methods
-  getAllRoles():string[]{
-    return ["rol 1","rol 2","rol 3"]
+  getAllRoles(){
+    this.roleService.getRoles()
+      .subscribe(roles=>{
+        this.allRoles = roles;
+      })
   }  
 
   getAllPermissions():string[]{
