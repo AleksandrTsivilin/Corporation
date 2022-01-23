@@ -40,7 +40,7 @@ namespace Services.UserServices
                 {
                     Id = u.Employee.Id,
                     Lastname = u.Employee.Lastname,
-                    Firsname = u.Employee.Firstname
+                    Firstname = u.Employee.Firstname
                 },
                 Department = new DepartmentModel
                 {

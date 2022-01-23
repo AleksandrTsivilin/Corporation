@@ -24,7 +24,8 @@ namespace Services.EmployeeServices
             var model = employees.Select(employee => new EmployeeModel()
             {
                 Id = employee.Id,
-                Fullname = employee.Lastname + " " + employee.Firstname
+                Lastname = employee.Lastname,
+                Firstname = employee.Firstname
             });
 
             return model.ToList();
