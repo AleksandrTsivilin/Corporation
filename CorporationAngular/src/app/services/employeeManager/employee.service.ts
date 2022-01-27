@@ -9,8 +9,8 @@ export class EmployeeService {
 
   constructor(private readonly client:HttpClient) { }
 
-  getEmployees(){
-    const urlGetEmployees="https://localhost:5001/api/Employee/employeeTitle";
+  getEmployeesNonUser(){
+    const urlGetEmployees="https://localhost:5001/api/Employee/nonUser";
     return this.client.get<EmployeeInfo[]>(urlGetEmployees);
   }
 }

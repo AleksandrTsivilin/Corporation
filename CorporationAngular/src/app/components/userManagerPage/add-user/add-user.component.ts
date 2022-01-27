@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { AvaiableUserForm } from 'src/app/interfaces/auth/avaiablesUserN';
 import { EmployeeInfo } from 'src/app/interfaces/employee/employeeInfo';
 import { PermissionAction } from 'src/app/interfaces/permissionAction';
-import { AccessAction } from 'src/app/interfaces/userManagerPage/accessAction';
 import { AccessInfo } from 'src/app/interfaces/userManagerPage/accessInfo';
+import { AvaiableUserAction } from 'src/app/interfaces/userManagerPage/avaiableUserAction';
 import { NewUserWithAvaiables } from 'src/app/interfaces/userManagerPage/newUserWithAvaiables';
 import { PermissionInfo } from 'src/app/interfaces/userManagerPage/permissionInfo';
 import { RoleInfo } from 'src/app/interfaces/userManagerPage/roleInfo';
@@ -34,7 +34,6 @@ export class AddUserComponent implements OnInit {
     employeeId:null,
     username:"",
     password:"",
-    email:"",
     avaiables:[]
   }
 
@@ -49,11 +48,15 @@ export class AddUserComponent implements OnInit {
   }
 
   currentAvaiables:CurrentAvaiables[]=[];
-  
+  avaiableAction:AvaiableUserAction[] = [];
+  newAvaiableAction:AvaiableUserAction = {
+    role:{id:0,title:""},
+    permissions:[],
+    accessId:0
+  }
 
   permissionsAction:PermissionAction[] =[];
-  accessesAction:AccessAction[] = [];
-
+  
   isCreateAvaiables:boolean=false;
   isOpenAvaiablesInfo:boolean=false;
   selectedRole:RoleInfo={
@@ -64,7 +67,7 @@ export class AddUserComponent implements OnInit {
 
   allRoles:RoleInfo [] = [];
   private allPermissions:PermissionInfo[]=[];
-  private allAccesses:AccessInfo[]=[];
+  allAccesses:AccessInfo[]=[];
   constructor(
     private readonly authService:AuthService,
     private readonly employeeService:EmployeeService,
@@ -75,7 +78,7 @@ export class AddUserComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.getAllEmployees();
+    this.getAllEmployeesNonUser();
     this.getAllRoles();
     this.getAllPermissions();
     this.getAllAccess();
@@ -92,8 +95,7 @@ export class AddUserComponent implements OnInit {
   onSelectRole(event:any){
     const index = Number ( event.target.value);
     this.selectedRole = this.allRoles.filter(r=>r.id===index)[0];
-    this.isExistRole(index);
-    if (this.isExistRole(index)) return;
+    if (this.isHasRole(index)) return;
     this.createAvaiablesUser();
 
   }
@@ -110,13 +112,12 @@ export class AddUserComponent implements OnInit {
   }
 
   isValidAccess(){
-    return this.accessesAction
-      .filter(a=>a.isSelected)
-      .length>0;
+    return this.newAvaiableAction.accessId!=0;
   }
   saveRole(){
     this.isCreateAvaiables=false;
-    const selectedAccess = this.accessesAction.filter(a=>a.isSelected)[0];
+    const selectedAccess= this.allAccesses
+      .filter(access=>access.id===this.newAvaiableAction.accessId)[0];
     const selectedPermissions=this.permissionsAction.filter(p=>p.isSelected);
     this.newUserWithAvaiables.avaiables
       .push({
@@ -124,10 +125,10 @@ export class AddUserComponent implements OnInit {
         accessId:selectedAccess.id,
         permissionsId:selectedPermissions.map(p=>p.id)
       });
-
+    console.log(this.newUserWithAvaiables)
     this.currentAvaiables.push({
       role:this.selectedRole.title,
-      access:selectedAccess.title,
+      access:selectedAccess.title, 
       permissions:selectedPermissions.map(p=>p.title)
     })
   }
@@ -147,6 +148,7 @@ export class AddUserComponent implements OnInit {
     this.currentAvaiables=this.currentAvaiables.filter(a=>a.role!==role);
     const id = this.allRoles.filter(r=>r.title===role).map(r=>r.id)[0];
     this.newUserWithAvaiables.avaiables = this.newUserWithAvaiables.avaiables.filter(a=>a.roleId!==id);
+    if (this.currentAvaiables.length===0) this.isOpenAvaiablesInfo=false;
   }
 
   private createAvaiablesUser(){
@@ -162,24 +164,19 @@ export class AddUserComponent implements OnInit {
         isSelected:false
       })
     }
-
-    this.accessesAction = [];
-    for (let access of this.allAccesses){
-      this.accessesAction.push({
-        id:access.id,
-        title:access.title,
-        isSelected:false
-      })
-    }
+    
+    this.newAvaiableAction.permissions=this.permissionsAction;
+    this.newAvaiableAction.role=this.selectedRole;
+    this.newAvaiableAction.accessId=0;
   }
 
-  private isExistRole(roleId:number){
+  private isHasRole(roleId:number){
     return this.newUserWithAvaiables.avaiables
       .map(a=>a.roleId)
       .includes(roleId);
   }
-  private getAllEmployees(){
-    this.employeeService.getEmployees()
+  private getAllEmployeesNonUser(){
+    this.employeeService.getEmployeesNonUser()
       .subscribe(employees=>{
         this.employees=employees;
       })

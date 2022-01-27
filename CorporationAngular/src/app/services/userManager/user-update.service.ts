@@ -6,7 +6,6 @@ import { AvaiableUserForm } from 'src/app/interfaces/auth/avaiablesUserN';
   providedIn: 'root'
 })
 export class UserUpdateService {
-  //avaiables: AvaiableUserN [] = []
   constructor(private readonly signalr:UserSignalrService) {
     if (!signalr.isConnection)
       signalr.startConnection();
@@ -18,10 +17,9 @@ export class UserUpdateService {
        employeeId:Number(newUser.employeeId),
        username:newUser.username,
        password:newUser.password,
-       email:newUser.email,
        avaiables:[] as AvaiableUserForm []
      }
-
+     
      let avaiables: AvaiableUserForm [] = [];
      for (let avaiable of newUser.avaiables){
        let permissions=[] as Number[];
@@ -36,7 +34,6 @@ export class UserUpdateService {
      }
 
     addedUser.avaiables=avaiables;
-    console.log(addedUser)
     this.signalr.hubConnection?.invoke("AddUserWithAvaiables",addedUser)
     .then()
     .catch(err=>{console.error(err)})

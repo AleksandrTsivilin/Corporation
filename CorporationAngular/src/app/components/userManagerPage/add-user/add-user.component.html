@@ -82,25 +82,7 @@
                         >
                         
                     </div>
-                    <div>
-                        <span 
-                            class="warning-message"
-                            *ngIf="email.touched && email.invalid else addedSpace"
-                        >
-                        ⚠️ incorrect email                
-                        </span>
-                        <input 
-                            class="input-data"
-                            type="email"
-                            [(ngModel)]="newUserWithAvaiables.email" 
-                            placeholder="example@gmail.com"
-                            name="email" 
-                            required
-                            ngModel [email] = "true"
-                            #email="ngModel"
-                        >
-                        
-                    </div>
+
                     <button 
                         [ngClass]="newUserWithAvaiablesForm.invalid || !checkPassword() || !isValidAvaiables() ? 'btn-disabled' : 'btn-submit'"
                         
@@ -222,7 +204,7 @@
                     
                     <div class="flex">
                         <div class="flex-1">
-                            <div *ngFor="let permission of permissionsAction; let i=index">
+                            <div *ngFor="let permission of newAvaiableAction.permissions; let i=index">
                                 <input 
                                     type="checkbox"
                                     [(ngModel)]="permission.isSelected"
@@ -236,15 +218,15 @@
                         <div class="flex-1">
                             <div 
                                 class="custom-control custom-radio"
-                                *ngFor="let access of accessesAction; let i=index"
+                                *ngFor="let access of allAccesses; let i=index"
                             >
                                 <input 
                                     class="custom-control-input"
                                     type="radio"
-                                    [(ngModel)]="access.isSelected"
-                                    value={{access.isSelected}}
+                                    [(ngModel)]="newAvaiableAction.accessId"
+                                    [value]="access.id"
                                     name="access" 
-                                    [checked]=access.isSelected                             
+                                    [checked]=access.id                             
                                 >
                                 <label>{{access.title}}</label>
                             </div>
