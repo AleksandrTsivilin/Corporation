@@ -10,5 +10,6 @@ namespace Repositories.EmployeeRepositories
     public interface IEmployeeRepository : IRepository<Employee>
     {
         Task<Employee> GetById(int id);
+        Task<List<Employee>> GetEmployeesNonUser();
     }
 }

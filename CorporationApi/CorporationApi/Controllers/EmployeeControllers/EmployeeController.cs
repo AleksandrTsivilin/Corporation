@@ -25,5 +25,13 @@ namespace CorporationApi.Controllers.EmployeeControllers
 
             return Ok(employees);
         }
+
+        [HttpGet("nonUser")]
+        public async Task<IActionResult> GetEmployeesNonUser()
+        {
+            var employees = await _service.GetEmployeesNonUser();
+
+            return Ok(employees);
+        }
     }
 }

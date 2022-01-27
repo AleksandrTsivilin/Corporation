@@ -24,5 +24,13 @@ namespace Repositories.EmployeeRepositories
             return await _context.Employees
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+
+        public async Task<List<Employee>> GetEmployeesNonUser()
+        {
+            return await _context.Employees
+                .Include(e => e.User)
+                .Where(e => e.User == null)
+                .ToListAsync();
+        }
     }
 }

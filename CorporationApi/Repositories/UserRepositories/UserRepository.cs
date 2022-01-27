@@ -32,16 +32,15 @@ namespace Repositories.UserRepositories
 
         public async Task AddUserWithAvaiables(NewUser model)
         {
-            var employee = await GetEntityById<Employee>(model.EmployeeId);
-
-            var salt = new byte[512 / 8];
-            _cryptoServiceProvider.GetNonZeroBytes(salt);
-
-            var hashedPassword = GetHashedPassword(model.Password, salt);
-
             using var transaction = _context.Database.BeginTransaction();
             try
             {
+                var employee = await GetEntityById<Employee>(model.EmployeeId);
+
+                var salt = new byte[512 / 8];
+                _cryptoServiceProvider.GetNonZeroBytes(salt);
+
+                var hashedPassword = GetHashedPassword(model.Password, salt);
 
                 await _context.AddAsync(
                     new User
@@ -64,42 +63,18 @@ namespace Repositories.UserRepositories
                 {
                     var access = await GetEntityById<Access>(avaiable.AccessId);
 
+                    if (access is null) throw new Exception();
+
                     var role = await GetEntityById<Role>(avaiable.RoleId);
 
-                    if (access is null || role is null) throw new Exception();
-                    await _context.AvaiablesUser.AddAsync(new AvaiableUser
-                    {
-                        UserId = addedUser.Id,
-                        RoleId = role.Id,
-                        AccessId = access.Id
-
-                    });
-                    await _context.SaveChangesAsync();
+                    if (role is null) throw new Exception();
+                    await AddAvaiableUser(addedUser.Id, role.Id, access.Id);
 
                     var addedAvaiables = await GetAvaiblesByUserRole(addedUser.Id, avaiable.RoleId);
 
                     if (addedAvaiables is null) throw new Exception();
 
-                    var avaiablesUserPermissions = new List<AvaiablesUserPermission>();
-                    foreach (var permissionId in avaiable.PermissionsId)
-                    {
-
-                        var permission = await GetEntityById<Permission>(permissionId);
-
-                        if (permission is null) throw new Exception();
-
-                        avaiablesUserPermissions.Add(new AvaiablesUserPermission()
-                        {
-                            AvaiablesUserId = addedAvaiables.Id,
-                            PermissionId = permission.Id
-                        });
-
-                    }
-
-                    await _context.AddRangeAsync(avaiablesUserPermissions);
-                    await _context.SaveChangesAsync();
-
-
+                    await AddNewPermissions(addedAvaiables,avaiable);
                 }
                 transaction.Commit();
 
