@@ -1,4 +1,4 @@
-import { AvaiableUser } from "./avaiablesUserT";
+import { AvaiableUser } from "./avaiablesUserForm";
 
 export interface TokenData{
     userId:number,

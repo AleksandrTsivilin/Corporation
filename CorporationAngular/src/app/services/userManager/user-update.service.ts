@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { NewUserWithAvaiables } from 'src/app/interfaces/userManagerPage/newUserWithAvaiables';
 import { UserSignalrService } from './user-signalr.service';
-import { AvaiableUserN } from 'src/app/interfaces/auth/avaiablesUserN';
+import { AvaiableUserForm } from 'src/app/interfaces/auth/avaiablesUserN';
 @Injectable({
   providedIn: 'root'
 })
@@ -13,16 +13,16 @@ export class UserUpdateService {
 
    }
 
-   addUserWithAvaiables(newUser:NewUserWithAvaiables){
+  addUserWithAvaiables(newUser:NewUserWithAvaiables){
      const addedUser={
        employeeId:Number(newUser.employeeId),
        username:newUser.username,
        password:newUser.password,
        email:newUser.email,
-       avaiables:[] as AvaiableUserN []
+       avaiables:[] as AvaiableUserForm []
      }
 
-     let avaiables: AvaiableUserN [] = [];
+     let avaiables: AvaiableUserForm [] = [];
      for (let avaiable of newUser.avaiables){
        let permissions=[] as Number[];
        for (let permission of avaiable.permissionsId){
@@ -40,6 +40,15 @@ export class UserUpdateService {
     this.signalr.hubConnection?.invoke("AddUserWithAvaiables",addedUser)
     .then()
     .catch(err=>{console.error(err)})
+  }
+
+  updateUser(avaiables:AvaiableUserForm,userId:number){
+    console.log(avaiables)
+    console.log(userId)
+    this.signalr.hubConnection?.invoke("UpdateUserAvaiables",avaiables,userId)
+      .then()
+      .catch(err=>{console.error(err)})
+
   }
     
 }

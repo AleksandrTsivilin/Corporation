@@ -1,4 +1,4 @@
-import { AvaiableUser } from "./auth/avaiablesUserT";
+import { AvaiableUser } from "./auth/avaiablesUserForm";
 import { EmployeeInfo } from "./employee/employeeInfo";
 import { Access } from "./userManagerPage/access";
 

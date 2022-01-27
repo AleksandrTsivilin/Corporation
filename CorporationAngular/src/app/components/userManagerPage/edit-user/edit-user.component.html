@@ -1,4 +1,4 @@
-
+<!-- 
 
 
 
@@ -47,13 +47,7 @@
             {{role.title}}
           </option>
         </select>
-        <button 
-          class="btn"
-          type="button"
-          (click)="addRole()"
-        >
-          add role
-        </button>
+        
       </div>
       <div class="">        
         <form
@@ -66,7 +60,7 @@
         
           <div class="avaiables-user " *ngFor="let avaiable of avaiablesUser ; let j=index">
             <div class="role">
-              <h1>{{avaiable.role}}</h1>
+              <h1>{{avaiable.role.title}}</h1>
             </div>
             <div class="permission">
               <div  *ngFor="let permission of avaiable.permissions; let i=index">
@@ -78,7 +72,23 @@
                   
                 >
                 <label>{{permission.title}}</label>
-                <h1>{{permission.isSelected}}</h1>
+                
+              </div>
+            </div>
+            
+            <div class="permission ">
+              <div class="custom-control custom-radio" *ngFor="let access of avaiable.access; let i=index">
+                <input 
+                  class="custom-control-input"
+                  type="radio"
+                  [(ngModel)]="selectedAccess"
+                  [value]="access.id"
+                  name="access{{i}}{{avaiable.role}}"
+                  [checked]=access.isSelected
+                  
+                >
+                <label>{{access.title}} {{access.id}}</label>
+                
               </div>
             </div>
             <div class="btn-remove-role">
@@ -99,64 +109,146 @@
       
   </div>
   
-</div>
-
-
-
-<!-- <div class="inline-block">
-  <select 
-    class="block bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-    (change)="onSelectRole($event)"
-  >
-    <option
-      [value]="" selected disabled
-    >choise role</option>
-    <option 
-      *ngFor="let item of allRoles"
-      [value]="item"
-    >
-      {{item}}
-    </option>
-  </select>
-  <button type="button" (click)="addRole()">add roles</button>
-  
 </div> -->
-
-
-<!-- <select  (change)="onSelectRole($event)">
-  <option
-    [value]="" selected disabled
+<button 
+    class="btn"
+    (click)="closePage()"
+>
+    ❌
+</button>
+<div>
+  <span>username</span>
+</div>
+<div>
+  <span>{{editUser.username}}</span>
+</div>
+<div>
+  <span>surname</span>
+</div>
+<div>
+  <span>{{editUser.employee.lastname}}</span>
+</div>
+<div>
+  <span>name</span>
+</div>
+<div>
+  <span>{{editUser.employee.firstname}}</span>
+</div>
+<div>
+  <span>Avaiables user</span>
+  <button
+    type="button"
+    (click)=startAddAvaiables()
   >
-    choise role
-  </option>
-  <option 
-    *ngFor="let item of allRoles"
-    [value]="item"
+    add avaiable
+  </button>
+</div>
+<div *ngIf="isOpenCreateAvaiable">
+  <form
+    (ngButton)="saveNewAvaiable()"
+    #newAvaiableForm="ngForm"
   >
-    {{item}}
-  </option>
-</select>
-<button type="button" (click)="addRole()">add roles</button> -->
-
-<!-- <form
-  (ngSubmit)="onSubmit()"
-
->  
-  <div *ngFor="let avaiable of avaiablesUser ; let j=index">
-    <h1>{{avaiable.role}}</h1>
-    <button type="button" (click)="removeRole(j)">❌</button>
+    
+    <button
+      type="button"
+      (click)="saveNewAvaiable();
+      newAvaiableForm.resetForm()"
+    >
+      save
+    </button>
+    <div>
+      <span>add role</span>
+      <select 
+          class="select-role"
+          (change)="onSelectRole($event)"
+          [(ngModel)]=newAvaiableUser.roleId
+          name="role"
+        >
+          
+          <option 
+            *ngFor="let role of allRoles"
+            [value]="role.id"
+          >
+            {{role.title}}
+          </option>
+        </select>
+    </div>
+    <div *ngFor="let permission of newAvaiableAction.permissions">
+      
+      <div>
+        <input
+          type="checkbox"
+          [(ngModel)]="permission.isSelected"
+          name="{{permission}}"
+          [checked]="permission.isSelected"
+        >
+        <span>{{permission.title}}</span>
+      </div>
+    </div>
+    <div 
+      class="custom-control custom-radio"
+      *ngFor="let access of allAccesses;let accIndex=index">
+      
+        <input
+          class="custom-control-input"
+          type="radio"
+          [(ngModel)]="newAvaiableAction.accessId"
+          [value]="access.id"
+          name="access{{accIndex}}"
+        >
+      
+      <span>{{access.title}}</span>
+    </div>
+  </form>
+</div>
+<form
+  (ngSubmit)="onSubmit();"
+  #editAvaiablesForm="ngForm" 
+>
+  
+  <div *ngFor="let avaiable of avaiablesAction ; let avaiableIndex=index">
+    <div>
+      <button type="button" (click) = "removeAvaiable(avaiable.role.id)" >remove</button>
+    </div>
+    <div>
+      <span>role</span>
+    </div>
+    <div>
+      <span>{{avaiable.role.title}}</span>
+    </div>
     <div *ngFor="let permission of avaiable.permissions; let i=index">
-      <input 
-        type="checkbox"
-        [(ngModel)]="permission.isSelected"
-        name="{{avaiable.role}}+{{i}}" 
-        [checked]="permission.isSelected"
-        
-      >
-      <label>{{permission.title}}</label>
-      <h1>{{permission.isSelected}}</h1>
+      <div>
+        <input
+          type="checkbox"
+          [(ngModel)]="permission.isSelected"
+          name="{{avaiable.role.title}}+{{i}}"
+          [checked]="permission.isSelected"
+        >
+        <span>{{permission.title}}</span>
+      </div>
+    </div>
+    <div 
+      class="custom-control custom-radio"
+      *ngFor="let access of allAccesses;let accIndex=index">
+      
+        <input
+          class="custom-control-input"
+          type="radio"
+          [(ngModel)]="avaiable.accessId"
+          [value]="access.id"
+          name="access{{avaiableIndex}}"
+        >
+      
+      <span>{{access.title}}</span>
     </div>
   </div>
-  <button type="submit" >submitExample</button>
+  <button
+    type="submit"
+  >
+    save changes
+  </button>
 </form>
-<button>aaa</button> -->
+
+
+
+

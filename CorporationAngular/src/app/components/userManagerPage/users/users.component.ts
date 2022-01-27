@@ -4,6 +4,7 @@ import { UserInfo } from 'src/app/interfaces/userInfo';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';
+import { UserUpdateService } from 'src/app/services/userManager/user-update.service';
 
 
 
@@ -54,7 +55,9 @@ export class UsersComponent implements OnInit {
   
   
   
-  constructor(private readonly userService:UserService) {   
+  constructor(
+    private readonly userService:UserService,
+    private readonly updateService:UserUpdateService) {   
        
   }
   
@@ -99,13 +102,15 @@ export class UsersComponent implements OnInit {
       id:rawUserInfo.id,
       username:rawUserInfo.username,
       employee:rawUserInfo.employee,
-      avaiables:[]
+      avaiables:rawUserInfo.avaiables
     }
     this.setStatePage("editUser",false);
   }
 
-  update(){
+  update(avaiables :any){ 
+    this.updateService.updateUser(avaiables,this.editUser.id);   
     this.closeDialog();
+    
   }
 
   remove(userId:number | null){
@@ -120,10 +125,7 @@ export class UsersComponent implements OnInit {
 
   openUserInfo(selectedUser:UserInfo){
     this.setStatePage("dialogUserInfo",false)
-    // this.pageState={
-    //   path:"dialogUserInfo",
-    //   isActive:false
-    // }
+   
     this.editUser={
       id:selectedUser.id,
       username:selectedUser.username,
@@ -140,10 +142,8 @@ export class UsersComponent implements OnInit {
   private getUsers() {
     this.userService.getUsers(this.userId)
         .subscribe((result)=>{
-          console.log(result)
           this.usersInfo=result;
           
-          console.log(this.usersInfo[0].employee)
           this.setStatePage("",true);
         },
         ()=>{

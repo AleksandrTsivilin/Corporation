@@ -1,6 +1,6 @@
 
 import { Component, OnInit } from '@angular/core';
-import { AvaiableUserN } from 'src/app/interfaces/auth/avaiablesUserN';
+import { AvaiableUserForm } from 'src/app/interfaces/auth/avaiablesUserN';
 import { EmployeeInfo } from 'src/app/interfaces/employee/employeeInfo';
 import { PermissionAction } from 'src/app/interfaces/permissionAction';
 import { AccessAction } from 'src/app/interfaces/userManagerPage/accessAction';
@@ -42,7 +42,7 @@ export class AddUserComponent implements OnInit {
 
   employees:EmployeeInfo[]=[];
 
-  avaiableUser:AvaiableUserN={
+  avaiableUser:AvaiableUserForm={
     roleId:null,
     accessId:0,
     permissionsId:[]

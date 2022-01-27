@@ -1,6 +1,6 @@
 import { Component, OnInit, Output } from '@angular/core';
 
-import { AvaiableUser } from 'src/app/interfaces/auth/avaiablesUserT';
+import { AvaiableUser } from 'src/app/interfaces/auth/avaiablesUserForm';
 import { TokenData } from 'src/app/interfaces/auth/tokenData';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';

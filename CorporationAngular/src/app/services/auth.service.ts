@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginForm } from '../interfaces/auth/loginForm';
 import { NewUser } from '../interfaces/auth/newUser';
 import { NewUserWithAvaiables } from '../interfaces/userManagerPage/newUserWithAvaiables';
-import { AvaiableUser } from '../interfaces/auth/avaiablesUserT';
+import { AvaiableUser } from '../interfaces/auth/avaiablesUserForm';
 import { PermissionInfo } from '../interfaces/userManagerPage/permissionInfo';
 
 

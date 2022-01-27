@@ -31,6 +31,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -54,7 +55,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     LoadingPageComponent,
     Responce500Component,
     CreateAccountComponent,
-    AddUserComponent,
+    AddUserComponent
     
     
   ],

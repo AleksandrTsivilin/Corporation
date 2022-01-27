@@ -37,7 +37,7 @@
     <app-edit-user 
       *ngSwitchCase="'editUser'"
       [editUser]="editUser"
-      (updateUser)="update()"
+      (updateUser)="update($event)"
       (closeDialog)="closeDialog()"
     >
     </app-edit-user>
