@@ -26,6 +26,11 @@ namespace CorporationApi.HubConfig
             //    await Clients.All.SendAsync("movementsProduct", storages);
 
         }
+
+        public async Task UpdateUserAvaiables(NewAvaiable[] avaiables, int userId)
+        {
+            await Task.Run(() => _service.UpdateAvaiables(avaiables, userId));
+        }
     }
 
 }

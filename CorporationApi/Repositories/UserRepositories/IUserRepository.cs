@@ -13,5 +13,6 @@ namespace Repositories.UserRepositories
         Task<User> GetTryUser(LoginModel model);
         Task AddUserWithAvaiables(NewUser model);
         Task<List<User>> GetByAccess();
+        Task UpdateAvaiables(NewAvaiable[] avaiables, int userId);
     }
 }

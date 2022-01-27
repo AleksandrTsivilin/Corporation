@@ -15,5 +15,6 @@ namespace Services.UserServices
         Task<UserModel> TryGetUser(LoginModel model);
         Task AddUserWithAvaiables(NewUser model);
         Task<List<UserModelFull>> GetByAccess(List<string> avaiablesString);
+        Task UpdateAvaiables(NewAvaiable[] avaiables, int userId);
     }
 }

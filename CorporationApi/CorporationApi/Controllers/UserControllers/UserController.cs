@@ -43,14 +43,14 @@ namespace CorporationApi.Controllers.UserControllers
             return avaiables;
         }
 
-        private int? GetUserId()
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            var idString = identity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            var id = 0;
-            return int.TryParse(idString, out id)
-                ? id
-                : null;
-        }
+        //private int? GetUserId()
+        //{
+        //    var identity = HttpContext.User.Identity as ClaimsIdentity;
+        //    var idString = identity.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        //    var id = 0;
+        //    return int.TryParse(idString, out id)
+        //        ? id
+        //        : null;
+        //}
     }
 }

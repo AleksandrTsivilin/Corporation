@@ -64,6 +64,10 @@ namespace Services.UserServices
                     Avaiables = CreateAvaiables(user)
                 };
         }
+        public async Task UpdateAvaiables(NewAvaiable[] avaiables,int userId)
+        {
+            await _repository.UpdateAvaiables(avaiables, userId);
+        }
 
         private List<AvaiableUserModel> CreateAvaiables(User user)
         {
@@ -75,7 +79,7 @@ namespace Services.UserServices
                 {
                     permissions.Add(new PermissionModel()
                     {
-                        Id = permission.Id,
+                        Id = permission.Permission.Id,
                         Title = permission.Permission.Title
                     });
                 }
