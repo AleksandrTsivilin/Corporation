@@ -1,10 +1,10 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { UserService } from 'src/app/services/adminPage/user.service';
+import { UserService } from 'src/app/services/userManager/userServices/user.service';
 import { UserInfo } from 'src/app/interfaces/userInfo';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';
-import { UserUpdateService } from 'src/app/services/userManager/user-update.service';
+import { UserUpdateService } from 'src/app/services/userManager/userServices/user-update.service';
 
 
 

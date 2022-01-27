@@ -14,7 +14,7 @@ import { EmployeeService } from 'src/app/services/employeeManager/employee.servi
 import { AccessService } from 'src/app/services/userManager/accessServices/access.service';
 import { PermissionService } from 'src/app/services/userManager/permissionServices/permission.service';
 import { RoleService } from 'src/app/services/userManager/roleServices/role.service';
-import { UserUpdateService } from 'src/app/services/userManager/user-update.service';
+import { UserUpdateService } from 'src/app/services/userManager/userServices/user-update.service';
 
 interface CurrentAvaiables{
   role:string,
