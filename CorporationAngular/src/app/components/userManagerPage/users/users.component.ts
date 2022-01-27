@@ -46,7 +46,8 @@ export class UsersComponent implements OnInit {
     id: 0,
     username: "",
     employee:{id:0,lastname:"",firstname:""},
-    avaiables: []
+    avaiables: [],
+    fullname:null
   }
 
   
@@ -58,7 +59,6 @@ export class UsersComponent implements OnInit {
   constructor(
     private readonly userService:UserService,
     private readonly updateService:UserUpdateService) {   
-       
   }
   
   ngOnInit(): void {
@@ -73,18 +73,19 @@ export class UsersComponent implements OnInit {
   }
 
   sortCol(criteria:string){
-    console.log("sortBy");
+  
     criteria===this._sortCriteria
       ? this._ascDirection *= -1
       : this._ascDirection = 1;
     
     this._sortCriteria=criteria;
+    
     let orderedUsersInfo= this.usersInfo.sort((a:UserInfo,b:UserInfo)=>{
+      
       let orderItemFirst=a[criteria];
       let orderItemSecond=b[criteria];
       const less = -1 * this._ascDirection;
       const more = 1 * this._ascDirection;
-
       if (typeof orderItemFirst === 'string') {
         return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
       } else {
@@ -102,7 +103,8 @@ export class UsersComponent implements OnInit {
       id:rawUserInfo.id,
       username:rawUserInfo.username,
       employee:rawUserInfo.employee,
-      avaiables:rawUserInfo.avaiables
+      avaiables:rawUserInfo.avaiables,
+      fullname:null
     }
     this.setStatePage("editUser",false);
   }
@@ -130,7 +132,8 @@ export class UsersComponent implements OnInit {
       id:selectedUser.id,
       username:selectedUser.username,
       employee:selectedUser.employee,
-      avaiables:selectedUser.avaiables
+      avaiables:selectedUser.avaiables,
+      fullname:null
     }
   }
 
@@ -160,7 +163,7 @@ export class UsersComponent implements OnInit {
       title:"username",
       isActive:true
     },{
-      title:"firstname",
+      title:"fullname",
       isActive:true
     }];
 

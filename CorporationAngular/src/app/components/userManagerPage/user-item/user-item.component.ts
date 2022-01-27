@@ -16,7 +16,8 @@ export class UserItemComponent implements OnInit {
     id:0,
     username:"",
     employee:{id:0,lastname:"",firstname:""},
-    avaiables:[]
+    avaiables:[],
+    fullname:null
   }
 
   @Input () numUser:number=0;

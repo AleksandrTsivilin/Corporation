@@ -14,7 +14,8 @@ export class DialogUserInfoComponent implements OnInit {
     id:0,
     username:"",
     employee:{id:0,lastname:"",firstname:""},
-    avaiables:[]
+    avaiables:[],
+    fullname:null
   }
   @Output() close=new EventEmitter();
 

@@ -8,6 +8,7 @@ export interface UserInfo{
     username:string ,
     employee:EmployeeInfo,
     avaiables:AvaiableUser[] 
+    fullname:string | null
 }
 
 export interface Role{

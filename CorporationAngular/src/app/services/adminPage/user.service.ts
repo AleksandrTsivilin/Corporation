@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map, tap } from 'rxjs/operators';
 import { UserInfo } from 'src/app/interfaces/userInfo';
 
 @Injectable({
@@ -12,7 +13,10 @@ export class UserService {
   getUsers(userId:number){
     const urlGetUsers="https://localhost:5001/api/User/byAccess";
     //let params = new HttpParams().set("userId",userId);
-    return this.client.get<UserInfo[]>(urlGetUsers);
+    return this.client.get<UserInfo[]>(urlGetUsers)
+      .pipe(
+        tap(users=>users.map(user=>user.fullname=user.employee.lastname+user.employee.firstname))
+      );
   }
 
   update(updateUser:UserInfo){
