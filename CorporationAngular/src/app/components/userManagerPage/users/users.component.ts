@@ -143,7 +143,7 @@ export class UsersComponent implements OnInit {
   }
 
   private getUsers() {
-    this.userService.getUsers(this.userId)
+    this.userService.getUsersByAccess()
         .subscribe((result)=>{
           this.usersInfo=result;
           

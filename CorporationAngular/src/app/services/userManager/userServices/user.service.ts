@@ -10,7 +10,7 @@ export class UserService {
   
   constructor(private readonly client:HttpClient) { }
 
-  getUsers(userId:number){
+  getUsersByAccess(){
     const urlGetUsers="https://localhost:5001/api/User/byAccess";
     return this.client.get<UserInfo[]>(urlGetUsers)
       .pipe(
