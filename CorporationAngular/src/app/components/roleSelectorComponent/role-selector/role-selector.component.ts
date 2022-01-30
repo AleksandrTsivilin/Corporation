@@ -17,7 +17,10 @@ export class RoleSelectorComponent implements OnInit {
   tokenData:TokenData={
     userId:0,
     username:"",
-    avaiables:[]
+    avaiables:[],
+    department:0,
+    factory:0,
+    region:0
   }
   avaiables : AvaiableUser={
     role: {id:0,title:""},

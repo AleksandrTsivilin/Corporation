@@ -19,7 +19,10 @@ export class AuthService {
   tokenData : TokenData={
     userId:0,
     username:"",
-    avaiables:[]
+    avaiables:[],
+    department:0,
+    factory:0,
+    region:0
   }
 
   //private avaiablesUser : AvaiableUser []=[];
@@ -70,13 +73,20 @@ export class AuthService {
       const username = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
       
       const avaiablesJson = dataJson["avaiables"];
+      const department = dataJson["department"];
+      const factory = dataJson["factory"];
+      const region = dataJson["region"]
+      console.log(department)
       
       const jsonAvaiables = JSON.parse(avaiablesJson);
       const avaiables = this.createAvaiables(jsonAvaiables);
       return {
         userId:userId,
         username:username,
-        avaiables:avaiables
+        avaiables:avaiables,
+        department:Number(department),
+        factory:Number(factory),
+        region:Number(region)
       }
       
   }
