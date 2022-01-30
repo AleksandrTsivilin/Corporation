@@ -21,6 +21,7 @@ using Repositories.EmployeeRepositories;
 using Repositories.UserRepositories;
 using Services.AuthServices;
 using Services.EmployeeServices;
+using Services.IdentityUserServices;
 using Services.ProductService;
 using Services.ProductService.MovementsService;
 using Services.ProductServices.CategoriesService;
@@ -92,6 +93,7 @@ namespace CorporationApi
             AddRole(services);
             AddPermission(services);
             AddAccess(services);
+            AddUserIdentity(services);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -163,6 +165,11 @@ namespace CorporationApi
         {
             services.AddScoped<IAccessService, AccessService>();
             services.AddScoped<IRepository<Access>, Repository<Access>>();
+        }
+
+        private void AddUserIdentity(IServiceCollection services)
+        {
+            services.AddScoped<IIdentityUserService, IdentityUserService>();
         }
     }
 }

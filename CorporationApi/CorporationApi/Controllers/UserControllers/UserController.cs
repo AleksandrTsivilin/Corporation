@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Services.IdentityUserServices;
 using Services.UserServices;
 using System;
 using System.Collections.Generic;
@@ -14,18 +15,22 @@ namespace CorporationApi.Controllers.UserControllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
         private readonly IUserService _service;
-        public UserController(IUserService service)
+        private readonly IIdentityUserService _identityService;
+        public UserController(
+            IUserService service,
+            IIdentityUserService identityUserService)
         {
             _service = service;
+            _identityService = identityUserService;
         }
 
         [HttpGet("byAccess")]
         public async Task<IActionResult> Get()
         {
-            var avaiablesString = GetAvaiables();
-            var users = await _service.GetByAccess(avaiablesString);
+            var claims = HttpContext.User.Identity as ClaimsIdentity;
+            var identityInfo = _identityService.GetIdentity(claims, "UserManager");
+            var users = await _service.GetByAccess(identityInfo);
             return Ok(users);
         }
 

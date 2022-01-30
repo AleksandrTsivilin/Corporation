@@ -1,11 +1,14 @@
 ﻿using DataBase.Entities.UserEntities;
 using Repositories.Models.UserManagerModels;
-
+using Repositories.Specifications;
 using Repositories.UserRepositories;
 using Services.Models;
 using Services.Models.DepartmentModels;
 using Services.Models.EmployeeModels;
+
 using Services.Models.UserModels;
+using Services.Models.UserModels.FactoryModels;
+using Services.Models.UserModels.RegionModels;
 using Services.Models.UserModels.UserModel;
 using System;
 using System.Collections.Generic;
@@ -29,9 +32,11 @@ namespace Services.UserServices
             await _repository.AddUserWithAvaiables(model);
         }
 
-        public async Task<List<UserModelFull>> GetByAccess(List<string> avaiablesString)
+        public async Task<List<UserModelFull>> GetByAccess(IdentityUserModel identity)
         {
-            var users = await _repository.GetByAccess();
+            var specification = new UserSpecificationByAccess(identity);
+
+            var users = await _repository.GetByAccess(specification);
             return users.Select(u => new UserModelFull
             {
                 Id = u.Id,
@@ -47,6 +52,7 @@ namespace Services.UserServices
                     Id = u.Department.Id,
                     Title = u.Department.Title
                 },
+
                 Avaiables = CreateAvaiables(u)
             }).ToList();
         }
@@ -61,12 +67,27 @@ namespace Services.UserServices
                 {
                     Id = user.Id,
                     Username = user.Username,
+                    Department = new DepartmentModel
+                    {
+                        Id = user.Department.Id,
+                        Title = user.Department.Title
+                    },
+                    Factory = new FactoryModel
+                    {
+                        Id = user.Department.Factory.Id,
+                        Title = user.Department.Factory.Title
+                    },
+                    Region = new RegionModel 
+                    {
+                        Id = user.Department.Factory.Region.Id,
+                        Title = user.Department.Factory.Region.Title
+                    },
                     Avaiables = CreateAvaiables(user)
                 };
         }
         public async Task UpdateAvaiables(NewAvaiable[] avaiables,int userId)
         {
-            await _repository.UpdateAvaiables(avaiables, userId);
+            await _repository.UpdateUserAvaiables(avaiables, userId);
         }
 
         private List<AvaiableUserModel> CreateAvaiables(User user)

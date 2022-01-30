@@ -1,4 +1,5 @@
 ﻿using DataBase.Entities.ProductEntities;
+using Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Services.AccessServices
 {
-    public class AccessServiceStorage : AccessServiceBase<Storage>
+    public class AccessServiceStorage : BaseSpecification<Storage>
     {
         public AccessServiceStorage(string access)
         {

@@ -33,10 +33,24 @@ namespace Services.AuthServices
         private List<Claim> CreateClaims(UserModel model)
         {
             var userClaim = CreateUserClaims(model);
+            var userLocation = CreateUserLocationClaims(model);
 
             var avaiablesClaims = new List<Claim>();
             avaiablesClaims.Add(new Claim("avaiables", JsonConvert.SerializeObject(model.Avaiables)));
-            return userClaim.Concat(avaiablesClaims).ToList();
+            return userClaim
+                .Concat(avaiablesClaims).ToList()
+                .Concat(userLocation).ToList();
+        }
+
+        private List<Claim> CreateUserLocationClaims(UserModel model)
+        {
+            return new List<Claim>
+            {
+                new Claim("department",model.Department.Id.ToString()),
+                new Claim("factory",model.Factory.Id.ToString()),
+                new Claim("region",model.Region.Id.ToString())
+
+            };
         }
 
         private List<Claim> CreateUserClaims(UserModel model)

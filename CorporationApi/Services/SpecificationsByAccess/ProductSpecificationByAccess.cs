@@ -1,4 +1,5 @@
 ﻿using DataBase.Entities.ProductEntities;
+using Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace Services.AccessServices
 {
-    public class AccessServiceProduct : AccessServiceBase<Product>
+    public class ProductSpecificationByAccess : BaseSpecification<Product>
     {
-        public AccessServiceProduct(string access)
+        public ProductSpecificationByAccess(string access)
         {
             var a = "region";
             switch (a)

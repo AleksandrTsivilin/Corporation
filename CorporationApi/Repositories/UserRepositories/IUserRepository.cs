@@ -1,5 +1,6 @@
 ﻿using DataBase.Entities.UserEntities;
 using Repositories.Models.UserManagerModels;
+using Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,7 +13,7 @@ namespace Repositories.UserRepositories
     {
         Task<User> GetTryUser(LoginModel model);
         Task AddUserWithAvaiables(NewUser model);
-        Task<List<User>> GetByAccess();
-        Task UpdateAvaiables(NewAvaiable[] avaiables, int userId);
+        Task<List<User>> GetByAccess(UserSpecificationByAccess specification);
+        Task UpdateUserAvaiables(NewAvaiable[] avaiables, int userId);
     }
 }

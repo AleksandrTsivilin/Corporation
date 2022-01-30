@@ -5,15 +5,10 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.AccessServices
+namespace Repositories.Specifications
 {
-    public class AccessServiceBase<T>
+    public class BaseSpecification<T>
     {
         public Expression<Func<T, bool>> Expression { get; set; }
-        public AccessServiceBase()
-        {
-
-        }
-
     }
 }

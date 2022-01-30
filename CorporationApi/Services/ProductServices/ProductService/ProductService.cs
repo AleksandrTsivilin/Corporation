@@ -22,7 +22,7 @@ namespace Services.ProductServices.ProductService
         }
         public async Task<List<ProductModel>> GetProductsByAccess(string access)
         {
-            var accessService = new AccessServiceProduct(access);
+            var accessService = new ProductSpecificationByAccess(access);
             return await _context.Products
                 .Include(p => p.Manufacture)
                 .Include(p => p.Category)

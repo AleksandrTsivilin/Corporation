@@ -1,6 +1,5 @@
 ﻿using Repositories.Models.UserManagerModels;
-using Services.Models;
-using Services.Models.UserModels;
+using Repositories.Specifications;
 using Services.Models.UserModels.UserModel;
 using System;
 using System.Collections.Generic;
@@ -14,7 +13,7 @@ namespace Services.UserServices
     {
         Task<UserModel> TryGetUser(LoginModel model);
         Task AddUserWithAvaiables(NewUser model);
-        Task<List<UserModelFull>> GetByAccess(List<string> avaiablesString);
+        Task<List<UserModelFull>> GetByAccess(IdentityUserModel identity);
         Task UpdateAvaiables(NewAvaiable[] avaiables, int userId);
     }
 }

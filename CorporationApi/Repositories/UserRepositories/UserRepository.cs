@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Repositories.DepartmentRepositories;
 using Repositories.EmployeeRepositories;
 using Repositories.Models.UserManagerModels;
+using Repositories.Specifications;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -29,7 +30,47 @@ namespace Repositories.UserRepositories
             _context = context;
             _cryptoServiceProvider = cryptoServiceProvider;
         }
+        public async Task<User> GetTryUser(LoginModel model)
+        {
+            var user = await _context.Users
+                .Include(user => user.Department)
+                    .ThenInclude(department => department.Factory)
+                        .ThenInclude(factory => factory.Region)
+                .Include(user => user.Employee)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiable => avaiable.Access)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiables => avaiables.Role)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiables => avaiables.AvaiablesUser_Permissions)
+                        .ThenInclude(ap => ap.Permission)
+                .FirstOrDefaultAsync(user => user.Username == model.Username);
 
+            if (user is null) return null;
+
+            var hashedPassword = GetHashedPassword(model.Password, user.Salt);
+
+            return !hashedPassword.Equals(user.HashedPassword)
+                ? null
+                : user;
+
+        }
+
+        public async Task<List<User>> GetByAccess(UserSpecificationByAccess specification)
+        {
+            return await _context.Users
+                .Include(user => user.Department)
+                .Include(user => user.Employee)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiable => avaiable.Access)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiables => avaiables.Role)
+                .Include(user => user.Avaiables)
+                    .ThenInclude(avaiables => avaiables.AvaiablesUser_Permissions)
+                        .ThenInclude(ap => ap.Permission)
+                .Where(specification.Expression)
+                .ToListAsync();
+        }
         public async Task AddUserWithAvaiables(NewUser model)
         {
             using var transaction = _context.Database.BeginTransaction();
@@ -87,7 +128,7 @@ namespace Repositories.UserRepositories
             }
         }
 
-        public async Task UpdateAvaiables(NewAvaiable[] avaiables, int userId)
+        public async Task UpdateUserAvaiables(NewAvaiable[] avaiables, int userId)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
@@ -191,44 +232,6 @@ namespace Repositories.UserRepositories
                     AccessId = accessId,
                 });
             await _context.SaveChangesAsync();
-        }
-
-        public async Task<User> GetTryUser(LoginModel model)
-        {
-            var user = await _context.Users
-                .Include(user => user.Employee)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiable => avaiable.Access)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiables => avaiables.Role)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiables => avaiables.AvaiablesUser_Permissions)
-                        .ThenInclude(ap => ap.Permission)
-                .FirstOrDefaultAsync(user => user.Username == model.Username);
-
-            if (user is null) return null;
-
-            var hashedPassword = GetHashedPassword(model.Password, user.Salt);
-
-            return !hashedPassword.Equals(user.HashedPassword)
-                ? null
-                : user;
-
-        }
-
-        public async Task<List<User>> GetByAccess()
-        {
-            return await _context.Users
-                .Include(user => user.Department)
-                .Include(user => user.Employee)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiable => avaiable.Access)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiables => avaiables.Role)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiables => avaiables.AvaiablesUser_Permissions)
-                        .ThenInclude(ap => ap.Permission)
-                .ToListAsync();
         }
         private string GetHashedPassword(string password, byte[] salt)
         {
