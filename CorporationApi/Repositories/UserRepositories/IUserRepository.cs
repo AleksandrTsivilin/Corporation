@@ -12,9 +12,10 @@ namespace Repositories.UserRepositories
     public interface IUserRepository 
     {
         Task<User> GetTryUser(LoginModel model);
-        Task<int> AddUserWithAvaiables(NewUser model);
+        Task<int> AddUserWithAvaiables(NewUserWithAvaiables model);
         Task<List<User>> GetByAccess(UserSpecificationByAccess specification);
         Task<int> UpdateUserAvaiables(NewAvaiable[] avaiables, int userId);
         Task<int> BanUser(int userId);
+        Task<User> AddUserWithRegistrationId(NewUserWithRegistrationId model);
     }
 }

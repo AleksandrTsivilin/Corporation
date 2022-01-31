@@ -27,9 +27,36 @@ namespace Services.UserServices
             _repository = repository;
         }
 
-        public async Task<int> AddUserWithAvaiables(NewUser model)
+        public async Task<int> AddUserWithAvaiables(NewUserWithAvaiables model)
         {
             return await _repository.AddUserWithAvaiables(model);
+        }
+
+        public async Task<UserModel> AddUserWithRegistrationId(NewUserWithRegistrationId model)
+        {
+            var user = await _repository.AddUserWithRegistrationId(model);
+            return new UserModel
+            {
+                Id = user.Id,
+                Username = user.Username,
+                Department = new DepartmentModel
+                {
+                    Id = user.Department.Id,
+                    Title = user.Department.Title
+                },
+                Factory = new FactoryModel
+                {
+                    Id = user.Department.Factory.Id,
+                    Title = user.Department.Factory.Title
+                },
+                Region = new RegionModel
+                {
+                    Id = user.Department.Factory.Region.Id,
+                    Title = user.Department.Factory.Region.Title
+                },
+                Avaiables = null
+
+            };
         }
 
         public async Task<int> BanUser(int userId)

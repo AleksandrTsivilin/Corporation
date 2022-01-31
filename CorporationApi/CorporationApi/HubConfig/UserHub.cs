@@ -16,7 +16,12 @@ namespace CorporationApi.HubConfig
         {
             _service = service;
         }
-        public async Task AddUserWithAvaiables(NewUser model)
+
+        public async Task AddUser(int departmentId)
+        {
+            await onNotifyUser(departmentId);
+        }
+        public async Task AddUserWithAvaiables(NewUserWithAvaiables model)
         {
             var changedDepartment = await Task.Run(() => _service.AddUserWithAvaiables(model));
             await onNotifyUser(changedDepartment);

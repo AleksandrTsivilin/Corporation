@@ -12,9 +12,10 @@ namespace Services.UserServices
     public interface IUserService
     {
         Task<UserModel> TryGetUser(LoginModel model);
-        Task<int> AddUserWithAvaiables(NewUser model);
+        Task<int> AddUserWithAvaiables(NewUserWithAvaiables model);
         Task<List<UserModelFull>> GetByAccess(IdentityUserModel identity);
         Task<int> UpdateAvaiables(NewAvaiable[] avaiables, int userId);
         Task<int> BanUser(int userId);
+        Task<UserModel> AddUserWithRegistrationId(NewUserWithRegistrationId model);
     }
 }

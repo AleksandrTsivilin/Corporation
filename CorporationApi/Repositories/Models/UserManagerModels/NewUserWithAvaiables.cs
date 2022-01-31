@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.Models.UserManagerModels
 {
-    public class NewUser
+    public class NewUserWithAvaiables
     {
         public int EmployeeId { get; set; }
         public string Username { get; set; }

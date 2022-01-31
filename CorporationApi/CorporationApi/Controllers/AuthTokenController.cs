@@ -40,5 +40,20 @@ namespace CorporationApi.Controllers
 
             return Ok(new { token = encodedJwt });
         }
+
+        [HttpPost("registration")]
+        public async Task<IActionResult> RegistrationUser(NewUserWithRegistrationId model)
+        {
+            var user = await _userService.AddUserWithRegistrationId(model);
+            //var user = await _userService
+            //    .TryGetUser(model);
+
+            if (user is null)
+                return Unauthorized();
+
+            var encodedJwt = _authService.CreateJWT(user);
+
+            return Ok(new { token = encodedJwt });
+        }
     }
 }

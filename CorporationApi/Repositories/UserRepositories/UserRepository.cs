@@ -71,7 +71,7 @@ namespace Repositories.UserRepositories
                 .Where(specification.Expression)
                 .ToListAsync();
         }
-        public async Task<int> AddUserWithAvaiables(NewUser model)
+        public async Task<int> AddUserWithAvaiables(NewUserWithAvaiables model)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
@@ -204,6 +204,43 @@ namespace Repositories.UserRepositories
             {
                 transaction.Rollback();
                 return 0;
+            }
+        }
+        public async Task<User> AddUserWithRegistrationId(NewUserWithRegistrationId model)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var employee = await GetEntityById<Employee>(model.RegistrationId);
+                if (employee is null) throw new Exception();
+                var salt = new byte[512 / 8];
+                _cryptoServiceProvider.GetNonZeroBytes(salt);
+
+                var hashedPassword = GetHashedPassword(model.Password, salt);
+                await _context.Users.AddAsync(new User
+                {
+                    EmployeeId = employee.Id,
+                    Username = model.Username,
+                    HashedPassword = hashedPassword,
+                    Salt = salt,
+                    DepartmentId = employee.DepartmentId
+                });
+                await _context.SaveChangesAsync();
+                var newUser = await _context.Users
+                    .Include(user => user.Department)
+                        .ThenInclude(department => department.Factory)
+                            .ThenInclude(factory => factory.Region)
+                    .FirstOrDefaultAsync(user => user.EmployeeId == employee.Id);
+                if (newUser is null) throw new Exception();
+
+                transaction.Commit();
+                return newUser;
+    
+            }
+            catch ( Exception ex)
+            {
+                transaction.Rollback();
+                return null;
             }
         }
         private async Task<User> GetUserByIdWithAvaiables(int userId)
