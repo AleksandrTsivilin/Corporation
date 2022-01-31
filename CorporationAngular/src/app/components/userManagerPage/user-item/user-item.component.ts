@@ -33,6 +33,7 @@ export class UserItemComponent implements OnInit {
 
   @Output() remove =new EventEmitter();
   @Output() edit=new EventEmitter();
+  @Output() userInfoDialog = new EventEmitter();
 
   constructor() { }
 
@@ -46,6 +47,10 @@ export class UserItemComponent implements OnInit {
 
   editUser(){
     this.edit.emit();
+  }
+
+  openUserInfoDialog(){
+    this.userInfoDialog.emit();
   }
 
 }

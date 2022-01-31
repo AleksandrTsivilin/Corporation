@@ -23,7 +23,7 @@
           [avaiablePermissions]="avaiablesPermissions"
           (remove)="remove(userInfo.id)"
           (edit)="startEdit(userInfo)"
-          (click)="openUserInfo(userInfo)"
+          (userInfoDialog) = "openUserInfo(userInfo)"          
       >  
       </tr>
   </table>

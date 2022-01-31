@@ -1,13 +1,13 @@
-<td class="user-counter">
+<td class="user-counter" (click)="openUserInfoDialog()">
     {{numUser}}
 </td>
-<td class="user-item">
+<td class="user-item" (click)="openUserInfoDialog()">
     {{userInfo.username}}
 </td>
-<td class="user-item">
+<td class="user-item" (click)="openUserInfoDialog()">
     {{userInfo.employee.lastname}} {{userInfo.employee.firstname}}
 </td>
-<td class="user-item">
+<td class="user-item" (click)="openUserInfoDialog()">
     {{userInfo.department.title}}
 </td>
 <td 
