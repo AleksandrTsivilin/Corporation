@@ -45,28 +45,27 @@
             <div>
                 <span 
                     class="warning-message"
-                    *ngIf="email.touched && email.invalid"
+                    *ngIf="password.touched && !isConfirmPassword()"
                 >
-                ⚠️ incorrect email                
-                </span>
+                    ⚠️ input password
+                </span>   
                 <input 
                     class="input-data"
-                    type="email"
-                    [(ngModel)]="newUser.email" 
-                    placeholder="example@gmail.com"
-                    name="email" 
+                    type="password"
+                    [(ngModel)]="confirmPassword" 
+                    placeholder="Password" 
+                    name="confirm"
                     required
-                    ngModel [email] = "true"
-                    #email="ngModel"
+                    #password="ngModel"
+                    
                 >
                 
             </div>
-
             <button 
-                [ngClass]="newUserForm.invalid ? 'btn-disabled' : 'btn-submit'"
+                [ngClass]="newUserForm.invalid || !isConfirmPassword()? 'btn-disabled' : 'btn-submit'"
                 
                 type="submit"
-                [disabled]="newUserForm.invalid"
+                [disabled]="newUserForm.invalid || !isConfirmPassword()"
             >
                     Login
             </button>

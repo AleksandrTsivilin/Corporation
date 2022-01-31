@@ -1,6 +1,5 @@
 export interface NewUser{
-    regId:number 
+    registrationId:number 
     username:string,
-    password:string,
-    email:string
+    password:string
 }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NewUser } from 'src/app/interfaces/auth/newUser';
 import { AuthService } from 'src/app/services/auth.service';
+import { UserUpdateService } from 'src/app/services/userManager/userServices/user-update.service';
 //import { RegistrationForm } from 'src/app/interfaces/registrationForm';
 interface RegistrationId{
   id:number
@@ -14,18 +15,16 @@ interface RegistrationId{
 export class CreateAccountComponent implements OnInit {
 
   newUser:NewUser={
-    regId:0,
+    registrationId:0,
     username:"",
-    password:"",
-    email:""
+    password:""
   }
-
-  private regId:RegistrationId={
-    id:0
-  }
+  confirmPassword:string="";
+  
   constructor
     ( private readonly route:ActivatedRoute,
-      private readonly authService:AuthService
+      private readonly authService:AuthService,
+      private readonly updateService:UserUpdateService
     ) { }
 
   ngOnInit(): void {
@@ -34,15 +33,22 @@ export class CreateAccountComponent implements OnInit {
       .subscribe((params ) => {
         
         const id = params.get(" id");
+        console.log(id)
         id !==null 
-          ? this.newUser.regId = Number(id)
+          ? this.newUser.registrationId = Number(id)
           : console.log("incorrect enter ");   
       }
     );
   }
 
   onSubmit(){
-    this.authService.addUser(this.newUser);
+    this.authService.addUser(this.newUser)
+    .subscribe(result=>{
+      this.updateService.addedUser(result.department);
+    })
+  }
+  isConfirmPassword(){
+    return this.newUser.password===this.confirmPassword;
   }
 }
 

@@ -9,6 +9,7 @@ import { NewUser } from '../interfaces/auth/newUser';
 import { NewUserWithAvaiables } from '../interfaces/userManagerPage/newUserWithAvaiables';
 import { AvaiableUser } from '../interfaces/auth/avaiablesUserForm';
 import { PermissionInfo } from '../interfaces/userManagerPage/permissionInfo';
+import { UserSignalrService } from './userManager/userServices/user-signalr.service';
 
 
 @Injectable({
@@ -25,13 +26,12 @@ export class AuthService {
     region:0
   }
 
-  //private avaiablesUser : AvaiableUser []=[];
-  //private permissions:PermissionInfo []=[];
-
-  
   tokenData$=new BehaviorSubject<TokenData | null>(null);
   token$=new BehaviorSubject<string | null>(null);
-  constructor(private readonly client:HttpClient) { }
+  
+  constructor(
+    private readonly client:HttpClient) { 
+    }
 
   login(loginForm:LoginForm):Observable<TokenData>{
     const urlLogin = "https://localhost:5001/api/AuthToken";
@@ -52,11 +52,19 @@ export class AuthService {
   }
 
   addUser(newUser:NewUser){
-    console.log(newUser);
-  }
-
-  addUserWithAvaiables(newUser:NewUserWithAvaiables){
-    console.log(newUser);
+    console.log("addUser service")
+    const addUserUrl = "https://localhost:5001/api/AuthToken/registration";
+    return this.client.post<Token>(addUserUrl,newUser)
+    .pipe(
+      map(t=>
+        {
+          this.token$.next(t.token);
+          const tokenData= this.readToken(t);
+          this.tokenData$.next(tokenData);
+          return tokenData;
+      })
+      
+    )
   }
 
   private readToken(token: any):TokenData {
@@ -79,6 +87,7 @@ export class AuthService {
       console.log(department)
       
       const jsonAvaiables = JSON.parse(avaiablesJson);
+      
       const avaiables = this.createAvaiables(jsonAvaiables);
       return {
         userId:userId,
@@ -91,9 +100,11 @@ export class AuthService {
       
   }
 
-  private createAvaiables(jsonAvaiables:any){
+  private createAvaiables(jsonAvaiables:any) : AvaiableUser[]{
     let avaiables= [] as AvaiableUser [];
     let permissions = [] as PermissionInfo [];
+    if (jsonAvaiables === null) return [];
+    
     for(let avaiable of jsonAvaiables){
       
       for (let permission of avaiable.Permissions){

@@ -55,7 +55,9 @@ export class UserUpdateService {
     this.signalr.hubConnection
       ?.invoke("BanUser",userId);
   }
-
+  addedUser(departmentId:number){
+    this.signalr.hubConnection?.invoke("AddUser",departmentId);
+  }
   departmentUserOnLis(){
     this.signalr.hubConnection
       ?.on("newUser",(departmentId:number)=>{
