@@ -22,5 +22,6 @@ namespace DataBase.Entities.UserEntities
         public Department Department { get; set; }
         [Newtonsoft.Json.JsonIgnore]
         public ICollection<AvaiableUser> Avaiables { get; set; }
+        public bool IsBanned { get; set; }
     }
 }
