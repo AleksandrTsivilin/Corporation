@@ -27,9 +27,9 @@ namespace Services.UserServices
             _repository = repository;
         }
 
-        public async Task AddUserWithAvaiables(NewUser model)
+        public async Task<int> AddUserWithAvaiables(NewUser model)
         {
-            await _repository.AddUserWithAvaiables(model);
+            return await _repository.AddUserWithAvaiables(model);
         }
 
         public async Task<List<UserModelFull>> GetByAccess(IdentityUserModel identity)
@@ -85,9 +85,9 @@ namespace Services.UserServices
                     Avaiables = CreateAvaiables(user)
                 };
         }
-        public async Task UpdateAvaiables(NewAvaiable[] avaiables,int userId)
+        public async Task<int> UpdateAvaiables(NewAvaiable[] avaiables,int userId)
         {
-            await _repository.UpdateUserAvaiables(avaiables, userId);
+            return await _repository.UpdateUserAvaiables(avaiables, userId);
         }
 
         private List<AvaiableUserModel> CreateAvaiables(User user)

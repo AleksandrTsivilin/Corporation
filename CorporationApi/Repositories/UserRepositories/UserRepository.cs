@@ -71,7 +71,7 @@ namespace Repositories.UserRepositories
                 .Where(specification.Expression)
                 .ToListAsync();
         }
-        public async Task AddUserWithAvaiables(NewUser model)
+        public async Task<int> AddUserWithAvaiables(NewUser model)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
@@ -118,6 +118,7 @@ namespace Repositories.UserRepositories
                     await AddNewPermissions(addedAvaiables,avaiable);
                 }
                 transaction.Commit();
+                return employee.DepartmentId;
 
             }
             catch (Exception ex)
@@ -125,10 +126,11 @@ namespace Repositories.UserRepositories
                 Console.Write(ex.Message);
                 Console.WriteLine(ex.InnerException.Message);
                 transaction.Rollback();
-            }
+                return 0;
+            } 
         }
 
-        public async Task UpdateUserAvaiables(NewAvaiable[] avaiables, int userId)
+        public async Task<int> UpdateUserAvaiables(NewAvaiable[] avaiables, int userId)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
@@ -174,15 +176,15 @@ namespace Repositories.UserRepositories
                         await _context.SaveChangesAsync();
                         await AddNewPermissions(avaiablesUser, addedAvaiable);
 
-                        Console.WriteLine(avaiablesUser);
                     }
                 }
                 transaction.Commit();
-
+                return user.DepartmentId;
             }
             catch(Exception ex)
             {
                 transaction.Rollback();
+                return 0;
             }
 
         }

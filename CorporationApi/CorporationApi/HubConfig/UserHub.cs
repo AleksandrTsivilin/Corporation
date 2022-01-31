@@ -20,17 +20,21 @@ namespace CorporationApi.HubConfig
         {
 
             Console.Write(model);
-            await Task.Run(() => _service.AddUserWithAvaiables(model));
-            //var storages = await Task.Run(() => _service.MovedProducts(model));
-            //if (storages is not null)
-            //    await Clients.All.SendAsync("movementsProduct", storages);
-
+            var changedDepartment = await Task.Run(() => _service.AddUserWithAvaiables(model));
+            await onNotifyUser(changedDepartment);
         }
 
         public async Task UpdateUserAvaiables(NewAvaiable[] avaiables, int userId)
         {
-            await Task.Run(() => _service.UpdateAvaiables(avaiables, userId));
+            var changedDepartment = await Task.Run(() => _service.UpdateAvaiables(avaiables, userId));
+            await onNotifyUser(changedDepartment);
         }
+
+        private async Task onNotifyUser(int changedDepartment)
+        {
+            if (changedDepartment != 0)
+                await Clients.All.SendAsync("newUser", changedDepartment);
+        } 
     }
 
 }

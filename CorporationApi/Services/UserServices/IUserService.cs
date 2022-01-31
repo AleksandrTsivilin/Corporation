@@ -12,8 +12,8 @@ namespace Services.UserServices
     public interface IUserService
     {
         Task<UserModel> TryGetUser(LoginModel model);
-        Task AddUserWithAvaiables(NewUser model);
+        Task<int> AddUserWithAvaiables(NewUser model);
         Task<List<UserModelFull>> GetByAccess(IdentityUserModel identity);
-        Task UpdateAvaiables(NewAvaiable[] avaiables, int userId);
+        Task<int> UpdateAvaiables(NewAvaiable[] avaiables, int userId);
     }
 }
