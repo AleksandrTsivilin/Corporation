@@ -13,5 +13,6 @@ namespace Services.Models.UserModels.UserModel
     public class UserModelFull : UserModel
     {        
         public EmployeeModel Employee { get; set; }
+        public bool IsBanned { get; set; }
     }
 }

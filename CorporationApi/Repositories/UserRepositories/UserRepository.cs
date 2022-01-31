@@ -188,7 +188,24 @@ namespace Repositories.UserRepositories
             }
 
         }
-
+        public async Task<int> BanUser(int userId)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var user = await GetEntityById<User>(userId);
+                if (user is null) throw new Exception();
+                user.IsBanned = !user.IsBanned;
+                await _context.SaveChangesAsync();
+                transaction.Commit();
+                return user.DepartmentId;
+            }
+            catch(Exception ex)
+            {
+                transaction.Rollback();
+                return 0;
+            }
+        }
         private async Task<User> GetUserByIdWithAvaiables(int userId)
         {
             return await _context.Users
@@ -278,6 +295,7 @@ namespace Repositories.UserRepositories
             await _context.SaveChangesAsync();
         }
 
+        
     }
 }
 

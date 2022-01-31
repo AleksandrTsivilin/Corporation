@@ -18,8 +18,6 @@ namespace CorporationApi.HubConfig
         }
         public async Task AddUserWithAvaiables(NewUser model)
         {
-
-            Console.Write(model);
             var changedDepartment = await Task.Run(() => _service.AddUserWithAvaiables(model));
             await onNotifyUser(changedDepartment);
         }
@@ -29,7 +27,11 @@ namespace CorporationApi.HubConfig
             var changedDepartment = await Task.Run(() => _service.UpdateAvaiables(avaiables, userId));
             await onNotifyUser(changedDepartment);
         }
-
+        public async Task BanUser(int userId)
+        {
+            var changedDepartment = await _service.BanUser(userId);
+            await onNotifyUser(changedDepartment);
+        }
         private async Task onNotifyUser(int changedDepartment)
         {
             if (changedDepartment != 0)

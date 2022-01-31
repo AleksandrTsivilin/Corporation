@@ -15,5 +15,6 @@ namespace Repositories.UserRepositories
         Task<int> AddUserWithAvaiables(NewUser model);
         Task<List<User>> GetByAccess(UserSpecificationByAccess specification);
         Task<int> UpdateUserAvaiables(NewAvaiable[] avaiables, int userId);
+        Task<int> BanUser(int userId);
     }
 }

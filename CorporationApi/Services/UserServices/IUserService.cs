@@ -15,5 +15,6 @@ namespace Services.UserServices
         Task<int> AddUserWithAvaiables(NewUser model);
         Task<List<UserModelFull>> GetByAccess(IdentityUserModel identity);
         Task<int> UpdateAvaiables(NewAvaiable[] avaiables, int userId);
+        Task<int> BanUser(int userId);
     }
 }

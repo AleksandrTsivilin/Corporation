@@ -32,6 +32,11 @@ namespace Services.UserServices
             return await _repository.AddUserWithAvaiables(model);
         }
 
+        public async Task<int> BanUser(int userId)
+        {
+            return await _repository.BanUser(userId);
+        }
+
         public async Task<List<UserModelFull>> GetByAccess(IdentityUserModel identity)
         {
             var specification = new UserSpecificationByAccess(identity);
@@ -41,6 +46,7 @@ namespace Services.UserServices
             {
                 Id = u.Id,
                 Username = u.Username,
+                IsBanned = u.IsBanned,
                 Employee = new EmployeeModel
                 {
                     Id = u.Employee.Id,
