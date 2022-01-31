@@ -1,4 +1,5 @@
 import { AvaiableUser } from "./auth/avaiablesUserForm";
+import { DepartmentInfo } from "./department/departmentInfo";
 import { EmployeeInfo } from "./employee/employeeInfo";
 import { Access } from "./userManagerPage/access";
 
@@ -8,7 +9,8 @@ export interface UserInfo{
     username:string ,
     employee:EmployeeInfo,
     avaiables:AvaiableUser[] 
-    fullname:string | null
+    fullname:string | null,
+    department:DepartmentInfo
 }
 
 export interface Role{

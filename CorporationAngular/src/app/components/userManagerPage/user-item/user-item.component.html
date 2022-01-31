@@ -7,6 +7,9 @@
 <td class="user-item">
     {{userInfo.employee.lastname}} {{userInfo.employee.firstname}}
 </td>
+<td class="user-item">
+    {{userInfo.department.title}}
+</td>
 <td 
     class="action-btn"
     *ngIf="avaiablePermissions.canUpdate"  

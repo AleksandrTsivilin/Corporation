@@ -47,7 +47,8 @@ export class UsersComponent implements OnInit {
     username: "",
     employee:{id:0,lastname:"",firstname:""},
     avaiables: [],
-    fullname:null
+    fullname:null,
+    department:{id:0,title:""}
   }
 
   
@@ -64,7 +65,11 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.getUsers();
     this.headersTable=this.getHeadersTable(); 
-     
+    this.updateService.changesDepartmentUser$.subscribe(changedDepartment=>{
+      const checkChanges = this.usersInfo.map(user=>user.department.id)
+        .includes(changedDepartment);
+      if (checkChanges) this.getUsers();
+    }) 
   }
   
 
@@ -104,7 +109,8 @@ export class UsersComponent implements OnInit {
       username:rawUserInfo.username,
       employee:rawUserInfo.employee,
       avaiables:rawUserInfo.avaiables,
-      fullname:null
+      fullname:null,
+      department:{id:0,title:""}
     }
     this.setStatePage("editUser",false);
   }
@@ -133,7 +139,8 @@ export class UsersComponent implements OnInit {
       username:selectedUser.username,
       employee:selectedUser.employee,
       avaiables:selectedUser.avaiables,
-      fullname:null
+      fullname:null,
+      department:{id:0,title:""}
     }
   }
 
@@ -146,7 +153,7 @@ export class UsersComponent implements OnInit {
     this.userService.getUsersByAccess()
         .subscribe((result)=>{
           this.usersInfo=result;
-          
+          console.log(result)
           this.setStatePage("",true);
         },
         ()=>{
@@ -165,6 +172,9 @@ export class UsersComponent implements OnInit {
     },{
       title:"fullname",
       isActive:true
+    },{
+      title:"department",
+      isActive:false
     }];
 
     if (this.avaiablesPermissions.canUpdate) {

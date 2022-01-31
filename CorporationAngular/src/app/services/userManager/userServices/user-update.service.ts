@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { NewUserWithAvaiables } from 'src/app/interfaces/userManagerPage/newUserWithAvaiables';
 import { UserSignalrService } from './user-signalr.service';
 import { AvaiableUserForm } from 'src/app/interfaces/auth/avaiablesUserN';
+import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
 export class UserUpdateService {
+
+  changesDepartmentUser$ = new BehaviorSubject<number>(0);
   constructor(private readonly signalr:UserSignalrService) {
     if (!signalr.isConnection)
       signalr.startConnection();
-
+    this.departmentUserOnLis();
    }
 
   addUserWithAvaiables(newUser:NewUserWithAvaiables){
@@ -46,6 +49,13 @@ export class UserUpdateService {
       .then()
       .catch(err=>{console.error(err)})
 
+  }
+
+  departmentUserOnLis(){
+    this.signalr.hubConnection
+      ?.on("newUser",(departmentId:number)=>{
+        this.changesDepartmentUser$.next(departmentId);
+      })
   }
     
 }
