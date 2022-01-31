@@ -1,25 +1,58 @@
-<td class="user-counter" (click)="openUserInfoDialog()">
+<td 
+    class="user-counter" 
+    [ngClass]="{'warning':userInfo.isBanned}"
+    (click)="openUserInfoDialog()"
+>
     {{numUser}}
 </td>
-<td class="user-item" (click)="openUserInfoDialog()">
+<td 
+    class="user-item" 
+    [ngClass]="{'warning':userInfo.isBanned}"
+    (click)="openUserInfoDialog()"
+>
     {{userInfo.username}}
 </td>
-<td class="user-item" (click)="openUserInfoDialog()">
+<td 
+    class="user-item"
+    [ngClass]="{'warning':userInfo.isBanned}"
+    (click)="openUserInfoDialog()"
+>
     {{userInfo.employee.lastname}} {{userInfo.employee.firstname}}
 </td>
-<td class="user-item" (click)="openUserInfoDialog()">
+<td 
+    class="user-item"
+    [ngClass]="{'warning':userInfo.isBanned}"
+    (click)="openUserInfoDialog()"
+>
     {{userInfo.department.title}}
 </td>
 <td 
     class="action-btn"
     *ngIf="avaiablePermissions.canUpdate"  
 >    
-    <button class="btn" (click)="editUser()">✏️</button>   
+    <button class="btn" 
+        (click)="editUser()"
+        *ngIf="!userInfo.isBanned else unLockEdit"
+    >
+        ✏️
+    </button>   
 </td>
 
 <td 
     class="action-btn"
     *ngIf="avaiablePermissions.canDelete"
 >    
-    <button class="btn" (click)="removeUser()">❌</button>       
+    <button 
+        class="btn" 
+        (click)="removeUser()"
+        *ngIf="!userInfo.isBanned else unLock"
+    >❌</button>       
 </td>
+
+<ng-template #unLock>
+    <button class="btn" (click)="removeUser()">🔓</button>
+</ng-template>
+
+<ng-template #unLockEdit>
+    <div class="warning text-red-600">11</div>
+</ng-template>

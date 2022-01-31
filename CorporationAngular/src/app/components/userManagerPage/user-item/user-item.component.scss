@@ -1,22 +1,7 @@
-// td { 
-//     padding: 5px; 
-//     border: 1px solid black; 
-//     .item{
-//         display: flex;
-//         .title-item{
-//             width: 85%;
-//         }
 
-//         .btn-item{
-//             width: 15%;
-//             .edit-btn{
-//                 width: 100%;
-//             }
-//         }
-
-//     }
-    
-// }
+.warning{
+    @apply bg-red-600;
+}
 .user-counter{
     @apply border border-green-600;
     @apply text-center;
@@ -29,18 +14,11 @@
 
 .action-btn{
     @apply border border-green-600;
-    // @apply w-full;
-    // @apply flex items-center;
-    //@apply bg-green-500;
-    // @apply pl-0;
+    
 
     .btn{
         @apply w-full;
-        //@apply rounded;
-        //@apply transition duration-500
+        
     }
-    //  ease-in-out bg-blue-600 hover:bg-red-600 transform hover:-translate-y-1 hover: 
-    // .btn:hover{
-    //     @apply bg-blue-600;
-    // }
+    
 }

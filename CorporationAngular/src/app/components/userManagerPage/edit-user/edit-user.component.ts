@@ -37,7 +37,8 @@ export class EditUserComponent implements OnInit {
     employee:{id:0,lastname:"",firstname:""},
     avaiables:[],
     fullname:null,
-    department:{id:0,title:""}
+    department:{id:0,title:""},
+    isBanned:false
   }
 
   @Output() updateUser=new EventEmitter<AvaiableUserForm[]>();

@@ -48,7 +48,8 @@ export class UsersComponent implements OnInit {
     employee:{id:0,lastname:"",firstname:""},
     avaiables: [],
     fullname:null,
-    department:{id:0,title:""}
+    department:{id:0,title:""},
+    isBanned:false
   }
 
   
@@ -66,9 +67,12 @@ export class UsersComponent implements OnInit {
     this.getUsers();
     this.headersTable=this.getHeadersTable(); 
     this.updateService.changesDepartmentUser$.subscribe(changedDepartment=>{
+      console.log(changedDepartment);
       const checkChanges = this.usersInfo.map(user=>user.department.id)
         .includes(changedDepartment);
+      console.log(checkChanges);
       if (checkChanges) this.getUsers();
+      console.log(this.usersInfo)
     }) 
   }
   
@@ -110,7 +114,8 @@ export class UsersComponent implements OnInit {
       employee:rawUserInfo.employee,
       avaiables:rawUserInfo.avaiables,
       fullname:null,
-      department:{id:0,title:""}
+      department:{id:0,title:""},
+      isBanned:false
     }
     this.setStatePage("editUser",false);
   }
@@ -121,14 +126,15 @@ export class UsersComponent implements OnInit {
     
   }
 
-  remove(userId:number | null){
+  remove(userId:number){
     console.log(userId)
-    this.userService.remove(userId)
-      ?.subscribe((result)=>
-      {
-        console.log("user removed");
-      },
-      ()=>{})
+    this.updateService.banUser(userId);
+    // this.userService.remove(userId)
+    //   ?.subscribe((result)=>
+    //   {
+    //     console.log("user removed");
+    //   },
+    //   ()=>{})
   }
 
   openUserInfo(selectedUser:UserInfo){
@@ -140,7 +146,8 @@ export class UsersComponent implements OnInit {
       employee:selectedUser.employee,
       avaiables:selectedUser.avaiables,
       fullname:null,
-      department:{id:0,title:""}
+      department:{id:0,title:""},
+      isBanned:false
     }
   }
 

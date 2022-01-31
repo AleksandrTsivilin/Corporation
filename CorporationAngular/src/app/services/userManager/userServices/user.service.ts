@@ -25,13 +25,13 @@ export class UserService {
   //   return this.client.put(urlUpdate,updateUser);
   // }
 
-  remove(userId:number | null){
-    const urlDelete="https://localhost:5001/api/Admin";
-    if (userId!==null){
-      let params = new HttpParams().set("userId",userId);
-      return this.client.delete(urlDelete,{params});
-    }
-    return null;
+  // remove(userId:number | null){
+  //   const urlDelete="https://localhost:5001/api/Admin";
+  //   if (userId!==null){
+  //     let params = new HttpParams().set("userId",userId);
+  //     return this.client.delete(urlDelete,{params});
+  //   }
+  //   return null;
     
-  }
+  // }
 }

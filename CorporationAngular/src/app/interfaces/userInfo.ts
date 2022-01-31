@@ -10,7 +10,8 @@ export interface UserInfo{
     employee:EmployeeInfo,
     avaiables:AvaiableUser[] 
     fullname:string | null,
-    department:DepartmentInfo
+    department:DepartmentInfo,
+    isBanned:boolean
 }
 
 export interface Role{
