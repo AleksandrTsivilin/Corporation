@@ -7,8 +7,8 @@
         <th 
           class="header"
           *ngFor="let header of headersTable"
-          (click)=sortCol(header.title)
-          [ngClass]="{'active-header':isActiveHeader(header.isActive)}"
+          (click)=sortCol(header)
+          [ngClass]="{'active-header':header.isActive}"
         >
           <span >
             {{header.title}}

@@ -67,45 +67,41 @@ export class UsersComponent implements OnInit {
     this.getUsers();
     this.headersTable=this.getHeadersTable(); 
     this.updateService.changesDepartmentUser$.subscribe(changedDepartment=>{
-      console.log(changedDepartment);
       const checkChanges = this.usersInfo.map(user=>user.department.id)
         .includes(changedDepartment);
-      console.log(checkChanges);
       if (checkChanges) this.getUsers();
-      console.log(this.usersInfo)
     }) 
   }
   
 
-  isActiveHeader(isActive:Boolean):Boolean{
-    return isActive;
-  }
-
-  sortCol(criteria:string){
   
+
+  sortCol(header:HeaderTable){
+   
+    if (!header.isActive) return;
+    let criteria = header.title;
+
     criteria===this._sortCriteria
       ? this._ascDirection *= -1
       : this._ascDirection = 1;
     
     this._sortCriteria=criteria;
-    
     let orderedUsersInfo= this.usersInfo.sort((a:UserInfo,b:UserInfo)=>{
       
       let orderItemFirst=a[criteria];
       let orderItemSecond=b[criteria];
       const less = -1 * this._ascDirection;
       const more = 1 * this._ascDirection;
+      
       if (typeof orderItemFirst === 'string') {
         return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
-      } else {
-        return orderedUsersInfo <= orderItemSecond ? less : more;
+      } else {        
+        return orderItemFirst.title <= orderItemSecond.title ? less : more;
       }
       
     })
     this.usersInfo=orderedUsersInfo;
-  }
-
-  
+  }  
 
   startEdit(rawUserInfo:UserInfo){
     this.editUser={
@@ -160,7 +156,6 @@ export class UsersComponent implements OnInit {
     this.userService.getUsersByAccess()
         .subscribe((result)=>{
           this.usersInfo=result;
-          console.log(result)
           this.setStatePage("",true);
         },
         ()=>{
@@ -181,7 +176,7 @@ export class UsersComponent implements OnInit {
       isActive:true
     },{
       title:"department",
-      isActive:false
+      isActive:true
     }];
 
     if (this.avaiablesPermissions.canUpdate) {
