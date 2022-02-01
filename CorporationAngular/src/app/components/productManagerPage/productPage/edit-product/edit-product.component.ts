@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { PageState } from 'src/app/interfaces/pageState';
 import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
-import { ProductInfo } from 'src/app/interfaces/productsInfo';
+import { ProductInfo } from 'src/app/interfaces/productManagerPage/productsInfo';
 import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
 import { ProductsService } from 'src/app/services/productPage/products.service';

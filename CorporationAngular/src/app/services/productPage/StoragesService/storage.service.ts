@@ -15,8 +15,7 @@ export class StorageService {
   }
 
   getStoragesByAccess(){
-    console.log("get storages by access")
-    const urlGetStoragesByAccess="https://localhost:5001/api/Storage/storageByAccess";
+    const urlGetStoragesByAccess="https://localhost:5001/api/Storage/ByAccess";
     return this.client.get<StorageInfo[]>(urlGetStoragesByAccess);
   }
 }

@@ -1,45 +1,24 @@
-<ng-template #toMoveNextPage>
-  <div [ngSwitch]="pageState.path"
-  class="h-full" >
-    <app-edit-product
-      *ngSwitchCase="'editProduct'"
-      [newProductForm]="newProductForm"
-      (updateProduct)="update($event)"
-      (close)="closeEditPage()"
-    >     
-    </app-edit-product> 
-    <app-loading-page
-      *ngSwitchCase="'loadingPage'"
-      [title]="'products'"
-    >
-    </app-loading-page> 
-    <app-responce500
-      *ngSwitchCase="'responce500'"
-      
-    >
-    </app-responce500>
-  </div>
-</ng-template>
-
-
-
-
-
-
-
-<!-- <ng-template #toUpdateForm >
-  <app-edit-product
-    [newProductForm]="newProductForm"
-    (updateProduct)="update($event)"
-    (close)="closeEditPage()"
-  >     
-  </app-edit-product>
-</ng-template> -->
-
-
-
 
 <div class="flex flex-col h-full " *ngIf="pageState.isActive else toMoveNextPage">
+  <div>
+    <h1>regions</h1>
+  </div>
+  <div *ngIf="regions.length>1 else showTitleRegion">
+    <h1>{{regions.length}}</h1>
+  </div>
+  <div>
+    <h1>factories</h1>
+  </div>
+  <div *ngIf="factories.length>1 else showTitleFactory">
+    <h1>{{factories.length}}</h1>
+  </div>
+  <div>
+    <h1>storages</h1>
+  </div>
+  <div *ngIf="storages.length>1 else showTitleStorage">
+    <h1>{{storages.length}}</h1>
+  </div>
+  
   <div class="flex overflow-auto">
     <table class="relative w-full border table">
       <thead>
@@ -72,3 +51,38 @@
     </table>
   </div>
 </div>            
+
+<ng-template #toMoveNextPage>
+  <div [ngSwitch]="pageState.path"
+  class="h-full" >
+    <app-edit-product
+      *ngSwitchCase="'editProduct'"
+      [newProductForm]="newProductForm"
+      (updateProduct)="update($event)"
+      (close)="closeEditPage()"
+    >     
+    </app-edit-product> 
+    <app-loading-page
+      *ngSwitchCase="'loadingPage'"
+      [title]="'products'"
+    >
+    </app-loading-page> 
+    <app-responce500
+      *ngSwitchCase="'responce500'"
+      
+    >
+    </app-responce500>
+  </div>
+</ng-template>
+
+<ng-template #showTitleStorage>
+  <h1>{{storages[0].title}}</h1>
+</ng-template>
+
+<ng-template #showTitleFactory>
+  <h1>{{factories[0].title}}</h1>
+</ng-template>
+
+<ng-template #showTitleRegion>
+  <h1>{{regions[0].title}}</h1>
+</ng-template>

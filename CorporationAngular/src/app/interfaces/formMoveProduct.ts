@@ -1,4 +1,4 @@
-import { ProductInfo } from "./productsInfo";
+import { ProductInfo } from "./productManagerPage/productsInfo";
 
 export interface FormMoveProducts{
     from:string,

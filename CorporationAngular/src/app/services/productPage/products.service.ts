@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Category, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
-import { ProductInfo } from 'src/app/interfaces/productsInfo';
+import { ProductInfo } from 'src/app/interfaces/productManagerPage/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 
 @Injectable({
@@ -48,4 +48,5 @@ export class ProductsService {
     params.append("userId",userId)
     return this.client.get<StorageInfo>(urlGetStorageByUser,{params})
   }
+  
 }

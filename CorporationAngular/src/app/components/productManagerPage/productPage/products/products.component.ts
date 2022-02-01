@@ -1,15 +1,21 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
+import { FactoryInfo } from 'src/app/interfaces/factory/factoryInfo';
 import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
+//import { LocationProduct } from 'src/app/interfaces/productManagerPage/locationProduct';
 import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
-import { ProductInfo } from 'src/app/interfaces/productsInfo';
+import { ProductInfo } from 'src/app/interfaces/productManagerPage/productsInfo';
+import { RegionInfo } from 'src/app/interfaces/region/regionInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
+import { FactoryService } from 'src/app/services/factoryManager/factory.service';
 import { ProductsService } from 'src/app/services/productPage/products.service';
+import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
+import { RegionService } from 'src/app/services/regionManager/region.service';
 
 @Component({
   selector: 'app-products',
@@ -31,6 +37,10 @@ export class ProductsComponent implements OnInit {
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
   currentStorages:StorageInfo[]=[{title:"Storage 1"},{title:"Storage 2"}];
+
+  storages:StorageInfo[]=[];
+  factories: FactoryInfo[]=[];
+  regions: RegionInfo[]=[];
   //editProductMode:boolean=false;
 
   newProductForm:NewProductForm={
@@ -43,48 +53,36 @@ export class ProductsComponent implements OnInit {
     unit:"",
     isBanned:false
   }
-
+  
   private editedProductId:number=0;
 
-
-  //load : string ="";
-  //loading:boolean=false;
 
   pageState:PageState={
     path:"loadingPage",
     isActive:false
   }
-  // editProduct:ProductInfo={
-  //   id:0,
-  //   title:"",
-  //   count:0,
-  //   price:0,
-  //   category:"",
-  //   manufacturer:"",
-  //   unit:"",
-  //   isBanned:false
-  // }
-
-  // private readonly signalrService:SignalrProductService
+  
   constructor( 
     private readonly service:ProductsService,
-    private readonly updateService:ProductUpdateService
+    private readonly updateService:ProductUpdateService,
+    private readonly storageService:StorageService,
+    private readonly factoryService:FactoryService,
+    private readonly regionService:RegionService
     ) { }
 
   ngOnInit(): void {
 
     this.headersTable=this.getHeadersTable(); 
     this.getProducts();
+    this.getStorages();
+    this.getFactories();
+    this.getRegions();
+    //this.getLocationProducts();
     
 
     
 
-    // if (!this.signalrService.isConnection)
-    //   this.signalrService.startConnection();
-
-    // this.productOnLis();
-    // this.productOnUpdateLis();
-    // this.productOnRemoveLis();
+    
     this.updateService.changesProductStorage$
       .subscribe((changes)=>{
         console.log(changes);
@@ -93,7 +91,7 @@ export class ProductsComponent implements OnInit {
         if (this.currentStorages
           .map(st=>st.title).includes(storage))
           {
-            //this.productsInfo=ch.movedProducts;
+            
             console.log("changes product")
             this.getProducts();
           }
@@ -273,16 +271,42 @@ export class ProductsComponent implements OnInit {
     return headers;
   }
 
-  private async getProducts(){
-    await this.service.getProductsByAccess()
-      .subscribe((result)=>{        
+  private getProducts(){
+     this.service.getProductsByAccess()
+      .subscribe((result)=>{  
+        console.log(result)     
         this.productsInfo=result;
-        this.setStatePage("",true)
+        
+        this.setStatePage("",true);
+        
         
     },(err)=>{
       this.setStatePage("responce500",false);
     })
   }
+
+  private getStorages(){
+    this.storageService.getStoragesByAccess()
+      .subscribe(storages=>{
+        this.storages=storages;
+      })
+  }
+
+  private getFactories(){
+    this.factoryService.getFactoriesByAcces()
+      .subscribe(factories=>{
+        this.factories=factories;
+      })
+  }
+
+  private getRegions(){
+    this.regionService.getRegionsByAccess()
+      .subscribe(regions=>{
+        this.regions = regions;
+      })
+  }
+
+  
 
   
 
