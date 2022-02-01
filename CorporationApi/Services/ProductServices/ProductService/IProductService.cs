@@ -1,4 +1,5 @@
-﻿using Services.Models;
+﻿using Repositories.Specifications;
+using Services.Models;
 using Services.Models.ProductModels;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,7 @@ namespace Services.ProductServices.ProductService
 {
     public interface IProductService
     {
-        Task<List<ProductModel>> GetProductsByAccess(string access);
+        Task<List<ProductModel>> GetProductsByAccess(IdentityUserModel identity);
         List<ProductModel> GetProductsByUser(int id);
         Task<List<string>> AddProduct(NewProductModel model);
         Task <List<string>> UpdateProduct(NewProductModel model, int id);

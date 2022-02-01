@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Services.IdentityUserServices;
 using Services.ProductService;
 using Services.ProductServices.ProductService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 
@@ -15,15 +17,21 @@ namespace CorporationApi.Controllers
     public class ProductController : ControllerBase
     {
         private readonly IProductService _service;
-        public ProductController(IProductService service)
+        private readonly IIdentityUserService _identityService;
+        public ProductController(
+            IProductService service,
+            IIdentityUserService identityService)
         {
             _service = service;
+            _identityService = identityService;
         }
 
         [HttpGet("productsByAccess")]
-        public async Task<IActionResult> GetProductsByAccess([FromHeader] string access)
+        public async Task<IActionResult> GetProductsByAccess()
         {
-            var product = await Task.Run(() => _service.GetProductsByAccess(access));
+            var claims = HttpContext.User.Identity as ClaimsIdentity;
+            var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
+            var product = await Task.Run(() => _service.GetProductsByAccess(identityInfo));
             return Ok(product);
         }
 
@@ -33,6 +41,7 @@ namespace CorporationApi.Controllers
             var products = _service.GetProductsByUser(id);
             return Ok(products);
         }
+
 
         //[HttpGet("manufacturer")]
         //public IActionResult GetManufacturers()

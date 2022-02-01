@@ -18,6 +18,11 @@ using Microsoft.OpenApi.Models;
 using Repositories;
 using Repositories.BaseRepositories;
 using Repositories.EmployeeRepositories;
+using Repositories.FactoryRepositories;
+using Repositories.ProductRepositories;
+using Repositories.ProductRepositories.FactoryRepositories;
+using Repositories.ProductRepositories.StorageRepositories;
+using Repositories.RegionRepositories;
 using Repositories.UserRepositories;
 using Services.AuthServices;
 using Services.EmployeeServices;
@@ -25,11 +30,13 @@ using Services.IdentityUserServices;
 using Services.ProductService;
 using Services.ProductService.MovementsService;
 using Services.ProductServices.CategoriesService;
+using Services.ProductServices.FactoryServices;
 using Services.ProductServices.ManufacturerService;
 using Services.ProductServices.ManufacturersService;
 using Services.ProductServices.ProductService;
 using Services.ProductServices.StoragesService;
 using Services.ProductServices.UnitsService;
+using Services.RegionServices;
 using Services.UserServices;
 using Services.UserServices.AccessServices;
 using Services.UserServices.PermissionServices;
@@ -73,19 +80,19 @@ namespace CorporationApi
 
             //services.AddScoped<IProductServiceTemplate, ProductServiceTemplate>();
 
-            services.AddScoped<IProductService, ProductService>();
+            
             services.AddScoped<IMovementsServive, MovementsService>();
-            services.AddScoped<IUserService, UserService>();
+            
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitService, UnitService>();
-            services.AddScoped<IStorageService, StorageService>();
-            services.AddScoped<IRepository<Storage>, Repository<Storage>>();
+            
+            //services.AddScoped<IRepository<Storage>, Repository<Storage>>();
             services.AddScoped<IRepository<CategoryProduct>, Repository<CategoryProduct>>();
             services.AddScoped<IRepository<ManufacturerProduct>, Repository<ManufacturerProduct>>();
             services.AddScoped<IRepository<UnitProduct>,Repository<UnitProduct>>();
-            services.AddScoped<IUserRepository, UserRepository>();
+            
             services.AddScoped<DBContext>();
             services.AddSingleton<RNGCryptoServiceProvider>();
 
@@ -94,6 +101,11 @@ namespace CorporationApi
             AddPermission(services);
             AddAccess(services);
             AddUserIdentity(services);
+            AddProduct(services);
+            AddStorage(services);
+            AddUser(services);
+            AddFactory(services);
+            AddRegion(services);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -112,6 +124,7 @@ namespace CorporationApi
                 });
         }
 
+        
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -143,12 +156,37 @@ namespace CorporationApi
             });
         }
 
+        private void AddRegion(IServiceCollection services)
+        {
+            services.AddScoped<IRegionService, RegionService>();
+            services.AddScoped<IRegionRepository, RegionRepository>();
+        }
+        private void AddFactory(IServiceCollection services)
+        {
+            services.AddScoped<IFactoryService, FactoryService>();
+            services.AddScoped<IFactoryRepository, FactoryRepository>();
+        }
+
+        private void AddStorage(IServiceCollection services)
+        {
+            services.AddScoped<IStorageService, StorageService>();
+            services.AddScoped<IStorageRepository, StorageRepository>();
+        }
+        private void AddProduct(IServiceCollection services)
+        {
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductRepository, ProductRepository>();
+        }
         private void AddEmployee(IServiceCollection services)
         {
             services.AddScoped<IEmployeeService, EmployeeService>();
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
         }
-
+        private void AddUser(IServiceCollection services)
+        {
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IUserRepository, UserRepository>();
+        }
         private void AddRole(IServiceCollection services)
         {
             services.AddScoped<IRoleService, RoleService>();

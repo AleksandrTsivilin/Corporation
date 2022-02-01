@@ -1,4 +1,5 @@
-﻿using Services.Models.ProductModels;
+﻿using Repositories.Specifications;
+using Services.Models.ProductModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,6 @@ namespace Services.ProductServices.StoragesService
     {
         Task<List<StorageModel>> GetStorages();
         Task<StorageModel> GetStorageByUser(int userId);
-        Task<List<StorageModel>> GetStorageByAccess(string access);
+        Task<List<StorageModel>> GetStorageByAccess(IdentityUserModel identity);
     }
 }

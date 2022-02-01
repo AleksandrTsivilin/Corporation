@@ -8,6 +8,7 @@ namespace Services.Models.ProductModels
 {
     public class StorageModel
     {
+        public int Id { get; set; }
         public string Title { get; set; }
     }
 }

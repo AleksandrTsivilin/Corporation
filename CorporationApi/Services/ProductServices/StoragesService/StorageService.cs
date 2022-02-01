@@ -2,6 +2,8 @@
 using DataBase.Entities.ProductEntities;
 using Microsoft.EntityFrameworkCore;
 using Repositories;
+using Repositories.ProductRepositories.StorageRepositories;
+using Repositories.Specifications;
 using Services.AccessServices;
 using Services.Models.ProductModels;
 using System;
@@ -15,26 +17,32 @@ namespace Services.ProductServices.StoragesService
     public class StorageService : IStorageService
     {
         private readonly DBContext _context;
-        private readonly IRepository<Storage> _repository;
-        public StorageService(DBContext context, IRepository<Storage> repository)
+        //private readonly IRepository<Storage> _repository;
+        private readonly IStorageRepository _repository;
+        public StorageService(DBContext context, IStorageRepository repository)
         {
             _context = context;
             _repository = repository;
         }
 
-        public async Task<List<StorageModel>> GetStorageByAccess(string access)
+        public async Task<List<StorageModel>> GetStorageByAccess(IdentityUserModel identity)
         {
-            var accessStorages = new AccessServiceStorage("factory");
-
-            return await _context.Storages
-                .Include(s => s.Department)
-                .ThenInclude(d => d.Factory)
-                .ThenInclude(f => f.Region)
-                .Where(accessStorages.Expression)
-                .Select((storage) => new StorageModel()
-                {
-                    Title = storage.Title
-                }).ToListAsync();
+            var specification = new StorageSpecificationByAccess(identity);
+            var storages = await _repository.GetByAccess(specification);
+            return storages.Select(storage => new StorageModel
+            {
+                Id = storage.Id,
+                Title = storage.Title
+            }).ToList();
+        //    return await _context.Storages
+        //        .Include(s => s.Department)
+        //        .ThenInclude(d => d.Factory)
+        //        .ThenInclude(f => f.Region)
+        //        .Where(accessStorages.Expression)
+        //        .Select((storage) => new StorageModel()
+        //        {
+        //            Title = storage.Title
+        //        }).ToListAsync();
         }
 
         public async Task<StorageModel> GetStorageByUser(int userId)

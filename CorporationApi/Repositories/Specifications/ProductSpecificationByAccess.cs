@@ -1,34 +1,32 @@
 ﻿using DataBase.Entities.ProductEntities;
-using Repositories.Specifications;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.AccessServices
+namespace Repositories.Specifications
 {
     public class ProductSpecificationByAccess : BaseSpecification<Product>
     {
-        public ProductSpecificationByAccess(string access)
+        public ProductSpecificationByAccess(IdentityUserModel identity)
         {
-            var a = "region";
-            switch (a)
+            switch (identity.Access)
             {
-                case "full":
+                case "Full":
                     Expression = product => true;
                     break;
-                case "region":
+                case "Region":
                     Expression = product => product.ProductStorages
-                        .Any<ProductStorage>(ps => ps.Storage.Department.Factory.Region.Id == 1);
+                       .Any<ProductStorage>(ps => ps.Storage.Department.Factory.Region.Id == identity.Location.RegionId);
                     break;
-                case "factory":
+                case "Factory":
                     Expression = product => product.ProductStorages
-                        .Any<ProductStorage>(ps => ps.Storage.Department.FactoryId == 4);
+                        .Any<ProductStorage>(ps => ps.Storage.Department.FactoryId == identity.Location.FactoryId);
                     break;
-                case "department":
+                case "Department":
                     Expression = product => product.ProductStorages
-                        .Any<ProductStorage>(ps => ps.Storage.DepartmentId == 1);
+                         .Any<ProductStorage>(ps => ps.Storage.DepartmentId == identity.Location.DepartmentId);
                     break;
             }
         }

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Specifications;
 using Services.IdentityUserServices;
-using Services.ProductServices.StoragesService;
+using Services.RegionServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,37 +13,23 @@ namespace CorporationApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StorageController : ControllerBase
+    public class RegionController : ControllerBase
     {
-        private readonly IStorageService _service;
+        private readonly IRegionService _service;
         private readonly IIdentityUserService _identityService;
-        public StorageController(
-            IStorageService service,
+        public RegionController(
+            IRegionService service,
             IIdentityUserService identityUserService)
         {
             _service = service;
             _identityService = identityUserService;
         }
-        [HttpGet("storage")]
-        public async Task<IActionResult> GetStorage()
-        {
-            var storages = await Task.Run(() => _service.GetStorages());
-            return Ok(storages);
-        }
-
-        [HttpGet("storageByUser")]
-        public async Task<IActionResult> GetStorageByUser([FromHeader] int userId)
-        {
-            var storage = await Task.Run(() => _service.GetStorageByUser(userId));
-            return Ok(storage);
-        }
-
         [HttpGet("ByAccess")]
         public async Task<IActionResult> Get()
         {
             var identity = GetIdentityInfo();
-            var storage = await Task.Run(() => _service.GetStorageByAccess(identity));
-            return Ok(storage);
+            var regions = await Task.Run(() => _service.GetRegionByAccess(identity));
+            return Ok(regions);
         }
 
         private IdentityUserModel GetIdentityInfo()
@@ -51,7 +37,5 @@ namespace CorporationApi.Controllers
             var claims = HttpContext.User.Identity as ClaimsIdentity;
             return _identityService.GetIdentity(claims, "ProductManager");
         }
-
-
     }
 }
