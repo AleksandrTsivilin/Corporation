@@ -11,7 +11,7 @@ export class ManufacturerService {
   constructor(private readonly client:HttpClient) { }
 
   getManufacturers(){
-    const urlGetManufacturers="https://localhost:5001/api/Manufacturer/manufacturer";
+    const urlGetManufacturers="https://localhost:5001/api/Manufacturer";
     return this.client.get<ManufacturerInfo[]>(urlGetManufacturers);
   }
 }

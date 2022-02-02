@@ -12,7 +12,7 @@ export class CategoryService {
   constructor(private readonly client:HttpClient) { }
 
   getCategories(){
-    const urlGetCategories="https://localhost:5001/api/CategoryProduct/category";
+    const urlGetCategories="https://localhost:5001/api/CategoryProduct";
     return this.client.get<CategoryInfo[]>(urlGetCategories);
   }
 }

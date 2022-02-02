@@ -33,14 +33,13 @@ export class EditProductComponent implements OnInit {
   // }
 
   @Input() newProductForm:NewProductForm={
-    storage:"",
+    storageId:0,
     title:"",
     price:0,
     count:0,
-    manufacturer:"",
-    category:"",
-    unit:"",
-    isBanned:false
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0
   }
 
 
@@ -100,7 +99,8 @@ export class EditProductComponent implements OnInit {
 
   onSubmit(){
     //console.log(this.formEditProduct)
-    this.updateProduct.emit(this.newProductForm);
+    console.log(this.newProductForm)
+    //this.updateProduct.emit(this.newProductForm);
   }
 
   closeEditPage(){

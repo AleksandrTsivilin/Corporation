@@ -2,20 +2,17 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
-import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
-//import { LocationProduct } from 'src/app/interfaces/productManagerPage/locationProduct';
-import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { FactoryService } from 'src/app/services/factoryManager/factory.service';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
-//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
 import { RegionService } from 'src/app/services/regionManager/region.service';
+import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 
 @Component({
   selector: 'app-products',
@@ -44,14 +41,13 @@ export class ProductsComponent implements OnInit {
   //editProductMode:boolean=false;
 
   newProductForm:NewProductForm={
-    storage:"",
+    storageId:0,
     title:"",
     price:0,
     count:0,
-    manufacturer:"",
-    category:"",
-    unit:"",
-    isBanned:false
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0
   }
   
   private editedProductId:number=0;
@@ -166,14 +162,13 @@ export class ProductsComponent implements OnInit {
 
     this.editedProductId=editProduct.id;
     this.newProductForm={
-      storage:"Storage 1",
+      storageId:0,
       title:editProduct.title,
       price:editProduct.price,
       count:editProduct.count,
-      manufacturer:editProduct.manufacturer.title,//editProduct.manufacturer,
-      category:editProduct.category.title,
-      unit:editProduct.unit.title,
-      isBanned:editProduct.isBanned
+      manufacturerId:editProduct.manufacturer.id,
+      categoryId:editProduct.category.id,
+      unitId:editProduct.unit.id
     }
     
     this.setStatePage("editProduct",false);
@@ -187,9 +182,9 @@ export class ProductsComponent implements OnInit {
   }
 
   update(updateProduct:NewProductForm){
-    updateProduct.storage="Storage 1";
-    this.updateService.updateProduct(updateProduct,this.editedProductId);
-    //this.editProductMode=false;
+    updateProduct.storageId=0;
+    //this.updateService.updateProduct(updateProduct,this.editedProductId);
+    
   }
 
   closeEditPage(){
@@ -297,9 +292,5 @@ export class ProductsComponent implements OnInit {
         this.regions = regions;
       })
   }
-
-  
-
-  
 
 }

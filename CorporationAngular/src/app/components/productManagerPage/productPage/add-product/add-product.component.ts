@@ -1,17 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
-//import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
+import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
-//import { Category, Manufacturer, Unit } from 'src/app/interfaces/productsInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
-//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
 
 @Component({
@@ -23,20 +20,25 @@ export class AddProductComponent implements OnInit {
 
   @Input() storage:string="";
 
-  formAddProduct:FormAddProduct={
-    storage:"",
+  
+  newProductForm:NewProductForm={
+    storageId:0,
     title:"",
+    count:0,
     price:0,
-    avaiableCount:0,
-    manufacturer:0, //{title:""} as Manufacturer,
-    category:"", // {title:""} as Category,
-    unit:"",// {title:""} as Unit
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0
   }
+  
 
-  currentStorage:string="";
-  manufacturers:ManufacturerInfo[]=[]; // Manufacturer[]=[];
-  categories:CategoryInfo[]=[];// Category[]=[];
-  units:UnitInfo[]=[]; // Unit[]=[];
+  currentStorage:StorageInfo={
+    id:0,
+    title:""
+  };
+  manufacturers:ManufacturerInfo[]=[]; 
+  categories:CategoryInfo[]=[];
+  units:UnitInfo[]=[]; 
 
   
   constructor(
@@ -51,8 +53,6 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentStorage();
    
-    
-    console.log(this.formAddProduct.storage)
     this.getManufacturers();
     this.getCategories();
     this.getUnits();
@@ -60,28 +60,28 @@ export class AddProductComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.formAddProduct); 
+    this.newProductForm.storageId=this.currentStorage.id; 
+    console.log(this.newProductForm); 
 
-    this.formAddProduct.storage=this.currentStorage; 
     
-    // this.updateService.addProduct(this.formAddProduct);
-    // this.formAddProduct={
-    //   storage:this.formAddProduct.storage,
-    //   title:"",
-    //   manufacturer:0,
-    //   category:"",
-    //   unit:"",
-    //   price:0,
-    //   avaiableCount:0
+    
+    this.updateService.addProduct(this.newProductForm);
+    this.newProductForm={
+      storageId:this.newProductForm.storageId,
+      title:"",
+      manufacturerId:0,
+      categoryId:0,
+      unitId:0,
+      price:0,
+      count:0
 
-    // }
+    }
   }
 
   private getCurrentStorage(){
     this.storageService.getStorageByUser()
       .subscribe((result)=>{
-        console.log(result)
-        this.currentStorage=result.title;
+        this.currentStorage=result;
       },()=>{
         console.log("failed get storageByUser")
       })
@@ -90,9 +90,7 @@ export class AddProductComponent implements OnInit {
   private getManufacturers(){
     this.manufacturerService.getManufacturers()
       .subscribe((result)=>{
-        this.manufacturers=result;
-        console.log(this.manufacturers)
-        
+        this.manufacturers=result;        
       },()=>{
         console.log("failed get manufacturers")
       })

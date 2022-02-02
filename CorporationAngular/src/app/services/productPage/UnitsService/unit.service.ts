@@ -11,7 +11,7 @@ export class UnitService {
   constructor(private readonly client:HttpClient) { }
 
   getUnits(){
-    const urlGetUnits="https://localhost:5001/api/UnitProduct/unit";
+    const urlGetUnits="https://localhost:5001/api/UnitProduct";
     return this.client.get<UnitInfo []>(urlGetUnits);
   }
 }

@@ -10,7 +10,7 @@ export class StorageService {
   constructor(private readonly client:HttpClient) { }
 
   getStorageByUser(){
-    const urlGetStorageByUser="https://localhost:5001/api/Storage/storageByUser";
+    const urlGetStorageByUser="https://localhost:5001/api/Storage/ByUser";
     return this.client.get<StorageInfo>(urlGetStorageByUser);
   }
 

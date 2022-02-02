@@ -1,10 +1,9 @@
 export interface NewProductForm{
-    storage:string,
+    storageId:number,
     title:string,
     count:number,
     price:number,
-    manufacturer:string,
-    category:string,
-    unit:string,
-    isBanned:boolean
+    manufacturerId:number,
+    categoryId:number,
+    unitId:number
 }

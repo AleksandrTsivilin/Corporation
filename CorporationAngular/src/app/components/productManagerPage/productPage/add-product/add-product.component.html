@@ -1,5 +1,6 @@
 <p>add-product works!</p>
-<h1>{{currentStorage}}</h1>
+<h1>storage:</h1>
+<h1>{{currentStorage.title}}</h1>
 <form
     class="form-add-product"
     (ngSubmit)="onSubmit()"         
@@ -8,17 +9,14 @@
         <label>manufacturer</label>
         <select 
             class="form-group"
-            [(ngModel)]="formAddProduct.manufacturer"
-            
-            name="manufacturer"
+            [(ngModel)]="newProductForm.manufacturerId"            
+            name="manufacturers"
         >
-        <!-- <option
-        [value]="''" selected disabled
-        >choise manufacturer</option> -->
+
             <option 
                 *ngFor="let manufacturer of manufacturers"
-                [value]="manufacturer.title"
-                name="manufacturer.title"
+                [value]="manufacturer.id"
+                name="manufacturerId"
             >
                 {{manufacturer.title}}
             </option>
@@ -29,17 +27,14 @@
         <label>category</label>
         <select 
             class="form-group"
-            [(ngModel)]="formAddProduct.category"
+            [(ngModel)]="newProductForm.categoryId"
                 
             name="category"
         >
-            <!-- <option
-            [value]="" selected disabled
-            >choise category</option> -->
             <option 
                 *ngFor="let category of categories"
-                [value]="category.title"
-                name="category.title"
+                [value]="category.id"
+                name="categoryid"
             >
                 {{category.title}}
             </option>
@@ -50,17 +45,14 @@
         <label>unit</label>
         <select 
             class="form-group"
-            [(ngModel)]="formAddProduct.unit"
+            [(ngModel)]="newProductForm.unitId"
                 
             name="unit"
         >
-            <!-- <option
-            [value]="" selected disabled
-            >choise unit</option> -->
             <option 
                 *ngFor="let unit of units"
-                [value]="unit.title"
-                name="unit.title"
+                [value]="unit.id"
+                name="unitId"
             >
                 {{unit.title}}
             </option>
@@ -72,8 +64,8 @@
         <input 
             class="form-group"
             type="text"
-            [(ngModel)]="formAddProduct.title"
-            name="formAddProduct.title" 
+            [(ngModel)]="newProductForm.title"
+            name="title" 
             
         >
         
@@ -83,7 +75,7 @@
         <input
             class="form-group"
             type="text"
-            [(ngModel)]="formAddProduct.price"
+            [(ngModel)]="newProductForm.price"
             name="price"
         >
         
@@ -93,8 +85,8 @@
         <input
             class="form-group"
             type="text"
-            [(ngModel)]="formAddProduct.avaiableCount"
-            name="avaiableCount"
+            [(ngModel)]="newProductForm.count"
+            name="productCount"
         >
         
     </div>
