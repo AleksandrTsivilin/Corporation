@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Category } from 'src/app/interfaces/formAddProduct';
+import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
+//import { Category } from 'src/app/interfaces/formAddProduct';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class CategoryService {
 
   getCategories(){
     const urlGetCategories="https://localhost:5001/api/CategoryProduct/category";
-    return this.client.get<Category[]>(urlGetCategories);
+    return this.client.get<CategoryInfo[]>(urlGetCategories);
   }
 }
 

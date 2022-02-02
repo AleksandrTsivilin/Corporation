@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Unit } from 'src/app/interfaces/formAddProduct';
+import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
+//import { Unit } from 'src/app/interfaces/formAddProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,6 @@ export class UnitService {
 
   getUnits(){
     const urlGetUnits="https://localhost:5001/api/UnitProduct/unit";
-    return this.client.get<Unit []>(urlGetUnits);
+    return this.client.get<UnitInfo []>(urlGetUnits);
   }
 }

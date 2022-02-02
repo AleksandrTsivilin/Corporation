@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Manufacturer } from 'src/app/interfaces/formAddProduct';
+import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
+//import { Manufacturer } from 'src/app/interfaces/formAddProduct';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { Manufacturer } from 'src/app/interfaces/formAddProduct';
 })
 export class AddManufacturerComponent implements OnInit {
 
-  formManufacturer:Manufacturer={
+  formManufacturer:ManufacturerInfo={
+    id:0,
     title:""
   }
 

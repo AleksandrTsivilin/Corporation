@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
+//import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { PageState } from 'src/app/interfaces/pageState';
 import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
@@ -7,6 +7,9 @@ import { CategoryService } from 'src/app/services/productPage/CategoriesService/
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
+import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
+import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
+import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
@@ -50,9 +53,9 @@ export class EditProductComponent implements OnInit {
     path:"",
     isActive:true
   }
-  manufacturers:Manufacturer[]=[];
-  categories:Category[]=[];
-  units:Unit[]=[];
+  manufacturers:ManufacturerInfo[]=[];
+  categories:CategoryInfo[]=[];
+  units:UnitInfo[]=[];
   //isAddGroup:boolean=false;
 
   // formEditProduct:FormAddProduct ={

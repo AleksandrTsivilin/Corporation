@@ -1,8 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Category, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
+//import { Category, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
+import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
+import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
+import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 
 @Injectable({
@@ -24,17 +27,17 @@ export class ProductsService {
 
   getManufacturers(){
     const urlGetManufacturers="https://localhost:5001/api/Product/manufacturer";
-    return this.client.get<Manufacturer[]>(urlGetManufacturers);
+    return this.client.get<ManufacturerInfo[]>(urlGetManufacturers);
   }
 
   getCategories(){
     const urlGetCategories="https://localhost:5001/api/Product/category";
-    return this.client.get<Category[]>(urlGetCategories);
+    return this.client.get<CategoryInfo[]>(urlGetCategories);
   }
 
   getUnits(){
     const urlGetUnits="https://localhost:5001/api/Product/unit";
-    return this.client.get<Unit []>(urlGetUnits);
+    return this.client.get<UnitInfo []>(urlGetUnits);
   }
 
   getStorages(){

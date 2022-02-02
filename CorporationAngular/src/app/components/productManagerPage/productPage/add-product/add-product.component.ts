@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
+import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
+import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
+import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
+import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
+//import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
@@ -18,24 +22,25 @@ import { ProductUpdateService } from 'src/app/services/productPage/updateService
 export class AddProductComponent implements OnInit {
 
   @Input() storage:string="";
+
   formAddProduct:FormAddProduct={
     storage:"",
     title:"",
     price:0,
     avaiableCount:0,
-    manufacturer:"", //{title:""} as Manufacturer,
+    manufacturer:0, //{title:""} as Manufacturer,
     category:"", // {title:""} as Category,
     unit:"",// {title:""} as Unit
   }
 
   currentStorage:string="";
-  manufacturers:Manufacturer[]=[]; // Manufacturer[]=[];
-  categories:Category[]=[];// Category[]=[];
-  units:Unit[]=[]; // Unit[]=[];
+  manufacturers:ManufacturerInfo[]=[]; // Manufacturer[]=[];
+  categories:CategoryInfo[]=[];// Category[]=[];
+  units:UnitInfo[]=[]; // Unit[]=[];
 
-  // private readonly signalrService:SignalrProductService
+  
   constructor(
-    //private readonly service:ProductsService,
+   
     private readonly updateService:ProductUpdateService,
     private readonly manufacturerService:ManufacturerService,
     private readonly categoryService:CategoryService,
@@ -46,31 +51,30 @@ export class AddProductComponent implements OnInit {
   ngOnInit(): void {
     this.getCurrentStorage();
    
-    //this.formAddProduct.storage=this.currentStorage;
+    
     console.log(this.formAddProduct.storage)
     this.getManufacturers();
     this.getCategories();
     this.getUnits();
-    // if (!this.signalrService.isConnection)
-    //   this.signalrService.startConnection();
+    
   }
 
   onSubmit(){
     console.log(this.formAddProduct); 
 
     this.formAddProduct.storage=this.currentStorage; 
-    //this.formAddProduct.avaiableCount=Number(this.formAddProduct.avaiableCount)
-    this.updateService.addProduct(this.formAddProduct);
-    this.formAddProduct={
-      storage:this.formAddProduct.storage,
-      title:"",
-      manufacturer:"",
-      category:"",
-      unit:"",
-      price:0,
-      avaiableCount:0
+    
+    // this.updateService.addProduct(this.formAddProduct);
+    // this.formAddProduct={
+    //   storage:this.formAddProduct.storage,
+    //   title:"",
+    //   manufacturer:0,
+    //   category:"",
+    //   unit:"",
+    //   price:0,
+    //   avaiableCount:0
 
-    }
+    // }
   }
 
   private getCurrentStorage(){

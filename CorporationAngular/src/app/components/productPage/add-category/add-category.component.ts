@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Category } from 'src/app/interfaces/formAddProduct';
+import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
+//import { Category } from 'src/app/interfaces/formAddProduct';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { Category } from 'src/app/interfaces/formAddProduct';
 })
 export class AddCategoryComponent implements OnInit {
 
-  formCategory:Category={
+  formCategory:CategoryInfo={
+    id:0,
     title:""
   }
 

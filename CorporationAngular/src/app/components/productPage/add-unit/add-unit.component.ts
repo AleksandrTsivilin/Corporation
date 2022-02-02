@@ -1,5 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Unit } from 'src/app/interfaces/formAddProduct';
+import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
+//import { Unit } from 'src/app/interfaces/formAddProduct';
 //import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { Unit } from 'src/app/interfaces/formAddProduct';
 })
 export class AddUnitComponent implements OnInit {
 
-  formUnit:Unit={
+  formUnit:UnitInfo={
+    id:0,
     title:""
   }
 

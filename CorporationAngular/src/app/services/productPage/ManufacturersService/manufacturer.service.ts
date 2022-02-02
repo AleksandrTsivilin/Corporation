@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Manufacturer } from 'src/app/interfaces/formAddProduct';
+import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
+//import { Manufacturer } from 'src/app/interfaces/formAddProduct';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,6 @@ export class ManufacturerService {
 
   getManufacturers(){
     const urlGetManufacturers="https://localhost:5001/api/Manufacturer/manufacturer";
-    return this.client.get<Manufacturer[]>(urlGetManufacturers);
+    return this.client.get<ManufacturerInfo[]>(urlGetManufacturers);
   }
 }
