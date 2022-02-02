@@ -1,5 +1,5 @@
 import { AvaiableUser } from "./auth/avaiablesUserForm";
-import { DepartmentInfo } from "./department/departmentInfo";
+import { DepartmentInfo } from "./location/department/departmentInfo";
 import { EmployeeInfo } from "./employee/employeeInfo";
 import { Access } from "./userManagerPage/access";
 

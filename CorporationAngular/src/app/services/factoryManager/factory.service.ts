@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FactoryInfo } from 'src/app/interfaces/factory/factoryInfo';
+import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 
 @Injectable({
   providedIn: 'root'

@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
-import { FactoryInfo } from 'src/app/interfaces/factory/factoryInfo';
+import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 import { FormAddProduct } from 'src/app/interfaces/formAddProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
 //import { LocationProduct } from 'src/app/interfaces/productManagerPage/locationProduct';
 import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
-import { ProductInfo } from 'src/app/interfaces/productManagerPage/productsInfo';
-import { RegionInfo } from 'src/app/interfaces/region/regionInfo';
+import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
+import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { FactoryService } from 'src/app/services/factoryManager/factory.service';
 import { ProductsService } from 'src/app/services/productPage/products.service';

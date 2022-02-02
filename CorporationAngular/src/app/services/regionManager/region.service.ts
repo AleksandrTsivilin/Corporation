@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { RegionInfo } from 'src/app/interfaces/region/regionInfo';
+import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
 
 @Injectable({
   providedIn: 'root'

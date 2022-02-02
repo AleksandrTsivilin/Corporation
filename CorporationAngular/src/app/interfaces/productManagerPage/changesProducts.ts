@@ -1,4 +1,4 @@
-import { ProductInfo } from "./productsInfo";
+import { ProductInfo } from "../product/productsInfo";
 
 export interface ProductStorageChanges{
     storage:string,

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
-import { ProductInfo } from 'src/app/interfaces/productManagerPage/productsInfo';
+import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';

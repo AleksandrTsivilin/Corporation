@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
-import { ProductInfo } from 'src/app/interfaces/productManagerPage/productsInfo';
+import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 
 @Component({
   selector: 'tr[app-product-item]',

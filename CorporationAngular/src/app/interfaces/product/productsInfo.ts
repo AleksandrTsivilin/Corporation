@@ -1,6 +1,6 @@
-import { CategoryInfo } from "../CategoryManagerPage/categoryInfo";
-import { ManufacturerInfo } from "../manufacturerManagerPage/manufacturerInfo";
-import { UnitInfo } from "../unitManagerPage/unitInfo";
+import { CategoryInfo } from "./categoryManagerPage/categoryInfo";
+import { ManufacturerInfo } from "./manufacturerManagerPage/manufacturerInfo";
+import { UnitInfo } from "./unitManagerPage/unitInfo";
 
 
 export interface ProductInfo{
