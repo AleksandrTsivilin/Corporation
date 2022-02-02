@@ -13,24 +13,18 @@ namespace Services.ProductServices.UnitsService
 {
     public class UnitService : IUnitService
     {
-        private readonly DBContext _context;
         private readonly IRepository<UnitProduct> _repository;
 
         public UnitService(DBContext context, IRepository<UnitProduct> repository)
         {
-            _context = context;
             _repository = repository;
         }
         public async Task<List<UnitModel>> GetUnits()
         {
-            //return await _context.Units
-            //    .Select((unit) => new UnitModel()
-            //    {
-            //        Title = unit.Title
-            //    }).ToListAsync();
             var units = await _repository.Get();
             return units.Select(u => new UnitModel()
             {
+                Id = u.Id,
                 Title = u.Title
             }).ToList();
         }

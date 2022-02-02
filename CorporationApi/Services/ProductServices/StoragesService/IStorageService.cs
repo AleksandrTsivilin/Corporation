@@ -11,7 +11,7 @@ namespace Services.ProductServices.StoragesService
     public interface IStorageService
     {
         Task<List<StorageModel>> GetStorages();
-        Task<StorageModel> GetStorageByUser(int userId);
+        Task<StorageModel> GetStorageByUser(IdentityUserModel identity);
         Task<List<StorageModel>> GetStorageByAccess(IdentityUserModel identity);
     }
 }

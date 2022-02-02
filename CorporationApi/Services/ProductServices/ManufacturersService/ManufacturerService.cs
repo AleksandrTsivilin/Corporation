@@ -15,12 +15,10 @@ namespace Services.ProductServices.ManufacturersService
 {
     public class ManufacturerService : IManufacturerService
     {
-        private readonly DBContext _context;
         private readonly IRepository<ManufacturerProduct> _repository;
 
         public ManufacturerService(DBContext context, IRepository<ManufacturerProduct> repository)
         {
-            _context = context;
             _repository = repository;
         }
         public async Task<List<ManufacturerModel>> GetManufacturers()
@@ -29,13 +27,9 @@ namespace Services.ProductServices.ManufacturersService
             return manufacturers
                 .Select(m => new ManufacturerModel()
                 {
+                    Id = m.Id,
                     Title = m.Title
                 }).ToList();
-            //return await _context.Manufactures
-            //    .Select((manufacturer) => new ManufacturerModel()
-            //    {
-            //        Title = manufacturer.Title
-            //    }).ToListAsync();
         }
     }
 }

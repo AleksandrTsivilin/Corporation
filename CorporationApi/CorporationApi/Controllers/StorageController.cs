@@ -31,10 +31,11 @@ namespace CorporationApi.Controllers
             return Ok(storages);
         }
 
-        [HttpGet("storageByUser")]
-        public async Task<IActionResult> GetStorageByUser([FromHeader] int userId)
+        [HttpGet("ByUser")]
+        public async Task<IActionResult> GetByUser()
         {
-            var storage = await Task.Run(() => _service.GetStorageByUser(userId));
+            var identity = GetIdentityInfo();
+            var storage = await Task.Run(() => _service.GetStorageByUser(identity));
             return Ok(storage);
         }
 

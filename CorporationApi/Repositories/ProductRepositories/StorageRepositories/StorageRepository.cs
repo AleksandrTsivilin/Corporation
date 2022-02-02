@@ -22,5 +22,11 @@ namespace Repositories.ProductRepositories.StorageRepositories
                 .Where(specification.Expression)
                 .ToListAsync();
         }
+
+        public async Task<Storage> GetByUser(int departmentId)
+        {
+            return await _context.Storages
+                .FirstOrDefaultAsync(storage => storage.DepartmentId == departmentId);
+        }
     }
 }

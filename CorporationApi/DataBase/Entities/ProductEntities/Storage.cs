@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities.ProductEntities
 {
-    public class Storage
+    public class Storage : BaseEntity
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public ICollection<ProductStorage> StorageProducts { get; set; }
         public Department Department { get; set; }

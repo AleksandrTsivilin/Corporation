@@ -13,12 +13,10 @@ namespace Services.ProductServices.CategoriesService
 {
     public class CategoryService : ICategoryService
     {
-        //private readonly DBContext _context;
         private readonly IRepository<CategoryProduct> _repository;
 
-        public CategoryService(/*DBContext context,*/ IRepository<CategoryProduct> repository)
+        public CategoryService(IRepository<CategoryProduct> repository)
         {
-           // _context = context;
             _repository = repository;
         }
         public async Task<List<CategoryModel>> GetCategories()
@@ -27,13 +25,9 @@ namespace Services.ProductServices.CategoriesService
             return categories
                 .Select(c => new CategoryModel()
                 {
+                    Id = c.Id,
                     Title = c.Title
                 }).ToList();
-            //return await _context.Categoties
-            //    .Select((category) => new CategoryModel()
-            //    {
-            //        Title = category.Title
-            //    }).ToListAsync();
         }
     }
 }

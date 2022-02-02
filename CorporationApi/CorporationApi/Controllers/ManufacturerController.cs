@@ -19,8 +19,8 @@ namespace CorporationApi.Controllers
             _service = service;
         }
 
-        [HttpGet("manufacturer")]
-        public async Task<IActionResult> GetManufacturers()
+        [HttpGet()]
+        public async Task<IActionResult> Get()
         {
             var manufacturers = await Task.Run(() => _service.GetManufacturers());
             return Ok(manufacturers);

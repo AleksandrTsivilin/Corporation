@@ -1,6 +1,7 @@
 ﻿using DataBase;
 using DataBase.Entities.ProductEntities;
 using Microsoft.EntityFrameworkCore;
+using Repositories.Models.ProductModels;
 using Repositories.ProductRepositories;
 using Repositories.Specifications;
 using Services.AccessServices;
@@ -78,64 +79,8 @@ namespace Services.ProductServices.ProductService
         }
         public async Task<List<string>> AddProduct(NewProductModel model)
         {
-            var storage = await GetStorageByTitle(model.Storage);
-
-            var manufacturer = await GetManufacturerByTitle(model.Manufacturer);
-
-            var category = await GetCategoryByTitle(model.Category);
-
-            var unit = await GetUnitByTitle(model.Unit);
-
-
-
-            if (storage is null
-                || manufacturer is null
-                || category is null
-                || unit is null) return null;
-
-            try
-            {
-                _context.Products.Add(new Product
-                {
-                    Title = model.Title,
-                    Price = model.Price,
-                    ManufactureId = manufacturer.Id,
-                    CategoryId = category.Id,
-                    UnitId = unit.Id,
-                    ProductStorages = new List<ProductStorage>
-                {
-                    new ProductStorage
-                    {
-                        StorageId=storage.Id,
-                        CountProduct=model.AvaiableCount
-                    }
-                }
-
-                });
-
-                await _context.SaveChangesAsync();
-                return new List<string> { model.Storage };
-            }
-            catch
-            {
-                return null;
-            }
-            
-            //return new List<string> { model.Storage };
-            //return CreateProductModel(model.Title);
-            //var addProductModel = CreateProductModel(model.Title);
-            //return new List<MovementsProductModel>
-            //{
-            //    new MovementsProductModel
-            //    {
-            //        Storage=model.Storage,
-            //        Products=new List<ProductModel>
-            //        {
-            //            addProductModel
-            //        }
-            //    }
-            //};
-
+            var storageId = await _repository.AddProduct(model);
+            return new List<string> { storageId.ToString() };
         }
         public List<ProductModel> GetProductsByUser(int id)
         {
@@ -183,42 +128,41 @@ namespace Services.ProductServices.ProductService
         }
         public async Task<List<string>> UpdateProduct(NewProductModel model, int id)
         {
-            var storage = await GetStorageByTitle(model.Storage);
+            //var storage = await GetStorageByTitle(model.Storage);
 
-            var productPrev = await GetProductById(id);             
+            //var productPrev = await GetProductById(id);             
 
-            var manufacturer = await GetManufacturerByTitle(model.Manufacturer);
+            //var manufacturer = await GetManufacturerByTitle(model.Manufacturer);
 
-            var category = await GetCategoryByTitle(model.Category);
+            //var category = await GetCategoryByTitle(model.Category);
 
-            var unit = await GetUnitByTitle(model.Unit);
+            //var unit = await GetUnitByTitle(model.Unit);
 
-            if ( storage is null
-                || productPrev is null
-                || manufacturer is null
-                || category is null
-                || unit is null) return null;
+            //if ( storage is null
+            //    || productPrev is null
+            //    || manufacturer is null
+            //    || category is null
+            //    || unit is null) return null;
 
 
-            try
-            {
-                productPrev.Title = model.Title;
-                productPrev.Price = model.Price;
-                productPrev.ManufactureId = manufacturer.Id;
-                productPrev.CategoryId=category.Id;
-                productPrev.UnitId = unit.Id;
-            
+            //try
+            //{
+            //    productPrev.Title = model.Title;
+            //    productPrev.Price = model.Price;
+            //    productPrev.ManufactureId = manufacturer.Id;
+            //    productPrev.CategoryId=category.Id;
+            //    productPrev.UnitId = unit.Id;
 
-            
-                await _context.SaveChangesAsync();
-                return new List<string> { model.Storage };
-            }
-            catch
-            {
-                return null;
-            }
-            
-            //return CreateProductModel(model.Title);               
+
+
+            //    await _context.SaveChangesAsync();
+            //    return new List<string> { model.Storage };
+            //}
+            //catch
+            //{
+            //    return null;
+            //}
+            return null;              
             
         }
         private async Task<Storage> GetStorageByTitle(string title)

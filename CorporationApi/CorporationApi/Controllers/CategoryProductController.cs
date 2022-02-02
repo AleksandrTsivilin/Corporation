@@ -18,8 +18,8 @@ namespace CorporationApi.Controllers
             _service = service;
         }
 
-        [HttpGet("category")]
-        public async Task<IActionResult> GetCategories()
+        [HttpGet()]
+        public async Task<IActionResult> Get()
         {
             var categories =await Task.Run(() => _service.GetCategories());
             return Ok(categories);

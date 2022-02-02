@@ -1,4 +1,5 @@
-﻿using Repositories.Specifications;
+﻿using Repositories.Models.ProductModels;
+using Repositories.Specifications;
 using Services.Models;
 using Services.Models.ProductModels;
 using System;

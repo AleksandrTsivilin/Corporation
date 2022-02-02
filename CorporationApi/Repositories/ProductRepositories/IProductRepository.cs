@@ -1,4 +1,5 @@
 ﻿using DataBase.Entities.ProductEntities;
+using Repositories.Models.ProductModels;
 using Repositories.Specifications;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace Repositories.ProductRepositories
     public interface IProductRepository : IRepository<Product>
     {
         Task<List<Product>> GetByAccess(ProductSpecificationByAccess specification);
+        Task<int> AddProduct(NewProductModel model);
     }
 }

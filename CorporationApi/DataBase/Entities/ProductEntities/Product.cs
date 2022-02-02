@@ -8,7 +8,6 @@ namespace DataBase.Entities.ProductEntities
 {
     public class Product
     {
-        
         public int Id { get; set; }
         public string Title { get; set; }
         public CategoryProduct Category { get; set; }
@@ -18,15 +17,9 @@ namespace DataBase.Entities.ProductEntities
         public ManufacturerProduct Manufacture { get; set; }
         public int ManufactureId { get; set; }
         public decimal Price { get; set; }
-        //changes for migration MoveColumnCountToProductStorage
-        //public int AvaiableCount { get; set; }
-        
-        
         public ICollection< HistoryProduct> Histories { get; set; }
         public bool IsBanned { get; set; }
         public ICollection<ProductStorage> ProductStorages { get; set; }
-            
-        
-        
+
     }
 }

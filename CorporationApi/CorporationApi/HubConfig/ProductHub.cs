@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
+using Repositories.Models.ProductModels;
 using Services.Models.ProductModels;
 using Services.ProductService;
 using Services.ProductServices.ProductService;
@@ -20,7 +21,6 @@ namespace CorporationApi.HubConfig
 
         public async Task AddProduct(NewProductModel model)
         {
-            //var changedProducts = _service.AddProduct(model);
             var storages = await Task.Run(() => _service.AddProduct(model));
             if (storages is not null)
                 await Clients.Others.SendAsync("changeProducts", storages);

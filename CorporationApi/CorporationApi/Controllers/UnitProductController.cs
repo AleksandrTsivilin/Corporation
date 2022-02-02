@@ -19,8 +19,8 @@ namespace CorporationApi.Controllers
             _service = service;
         }
 
-        [HttpGet("unit")]
-        public async Task<IActionResult> GetUnits()
+        [HttpGet()]
+        public async Task<IActionResult> Get()
         {
             var units = await Task.Run(() => _service.GetUnits());
             return Ok(units);

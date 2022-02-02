@@ -34,27 +34,18 @@ namespace Services.ProductServices.StoragesService
                 Id = storage.Id,
                 Title = storage.Title
             }).ToList();
-        //    return await _context.Storages
-        //        .Include(s => s.Department)
-        //        .ThenInclude(d => d.Factory)
-        //        .ThenInclude(f => f.Region)
-        //        .Where(accessStorages.Expression)
-        //        .Select((storage) => new StorageModel()
-        //        {
-        //            Title = storage.Title
-        //        }).ToListAsync();
         }
 
-        public async Task<StorageModel> GetStorageByUser(int userId)
+        public async Task<StorageModel> GetStorageByUser(IdentityUserModel identity)
         {
-            var storage = await _context.Storages
-                .FirstOrDefaultAsync(s => s.DepartmentId == userId);
-
-            return new StorageModel()
-            {
-                Title = storage.Title
-            };
-            //return new StorageModel();
+            var storage = await _repository.GetByUser(identity.Location.DepartmentId);
+            return storage is null 
+                ? null
+                : new StorageModel()
+                {
+                    Id = storage.Id,
+                    Title = storage.Title
+                };
         }
 
         public async Task<List<StorageModel>> GetStorages()
