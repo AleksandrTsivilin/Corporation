@@ -1,3 +1,6 @@
+import { CategoryInfo } from "../CategoryManagerPage/categoryInfo";
+import { ManufacturerInfo } from "../manufacturerManagerPage/manufacturerInfo";
+import { UnitInfo } from "../unitManagerPage/unitInfo";
 
 
 export interface ProductInfo{
@@ -5,9 +8,9 @@ export interface ProductInfo{
     title:string,
     count:number,
     price:number,
-    manufacturer:string,
-    category:string,
-    unit:string,
+    manufacturer:ManufacturerInfo,
+    category:CategoryInfo,
+    unit:UnitInfo,
     isBanned:boolean
 }
 

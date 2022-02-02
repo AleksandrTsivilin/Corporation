@@ -15,9 +15,9 @@ export class ProductItemComponent implements OnInit {
     title:"",
     count:0,
     price:0,
-    manufacturer:"",
-    category:"",
-    unit:"",
+    manufacturer:{id:0,title:""},
+    category:{id:0,title:""},
+    unit:{id:0,title:""},
     isBanned:false
   };
 

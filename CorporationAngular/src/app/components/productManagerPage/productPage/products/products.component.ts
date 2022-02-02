@@ -36,7 +36,7 @@ export class ProductsComponent implements OnInit {
 
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
-  currentStorages:StorageInfo[]=[{title:"Storage 1"},{title:"Storage 2"}];
+  //currentStorages:StorageInfo[]=[{title:"Storage 1"},{title:"Storage 2"}];
 
   storages:StorageInfo[]=[];
   factories: FactoryInfo[]=[];
@@ -77,21 +77,14 @@ export class ProductsComponent implements OnInit {
     this.getStorages();
     this.getFactories();
     this.getRegions();
-    //this.getLocationProducts();
-    
 
-    
-
-    
     this.updateService.changesProductStorage$
       .subscribe((changes)=>{
-        console.log(changes);
       if (changes.length===0) return;
       changes.forEach(storage=>{
-        if (this.currentStorages
+        if (this.storages
           .map(st=>st.title).includes(storage))
-          {
-            
+          {            
             console.log("changes product")
             this.getProducts();
           }
@@ -177,9 +170,9 @@ export class ProductsComponent implements OnInit {
       title:editProduct.title,
       price:editProduct.price,
       count:editProduct.count,
-      manufacturer:editProduct.manufacturer,
-      category:editProduct.category,
-      unit:editProduct.unit,
+      manufacturer:editProduct.manufacturer.title,//editProduct.manufacturer,
+      category:editProduct.category.title,
+      unit:editProduct.unit.title,
       isBanned:editProduct.isBanned
     }
     
@@ -273,10 +266,8 @@ export class ProductsComponent implements OnInit {
 
   private getProducts(){
      this.service.getProductsByAccess()
-      .subscribe((result)=>{  
-        console.log(result)     
-        this.productsInfo=result;
-        
+      .subscribe((result)=>{    
+        this.productsInfo=result;        
         this.setStatePage("",true);
         
         
@@ -289,6 +280,7 @@ export class ProductsComponent implements OnInit {
     this.storageService.getStoragesByAccess()
       .subscribe(storages=>{
         this.storages=storages;
+        console.log(this.storages)
       })
   }
 

@@ -170,7 +170,7 @@ export class ProductMovementsComponent implements OnInit {
         countMoved:0,
         isChecked:false,
         price:product.price,
-        unit:product.unit
+        unit:product.unit.title
       })
     }
     console.log(this.formMovedProducts.movedProducts)

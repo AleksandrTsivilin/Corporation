@@ -6,16 +6,16 @@
     {{productInfo.title}}
 </td>
 <td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
-    {{productInfo.manufacturer}}
+    {{productInfo.manufacturer.title}}
 </td>
 <td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
-    {{productInfo.category}}
+    {{productInfo.category.title}}
 </td>
 <td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
     {{productInfo.count}}
 </td>
 <td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
-    {{productInfo.unit}}
+    {{productInfo.unit.title}}
 </td>
 <td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
     {{productInfo.price}}
