@@ -15,9 +15,9 @@ namespace Services.Models
         public string Title { get; set; }
         public int Count { get; set; }
         public decimal Price { get; set; }
-        public string Manufacturer { get; set; }
-        public string Category { get; set; }
-        public string Unit { get; set; }
+        public ManufacturerModel Manufacturer { get; set; }
+        public CategoryModel Category { get; set; }
+        public UnitModel Unit { get; set; }
         public bool IsBanned { get; set; }
     }
 }

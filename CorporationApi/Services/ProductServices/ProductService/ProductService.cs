@@ -36,9 +36,21 @@ namespace Services.ProductServices.ProductService
                 Price = product.Price,
                 Count = product.ProductStorages
                             .Sum(ps => ps.CountProduct),
-                Manufacturer = product.Manufacture.Title,
-                Category = product.Category.Title,
-                Unit = product.Unit.Title,
+                Manufacturer = new ManufacturerModel
+                {
+                    Id = product.Manufacture.Id,
+                    Title = product.Manufacture.Title
+                },
+                Category = new CategoryModel 
+                {
+                    Id = product.Category.Id,
+                    Title = product.Category.Title
+                }, //product.Category.Title,
+                Unit = new UnitModel 
+                {
+                    Id = product.Unit.Id,
+                    Title = product.Unit.Title
+                }, //product.Unit.Title,
                 IsBanned = product.IsBanned
             }).ToList();
             //return await _context.Products
@@ -136,9 +148,21 @@ namespace Services.ProductServices.ProductService
                     Title = ps.Product.Title,
                     Price = ps.Product.Price,
                     Count = ps.CountProduct,
-                    Manufacturer = ps.Product.Manufacture.Title,
-                    Category = ps.Product.Category.Title,
-                    Unit = ps.Product.Unit.Title,
+                    Manufacturer = new ManufacturerModel 
+                    { 
+                        Id = ps.Product.Manufacture.Id,
+                        Title = ps.Product.Manufacture.Title
+                    },//ps.Product.Manufacture.Title,
+                    Category = new CategoryModel 
+                    {
+                        Id = ps.Product.Category.Id,
+                        Title = ps.Product.Category.Title
+                    }, //ps.Product.Category.Title,
+                    Unit = new UnitModel 
+                    {
+                        Id = ps.Product.Unit.Id,
+                        Title = ps.Product.Unit.Title
+                    }, //ps.Product.Unit.Title,
                     IsBanned = ps.Product.IsBanned
 
                 }).ToList();
@@ -215,9 +239,21 @@ namespace Services.ProductServices.ProductService
                 Price = newProduct.Price,
                 Count = newProduct.ProductStorages
                     .Sum(ps=>ps.CountProduct),
-                Category = newProduct.Category.Title,
-                Manufacturer = newProduct.Manufacture.Title,
-                Unit = newProduct.Unit.Title,
+                Category = new CategoryModel 
+                {
+                    Id= newProduct.Category.Id,
+                    Title = newProduct.Category.Title
+                }, //newProduct.Category.Title,
+                Manufacturer = new ManufacturerModel 
+                { 
+                    Id = newProduct.Manufacture.Id,
+                    Title = newProduct.Manufacture.Title
+                }, //newProduct.Manufacture.Title,
+                Unit = new UnitModel 
+                {
+                    Id = newProduct.Unit.Id,
+                    Title = newProduct.Unit.Title
+                }, //newProduct.Unit.Title,
                 IsBanned = newProduct.IsBanned
             };
 

@@ -8,6 +8,7 @@ namespace Services.Models.ProductModels
 {
     public class UnitModel
     {
+        public int Id { get; set; }
         public string Title { get; set; }
     }
 }

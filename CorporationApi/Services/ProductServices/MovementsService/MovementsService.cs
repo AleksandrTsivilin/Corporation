@@ -79,9 +79,21 @@ namespace Services.ProductService.MovementsService
                     Title = ps.Product.Title,
                     Price = ps.Product.Price,
                     Count = ps.CountProduct,
-                    Manufacturer = ps.Product.Manufacture.Title,
-                    Category = ps.Product.Category.Title,
-                    Unit = ps.Product.Unit.Title,
+                    Manufacturer = new ManufacturerModel
+                    {
+                        Id = ps.Product.Manufacture.Id,
+                        Title = ps.Product.Manufacture.Title
+                    },//ps.Product.Manufacture,
+                    Category = new CategoryModel 
+                    {
+                        Id = ps.Product.Category.Id,
+                        Title = ps.Product.Category.Title
+                    }, //ps.Product.Category.Title,
+                    Unit = new UnitModel 
+                    {
+                        Id = ps.Product.Unit.Id,
+                        Title = ps.Product.Unit.Title
+                    }, //ps.Product.Unit.Title,
                     IsBanned = ps.Product.IsBanned
                 })
                 .ToList();
