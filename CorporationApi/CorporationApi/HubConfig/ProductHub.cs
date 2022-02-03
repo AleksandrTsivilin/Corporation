@@ -23,21 +23,15 @@ namespace CorporationApi.HubConfig
         {
             var storages = await Task.Run(() => _service.AddProduct(model));
             if (storages is not null)
-                await Clients.Others.SendAsync("changeProducts", storages);
+                await Clients.All.SendAsync("changeProducts", storages);
         }
 
         public async Task UpdateProduct(NewProductModel model, int id)
-        {            
-            //var updatedProduct = _service.UpdateProduct(model, id);
-
-            //if (updatedProduct is null) return;
-            //Clients.All.SendAsync("updateProduct", updatedProduct);
-
+        {
             var storages = await Task.Run(() => _service.UpdateProduct(model, id));
             if (storages is not null)
                 await Clients.All.SendAsync("changeProducts", storages);
-        }    
-                
+        }
 
         public async Task DeleteProduct(int id)
         {

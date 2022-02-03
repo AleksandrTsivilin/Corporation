@@ -14,8 +14,8 @@ namespace Services.ProductServices.ProductService
     {
         Task<List<ProductModel>> GetProductsByAccess(IdentityUserModel identity);
         List<ProductModel> GetProductsByUser(int id);
-        Task<List<string>> AddProduct(NewProductModel model);
-        Task <List<string>> UpdateProduct(NewProductModel model, int id);
+        Task<List<int>> AddProduct(NewProductModel model);
+        Task <List<int>> UpdateProduct(NewProductModel model, int id);
         Task <List<string>> RemoveProduct(int id);
     }
 }

@@ -77,10 +77,10 @@ namespace Services.ProductServices.ProductService
                 //    IsBanned = product.IsBanned
                 //}).ToListAsync();
         }
-        public async Task<List<string>> AddProduct(NewProductModel model)
+        public async Task<List<int>> AddProduct(NewProductModel model)
         {
-            var storageId = await _repository.AddProduct(model);
-            return new List<string> { storageId.ToString() };
+            var storagesId = await _repository.AddProduct(model);
+            return storagesId;
         }
         public List<ProductModel> GetProductsByUser(int id)
         {
@@ -126,44 +126,9 @@ namespace Services.ProductServices.ProductService
             return new List<string> { storage.Storage.Title };
             //return CreateProductModel(product.Title);
         }
-        public async Task<List<string>> UpdateProduct(NewProductModel model, int id)
+        public async Task<List<int>> UpdateProduct(NewProductModel model, int id)
         {
-            //var storage = await GetStorageByTitle(model.Storage);
-
-            //var productPrev = await GetProductById(id);             
-
-            //var manufacturer = await GetManufacturerByTitle(model.Manufacturer);
-
-            //var category = await GetCategoryByTitle(model.Category);
-
-            //var unit = await GetUnitByTitle(model.Unit);
-
-            //if ( storage is null
-            //    || productPrev is null
-            //    || manufacturer is null
-            //    || category is null
-            //    || unit is null) return null;
-
-
-            //try
-            //{
-            //    productPrev.Title = model.Title;
-            //    productPrev.Price = model.Price;
-            //    productPrev.ManufactureId = manufacturer.Id;
-            //    productPrev.CategoryId=category.Id;
-            //    productPrev.UnitId = unit.Id;
-
-
-
-            //    await _context.SaveChangesAsync();
-            //    return new List<string> { model.Storage };
-            //}
-            //catch
-            //{
-            //    return null;
-            //}
-            return null;              
-            
+            return await _repository.Update(model, id);
         }
         private async Task<Storage> GetStorageByTitle(string title)
         {
