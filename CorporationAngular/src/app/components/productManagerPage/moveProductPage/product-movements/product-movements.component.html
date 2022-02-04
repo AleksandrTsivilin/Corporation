@@ -36,6 +36,7 @@
                                 class="sticky top-0 px-6 py-3 text-red-900 bg-red-300 header"
                                 *ngFor="let header of headersTable"
                                 [ngClass]="{'active-header':header.isActive}"
+                                (click)=sortCol(header)
                             >
                                 <span >
                                 {{header.title}}

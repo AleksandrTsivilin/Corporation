@@ -42,7 +42,8 @@ export class ProductMovementsComponent implements OnInit {
     path:"loadingPage",
     isActive:false
   }
-
+  private _ascDirection = 1;
+  private _sortCriteria="";
   constructor(
       
       private readonly updateService:MovementsUpdateService,
@@ -60,23 +61,21 @@ export class ProductMovementsComponent implements OnInit {
     this.createMovedProductAction();   
     this.getAvaiableStorages();
     
-    
 
 
   this.updateServiceProduct.changesProductStorage$
-  .subscribe((changedStorages)=>{
-    console.log("movements update");
-    changedStorages.forEach(storage=>{
-      if (storage===this.currentStorage.id)
-      this.createMovedProductAction();
+    .subscribe((changedStorages)=>{
+      this.updateProduct(changedStorages)
     })
-  })
+  
+  this.updateService.movementsProduct$
+    .subscribe((changedStorages)=>{
+      this.updateProduct(changedStorages)
+    })
 
   }
 
   onSubmit(){  
-    console.log(this.movedProductActions)
-
     this.formMovedProducts.from = this.currentStorage.id;
     const movedProduct = this.movedProductActions
     .filter(product=>product.isSelected);
@@ -102,6 +101,37 @@ export class ProductMovementsComponent implements OnInit {
       
   }
 
+  sortCol(header:HeaderTable){
+    if (!header.isActive) return;
+    header.title = this.convert(header.title);
+    let criteria = header.title;
+    console.log(criteria)
+    criteria===this._sortCriteria
+      ? this._ascDirection *= -1
+      : this._ascDirection = 1;
+    
+    this._sortCriteria=criteria;
+    let orderedUsersInfo= this.movedProductActions
+      .sort((a:MovedProductAction,b:MovedProductAction)=>{
+      let orderItemFirst=a[criteria];
+      let orderItemSecond=b[criteria];
+      console.log(orderItemFirst)
+      const less = -1 * this._ascDirection;
+      const more = 1 * this._ascDirection;
+
+      if (typeof orderItemFirst === 'string') {
+        return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
+      } else if (typeof orderItemFirst ==='number'){
+        return orderItemFirst <= orderItemSecond ? less:more
+      }  else {
+        console.log("obj")
+        return orderItemFirst.title <= orderItemSecond.title ? less : more;
+      }
+      
+    })
+    this.movedProductActions=orderedUsersInfo;
+  }
+
   private getHeadersTable():HeaderTable[]{
     const headers= [{
       title:'#',
@@ -111,8 +141,8 @@ export class ProductMovementsComponent implements OnInit {
       title:"✔️",
       isActive:false
     },{
-      title:"count",
-      isActive:true
+      title:"count moved",
+      isActive:false
     },{
       title:"title",
       isActive:true
@@ -128,7 +158,17 @@ export class ProductMovementsComponent implements OnInit {
     }];
     return headers;
   }
-
+  private convert(rawHeader:string):string{
+    console.log(rawHeader)
+    if (!rawHeader.includes(" ")) return rawHeader;
+    const indexSpace = rawHeader.indexOf(" ");
+    rawHeader = rawHeader.replace(" ","");
+    let newHeader = rawHeader
+      .substring(0,indexSpace) + rawHeader[indexSpace].toUpperCase() + rawHeader.substring(indexSpace+1,rawHeader.length);
+    
+    console.log(newHeader)
+    return newHeader;
+  }
   private setStatePage(path: string, isActive: boolean) {
     this.pageState={
       path:path,
@@ -136,17 +176,19 @@ export class ProductMovementsComponent implements OnInit {
     }
   }
 
-  private updateMovedProduct(products:ProductInfo[]){
-    if (products ===undefined) return;
-    
-    this.formMovedProducts.movementProducts=[];
-    
+  private updateProduct(changes : number[]){
+    console.log("movements update");
+    changes.forEach(storage=>{
+      if (storage===this.currentStorage.id)
+        this.createMovedProductAction();
+    })
   }
 
   
   private createMovedProductAction(){
     this.productService.getProductsByUser()
       .subscribe((products)=>{
+        console.log(products)
         this.setStatePage("",true);
         this.setMovedProductAction(products);       
       },(products)=>{

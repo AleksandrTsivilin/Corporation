@@ -25,7 +25,7 @@ export class MovementsUpdateService {
       .then()
       .catch(err=>{console.error(err)}) ;
   }
-  convertForm(form: MovementProductForm) : MovementProductForm{
+  private convertForm(form: MovementProductForm) : MovementProductForm{
     const addedMovementProducts = [] as MovementProduct[];
     form.movementProducts.forEach(movement=>{
       addedMovementProducts.push({

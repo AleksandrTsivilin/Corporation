@@ -14,8 +14,8 @@ export class ProductUpdateService {
   constructor(private readonly signalr:ProductSignalrService) { 
     if (!signalr.isConnection)
       signalr.startConnection();
-
-      this.productChangesOnLis();
+    console.log( signalr.isConnection)
+    this.productChangesOnLis();
   }
 
   addProduct(newProductForm:NewProductForm){

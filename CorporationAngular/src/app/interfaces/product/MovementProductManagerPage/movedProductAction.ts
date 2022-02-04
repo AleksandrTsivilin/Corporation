@@ -1,4 +1,5 @@
 export interface MovedProductAction{
+    [x: string]: any;
     id:number,
     title:string,
     avaiableCount:number,

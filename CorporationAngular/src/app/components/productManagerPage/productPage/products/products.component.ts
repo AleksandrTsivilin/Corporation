@@ -13,6 +13,7 @@ import { StorageService } from 'src/app/services/productPage/StoragesService/sto
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
 import { RegionService } from 'src/app/services/regionManager/region.service';
 import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
+import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
 
 @Component({
   selector: 'app-products',
@@ -69,6 +70,7 @@ export class ProductsComponent implements OnInit {
   constructor( 
     private readonly service:ProductsService,
     private readonly updateService:ProductUpdateService,
+    private readonly updateMovementService:MovementsUpdateService,
     private readonly storageService:StorageService,
     private readonly factoryService:FactoryService,
     private readonly regionService:RegionService
@@ -84,11 +86,13 @@ export class ProductsComponent implements OnInit {
 
     this.updateService.changesProductStorage$
       .subscribe((changes)=>{
-        console.log(changes)
-      if (changes.length===0) return;
-      const isDoChanges = this.storages.some(storage=>changes.includes(storage.id));
-      if (isDoChanges) this.getProducts();      
-  })
+        this.updateProducts(changes);  
+    })
+
+    this.updateMovementService.movementsProduct$
+      .subscribe((changes)=>{
+        this.updateProducts(changes);
+      })
 }
 
 
@@ -166,6 +170,11 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  private updateProducts(changes:number[]){
+    if (changes.length===0) return;
+    const isDoChanges = this.storages.some(storage=>changes.includes(storage.id));
+    if (isDoChanges) this.getProducts(); 
+  }
   
 
   private getHeadersTable():HeaderTable[]{
