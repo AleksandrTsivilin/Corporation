@@ -35,11 +35,6 @@ namespace CorporationApi.HubConfig
 
         public async Task DeleteProduct(int id)
         {
-            //var newProduct = _service.RemoveProduct(id);
-
-            //if (newProduct is not null)
-            //    await Clients.All.SendAsync("updateProduct", newProduct);
-
             var storages = await Task.Run(() => _service.RemoveProduct(id));
             if (storages is not null )
                 await Clients.All.SendAsync("changeProducts", storages);

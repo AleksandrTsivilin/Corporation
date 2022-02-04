@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.ProductService.MovementsService
+namespace Repositories.MovementRepositories
 {
-    public interface IMovementsServive
+    public interface IMovementProductRepository
     {
-        Task<List<int>> MovedProducts(MoveProductModel model);
+        Task<List<int>> MovedProduct(MoveProductModel model);
     }
 }

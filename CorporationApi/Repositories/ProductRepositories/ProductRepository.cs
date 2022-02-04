@@ -15,30 +15,30 @@ namespace Repositories.ProductRepositories
 {
     public class ProductRepository : Repository<Product>, IProductRepository
     {
+        private SpecificationProduct _specificationProduct;
         public ProductRepository(DBContext context)
-            : base(context) { }
+            : base(context) 
+        {
+            _specificationProduct = new SpecificationProduct();
+        }
 
-        public async Task<List<int>> AddProduct(NewProductModel model)
+        public async Task<List<int>> Add(NewProductModel model)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
             {
                 var storage = await GetEntityById<Storage>(model.StorageId);
                 if (storage is null) throw new Exception();
-                var manufacturer = await GetEntityById<ManufacturerProduct>(model.ManufacturerId);
-                if (manufacturer is null) throw new Exception();
-                var category = await GetEntityById<CategoryProduct>(model.CategoryId);
-                if (category is null) throw new Exception();
-                var unit = await GetEntityById<UnitProduct>(model.UnitId);
-                if (unit is null) throw new Exception();
+                var specProduct = await GetSpecificationProduct(model);
+
                 await _context.Products.AddAsync(
                     new Product
                     {
                         Title = model.Title,
                         Price = model.Price,
-                        Manufacture = manufacturer,
-                        Category = category,
-                        Unit = unit,
+                        Manufacture = specProduct.Manufacturer,
+                        Category = specProduct.Category,
+                        Unit = specProduct.Unit,
                         ProductStorages = new List<ProductStorage> 
                         {
                             new ProductStorage
@@ -78,35 +78,21 @@ namespace Repositories.ProductRepositories
             return products;
         }
 
-        public async Task<List<int>> Update(NewProductModel model, int id)
+        public async Task<List<int>> Remove(int id)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
             {
-                var editProduct = await _context.Products
-                    .Include(product => product.ProductStorages)
-                    .FirstOrDefaultAsync(product => product.Id == id);
+                var banProduct = await GetProductWithStorage(id);
 
-                if (editProduct is null) throw new Exception();
-                var manufacturer = await GetEntityById<ManufacturerProduct>(model.ManufacturerId);
-                if (manufacturer is null) throw new Exception();
-                var category = await GetEntityById<CategoryProduct>(model.CategoryId);
-                if (category is null) throw new Exception();
-                var unit = await GetEntityById<UnitProduct>(model.UnitId);
-                if (unit is null) throw new Exception();
+                if (banProduct is null) throw new Exception();
 
-                editProduct.Title = model.Title;
-                editProduct.Price = model.Price;
-                editProduct.Manufacture = manufacturer;
-                editProduct.Category = category;
-                editProduct.Unit = unit;
+                banProduct.IsBanned = !banProduct.IsBanned;
+
                 await _context.SaveChangesAsync();
                 transaction.Commit();
-                var storages = new List<int>();
-                foreach (var productStorage in editProduct.ProductStorages)
-                {
-                    storages.Add(productStorage.StorageId);
-                }
+                var storages = GetUpdatedStorages(banProduct.ProductStorages);
+
                 return storages;
             }
             catch(Exception ex)
@@ -116,10 +102,87 @@ namespace Repositories.ProductRepositories
             }
         }
 
+        public async Task<List<int>> Update(NewProductModel model, int id)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var editProduct = await GetProductWithStorage(id);
+
+                if (editProduct is null) throw new Exception();
+                var specProduct = await GetSpecificationProduct(model);
+
+                editProduct.Title = model.Title;
+                editProduct.Price = model.Price;
+                editProduct.Manufacture = specProduct.Manufacturer;
+                editProduct.Category = specProduct.Category;
+                editProduct.Unit = specProduct.Unit;
+                await _context.SaveChangesAsync();
+                transaction.Commit();
+                var storages = GetUpdatedStorages(editProduct.ProductStorages);
+                return storages;
+            }
+            catch(Exception ex)
+            {
+                transaction.Rollback();
+                return null;
+            }
+        }
+
+        public async Task<List<Product>> GetByUser(int departmentId)
+        {
+            var productStorage = await _context.Product_Storage
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Manufacture)
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Category)
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Unit)
+                .Include(ps => ps.Storage)
+                .Where(ps => ps.Storage.DepartmentId == departmentId)
+                .ToListAsync();
+
+            return productStorage.Select(ps => ps.Product).ToList();
+        }
+        private List<int> GetUpdatedStorages(ICollection<ProductStorage> productStorages)
+        {
+            var storages = new List<int>();
+
+            foreach (var productStorage in productStorages)
+            {
+                storages.Add(productStorage.StorageId);
+            }
+            return storages;
+        }
+
+        private async Task<SpecificationProduct> GetSpecificationProduct(NewProductModel model)
+        {
+            _specificationProduct.Manufacturer = await GetEntityById<ManufacturerProduct>(model.ManufacturerId);
+            if (_specificationProduct.Manufacturer is null)
+                throw new Exception();
+
+            _specificationProduct.Category = await GetEntityById<CategoryProduct>(model.CategoryId);
+            if (_specificationProduct.Category is null)
+                throw new Exception();
+
+            _specificationProduct.Unit = await GetEntityById<UnitProduct>(model.UnitId);
+            if (_specificationProduct.Unit is null)
+                throw new Exception();
+            return _specificationProduct;
+        }
+
         private async Task<T> GetEntityById<T>(int id) where T : BaseEntity
         {
             return await _context.Set<T>()
                 .FirstOrDefaultAsync(e => e.Id == id);
         }
+
+        private async Task<Product> GetProductWithStorage(int id)
+        {
+            return await _context.Products
+                    .Include(product => product.ProductStorages)
+                    .FirstOrDefaultAsync(product => product.Id == id);
+        }
+
     }
 }

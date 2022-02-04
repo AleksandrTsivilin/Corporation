@@ -32,25 +32,25 @@ namespace CorporationApi.Controllers
         }
 
         [HttpGet("ByUser")]
-        public async Task<IActionResult> GetByUser()
+        public async Task<IActionResult> GetByUser(string key)
         {
-            var identity = GetIdentityInfo();
+            var identity = GetIdentityInfo(key);
             var storage = await Task.Run(() => _service.GetStorageByUser(identity));
             return Ok(storage);
         }
 
         [HttpGet("ByAccess")]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(string key)
         {
-            var identity = GetIdentityInfo();
+            var identity = GetIdentityInfo(key);
             var storage = await Task.Run(() => _service.GetStorageByAccess(identity));
             return Ok(storage);
         }
 
-        private IdentityUserModel GetIdentityInfo()
+        private IdentityUserModel GetIdentityInfo(string key)
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;
-            return _identityService.GetIdentity(claims, "ProductManager");
+            return _identityService.GetIdentity(claims, key);
         }
 
 

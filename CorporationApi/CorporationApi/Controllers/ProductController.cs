@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Specifications;
 using Services.IdentityUserServices;
 using Services.ProductService;
 using Services.ProductServices.ProductService;
@@ -35,49 +36,18 @@ namespace CorporationApi.Controllers
             return Ok(product);
         }
 
-        [HttpGet("productsByUser")]
-        public IActionResult GetProductsByUser(int id)
+        [HttpGet("ByUser")]
+        public async Task<IActionResult> GetProductsByUser(int id)
         {
-            var products = _service.GetProductsByUser(id);
+            var identity = GetIdentityInfo();
+            var products = await _service.GetProductsByUser(identity);
             return Ok(products);
         }
 
-
-        //[HttpGet("manufacturer")]
-        //public IActionResult GetManufacturers()
-        //{
-        //    var manufacturers = _service.GetManufacturers();
-        //    return Ok(manufacturers);
-        //}
-
-        //[HttpGet("category")]
-        //public IActionResult GetCategories()
-        //{
-        //    var manufacturers = _service.GetCategories();
-        //    return Ok(manufacturers);
-        //}
-
-        //[HttpGet("unit")]
-        //public IActionResult GetUnits()
-        //{
-        //    var manufacturers = _service.GetUnits();
-        //    return Ok(manufacturers);
-        //}
-
-        //[HttpGet("storage")]
-        //public IActionResult GetStorages()
-        //{
-        //    var storages = _service.GetStorages();
-        //    return Ok(storages);
-        //}
-
-        //[HttpGet("storageByUser")]
-        //public IActionResult GetStorageByUser(int userId)
-        //{
-        //    var storage = _service.GetStorageByUser(userId);
-        //    return Ok(storage);
-        //}
-
-
+        private IdentityUserModel GetIdentityInfo()
+        {
+            var claims = HttpContext.User.Identity as ClaimsIdentity;
+            return _identityService.GetIdentity(claims, "ProductMovementManager");
+        }
     }
 }

@@ -15,9 +15,6 @@ namespace Services.IdentityUserServices
 {
     public class IdentityUserService : IIdentityUserService
     {
-
-
-
         public IdentityUserModel GetIdentity(ClaimsIdentity claims, string role)
         {
             string access = GetAccessUser(claims, role);

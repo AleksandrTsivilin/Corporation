@@ -13,9 +13,10 @@ namespace Services.ProductServices.ProductService
     public interface IProductService
     {
         Task<List<ProductModel>> GetProductsByAccess(IdentityUserModel identity);
-        List<ProductModel> GetProductsByUser(int id);
+        //List<ProductModel> GetProductsByUser(int id);
         Task<List<int>> AddProduct(NewProductModel model);
         Task <List<int>> UpdateProduct(NewProductModel model, int id);
-        Task <List<string>> RemoveProduct(int id);
+        Task <List<int>> RemoveProduct(int id);
+        Task<List<ProductModel>> GetProductsByUser(IdentityUserModel identity);
     }
 }

@@ -12,7 +12,9 @@ namespace Repositories.ProductRepositories
     public interface IProductRepository : IRepository<Product>
     {
         Task<List<Product>> GetByAccess(ProductSpecificationByAccess specification);
-        Task<List<int>> AddProduct(NewProductModel model);
+        Task<List<int>> Add(NewProductModel model);
         Task<List<int>> Update(NewProductModel model, int id);
+        Task<List<int>> Remove(int id);
+        Task<List<Product>> GetByUser(int departmentId);
     }
 }

@@ -18,12 +18,12 @@ namespace Services.ProductServices.ProductService
 {
     public class ProductService : IProductService
     {
-        private readonly DBContext _context;
+        //private readonly DBContext _context;
         private readonly IProductRepository _repository;
         //private readonly AccessService _access;
         public ProductService(DBContext context, IProductRepository repository)
         {
-            _context = context;
+            //_context = context;
             _repository = repository;
         }
         public async Task<List<ProductModel>> GetProductsByAccess(IdentityUserModel identity)
@@ -79,123 +79,53 @@ namespace Services.ProductServices.ProductService
         }
         public async Task<List<int>> AddProduct(NewProductModel model)
         {
-            var storagesId = await _repository.AddProduct(model);
+            var storagesId = await _repository.Add(model);
             return storagesId;
         }
-        public List<ProductModel> GetProductsByUser(int id)
+
+        public async Task<List<int>> RemoveProduct(int id)
         {
-            return _context.Product_Storage
-                .Include(ps => ps.Product)
-                .Where(ps => ps.StorageId == 5)
-                .Select(ps => new ProductModel()
-                {
-                    Id = ps.Product.Id,
-                    Title = ps.Product.Title,
-                    Price = ps.Product.Price,
-                    Count = ps.CountProduct,
-                    Manufacturer = new ManufacturerModel 
-                    { 
-                        Id = ps.Product.Manufacture.Id,
-                        Title = ps.Product.Manufacture.Title
-                    },//ps.Product.Manufacture.Title,
-                    Category = new CategoryModel 
-                    {
-                        Id = ps.Product.Category.Id,
-                        Title = ps.Product.Category.Title
-                    }, //ps.Product.Category.Title,
-                    Unit = new UnitModel 
-                    {
-                        Id = ps.Product.Unit.Id,
-                        Title = ps.Product.Unit.Title
-                    }, //ps.Product.Unit.Title,
-                    IsBanned = ps.Product.IsBanned
-
-                }).ToList();
-        }
-        public async Task<List<string>> RemoveProduct(int id)
-        {
-            var product = await GetProductById(id);
-
-            if (product is null) return null;
-
-            product.IsBanned = !product.IsBanned;
-            await _context.SaveChangesAsync();
-            var storage = await _context.Product_Storage
-                .Include(ps => ps.Storage)
-                .FirstOrDefaultAsync(ps => ps.ProductId == id);
-            return new List<string> { storage.Storage.Title };
-            //return CreateProductModel(product.Title);
+            return await _repository.Remove(id);
         }
         public async Task<List<int>> UpdateProduct(NewProductModel model, int id)
         {
             return await _repository.Update(model, id);
         }
-        private async Task<Storage> GetStorageByTitle(string title)
+
+        public async Task<List<ProductModel>> GetProductsByUser(IdentityUserModel identity)
         {
-            return await _context.Storages
-                .FirstOrDefaultAsync(s => s.Title == title);
+            var departmentId = identity.Location.DepartmentId;
+            var products = await _repository.GetByUser(departmentId);
+            return GetProductModels(products);
         }
-        private ProductModel CreateProductModel(string title)
+
+        private List<ProductModel> GetProductModels(List<Product> products)
         {
-            var newProduct = GetProduct(title);
-
-            if (newProduct is null) return null;
-
-            return new ProductModel
+            return products.Select(product => new ProductModel
             {
-                Id = newProduct.Id,
-                Title = newProduct.Title,
-                Price = newProduct.Price,
-                Count = newProduct.ProductStorages
-                    .Sum(ps=>ps.CountProduct),
-                Category = new CategoryModel 
+                Id = product.Id,
+                Title = product.Title,
+                Price = product.Price,
+                Count = product.ProductStorages
+                            .Sum(ps => ps.CountProduct),
+                Manufacturer = new ManufacturerModel
                 {
-                    Id= newProduct.Category.Id,
-                    Title = newProduct.Category.Title
-                }, //newProduct.Category.Title,
-                Manufacturer = new ManufacturerModel 
-                { 
-                    Id = newProduct.Manufacture.Id,
-                    Title = newProduct.Manufacture.Title
-                }, //newProduct.Manufacture.Title,
-                Unit = new UnitModel 
+                    Id = product.Manufacture.Id,
+                    Title = product.Manufacture.Title
+                },
+                Category = new CategoryModel
                 {
-                    Id = newProduct.Unit.Id,
-                    Title = newProduct.Unit.Title
-                }, //newProduct.Unit.Title,
-                IsBanned = newProduct.IsBanned
-            };
-
-            
-        }
-        private Product GetProduct (string title)
-        {
-            return _context.Products
-                .Include(p => p.Manufacture)
-                .Include(p => p.Category)
-                .Include(p => p.Unit)
-                .Include(p => p.ProductStorages)
-                .FirstOrDefault(p => p.Title == title);
-        }
-        private async Task< Product> GetProductById(int id)
-        {
-            return await _context.Products
-                .FirstOrDefaultAsync(p => p.Id == id);
-        }
-        private async Task<ManufacturerProduct> GetManufacturerByTitle(string title)
-        {
-            return await _context.Manufactures
-                .FirstOrDefaultAsync(m => m.Title == title);
-        }
-        private async Task<CategoryProduct> GetCategoryByTitle(string title)
-        {
-            return await _context.Categoties
-                .FirstOrDefaultAsync(c => c.Title == title);
-        }
-        private async Task <UnitProduct> GetUnitByTitle(string title)
-        {
-            return await _context.Units
-                .FirstOrDefaultAsync(u => u.Title == title);
+                    Id = product.Category.Id,
+                    Title = product.Category.Title
+                }, //product.Category.Title,
+                Unit = new UnitModel
+                {
+                    Id = product.Unit.Id,
+                    Title = product.Unit.Title
+                }, //product.Unit.Title,
+                IsBanned = product.IsBanned
+            }).ToList();
+ 
         }
     }
 

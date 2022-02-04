@@ -19,10 +19,9 @@ namespace CorporationApi.HubConfig
         public async Task MoveProducts(MoveProductModel model)
         {
 
-            //var movements = _service.MovedProducts(model);
             var storages = await Task.Run(() => _service.MovedProducts(model));
             if (storages is not null)
-                await Clients.All.SendAsync("movementsProduct", storages);
+                await Clients.All.SendAsync("changeProducts", storages);
 
         }
     }

@@ -19,6 +19,7 @@ using Repositories;
 using Repositories.BaseRepositories;
 using Repositories.EmployeeRepositories;
 using Repositories.FactoryRepositories;
+using Repositories.MovementRepositories;
 using Repositories.ProductRepositories;
 using Repositories.ProductRepositories.FactoryRepositories;
 using Repositories.ProductRepositories.StorageRepositories;
@@ -81,7 +82,7 @@ namespace CorporationApi
             //services.AddScoped<IProductServiceTemplate, ProductServiceTemplate>();
 
             
-            services.AddScoped<IMovementsServive, MovementsService>();
+            
             
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
@@ -106,6 +107,7 @@ namespace CorporationApi
             AddUser(services);
             AddFactory(services);
             AddRegion(services);
+            AddMovementProduct(services);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -176,6 +178,11 @@ namespace CorporationApi
         {
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductRepository, ProductRepository>();
+        }
+        private void AddMovementProduct(IServiceCollection services)
+        {
+            services.AddScoped<IMovementsServive, MovementsService>();
+            services.AddScoped<IMovementProductRepository, MovementProductRepository>();
         }
         private void AddEmployee(IServiceCollection services)
         {

@@ -1,6 +1,7 @@
 ﻿using DataBase;
 using DataBase.Entities.ProductEntities;
 using Microsoft.EntityFrameworkCore;
+using Repositories.MovementRepositories;
 using Services.Models;
 using Services.Models.ProductModels;
 using System;
@@ -13,109 +14,67 @@ namespace Services.ProductService.MovementsService
 {
     public class MovementsService : IMovementsServive
     {
-        private readonly DBContext _context;
-        public MovementsService(DBContext context)
+        //private readonly DBContext _context;
+        private readonly IMovementProductRepository _repository;
+        public MovementsService(DBContext context, IMovementProductRepository repository)
         {
-            _context = context;
+            //_context = context;
+            _repository = repository;
         }
-        public async Task<List<string>> MovedProducts(MoveProductModel model)
-        {          
-            var storageFrom = GetStorageByTitle(model.From);
-            var storageTo = GetStorageByTitle(model.To);
-            if (storageFrom is null || storageTo is null) return null;          
-
-            var resultMovements = StartMovements(model);
-            
-            foreach (var product in model.MovedProducts)
-            {              
-
-                var productStorageFrom = _context.Product_Storage
-                    .Where(ps => ps.Storage.Title == model.From)
-                    .FirstOrDefault(ps => ps.Product.Id == product.Id);
-
-                if (productStorageFrom is null) continue;
-
-
-                var productStorageTo = _context.Product_Storage
-                    .Where(ps => ps.Storage.Title == model.To)
-                    .FirstOrDefault(ps => ps.Product.Id == product.Id);
-
-                if (productStorageTo is null)
-                {
-                    _context.Product_Storage.Add(new ProductStorage
-                    {
-                        ProductId = product.Id,
-                        StorageId = storageTo.Id,
-                        CountProduct = product.CountMoved
-                    });
-
-                    productStorageFrom.CountProduct -= product.CountMoved;
-                    _context.SaveChanges();
-                }
-                else
-                {
-                    productStorageTo.CountProduct += product.CountMoved;
-                    productStorageFrom.CountProduct -= product.CountMoved;
-                    _context.SaveChanges();
-                }
-            }
-
-            resultMovements[0].Products = GetProductsByStorage(storageFrom);   
-       
-            resultMovements[1].Products = GetProductsByStorage(storageTo);
-            //return resultMovements;
-            return new List<string> { storageFrom.Title, storageTo.Title };
-        }
-
-        private List<ProductModel> GetProductsByStorage(Storage storage)
+        public async Task<List<int>> MovedProducts(MoveProductModel model)
         {
-            return _context.Product_Storage
-                .Include(ps => ps.Storage)
-                .Include(ps => ps.Product)
-                .Where(ps => ps.Storage.Id == storage.Id)
-                .Select(ps => new ProductModel
-                {
-                    Id = ps.Product.Id,
-                    Title = ps.Product.Title,
-                    Price = ps.Product.Price,
-                    Count = ps.CountProduct,
-                    Manufacturer = new ManufacturerModel
-                    {
-                        Id = ps.Product.Manufacture.Id,
-                        Title = ps.Product.Manufacture.Title
-                    },//ps.Product.Manufacture,
-                    Category = new CategoryModel 
-                    {
-                        Id = ps.Product.Category.Id,
-                        Title = ps.Product.Category.Title
-                    }, //ps.Product.Category.Title,
-                    Unit = new UnitModel 
-                    {
-                        Id = ps.Product.Unit.Id,
-                        Title = ps.Product.Unit.Title
-                    }, //ps.Product.Unit.Title,
-                    IsBanned = ps.Product.IsBanned
-                })
-                .ToList();
+            return await _repository.MovedProduct(model);
         }
 
-        private List<MovementsProductModel> StartMovements(MoveProductModel model)
-        {
-            return new List<MovementsProductModel>
-            {
-                new MovementsProductModel
-                {
-                    Storage=model.From,
-                    Products=new List<ProductModel>()
-                },
-                new MovementsProductModel
-                {
-                    Storage=model.To,
-                    Products=new List<ProductModel>()
-                }
+        //private List<ProductModel> GetProductsByStorage(Storage storage)
+        //{
+        //    return _context.Product_Storage
+        //        .Include(ps => ps.Storage)
+        //        .Include(ps => ps.Product)
+        //        .Where(ps => ps.Storage.Id == storage.Id)
+        //        .Select(ps => new ProductModel
+        //        {
+        //            Id = ps.Product.Id,
+        //            Title = ps.Product.Title,
+        //            Price = ps.Product.Price,
+        //            Count = ps.CountProduct,
+        //            Manufacturer = new ManufacturerModel
+        //            {
+        //                Id = ps.Product.Manufacture.Id,
+        //                Title = ps.Product.Manufacture.Title
+        //            },//ps.Product.Manufacture,
+        //            Category = new CategoryModel 
+        //            {
+        //                Id = ps.Product.Category.Id,
+        //                Title = ps.Product.Category.Title
+        //            }, //ps.Product.Category.Title,
+        //            Unit = new UnitModel 
+        //            {
+        //                Id = ps.Product.Unit.Id,
+        //                Title = ps.Product.Unit.Title
+        //            }, //ps.Product.Unit.Title,
+        //            IsBanned = ps.Product.IsBanned
+        //        })
+        //        .ToList();
+        //}
 
-            };
-        }
+        //private List<MovementsProductModel> StartMovements(MoveProductModel model)
+        //{
+        //    return new List<MovementsProductModel>
+        //    {
+        //        //new MovementsProductModel
+        //        //{
+        //        //    Storage=model.From,
+        //        //    Products=new List<ProductModel>()
+        //        //},
+        //        //new MovementsProductModel
+        //        //{
+        //        //    Storage=model.To,
+        //        //    Products=new List<ProductModel>()
+        //        //}
+
+        //    };
+        //}
 
         private Storage GetStorageByTitle(string title)
         {
@@ -123,3 +82,15 @@ namespace Services.ProductService.MovementsService
         }
     }
 }
+
+
+
+        
+
+//            var resultMovements = StartMovements(model);
+            
+//            
+//            resultMovements[0].Products = GetProductsByStorage(storageFrom);   
+       
+//            resultMovements[1].Products = GetProductsByStorage(storageTo);
+//            //return resultMovements;
