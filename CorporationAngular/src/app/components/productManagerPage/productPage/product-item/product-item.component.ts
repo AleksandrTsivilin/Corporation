@@ -31,6 +31,7 @@ export class ProductItemComponent implements OnInit {
 
   @Output() edit=new EventEmitter();
   @Output() remove=new EventEmitter();
+  @Output() openProductInfo = new EventEmitter();
   
   constructor() { }
 
@@ -43,6 +44,10 @@ export class ProductItemComponent implements OnInit {
 
   removeProduct(){
     this.remove.emit();
+  }
+
+  openProductItemInfo(){
+    this.openProductInfo.emit();
   }
 
   

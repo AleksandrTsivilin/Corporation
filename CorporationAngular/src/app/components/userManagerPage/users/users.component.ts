@@ -95,7 +95,8 @@ export class UsersComponent implements OnInit {
       
       if (typeof orderItemFirst === 'string') {
         return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
-      } else {        
+      }     
+      else {        
         return orderItemFirst.title <= orderItemSecond.title ? less : more;
       }
       

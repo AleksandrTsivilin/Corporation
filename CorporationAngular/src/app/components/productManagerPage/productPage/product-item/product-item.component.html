@@ -2,22 +2,46 @@
 <td class="product-counter"  [ngClass]="{'warning':productInfo.isBanned}">
     {{numProduct}}
 </td>
-<td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
+<td 
+    class="product-item" 
+    [ngClass]="{'warning':productInfo.isBanned}"
+    (click)="openProductItemInfo()"
+>
     {{productInfo.title}}
 </td>
-<td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
+<td 
+    class="product-item" 
+    [ngClass]="{'warning':productInfo.isBanned}"
+    (click)="openProductItemInfo()" 
+>
     {{productInfo.manufacturer.title}}
 </td>
-<td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
+<td 
+    class="product-item" 
+    [ngClass]="{'warning':productInfo.isBanned}"
+    (click)="openProductItemInfo()"
+>
     {{productInfo.category.title}}
 </td>
-<td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
+<td 
+    class="product-item" 
+    [ngClass]="{'warning':productInfo.isBanned}"
+    (click)="openProductItemInfo()"
+>
     {{productInfo.count}}
 </td>
-<td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
+<td 
+    class="product-item" 
+    [ngClass]="{'warning':productInfo.isBanned}"
+    (click)="openProductItemInfo()"
+>
     {{productInfo.unit.title}}
 </td>
-<td class="product-item" [ngClass]="{'warning':productInfo.isBanned}">
+<td 
+    class="product-item"
+    [ngClass]="{'warning':productInfo.isBanned}"
+    (click)="openProductItemInfo()"
+>
     {{productInfo.price}}
 </td>
 <td 

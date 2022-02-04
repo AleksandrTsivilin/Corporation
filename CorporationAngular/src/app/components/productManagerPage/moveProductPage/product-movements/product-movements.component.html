@@ -9,7 +9,7 @@
     > 
         <div>
             <span>from</span>
-            <h1>{{formMovedProducts.from}}</h1>
+            <h1>{{currentStorage.title}}</h1>
         </div> 
         <select 
             [(ngModel)]=formMovedProducts.to
@@ -17,8 +17,8 @@
         >
             <option
                 *ngFor="let storage of avaiableStorages" 
-                [value]="storage.title"
-                name="storage.title"                   
+                [value]="storage.id"
+                name="storageTo"                   
             >
                 {{storage.title}}
             </option>
@@ -46,7 +46,7 @@
                     <tbody class="divide-y bg-red-100">
                         <tr app-product-item-movements
                             class="product-item"                    
-                            *ngFor="let product of formMovedProducts.movedProducts let i=index"
+                            *ngFor="let product of movedProductActions let i=index"
                             [numProduct]="i+1"
                             [productInfo]="product" 
                             (onCountMoved)="change()"

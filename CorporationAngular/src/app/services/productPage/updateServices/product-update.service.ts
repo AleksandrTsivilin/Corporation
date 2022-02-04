@@ -2,7 +2,7 @@ import { HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { ProductStorageChanges } from 'src/app/interfaces/productManagerPage/changesProducts';
-import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
+import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { ProductSignalrService } from '../signalrServices/product-signalr.service';
 
 @Injectable({
@@ -10,7 +10,7 @@ import { ProductSignalrService } from '../signalrServices/product-signalr.servic
 })
 export class ProductUpdateService {
 
-  changesProductStorage$=new BehaviorSubject<string[]>([]);
+  changesProductStorage$=new BehaviorSubject<number[]>([]);
   constructor(private readonly signalr:ProductSignalrService) { 
     if (!signalr.isConnection)
       signalr.startConnection();
@@ -27,10 +27,11 @@ export class ProductUpdateService {
       .catch(err=>{console.error(err)})
   }
 
-  // updateProduct(newProductForm:NewProductForm,id:number){
-  //   //const product=this.convertFormToModel(newProductForm);
-  //   //this.signalr.hubConnection?.invoke("UpdateProduct",product,id)
-  // }
+  updateProduct(newProductForm:NewProductForm,id:number){
+    const product=this.convertForm(newProductForm);
+    console.log(product);
+    this.signalr.hubConnection?.invoke("UpdateProduct",product,id)
+  }
 
   remove(id:number){
     this.signalr.hubConnection?.invoke("DeleteProduct",id)
@@ -39,8 +40,9 @@ export class ProductUpdateService {
   }
 
   private productChangesOnLis() {
+    console.log("productChange on")
     this.signalr.hubConnection
-      ?.on("changeProducts",(changes:string[])=>{
+      ?.on("changeProducts",(changes:number[])=>{
         console.log("changeProductsLis")
         this.changesProductStorage$.next(changes);
     })

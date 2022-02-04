@@ -12,7 +12,7 @@ import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
 import { RegionService } from 'src/app/services/regionManager/region.service';
-import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
+import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 
 @Component({
   selector: 'app-products',
@@ -29,16 +29,12 @@ export class ProductsComponent implements OnInit {
     canMove:false
   }
 
-  //@Output() editPage=new EventEmitter();
-
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
-  //currentStorages:StorageInfo[]=[{title:"Storage 1"},{title:"Storage 2"}];
 
   storages:StorageInfo[]=[];
   factories: FactoryInfo[]=[];
   regions: RegionInfo[]=[];
-  //editProductMode:boolean=false;
 
   newProductForm:NewProductForm={
     storageId:0,
@@ -49,8 +45,20 @@ export class ProductsComponent implements OnInit {
     categoryId:0,
     unitId:0
   }
+  selectedProduct : ProductInfo={
+    id:0,
+    title:"",
+    price:0,
+    count:0,
+    manufacturer:{id:0,title:""},
+    category:{id:0,title:""},
+    unit:{id:0,title:""},
+    isBanned:false
+  }
   
   private editedProductId:number=0;
+  private _ascDirection = 1;
+  private _sortCriteria="";
 
 
   pageState:PageState={
@@ -76,89 +84,16 @@ export class ProductsComponent implements OnInit {
 
     this.updateService.changesProductStorage$
       .subscribe((changes)=>{
+        console.log(changes)
       if (changes.length===0) return;
-      changes.forEach(storage=>{
-        if (this.storages
-          .map(st=>st.title).includes(storage))
-          {            
-            console.log("changes product")
-            this.getProducts();
-          }
-      })
-      
-
+      const isDoChanges = this.storages.some(storage=>changes.includes(storage.id));
+      if (isDoChanges) this.getProducts();      
   })
 }
 
 
-  // productOnLis(): void {
-  //   console.log("productOnLis")
-    
-  //   this.signalrService.hubConnection?.on("productAdd", (newProduct:ProductInfo) => {
-  //     console.log(newProduct);
-  //     this.productsInfo.push(newProduct);
-  //   });
-  // }
-
-  // productOnUpdateLis():void{
-  //   this.signalrService.hubConnection?.on("updateProduct",(updateProduct:ProductInfo)=>{
-  //     console.log("productOnUpdateLis")
-  //     console.log(updateProduct); 
-
-      
-      
-  //     this.productsInfo=this.productsInfo.map((p)=>{
-  //       if (p.id===updateProduct.id)
-  //       {
-  //         console.log("compare")
-  //         return {
-  //           id:updateProduct.id,
-  //           title:updateProduct.title,
-  //           price:updateProduct.price,
-  //           count:updateProduct.count,
-  //           category:updateProduct.category,
-  //           manufacturer:updateProduct.manufacturer,
-  //           unit:updateProduct.unit,
-  //           isBanned:updateProduct.isBanned
-  //         }
-  //       }
-          
-  //       else return p;
-  //      });
-  //   })
-  // }
-
-  // productOnRemoveLis():void{
-  //   this.signalrService.hubConnection?.on("removeProduct",(id:number)=>{
-  //     console.log("id")
-  //     console.log (id);
-  //     this.productsInfo=this.productsInfo.map((p)=>{
-  //       if (p.id===id)
-  //       {
-  //         p.isBanned=true;
-  //         console.log(p)
-  //       }
-  //       return p;
-  //      });
-  //   })
-  // }
-
-
-
+ 
   startEdit(editProduct:ProductInfo){
-    
-    // this.editProduct={
-    //   id:editProduct.id,
-    //   title:editProduct.title,
-    //   count:editProduct.count,
-    //   price:editProduct.price,
-    //   category:editProduct.category,
-    //   manufacturer:editProduct.manufacturer,
-    //   unit:editProduct.unit,
-    //   isBanned:editProduct.isBanned
-    // }
-
-    console.log('edit product')
 
     this.editedProductId=editProduct.id;
     this.newProductForm={
@@ -178,20 +113,51 @@ export class ProductsComponent implements OnInit {
 
   remove(removeProduct:ProductInfo){
     this.updateService.remove(removeProduct.id);
-    //this.signalrService.removeProduct(removeProduct.id);
   }
 
   update(updateProduct:NewProductForm){
-    updateProduct.storageId=0;
-    //this.updateService.updateProduct(updateProduct,this.editedProductId);
-    
+    this.updateService.updateProduct(updateProduct,this.editedProductId);    
   }
 
   closeEditPage(){
-    console.log("closeEditPage")
     this.setStatePage("",true)
-    //this.editProductMode=false;
     this.editedProductId=0;
+  }
+
+  openProductInfo(product:ProductInfo){
+    this.setStatePage("productInfo",false);
+    this.selectedProduct = product;
+    console.log(this.selectedProduct)
+  }
+
+  closeProductInfo(){
+    this.setStatePage("",true);
+  }
+  sortCol(header:HeaderTable){
+    console.log("sortBy");
+    if (!header.isActive) return;
+    let criteria = header.title;
+    criteria===this._sortCriteria
+      ? this._ascDirection *= -1
+      : this._ascDirection = 1;
+    
+    this._sortCriteria=criteria;
+    let orderedUsersInfo= this.productsInfo.sort((a:ProductInfo,b:ProductInfo)=>{
+      let orderItemFirst=a[criteria];
+      let orderItemSecond=b[criteria];
+      const less = -1 * this._ascDirection;
+      const more = 1 * this._ascDirection;
+
+      if (typeof orderItemFirst === 'string') {
+        return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
+      } else if (typeof orderItemFirst ==='number'){
+        return orderItemFirst <= orderItemSecond ? less:more
+      }  else {
+        return orderItemFirst.title <= orderItemSecond.title ? less : more;
+      }
+      
+    })
+    this.productsInfo=orderedUsersInfo;
   }
   private setStatePage(path: string, isActive: boolean) {
     this.pageState={
@@ -200,28 +166,7 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  sortCol(criteria:string){
-    // console.log("sortBy");
-    // criteria===this._sortCriteria
-    //   ? this._ascDirection *= -1
-    //   : this._ascDirection = 1;
-    
-    // this._sortCriteria=criteria;
-    // let orderedUsersInfo= this.usersInfo.sort((a:UserInfo,b:UserInfo)=>{
-    //   let orderItemFirst=a[criteria];
-    //   let orderItemSecond=b[criteria];
-    //   const less = -1 * this._ascDirection;
-    //   const more = 1 * this._ascDirection;
-
-    //   if (typeof orderItemFirst === 'string') {
-    //     return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
-    //   } else {
-    //     return orderedUsersInfo <= orderItemSecond ? less : more;
-    //   }
-      
-    // })
-    // this.usersInfo=orderedUsersInfo;
-  }
+  
 
   private getHeadersTable():HeaderTable[]{
     const headers= [{
@@ -272,7 +217,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private getStorages(){
-    this.storageService.getStoragesByAccess()
+    this.storageService.getStoragesByAccess("ProductManager")
       .subscribe(storages=>{
         this.storages=storages;
         console.log(this.storages)

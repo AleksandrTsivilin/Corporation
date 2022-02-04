@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 //import { Category, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
-import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
+//import { FormMoveProducts } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
 import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
@@ -21,7 +21,7 @@ export class ProductsService {
   }
 
   getProductsByUser(){
-    const urlGetProducts="https://localhost:5001/api/Product/productsByUser";
+    const urlGetProducts="https://localhost:5001/api/Product/ByUser";
     return this.client.get<ProductInfo[]>(urlGetProducts);
   }
 

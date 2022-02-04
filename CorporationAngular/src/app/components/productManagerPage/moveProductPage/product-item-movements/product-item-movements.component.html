@@ -11,9 +11,9 @@
     <td class="product-item">
         <input 
             type="checkbox"                  
-            [(ngModel)]="productInfo.isChecked"
+            [(ngModel)]="productInfo.isSelected"
             name="'checkbox'+{{numProduct}}" 
-            [checked]="productInfo.isChecked" 
+            [checked]="productInfo.isSelected" 
             (change)="checkedProduct(productInfo)"      
         > 
         
@@ -23,7 +23,7 @@
             type="text"
             [(ngModel)]="productInfo.countMoved"
             name="'countMoved'+{{numProduct}}"        
-            [disabled]="!productInfo.isChecked" 
+            [disabled]="!productInfo.isSelected" 
             (change)="changeCount()"            
         >
     </td>

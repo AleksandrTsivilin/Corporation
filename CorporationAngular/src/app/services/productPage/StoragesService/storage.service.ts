@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 
@@ -9,13 +9,15 @@ export class StorageService {
 
   constructor(private readonly client:HttpClient) { }
 
-  getStorageByUser(){
+  getStorageByUser(key:string){
     const urlGetStorageByUser="https://localhost:5001/api/Storage/ByUser";
-    return this.client.get<StorageInfo>(urlGetStorageByUser);
+    const params = new HttpParams().set("key",key);
+    return this.client.get<StorageInfo>(urlGetStorageByUser,{params:params});
   }
 
-  getStoragesByAccess(){
+  getStoragesByAccess(key:string){
     const urlGetStoragesByAccess="https://localhost:5001/api/Storage/ByAccess";
-    return this.client.get<StorageInfo[]>(urlGetStoragesByAccess);
+    const params = new HttpParams().set("key",key);
+    return this.client.get<StorageInfo[]>(urlGetStoragesByAccess,{params:params});
   }
 }

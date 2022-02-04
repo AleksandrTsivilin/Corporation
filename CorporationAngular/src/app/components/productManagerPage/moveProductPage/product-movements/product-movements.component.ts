@@ -1,8 +1,11 @@
 
 import { Component, OnInit } from '@angular/core';
-import { FormMoveProducts } from 'src/app/interfaces/formMoveProduct';
+
+//import { FormMoveProducts } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
+import { MovedProductAction } from 'src/app/interfaces/product/MovementProductManagerPage/movedProductAction';
+import { MovementProductForm } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
@@ -19,17 +22,18 @@ import { ProductUpdateService } from 'src/app/services/productPage/updateService
 })
 export class ProductMovementsComponent implements OnInit {
 
-  formMovedProducts:FormMoveProducts={
-    from:"",
-    to:"",
-    movedProducts:[]
+  formMovedProducts:MovementProductForm={
+    from:0,
+    to:0,
+    movementProducts:[]
   }
 
   
 
-  currentStorage:string="";
+  currentStorage:StorageInfo={id:0,title:""};
 
   avaiableStorages:StorageInfo[]=[];
+  movedProductActions:MovedProductAction [] = [];
 
   headersTable:HeaderTable[]=[];
   totalMoved:number=0;
@@ -40,73 +44,62 @@ export class ProductMovementsComponent implements OnInit {
   }
 
   constructor(
-      //private service:ProductsService,
+      
       private readonly updateService:MovementsUpdateService,
       private readonly updateServiceProduct:ProductUpdateService,
       private readonly storageService:StorageService,
       private readonly productService:ProductsService
-      //private readonly serviceUpdate:UpdateService,
-      //private readonly signalrService:SignalrProductService
+     
       ) { }
 
   ngOnInit(): void {
 
     this.headersTable= this.getHeadersTable();
     this.getCurrentStorage();
-    console.log(this.currentStorage)
-       
-    this.setFormMovedProduct();    
+    
+    this.createMovedProductAction();   
     this.getAvaiableStorages();
     
-    this.updateService.movementsProduct$.subscribe((result)=>{
-      console.log("sub productstorage")
-      result.forEach(r=>{
-        if (r===this.currentStorage){
-          console.log("compare")
-          this.setFormMovedProduct();
-
-        }
-          
-      })
-      // if (result.length===0) return;
-      // const storageFrom=result[0];
-      // const storageTo=result[1];
-      // if (storageFrom.storage===this.currentStorage.title){
-      //   this.updateMovedProduct(storageFrom.products);
-      // }
-      // if (storageTo.storage==this.currentStorage.title)
-      //   this.updateMovedProduct(storageTo.products);
-    })
+    
 
 
-  this.updateServiceProduct.changesProductStorage$.subscribe((result)=>{
-    result.forEach(r=>{
-      if (r===this.currentStorage){
-        console.log("compare")
-        this.setFormMovedProduct();
-
-      }
-        
+  this.updateServiceProduct.changesProductStorage$
+  .subscribe((changedStorages)=>{
+    console.log("movements update");
+    changedStorages.forEach(storage=>{
+      if (storage===this.currentStorage.id)
+      this.createMovedProductAction();
     })
   })
 
   }
 
   onSubmit(){  
-    console.log(this.formMovedProducts)
+    console.log(this.movedProductActions)
+
+    this.formMovedProducts.from = this.currentStorage.id;
+    const movedProduct = this.movedProductActions
+    .filter(product=>product.isSelected);
+    this.formMovedProducts.movementProducts=[];
+    movedProduct.forEach(product=>{
+      this.formMovedProducts.movementProducts.push({
+        productId:product.id,
+        movedCount:product.countMoved
+      })
+    })
+    
     this.updateService.moveProducts(this.formMovedProducts);        
   }
 
   change(){
-    const totalProducts =this.formMovedProducts.movedProducts
-      .filter(p=>p.isChecked)
-      .map(p=>p.price*p.countMoved);
     
+    const totalProducts = this.movedProductActions
+    .filter(product=>product.isSelected)
+    .map(product=>product.price*product.countMoved);
     this.totalMoved = totalProducts.length>0
       ? totalProducts.reduce((a,b)=>a+b)
       : 0;
-      console.log(this.totalMoved);
-    
+      
   }
 
   private getHeadersTable():HeaderTable[]{
@@ -136,15 +129,6 @@ export class ProductMovementsComponent implements OnInit {
     return headers;
   }
 
-  private setFormMovedProduct(){
-    this.productService.getProductsByUser()
-      .subscribe((products)=>{
-        this.setStatePage("",true);
-        this.setMovedProduct(products);        
-      },()=>{
-        this.setStatePage("responce500",false);
-      })
-  }
   private setStatePage(path: string, isActive: boolean) {
     this.pageState={
       path:path,
@@ -155,39 +139,48 @@ export class ProductMovementsComponent implements OnInit {
   private updateMovedProduct(products:ProductInfo[]){
     if (products ===undefined) return;
     
-    this.formMovedProducts.movedProducts=[];
-    this.setMovedProduct(products);    
+    this.formMovedProducts.movementProducts=[];
+    
   }
 
-  private setMovedProduct(products:ProductInfo[]) {
-    this.formMovedProducts.movedProducts=[];
-    for (let product of products){
-      if (product.isBanned) continue;
-      this.formMovedProducts.movedProducts.push({
+  
+  private createMovedProductAction(){
+    this.productService.getProductsByUser()
+      .subscribe((products)=>{
+        this.setStatePage("",true);
+        this.setMovedProductAction(products);       
+      },(products)=>{
+        console.log(products)
+        this.setStatePage("responce500",false);
+      })
+  }
+  private setMovedProductAction(products : ProductInfo[]){
+    this.movedProductActions=[];
+    products.forEach(product=>{
+    if (!product.isBanned) this.movedProductActions.push({
         id:product.id,
         title:product.title,
         avaiableCount:product.count,
         countMoved:0,
-        isChecked:false,
+        isSelected:false,
         price:product.price,
         unit:product.unit.title
-      })
-    }
-    console.log(this.formMovedProducts.movedProducts)
+    })
+    })
   }
   private getCurrentStorage(){
-    this.storageService.getStorageByUser()
+    this.storageService.getStorageByUser("ProductMovementManager")
     .subscribe((result)=>{
-      this.currentStorage=result.title;
-      this.formMovedProducts.from=this.currentStorage;
+      this.currentStorage=result;
+      this.formMovedProducts.from=this.currentStorage.id;
     },()=>{console.log("failed getStorageUser")});
   }
 
   private getAvaiableStorages(){
-    this.storageService.getStoragesByAccess()
+    this.storageService.getStoragesByAccess("ProductMovementManager")
       .subscribe((result)=>{
         this.avaiableStorages=result
-        .filter(storage=>storage.title!==this.currentStorage);
+        .filter(storage=>storage.title!==this.currentStorage.title);
       },()=>{console.log("failed getStorage")})
   }
 

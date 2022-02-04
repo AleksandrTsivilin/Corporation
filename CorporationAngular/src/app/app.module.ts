@@ -28,6 +28,7 @@ import { CreateAccountComponent } from './components/loginPageComponent/create-a
 import { AddUserComponent } from './components/userManagerPage/add-user/add-user.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { PersonalUserDataComponent } from './components/personalDataPage/personal-user-data/personal-user-data.component';
+import { ProductItemInfoComponent } from './components/productManagerPage/productPage/product-item-info/product-item-info.component';
 
 
 
@@ -57,7 +58,8 @@ import { PersonalUserDataComponent } from './components/personalDataPage/persona
     Responce500Component,
     CreateAccountComponent,
     AddUserComponent,
-    PersonalUserDataComponent
+    PersonalUserDataComponent,
+    ProductItemInfoComponent
     
     
   ],

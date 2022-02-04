@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MovedProduct } from 'src/app/interfaces/formMoveProduct';
+import { MovedProductAction } from 'src/app/interfaces/product/MovementProductManagerPage/movedProductAction';
+//import { MovedProduct } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
 
 @Component({
   selector: 'tr[app-product-item-movements]',
@@ -9,14 +10,14 @@ import { MovedProduct } from 'src/app/interfaces/formMoveProduct';
 export class ProductItemMovementsComponent implements OnInit {
 
   @Input() numProduct:number=0;
-  @Input() productInfo:MovedProduct={
+  @Input() productInfo:MovedProductAction={
     id:0,
     title:"",
     avaiableCount:0,
     countMoved:0,
-    isChecked:false,
     price:0,
-    unit:""
+    unit:"",
+    isSelected:false
   }
 
   @Output() onCountMoved=new EventEmitter();
@@ -25,11 +26,11 @@ export class ProductItemMovementsComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  checkedProduct(checkedProduct:MovedProduct){
-    checkedProduct.countMoved= checkedProduct.isChecked
+  checkedProduct(checkedProduct:MovedProductAction){
+    checkedProduct.countMoved= checkedProduct.isSelected
       ?checkedProduct.avaiableCount
       :0;
-
+      console.log("checked product")
       this.onCountMoved.emit();
   }
 

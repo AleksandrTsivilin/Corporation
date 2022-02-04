@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 //import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { PageState } from 'src/app/interfaces/pageState';
-import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
+import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
@@ -99,8 +99,8 @@ export class EditProductComponent implements OnInit {
 
   onSubmit(){
     //console.log(this.formEditProduct)
-    console.log(this.newProductForm)
-    //this.updateProduct.emit(this.newProductForm);
+    //console.log(this.newProductForm)
+    this.updateProduct.emit(this.newProductForm);
   }
 
   closeEditPage(){

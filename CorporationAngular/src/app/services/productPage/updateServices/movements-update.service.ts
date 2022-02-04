@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { FormMoveProducts, MovementsProduct } from 'src/app/interfaces/formMoveProduct';
+import { BehaviorSubject, fromEventPattern } from 'rxjs';
+import { MovementProduct } from 'src/app/interfaces/product/MovementProductManagerPage/movementProduct';
+import { MovementProductForm } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
+//import { FormMoveProducts, MovementsProduct } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
 import { MovementsSignalrService } from '../signalrServices/movements-signalr.service';
 
 @Injectable({
@@ -8,7 +10,7 @@ import { MovementsSignalrService } from '../signalrServices/movements-signalr.se
 })
 export class MovementsUpdateService {
 
-  movementsProduct$=new BehaviorSubject<string []>([]);
+  movementsProduct$=new BehaviorSubject<number[]>([]);
 
   constructor(private readonly signalr:MovementsSignalrService) { 
     if (!signalr.isConnection)
@@ -16,26 +18,33 @@ export class MovementsUpdateService {
     this.productStorageOnLis();
   }
 
-  moveProducts(form:FormMoveProducts){
-   
-    console.log("moveProduct moveUpdateService")
-    const movedProducts={
-      from:form.from,
-      to:form.to,
-      movedProducts:form.movedProducts
-        .filter(p=>p.isChecked)
-        .map(p=>({id:p.id, countMoved:Number(p.countMoved)}))
-    }
+  moveProducts(form:MovementProductForm){
+   const addedMovements = this.convertForm(form);
     
-    this.signalr.hubConnection?.invoke("MoveProducts",movedProducts)
+    this.signalr.hubConnection?.invoke("MoveProducts",addedMovements)
       .then()
       .catch(err=>{console.error(err)}) ;
+  }
+  convertForm(form: MovementProductForm) : MovementProductForm{
+    const addedMovementProducts = [] as MovementProduct[];
+    form.movementProducts.forEach(movement=>{
+      addedMovementProducts.push({
+        productId: Number ( movement.productId),
+        movedCount: Number (movement.movedCount)
+      })
+    })
+    return {
+      from:Number(form.from),
+      to:Number(form.to),
+      movementProducts:addedMovementProducts
+    }
   }
   
   private productStorageOnLis() {
     this.signalr.hubConnection
-      ?.on("movementsProduct",(movements:string[])=>{
-        this.movementsProduct$.next(movements);
+      ?.on("changeProducts",(changedStorages:number[])=>{
+        console.log("movements lis")
+        this.movementsProduct$.next(changedStorages);
     })
   }
 }

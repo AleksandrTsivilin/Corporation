@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
-import { NewProductForm } from 'src/app/interfaces/productManagerPage/newProductForm';
+import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
@@ -79,7 +79,7 @@ export class AddProductComponent implements OnInit {
   }
 
   private getCurrentStorage(){
-    this.storageService.getStorageByUser()
+    this.storageService.getStorageByUser("ProductManager")
       .subscribe((result)=>{
         this.currentStorage=result;
       },()=>{

@@ -26,7 +26,7 @@
           <th           
             class="sticky top-0 px-6 py-3 text-red-900 bg-red-300 header"
             *ngFor="let header of headersTable"
-            (click)=sortCol(header.title)
+            (click)=sortCol(header)
             [ngClass]="{'active-header':header.isActive}"
           >
             
@@ -44,7 +44,8 @@
           [productInfo]="productInfo" 
           [avaiablesPermissions]="avaiablesPermissions"
           (edit)="startEdit(productInfo)"
-          (remove)="remove(productInfo)"        
+          (remove)="remove(productInfo)"
+          (openProductInfo) = "openProductInfo(productInfo)"        
         >  
         </tr>    
       </tbody>
@@ -72,6 +73,12 @@
       
     >
     </app-responce500>
+    <app-product-item-info
+      *ngSwitchCase="'productInfo'"
+      [product]="selectedProduct"
+      (close)="closeProductInfo()"
+    >
+    </app-product-item-info>
   </div>
 </ng-template>
 

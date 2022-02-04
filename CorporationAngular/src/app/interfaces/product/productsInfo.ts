@@ -4,6 +4,7 @@ import { UnitInfo } from "./unitManagerPage/unitInfo";
 
 
 export interface ProductInfo{
+    [x: string]: any;
     id:number,
     title:string,
     count:number,
