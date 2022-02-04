@@ -76,10 +76,10 @@ namespace Services.ProductService.MovementsService
         //    };
         //}
 
-        private Storage GetStorageByTitle(string title)
-        {
-            return _context.Storages.FirstOrDefault(s => s.Title == title);
-        }
+        //private Storage GetStorageByTitle(string title)
+        //{
+        //    return _context.Storages.FirstOrDefault(s => s.Title == title);
+        //}
     }
 }
 

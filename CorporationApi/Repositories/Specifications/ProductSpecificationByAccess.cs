@@ -7,26 +7,25 @@ using System.Threading.Tasks;
 
 namespace Repositories.Specifications
 {
-    public class ProductSpecificationByAccess : BaseSpecification<Product>
+    public class ProductSpecificationByAccess : BaseSpecification<ProductStorage>
     {
         public ProductSpecificationByAccess(IdentityUserModel identity)
         {
             switch (identity.Access)
             {
                 case "Full":
-                    Expression = product => true;
+                    Expression = productStorage => true;
                     break;
                 case "Region":
-                    Expression = product => product.ProductStorages
-                       .Any<ProductStorage>(ps => ps.Storage.Department.Factory.Region.Id == identity.Location.RegionId);
+                    Expression = productStorage => productStorage
+                        .Storage.Department.Factory.RegionId == identity.Location.RegionId;
                     break;
                 case "Factory":
-                    Expression = product => product.ProductStorages
-                        .Any<ProductStorage>(ps => ps.Storage.Department.FactoryId == identity.Location.FactoryId);
+                    Expression = productStorage => productStorage.Storage.Department.FactoryId == identity.Location.FactoryId;
                     break;
                 case "Department":
-                    Expression = product => product.ProductStorages
-                         .Any<ProductStorage>(ps => ps.Storage.DepartmentId == identity.Location.DepartmentId);
+                    Expression = productStorage => productStorage
+                    .Storage.DepartmentId == identity.Location.DepartmentId;
                     break;
             }
         }

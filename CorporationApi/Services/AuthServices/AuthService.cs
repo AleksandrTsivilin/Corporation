@@ -69,7 +69,7 @@ namespace Services.AuthServices
             return new JwtSecurityToken
             (
                 notBefore: now,
-                expires: now.AddMinutes(2),
+                expires: now.AddDays(2),
                 claims: claims,
                 signingCredentials: new SigningCredentials(
                     new SymmetricSecurityKey(

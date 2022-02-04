@@ -261,7 +261,7 @@ namespace Repositories.UserRepositories
             var addedPermissions = new List<AvaiablesUserPermission>();
             foreach (var addedPermissionId in newAvaiable.PermissionsId)
             {
-                var permission = GetEntityById<Permission>(addedPermissionId);
+                var permission = await GetEntityById<Permission>(addedPermissionId);
 
                 if (permission is null) 
                     throw new Exception();

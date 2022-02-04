@@ -61,21 +61,37 @@ namespace Repositories.ProductRepositories
             }
         }
 
-        public async Task<List<Product>> GetByAccess(ProductSpecificationByAccess specification)
+        public async Task<List<Product>> GetByAccess(
+            ProductSpecificationByAccess specification)
         {
-            var products = await _context.Products
-                .Include(p => p.Manufacture)
-                .Include(p => p.Category)
-                .Include(p => p.Unit)
-                .Include(p => p.ProductStorages)
-                .ThenInclude(ps => ps.Storage)
-                .ThenInclude(s => s.Department)
-                .ThenInclude(d => d.Factory)
-                .ThenInclude(f => f.Region)
+            //var products = await _context.Products
+            //    .Include(p => p.Manufacture)
+            //    .Include(p => p.Category)
+            //    .Include(p => p.Unit)
+            //    .Include(p => p.ProductStorages)
+            //    .ThenInclude(ps => ps.Storage)
+            //    .ThenInclude(s => s.Department)
+            //    .ThenInclude(d => d.Factory)
+            //    .ThenInclude(f => f.Region)
+            //    .Where(specification.Expression)
+            //    .ToListAsync();
+            var productStorage = await _context.Product_Storage
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Manufacture)
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Category)
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Unit)
+                .Include(ps => ps.Storage)
+                    .ThenInclude(storage => storage.Department)
+                        .ThenInclude(department => department.Factory)
+                            .ThenInclude(factory => factory.Region)
                 .Where(specification.Expression)
+                
                 .ToListAsync();
+
            
-            return products;
+            return productStorage.Select(ps=>ps.Product).Distinct<Product>().ToList();
         }
 
         public async Task<List<int>> Remove(int id)
