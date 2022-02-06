@@ -20,4 +20,8 @@ export class StorageService {
     const params = new HttpParams().set("key",key);
     return this.client.get<StorageInfo[]>(urlGetStoragesByAccess,{params:params});
   }
+  getCount(){
+    const urlGetCount="https://localhost:5001/api/Storage/count";
+    return this.client.get<number>(urlGetCount);
+  }
 }

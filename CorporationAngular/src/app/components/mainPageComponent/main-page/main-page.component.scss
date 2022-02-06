@@ -1,3 +1,165 @@
-.container-header{
-    background-color: brown;
+
+
+.main-page-container{
+    .main-page{
+        height: 800px;
+        @apply flex flex-col ;
+
+        .main-header-container{
+            @apply flex-none;
+            .main-header{
+                @apply flex;
+                @apply h-auto;
+                @apply p-2;
+                @apply py-4;
+                @apply mx-48;
+        
+                .logo-container{
+                    @apply flex-none;
+                    @apply w-48;
+                    @apply border-2 border-white;
+                }
+        
+                .logo-container:hover{
+                    @apply cursor-pointer;
+                    @apply border-2 border-blue-900;
+                }
+                .navigation-container{
+                    @apply flex-1;
+                    @apply my-auto;
+                    @apply text-white;
+                    @apply text-xl;
+                    @apply font-bold;
+        
+                    .navigation{
+                        @apply flex justify-end;
+                        @apply gap-x-9;
+        
+                        .navigation-tag:hover{
+                            @apply text-red-600;
+                            @apply cursor-pointer;
+                            @apply pb-0;
+                            @apply border-b-2 border-red-600;
+                        }
+                        .navigation-tag{
+                            @apply pb-2;
+                        }
+                        
+                    }
+                }
+            }
+        }
+        .tag-line-container{
+            @apply flex flex-1;
+          
+            @apply text-center;
+            @apply text-red-600;
+            @apply text-6xl;
+            @apply font-bold;
+            @apply m-auto;
+    
+            .tag-line{
+                
+                @apply my-auto;
+                
+            }
+        }
+
+        .global-information-container{
+            @apply flex-none;
+            
+            @apply pb-8;
+            .global-information{
+                
+
+                
+    
+                .info-card-container{
+                    @apply  flex justify-evenly;
+                    
+                    @apply gap-x-9;
+                    
+                    .info-card{
+                        
+                        @apply text-red-600;
+                        @apply font-bold;
+                        
+    
+                        .title{
+    
+                        }
+                        .value-unit{
+                            @apply flex;
+                            @apply gap-x-2;
+                        }
+                        .value{
+                            @apply text-6xl;
+    
+                        }
+                        .unit{
+                            @apply pt-2;
+                            
+                        }
+                    }
+                }
+            }
+    
+        }
+        
+    }
+    .main-page-short{
+        @apply h-auto ;
+        @apply bg-blue-900;
+
+        
+        .main-header-container{
+           
+            .main-header{
+                @apply flex;
+                @apply h-auto;
+                @apply p-2;
+                @apply py-4;
+                @apply mx-48;
+        
+                .logo-container{
+                    @apply flex-none;
+                    @apply w-48;
+                    @apply border-2 border-white;
+                }
+        
+                .logo-container:hover{
+                    @apply cursor-pointer;
+                    @apply border-2 border-blue-900;
+                }
+                .navigation-container{
+                    @apply flex-1;
+                    @apply my-auto;
+                    @apply text-white;
+                    @apply text-xl;
+                    @apply font-bold;
+        
+                    .navigation{
+                        @apply flex justify-end;
+                        @apply gap-x-9;
+        
+                        .navigation-tag:hover{
+                            @apply text-red-600;
+                            @apply cursor-pointer;
+                            @apply pb-0;
+                            @apply border-b-2 border-red-600;
+                        }
+                        .navigation-tag{
+                            @apply pb-2;
+                        }
+                        
+                    }
+                }
+            }
+        }
+    }
+
+    
+
+    
+    
 }
