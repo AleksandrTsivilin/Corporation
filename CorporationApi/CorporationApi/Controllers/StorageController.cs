@@ -46,6 +46,12 @@ namespace CorporationApi.Controllers
             var storage = await Task.Run(() => _service.GetStorageByAccess(identity));
             return Ok(storage);
         }
+        [HttpGet("count")]
+        public async Task<IActionResult> GetCount()
+        {
+            var count = await Task.Run(() => _service.GetCount());
+            return Ok(count);
+        }
 
         private IdentityUserModel GetIdentityInfo(string key)
         {

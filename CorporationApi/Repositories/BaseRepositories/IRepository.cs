@@ -9,5 +9,6 @@ namespace Repositories
     public interface IRepository<T>
     {
         Task<IEnumerable<T>> Get();
+        Task<int> GetCount();
     }
 }

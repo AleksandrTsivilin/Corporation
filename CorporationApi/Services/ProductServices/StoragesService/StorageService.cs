@@ -25,6 +25,11 @@ namespace Services.ProductServices.StoragesService
             _repository = repository;
         }
 
+        public async Task<int> GetCount()
+        {
+            return await _repository.GetCount();
+        }
+
         public async Task<List<StorageModel>> GetStorageByAccess(IdentityUserModel identity)
         {
             var specification = new StorageSpecificationByAccess(identity);

@@ -20,5 +20,11 @@ namespace Repositories.BaseRepositories
         {
             return await _context.Set<T>().ToListAsync();
         }
+
+        public async Task<int> GetCount()
+        {
+            return await _context.Set<T>()
+                .CountAsync();
+        }
     }
 }
