@@ -1,5 +1,6 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 
@@ -19,17 +20,30 @@ export class MainPageComponent implements OnInit {
 
   private counterDelay=20;
 
-  constructor(private readonly router:Router,
+  constructor(
+    //private readonly route:ActivatedRoute,
+    private readonly location:Location,
+    private readonly router:Router,
     private readonly authService:AuthService,
-    private readonly storageService:StorageService) {}
+   
+    ) {}
 
   ngOnInit(): void {
+    console.log('on init main page')
     this.authService.token$.subscribe(result=>{
       this.isLogin = result ===null
         ? false
         : true; 
-        if (!this.isLogin) this.router.navigate(['']);          
+                 
     })
+    
+    this.router.events.subscribe(x=>{
+      console.log(x);
+      console.log(this.location.path())
+      const path = this.location.path();
+      if (path!=="") this.isShortMainPage=true;
+    })
+    
     this.getGlobalInformation();
   }
   

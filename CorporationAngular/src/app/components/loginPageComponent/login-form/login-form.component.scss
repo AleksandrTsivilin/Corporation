@@ -1,44 +1,8 @@
-.login-page{
-    @apply h-full;
-    @apply flex items-center justify-center;
-    @apply py-12 px-4;
+
+
+.warning-message{
+    @apply text-red-600;
+    @apply pl-2;
     
-
-    .login-form-container{
-        @apply w-96;  
-
-        .login-form{
-            
-            .input-data{
-                @apply appearance-none;
-                @apply rounded;
-                @apply w-full;
-                @apply px-3 py-2 my-2;
-                @apply border border-blue-600;
-                @apply placeholder-gray-500;
-                @apply text-gray-900;
-            }
-
-            .btn-submit{
-                @apply rounded;
-                @apply w-full;
-                @apply px-3 py-2 my-2;
-                @apply bg-green-500;
-                @apply text-white font-bold;
-
-            }
-
-            .btn-submit:hover{
-                @apply bg-green-700;
-            } 
-
-            .btn-disabled{
-                @apply rounded;
-                @apply w-full;
-                @apply px-3 py-2 my-2;
-                @apply bg-green-200;
-                @apply text-white font-bold;
-            }
-        }
-    }
 }
+
