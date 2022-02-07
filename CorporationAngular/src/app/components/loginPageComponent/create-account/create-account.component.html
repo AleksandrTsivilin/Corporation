@@ -1,75 +1,107 @@
 
-<div class="login-page">
-    <div class="login-form-container">
-        <form
-            class="login-form"
-            (ngSubmit)="onSubmit(); newUserForm.resetForm();"
-            #newUserForm="ngForm" 
-        >
+<div 
+    class="pt-48">
+    <div 
+        class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div 
+            class="max-w-md w-full space-y-8">
             <div>
-                <span 
-                    class="warning-message"
-                    *ngIf="login.touched && login.invalid"
-                >
-                    ⚠️ input username
-                </span>
-                <input 
-                    class="input-data"
-                    [(ngModel)]="newUser.username" 
-                    placeholder="username"
-                    name="username" 
-                    required
-                    #login="ngModel"
+                <img 
+                    class="mx-auto h-12 w-auto" src="assets/images/login_form_logo.png"
                 >
                 
+                <h2 
+                    class="mt-6 text-center text-3xl font-extrabold text-gray-900"
+                >
+                    Sign in to your account
+                </h2>
+            
             </div>
-            <div>
-                <span 
-                    class="warning-message"
-                    *ngIf="password.touched && password.invalid"
-                >
-                    ⚠️ input password
-                </span>   
-                <input 
-                    class="input-data"
-                    type="password"
-                    [(ngModel)]="newUser.password" 
-                    placeholder="Password" 
-                    name="password"
-                    required
-                    #password="ngModel"
-                    
-                >
-                
-            </div>
-            <div>
-                <span 
-                    class="warning-message"
-                    *ngIf="password.touched && !isConfirmPassword()"
-                >
-                    ⚠️ input password
-                </span>   
-                <input 
-                    class="input-data"
-                    type="password"
-                    [(ngModel)]="confirmPassword" 
-                    placeholder="Password" 
-                    name="confirm"
-                    required
-                    #password="ngModel"
-                    
-                >
-                
-            </div>
-            <button 
-                [ngClass]="newUserForm.invalid || !isConfirmPassword()? 'btn-disabled' : 'btn-submit'"
-                
-                type="submit"
-                [disabled]="newUserForm.invalid || !isConfirmPassword()"
+            <form 
+                class="mt-8 space-y-6" 
+                (ngSubmit)="onSubmit(); newUserForm.resetForm();"
+                #newUserForm="ngForm" 
             >
-                    Login
-            </button>
-        </form>
+            
+            
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <span 
+                            class="warning-message"
+                            *ngIf="login.touched && login.invalid else addedSpace"
+                        >
+                            ⚠️username is incorrect
+                        </span>
+                        <input 
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 my-2 border-1 border-gray-900 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
+                            [(ngModel)]="newUser.username"
+                            name="username" 
+                            type="text"
+                            placeholder="username"
+                            required                             
+                            #login="ngModel"
+                        >
+                    </div>
+                    <div>
+                        <span 
+                            class="warning-message"
+                            *ngIf="password.touched && password.invalid else addedSpace"
+                        >
+                            ⚠️password is incorrect
+                        </span> 
+                        <input 
+                            class="appearance-none rounded-none relative block w-full px-3 py-2 my-2 border-1 border-gray-900 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            [(ngModel)]="newUser.password"
+                            #password="ngModel"
+                            name="password" 
+                            type="password" 
+                            autocomplete="current-password" 
+                            required 
+                            placeholder="Password">
+                    </div>
+                    <div>
+                        <span 
+                            class="warning-message"
+                            *ngIf="password.touched && !isConfirmPassword() else addedSpace"
+                        >
+                            ⚠️ confirm password is incorrect
+                        </span>   
+                        <input 
+                        class="appearance-none rounded-none relative block w-full px-3 py-2 my-2 border-1 border-gray-900 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            type="password"
+                            [(ngModel)]="confirmPassword" 
+                            placeholder="Confirm password" 
+                            name="confirm"
+                            required
+                            #password="ngModel"
+                            [disabled]="!isHasPassword()"
+                            
+                        >
+                        
+                    </div>
+                </div>
+    
+                <div>
+                    <button 
+                        class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        type="submit"
+                        [disabled]="newUserForm.invalid || !isConfirmPassword()" 
+                    >
+                            <span 
+                                class="absolute right-0 inset-y-0 flex items-center pr-3"
+                                *ngIf="newUserForm.invalid || !isConfirmPassword()"
+                            >
+                                🔓
+                            </span>
+                        Sign in
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
+
+<ng-template #addedSpace>
+    <br>
+</ng-template>
 

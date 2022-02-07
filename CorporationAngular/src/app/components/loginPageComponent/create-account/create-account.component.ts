@@ -33,7 +33,6 @@ export class CreateAccountComponent implements OnInit {
       .subscribe((params ) => {
         
         const id = params.get(" id");
-        console.log(id)
         id !==null 
           ? this.newUser.registrationId = Number(id)
           : console.log("incorrect enter ");   
@@ -49,6 +48,10 @@ export class CreateAccountComponent implements OnInit {
   }
   isConfirmPassword(){
     return this.newUser.password===this.confirmPassword;
+  }
+
+  isHasPassword(){
+    return this.newUser.password!=='';
   }
 }
 
