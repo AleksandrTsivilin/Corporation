@@ -200,6 +200,9 @@ export class ProductsComponent implements OnInit {
     },{
       title:"price",
       isActive:true
+    },{
+      title:"view",
+      isActive:false
     }];
 
     if (this.avaiablesPermissions.canUpdate) {

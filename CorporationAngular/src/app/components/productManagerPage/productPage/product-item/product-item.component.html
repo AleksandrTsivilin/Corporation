@@ -1,66 +1,73 @@
 
-<td class="product-counter"  [ngClass]="{'warning':productInfo.isBanned}">
+<td 
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
+    [ngClass]="{'warning':productInfo.isBanned}"
+>
     {{numProduct}}
 </td>
 <td 
-    class="product-item" 
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500" 
     [ngClass]="{'warning':productInfo.isBanned}"
-    (click)="openProductItemInfo()"
 >
     {{productInfo.title}}
 </td>
 <td 
-    class="product-item" 
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
     [ngClass]="{'warning':productInfo.isBanned}"
-    (click)="openProductItemInfo()" 
 >
     {{productInfo.manufacturer.title}}
 </td>
 <td 
-    class="product-item" 
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500" 
     [ngClass]="{'warning':productInfo.isBanned}"
-    (click)="openProductItemInfo()"
 >
     {{productInfo.category.title}}
 </td>
 <td 
-    class="product-item" 
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
     [ngClass]="{'warning':productInfo.isBanned}"
-    (click)="openProductItemInfo()"
 >
     {{productInfo.count}}
 </td>
 <td 
-    class="product-item" 
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
     [ngClass]="{'warning':productInfo.isBanned}"
-    (click)="openProductItemInfo()"
 >
     {{productInfo.unit.title}}
 </td>
 <td 
-    class="product-item"
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
     [ngClass]="{'warning':productInfo.isBanned}"
-    (click)="openProductItemInfo()"
+    
 >
     {{productInfo.price}}
 </td>
 <td 
-    class="action-btn"
-    *ngIf="avaiablesPermissions.canUpdate"    
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
+    *ngIf="avaiablesPermissions.canUpdate"
+    [ngClass]="{'warning':productInfo.isBanned}"   
 >    
     <button 
-        class="btn"
-        [ngClass]="{'warning':productInfo.isBanned}"
+        *ngIf="!productInfo.isBanned" 
+        (click)="openProductItemInfo()"
+    >👁️</button>   
+</td>
+<td 
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
+    *ngIf="avaiablesPermissions.canUpdate"
+    [ngClass]="{'warning':productInfo.isBanned}"   
+>    
+    <button 
         *ngIf="!productInfo.isBanned" 
         (click)="editProduct()"
     >✏️</button>   
 </td>
 <td 
-    class="action-btn"
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
     *ngIf="avaiablesPermissions.canDelete"
+    [ngClass]="{'warning':productInfo.isBanned}"
 >    
     <button 
-        class="btn"
         (click)="removeProduct()"
         *ngIf="!productInfo.isBanned else unLock"
     >❌</button>    
