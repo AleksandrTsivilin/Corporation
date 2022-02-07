@@ -78,99 +78,331 @@
       </app-responce500>
     </div>
   </ng-template>
-<!-- <div class="flex flex-col h-full ">
-    <div class="flex overflow-auto">
-        <table class="table relative w-full">
-            <thead>
-                <tr>
-                    <th 
-                        class="sticky top-0 px-6 py-3 text-red-900 bg-red-300 header"
-                        *ngFor="let header of headersTable"
-                        [ngClass]="{'active-header':header.isActive}"
-                    >
-                        <span >
-                        {{header.title}}
-                        </span>
-                    </th>    
-                </tr>
-            </thead>
-            <tbody class="divide-y bg-red-100">
-                <tr app-product-item-movements
-                    class="product-item"                    
-                    *ngFor="let product of formMovedProducts.movedProducts let i=index"
-                    [numProduct]="i+1"
-                    [productInfo]="product" 
-                    (onCountMoved)="change()"
-                >  
-                </tr>
-            </tbody>
-        </table>
-    </div>
 
-</div> -->
-<!-- <div class="flex flex-col h-full ">
-    <div class="flex overflow-auto">
-        <table class="table relative w-full">
-            <thead>
-                <tr>
-                    <th 
-                        class="sticky top-0 px-6 py-3 text-red-900 bg-red-300 header"
-                        *ngFor="let header of headersTable"
-                        [ngClass]="{'active-header':header.isActive}"
-                    >
-                        <span >
-                        {{header.title}}
-                        </span>
-                    </th>    
-                </tr>
-            </thead>
-            <tbody class="divide-y bg-red-100">
-                <tr app-product-item-movements
-                    class="product-item"                    
-                    *ngFor="let product of formMovedProducts.movedProducts let i=index"
-                    [numProduct]="i+1"
-                    [productInfo]="product" 
-                    (onCountMoved)="change()"
-                >  
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    
+
+  <!-- component -->
+<div class="container">
+	<h1 class="mb-8">
+    Scrollable Table Fixed Height
+  </h1>
+
+	<table class="text-left w-full">
+		<thead class="bg-black flex text-white w-full">
+			<tr class="flex w-full mb-4">
+				<th class="p-4 w-1/4">One</th>
+				<th class="p-4 w-1/4">Two</th>
+				<th class="p-4 w-1/4">Three</th>
+				<th class="p-4 w-1/4">Four</th>
+			</tr>
+		</thead>
+    <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
+		<tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full" style="height: 50vh;">
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+			<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+          	<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+          	<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+          	<tr class="flex w-full mb-4">
+				<td class="p-4 w-1/4">Dogs</td>
+				<td class="p-4 w-1/4">Cats</td>
+				<td class="p-4 w-1/4">Birds</td>
+				<td class="p-4 w-1/4">Fish</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
- -->
-
-
-<!-- <div class="flex overflow-auto">
-    <table class="relative w-full border table">
-      <thead>
-        <tr>
-          <th           
-            class="sticky top-0 px-6 py-3 text-red-900 bg-red-300 header"
-            *ngFor="let header of headersTable"
-            (click)=sortCol(header.title)
-            [ngClass]="{'active-header':header.isActive}"
-          >
-            
-              {{header.title}}
-            
-          </th>    
-          
-        </tr>
-      </thead>
-      <tbody class="divide-y bg-red-100">
-        <tr app-product-item 
-        
-        
-        *ngFor="let productInfo of productsInfo let i=index"
-        [ngClass]="{'product-item-warning':productInfo.isBanned}"
-        [numProduct]="i+1"
-        [productInfo]="productInfo" 
-        [avaiablesPermissions]="avaiablesPermissions"
-        (edit)="startEdit(productInfo)"
-        (remove)="remove(productInfo)"        
-        >  
-        </tr>    
-      </tbody>
-    </table>
-  </div> -->
