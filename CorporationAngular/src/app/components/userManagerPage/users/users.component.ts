@@ -178,6 +178,9 @@ export class UsersComponent implements OnInit {
     },{
       title:"department",
       isActive:true
+    },{
+      title:"view",
+      isActive:false
     }];
 
     if (this.avaiablesPermissions.canUpdate) {

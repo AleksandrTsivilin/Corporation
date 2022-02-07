@@ -38,8 +38,6 @@ export class MainPageComponent implements OnInit {
     })
     
     this.router.events.subscribe(x=>{
-      console.log(x);
-      console.log(this.location.path())
       const path = this.location.path();
       if (path!=="") this.isShortMainPage=true;
     })
@@ -48,7 +46,6 @@ export class MainPageComponent implements OnInit {
   }
   
   toMainPage(){
-    console.log('to main page')
     this.router.navigate([''])
     this.isShortMainPage=false;
   }
