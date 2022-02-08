@@ -43,6 +43,7 @@ export class EditProductComponent implements OnInit {
   }
 
 
+
   
   @Output() updateProduct=new EventEmitter();
   @Output() close=new EventEmitter();
@@ -55,17 +56,7 @@ export class EditProductComponent implements OnInit {
   manufacturers:ManufacturerInfo[]=[];
   categories:CategoryInfo[]=[];
   units:UnitInfo[]=[];
-  //isAddGroup:boolean=false;
-
-  // formEditProduct:FormAddProduct ={
-  //   storage:"",
-  //   title:this.editProduct.title,
-  //   price:this.editProduct.price,
-  //   avaiableCount:this.editProduct.count,
-  //   category:this.editProduct.category,
-  //   manufacturer:this.editProduct.manufacturer,
-  //   unit:this.editProduct.unit
-  // }
+  
   constructor(
     private readonly service:ProductsService,
     private readonly manufacturerService:ManufacturerService,
@@ -76,30 +67,13 @@ export class EditProductComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.editProduct)
-    // this.formEditProduct={
-    //   storage:"Storage 1",
-    //   title:this.editProduct.title,
-    //   price:this.editProduct.price,
-    //   avaiableCount:this.editProduct.count,
-    //   category:this.editProduct.category,
-    //   manufacturer:this.editProduct.manufacturer,
-    //   unit:this.editProduct.unit
-    // }
+    
     this.getManufacturer();
     this.getCategories();
     this.getUnits();
-
-    // if (!this.signalrService.isConnection)
-    //   this.signalrService.startConnection();
-    //this.ManufacturerOnLis();
-    //this.CategoryOnLis();
-    //this.UnitOnLis();
   }
 
   onSubmit(){
-    //console.log(this.formEditProduct)
-    //console.log(this.newProductForm)
     this.updateProduct.emit(this.newProductForm);
   }
 
@@ -107,20 +81,25 @@ export class EditProductComponent implements OnInit {
     this.close.emit();
   }
 
-  startAddGroup(path:string){
-    this.pageState={
-      path:path,
-      isActive:false
-
-    };
+  changedPrice(){
+    const convertToNumber = Number(this.newProductForm.price);
+    return convertToNumber>0;
   }
 
-  addedGroup(){
-    this.pageState={
-      path:"",
-      isActive:true
-    }
-  }
+  // startAddGroup(path:string){
+  //   this.pageState={
+  //     path:path,
+  //     isActive:false
+
+  //   };
+  // }
+
+  // addedGroup(){
+  //   this.pageState={
+  //     path:"",
+  //     isActive:true
+  //   }
+  // }
 
   // ManufacturerOnLis(): void {
   //   this.signalrService.hubConnection?.on("manufacturerAdd", (newManufacturer:Manufacturer) => {
