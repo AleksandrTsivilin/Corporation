@@ -5,10 +5,10 @@
     isChecked:false, -->
 
 
-    <td class="product-counter">
+    <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
         {{numProduct}}
     </td>
-    <td class="product-item">
+    <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
         <input 
             type="checkbox"                  
             [(ngModel)]="productInfo.isSelected"
@@ -18,25 +18,26 @@
         > 
         
     </td>
-    <td class="product-item">
+    <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
         <input 
+            class="appearance-none rounded-none relative block w-16  px-1 py-1 my-2 border-1 border-gray-900 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
             type="text"
             [(ngModel)]="productInfo.countMoved"
             name="'countMoved'+{{numProduct}}"        
             [disabled]="!productInfo.isSelected" 
-            (change)="changeCount()"            
+            (change)="changeCount()"           
         >
     </td>
-    <td class="product-item">
+    <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
         {{productInfo.title}}
     </td>
-    <td class="product-item">
+    <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
         {{productInfo.avaiableCount}}
     </td>
-    <td class="product-item">
+    <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
         {{productInfo.unit}}
     </td>
-    <td class="product-item">
+    <td class="px-6 py-2 whitespace-no-wrap border-b border-gray-500">
         {{productInfo.price}}
     </td>
     

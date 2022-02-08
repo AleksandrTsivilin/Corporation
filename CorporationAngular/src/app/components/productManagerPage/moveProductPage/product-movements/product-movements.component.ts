@@ -1,7 +1,6 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 
-//import { FormMoveProducts } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
 import { MovedProductAction } from 'src/app/interfaces/product/MovementProductManagerPage/movedProductAction';
@@ -10,10 +9,9 @@ import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
-//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
-//import { UpdateService } from 'src/app/services/update.service';
+
 
 @Component({
   selector: 'app-product-movements',
@@ -42,8 +40,11 @@ export class ProductMovementsComponent implements OnInit {
     path:"loadingPage",
     isActive:false
   }
+
+  public currentErrors:string="";
   private _ascDirection = 1;
   private _sortCriteria="";
+  
   constructor(
       
       private readonly updateService:MovementsUpdateService,
@@ -100,11 +101,19 @@ export class ProductMovementsComponent implements OnInit {
       : 0;
       
   }
+  openWarningDialog(event:any){
+    this.currentErrors = "countMoved can't be more than avaiableCount\ncountMove"+" " + event.countMoved.toString()+"\n"
+    + "avaiableCount" + " " + event.avaiableCount.toString();
+    this.setStatePage("warningDialog",false);
+  }
+  closeWarningDialog(){
+    this.setStatePage("",true);
+  }
 
   sortCol(header:HeaderTable){
     if (!header.isActive) return;
-    header.title = this.convert(header.title);
-    let criteria = header.title;
+    const currentHeader = this.convert(header.title);
+    let criteria = currentHeader;
     console.log(criteria)
     criteria===this._sortCriteria
       ? this._ascDirection *= -1

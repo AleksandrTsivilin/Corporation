@@ -21,6 +21,8 @@ export class ProductItemMovementsComponent implements OnInit {
   }
 
   @Output() onCountMoved=new EventEmitter();
+  @Output() openWarningDialog = 
+    new EventEmitter<{countMoved:number,avaiableCount:number}>();
   constructor() { }
 
   ngOnInit(): void {
@@ -30,11 +32,16 @@ export class ProductItemMovementsComponent implements OnInit {
     checkedProduct.countMoved= checkedProduct.isSelected
       ?checkedProduct.avaiableCount
       :0;
-      console.log("checked product")
       this.onCountMoved.emit();
   }
 
   changeCount(){
+    if (this.productInfo.countMoved>this.productInfo.avaiableCount){
+      this.openWarningDialog
+        .emit({countMoved:this.productInfo.countMoved, avaiableCount:this.productInfo.avaiableCount});
+      this.productInfo.countMoved = this.productInfo.avaiableCount;
+      return;
+    }
     this.onCountMoved.emit();
   }
 

@@ -1,67 +1,98 @@
-<p>product-movements works!</p>
+
 <div 
     class="flex flex-col h-full "
     *ngIf="pageState.isActive else toMoveNextPage"
 >
+    <div 
+        class="text-center mx-2 py-4 mb-2 font-bold text-2xl text-blue-600 border-b-2 border-blue-300"    
+    >
+        product movements
+    </div>
     <form
         class="h-full"
         (ngSubmit)="onSubmit()"        
     > 
-        <div>
-            <span>from</span>
-            <h1>{{currentStorage.title}}</h1>
-        </div> 
-        <select 
-            [(ngModel)]=formMovedProducts.to
-            name="to"
-        >
-            <option
-                *ngFor="let storage of avaiableStorages" 
-                [value]="storage.id"
-                name="storageTo"                   
-            >
-                {{storage.title}}
-            </option>
-        </select>
-        <button class="btn-submit" type="submit">submit</button>
-        <div>
-            <span>{{totalMoved}}</span>
-        </div>
-        <div class="flex flex-col h-4/5 ">
-            <div class="flex overflow-auto">
-                <table class="table relative w-full">
-                    <thead>
-                        <tr>
-                            <th 
-                                class="sticky top-0 px-6 py-3 text-red-900 bg-red-300 header"
-                                *ngFor="let header of headersTable"
-                                [ngClass]="{'active-header':header.isActive}"
-                                (click)=sortCol(header)
-                            >
-                                <span >
-                                {{header.title}}
-                                </span>
-                            </th>    
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y bg-red-100">
-                        <tr app-product-item-movements
-                            class="product-item"                    
-                            *ngFor="let product of movedProductActions let i=index"
-                            [numProduct]="i+1"
-                            [productInfo]="product" 
-                            (onCountMoved)="change()"
-                        >  
-                        </tr>
-                    </tbody>
-                </table>
+        <div class="align-middle inline-block min-w-full shadow overflow-y-scroll bg-white shadow-dashboard px-8 py-2 rounded-bl-lg rounded-br-lg">
+            <div class="flex justify-between font-bold ">
+                <div class="flex my-auto gap-x-1">
+                    <span>From : </span>
+                    <h1>{{currentStorage.title}}</h1>
+                </div>
+                <div class="flex gap-x-1">
+                    <span class="my-auto">To : </span>
+                    <select 
+                        class="rounded w-96"
+                        [(ngModel)]=formMovedProducts.to
+                        name="to"
+                    >
+                        <option
+                            *ngFor="let storage of avaiableStorages" 
+                            [value]="storage.id"
+                            name="storageTo"                   
+                        >
+                            {{storage.title}}
+                        </option>
+                    </select>
+                </div>              
+            
+                <div class="flex gap-x-3 my-auto">
+                    <div>
+                        <span>Total :</span>
+                    </div>
+                    <div>
+                        <span>{{totalMoved}}</span>
+                    </div>
+                </div>
+                <button 
+                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white font-bold hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 sm:ml-3 sm:w-auto sm:text-sm" 
+                    type="submit"
+                >
+                    submit
+                </button>
             </div>
-    
         </div>
+        <div class="table-container  align-middle inline-block min-w-full shadow overflow-y-scroll bg-white shadow-dashboard px-8  rounded-bl-lg rounded-br-lg">
+    
+            <table class="min-w-full h-full">
+                <thead>
+                    <tr>                     
+                        <th 
+                            class="sticky top-0 h-16 px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-white bg-blue-900 tracking-wider"
+                            *ngFor="let header of headersTable"
+                            [ngClass]="{'active-header':header.isActive}"
+                            (click)=sortCol(header)
+                        >
+                            <div 
+                                [ngClass]="{'tooltip':header.isActive}">
+                                <span>
+                                    {{header.title}}
+                                </span>
+                                <span 
+                                    class="tooltiptext"
+                                    *ngIf="header.isActive"
+                                >sort by</span>
+                          </div>
+                        </th> 
+                    </tr>
+                </thead>
+              <tbody class="bg-white">
+                <tr app-product-item-movements
+                    class="product-item"                    
+                    *ngFor="let product of movedProductActions let i=index"
+                    [numProduct]="i+1"
+                    [productInfo]="product" 
+                    (onCountMoved)="change()"
+                    (openWarningDialog)="openWarningDialog($event)"
+                >  
+                </tr>
+              </tbody>
+          </table>
+        </div>
+    
         
     </form>
-</div> 
- 
+</div>
+
 <ng-template #toMoveNextPage>
     <div [ngSwitch]="pageState.path"
     class="h-full" >
@@ -76,333 +107,14 @@
         
       >
       </app-responce500>
+      <app-warning-dialog-movements
+        *ngSwitchCase="'warningDialog'"
+        [description]="currentErrors"
+        (closeDialog)="closeWarningDialog()"        
+      >
+      </app-warning-dialog-movements>
     </div>
-  </ng-template>
+</ng-template>
 
 
-  <!-- component -->
-<div class="container">
-	<h1 class="mb-8">
-    Scrollable Table Fixed Height
-  </h1>
-
-	<table class="text-left w-full">
-		<thead class="bg-black flex text-white w-full">
-			<tr class="flex w-full mb-4">
-				<th class="p-4 w-1/4">One</th>
-				<th class="p-4 w-1/4">Two</th>
-				<th class="p-4 w-1/4">Three</th>
-				<th class="p-4 w-1/4">Four</th>
-			</tr>
-		</thead>
-    <!-- Remove the nasty inline CSS fixed height on production and replace it with a CSS class — this is just for demonstration purposes! -->
-		<tbody class="bg-grey-light flex flex-col items-center justify-between overflow-y-scroll w-full" style="height: 50vh;">
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-			<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-          	<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-          	<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-          	<tr class="flex w-full mb-4">
-				<td class="p-4 w-1/4">Dogs</td>
-				<td class="p-4 w-1/4">Cats</td>
-				<td class="p-4 w-1/4">Birds</td>
-				<td class="p-4 w-1/4">Fish</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+  
