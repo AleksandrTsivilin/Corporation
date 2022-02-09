@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './components/appComponent/app.component';
@@ -72,6 +74,13 @@ import { WarningDialogMovementsComponent } from './components/productManagerPage
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      enableHtml:true,
+      timeOut:3000,
+      positionClass:'toast-top-right',
+      preventDuplicates:false
+    })
   ],
   providers: [
     {
