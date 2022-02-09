@@ -1,52 +1,129 @@
-.page-info{
-    @apply flex flex-wrap  gap-4;
-    
-    .role-section{
 
-        @apply flex flex-wrap justify-items-center gap-4;  
-        
-        .permissions-section{
-            @apply flex flex-col ;
-            @apply border border-green-600;
-            @apply  w-32;         
-            @apply text-center;       
-            
-            .img-area{
-                @apply flex  justify-center ;            
-
-                .img{
-                    @apply w-20;
-                    @apply h-20;
-                    @apply flex;                
-                    
-                    .img{
-                        @apply object-scale-down h-full;                     
-                    }  
-                }
-            }    
-        }
-        .permissions-section:hover{
-            @apply border-4 border-green-500  ;
-            @apply justify-items-center;
-        }
-    }
-}
 
 .tabs{
     @apply flex;
 
     .tab{
-        @apply bg-blue-500 text-white font-bold py-2  rounded
+        @apply  text-white font-bold py-2 rounded
     }
 
     .tab:hover{
-        @apply bg-blue-700;
+        @apply bg-blue-800;
+        @apply border-2 border-blue-800;
     } 
     
     .btn-tab{
-        @apply pr-4;
+        @apply pr-4 pl-2;
     }
 
 }
 
+ .activTab{
+  @apply bg-blue-600;
+  @apply border-2 border-blue-900;
+ }
 
+ .noActivTab{
+   @apply bg-blue-500;
+   @apply border-2 border-blue-500;
+ }
+
+
+  .card {
+    width: w-full;
+    height: h-48;
+    position: relative;
+    //perspective: 1000px;
+    border: 1px solid #fff;
+  }
+  .front {
+    //position: absolute;
+    width: 100%;
+    @apply h-48;
+    //left: 0;
+    //top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 1s;
+    backface-visibility: hidden;
+    background-color: #fff;
+   }
+   .back {
+    @apply bg-blue-500;
+    position: absolute;
+    width: 100%;
+    @apply h-48;
+    left: 0;
+    top: 0;
+    display: flex;
+    //justify-content: center;
+    //align-items: center;
+    transition: 1s;
+    backface-visibility: hidden;
+    //background-color: #fff;
+   }
+  .front img {
+    //max-width: 100%;
+    //min-width: 100%;
+    //height: auto;
+  }
+  .back {
+    transform: rotateY(180deg);
+  }
+
+//   .card:hover .front {
+//     transform: rotateY(180deg);}
+//   .card:hover .back {
+//     transform: rotateY(360deg);}
+
+.cardFronSide{
+    transform: rotateY(180deg);
+}
+
+.cardBackSide{
+    transform: rotateY(360deg);
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    //background-color: blue;
+    color: black#fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    position: absolute;
+    z-index: 1;
+    //top:125%;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-color: white transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }

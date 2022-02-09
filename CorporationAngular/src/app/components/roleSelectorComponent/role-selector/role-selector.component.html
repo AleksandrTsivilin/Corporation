@@ -1,9 +1,11 @@
 
 <div 
-    class="tabs"
-    *ngIf="openedTabs.length>0"
+    class="tabs"    
 >
-    <div class="tab">
+    <div 
+        class="tab bg-blue-500"
+        [ngClass]="{'invisible': openedTabs.length===0}"
+    >
         <button class="btn-tab" (click)="returnToSelector()">
             ↩
         </button>
@@ -11,186 +13,23 @@
     <div 
         *ngFor="let tab of openedTabs"            
     >
-        <div class="tab">
+        <div 
+            class="tab" 
+            [ngClass]="tab.isActive ? 'activTab':'noActivTab'"
+        >
             <button 
                 class="btn-tab"
                 (click)="moveToTab(tab)"
             >
-                {{tab}}                
+                {{tab.title}}                
             </button>
-            <button class="btn-close" (click)="closeTab(tab)">❌</button>
+            <button class="btn-close" (click)="closeTab(tab.title)">❌</button>
         </div>
         
     </div>
 </div>
 
-<div 
-    class="page-info"
-    *ngIf="pageState.isActive else toMoveNextPage"
->
-    <div 
-        class="role-section"        
-    >
-    <div 
-        class="permissions-section" 
-        (click)="changeModePage('personal_data')"     
-    >
-        <div class="img-area">
-            <div class="img">
-                <img src="assets/images/personal_data_user.png">
-            </div>
-        </div>
-        
-        <div >
-            personal data
-        </div>
-    </div>
-</div>
-    <!-- <div 
-        class="role-section"
-        *ngIf="checkRole('ProductManager')"
-    >
-        <div 
-            class="permissions-section"
-            *ngIf="getAvaiablesPermissions('ProductManager').canRead"
-            (click)="changeModePage('products')"
-            
-            
-        >
-            <div class="img-area">
-                <div class="img">
-                    <img src="assets/images/storage.jpg">
-                </div>
-            </div>
-            
-            <div >
-                products
-            </div>
-        </div>
-        <div 
-            class="permissions-section"
-            (click)="changeModePage('addProduct')"
-            *ngIf="getAvaiablesPermissions('ProductManager').canCreate"
-        >
-            <div class="img-area">
-                <div class="img">            
-                    <img src="assets/images/add-product.png">
-                </div>
-            </div>
-            
-            <div >
-                add product
-            </div>
-        </div>
-    </div> -->
-    <div 
-        class="role-section"
-        *ngIf="checkRole('ProductManager')"
-    >
-        <div 
-            class="permissions-section"
-            *ngIf="getAvaiablesPermissions('ProductManager').canRead"
-            (click)="changeModePage('products')"
-            
-            
-        >
-            <div class="img-area">
-                <div class="img">
-                    <img src="assets/images/storage.jpg">
-                </div>
-            </div>
-            
-            <div >
-                products
-            </div>
-        </div>
-        <div 
-            class="permissions-section"
-            (click)="changeModePage('addProduct')"
-            *ngIf="getAvaiablesPermissions('ProductManager').canCreate"
-        >
-            <div class="img-area">
-                <div class="img">            
-                    <img src="assets/images/add-product.png">
-                </div>
-            </div>
-            
-            <div >
-                add product
-            </div>
-        </div>
-    </div>
-    <div 
-        class="role-section"
-        *ngIf="checkRole('UserManager')"    
-    >
-        <div 
-            class="permissions-section" 
-            (click)="changeModePage('users')"
-            *ngIf="getAvaiablesPermissions('UserManager').canRead"
-        >
-            <div class="img-area">
-                <div class="img">
-                    <img src="assets/images/users.png">
-                </div>
-            </div>
-            
-            <div >
-                users
-            </div>
-        </div>
-        <div 
-            class="permissions-section" 
-            (click)="changeModePage('addUser')"
-            *ngIf="getAvaiablesPermissions('UserManager').canCreate"
-        >
-            <div class="img-area">
-                <div class="img">            
-                    <img src="assets/images/add-user.png">
-                </div>
-            </div>
-            
-            <div >
-                add user
-            </div>
-        </div>
-    </div>
-    <div 
-        class="role-section"
-        *ngIf="checkRole('ProductMovementManager')"
-    >
-        <div 
-            class="permissions-section" 
-            (click)="changeModePage('movementsProducts')"
-            *ngIf="getAvaiablesPermissions('MovementsProductManager').canRead"
-        >
-            <div class="img-area">
-                <div class="img">
-                    <img src="assets/images/move_to_product.png">
-                </div>
-            </div>
-            
-            <div >
-                movements products
-            </div>
-        </div>
-        <div 
-            class="permissions-section" 
-            (click)="changeModePage('addMovements')"
-            *ngIf="getAvaiablesPermissions('MovementsProductManager').canCreate"
-        >
-            <div class="img-area">
-                <div class="img">            
-                    <img src="assets/images/addMovements.png">
-                </div>
-            </div>
-            
-            <div >
-                add movements
-            </div>
-        </div>
-    </div>
-</div>
+
 
 
 <ng-template #toMoveNextPage>
@@ -212,7 +51,7 @@
         
         <app-users
             *ngSwitchCase="'users'"
-            [avaiablesPermissions]="getAvaiablesPermissions('AdminManager')"
+            [avaiablesPermissions]="getAvaiablesPermissions('UserManager')"
         >
         </app-users>
         <app-add-user
@@ -235,4 +74,266 @@
 </ng-template>
 
 
+<div *ngIf="pageState.isActive else toMoveNextPage">
+    <div class="container my-12 mx-auto px-4 md:px-12">
+        <div class="flex flex-wrap -mx-1 lg:-mx-4">
+            <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3">
+                <article 
+                    class="overflow-hidden rounded-lg shadow-lg"                        
+                >                
+                <div class="card">
+                    <div 
+                        class="front "                         
+                        (click)="returnCard('personal_data')"
+                        [ngClass]="{'cardFrontSide': getStateCard('personal_data')}"
+                    >
+                        <img 
+                            class="rounded-lg block h-48 w-full "
+                            src="assets/images/personal_data1.jpg"
+                        >
+                        
+                    </div>
+                    <div 
+                        class="back rounded-lg"                        
+                        [ngClass]="{'cardBackSide': !getStateCard('personal_data')}"
+                        (click)="returnCard('personal_data')"
+                    >
+                        <span class="text-clip overflow-hidden text-white">
+                            Personal data - description
+                        </span>  
+                                
+                    </div>
+                </div>
+                    <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                        <h1 class="text-lg font-bold">
+                            <span class="text-blue-900 " >
+                                Personal data user
+                            </span>
+                        </h1> 
+                        <button 
+                            class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                            (click) = "changeModePage('personal_data')"
+                        >Go</button>                   
+                    </header>                
+                </article>
+            </div>
+            <div 
+                class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                *ngIf="checkRole('UserManager')"
+            >
+                <article 
+                    class="overflow-hidden rounded-lg shadow-lg"                
+                    
+                >               
+                    <div *ngIf="getAvaiablesPermissions('UserManager').canRead"                        >
+                        <div class="card">
+                            <div 
+                                class="front"                                 
+                                (click)="returnCard('users')"
+                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                            >
+                                <img 
+                                    class="rounded-lg block h-48 w-full "
+                                    src="assets/images/users2.png"
+                                >
+                            </div>
+                            <div 
+                                class="back rounded-lg"                        
+                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                (click)="returnCard('users')"
+                            >
+                                <span class="text-clip overflow-hidden text-white">
+                                    User manager - description
+                                </span>
+                            </div>
+                        </div>
+                        <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                            <h1 class="text-lg font-bold">
+                                <span class="text-blue-900">
+                                    Users
+                                </span>
+                            </h1> 
+                            <button 
+                                class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                (click)="changeModePage('users')"
+                            >Go</button>                  
+                        </header>
+                    </div>
+                </article>
+            </div>
+            <div 
+                class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                *ngIf="checkRole('UserManager')"
+            >
+                <article class="overflow-hidden rounded-lg shadow-lg">
+                    <div *ngIf="getAvaiablesPermissions('UserManager').canCreate">
+                        <div class="card">
+                            <div 
+                                class="front"                                                       
+                                (click)="returnCard('addUser')"
+                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                            >
+                                <img 
+                                    class="rounded-lg block h-48 w-full "
+                                    src="assets/images/addUser1.jpg"
+                                >
+                            </div>
+                            <div 
+                                class="back rounded-lg"                        
+                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                (click)="returnCard('addUser')"
+                            >
+                                <span class="text-clip overflow-hidden text-white">
+                                    Add user - description
+                                </span>
+                            </div>
+                        </div>
+                        <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                            <h1 class="text-lg font-bold">
+                                <span class="text-blue-900">
+                                    Add user
+                                </span>
+                            </h1>
+                            <button 
+                                class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                (click)="changeModePage('addUser')"
+                            >Go</button>
+                        </header>
+                    </div>
+                </article>
+            </div>
+            <div 
+                class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                *ngIf="checkRole('ProductManager')"
+            >
+                <article 
+                    class="overflow-hidden rounded-lg shadow-lg"
+                    
+                >
+                    <div *ngIf="getAvaiablesPermissions('ProductManager').canRead">
+                        <div class="card">
+                            <div 
+                                class="front"                                                         
+                                (click)="returnCard('products')"
+                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                            >
+                                <img 
+                                    class="rounded-lg block h-48 w-full "
+                                    src="assets/images/products.jpg"
+                                >
+                            </div>
+                            <div 
+                                class="back rounded-lg"                        
+                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                (click)="returnCard('products')"
+                            >
+                                <span class="text-clip overflow-hidden text-white">
+                                    Products - description
+                                </span>
+                            </div>
+                        </div>
+                        <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                            <h1 class="text-lg font-bold">
+                                <span class="text-blue-900">
+                                    Products
+                                </span>
+                            </h1>
+                            <button 
+                                class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                (click)="changeModePage('products')"
+                            >Go</button>
+                        </header>
+                    </div>
+                    
+                </article>
+            </div>
+            <div 
+                class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                *ngIf="checkRole('ProductManager')"
+            >
+                <article class="overflow-hidden rounded-lg shadow-lg">
+                    <div *ngIf="getAvaiablesPermissions('ProductManager').canCreate" >
+                        <div class="card">
+                            <div 
+                                class="front"                        
+                                (click)="returnCard('addProduct')"
+                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                            >
+                                <img 
+                                    class="rounded-lg block h-48 w-full "
+                                    src="assets/images/add_product2.jpg"
+                                >
+                            </div>
+                            <div 
+                                class="back rounded-lg"                        
+                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                (click)="returnCard('addProduct')"
+                            >
+                                <span class="text-clip overflow-hidden text-white">
+                                    Add product - description
+                                </span>
+                            </div>
+                        </div>
+                        <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                            <h1 class="text-lg font-bold">
+                                <span class="text-blue-900">
+                                    Add  product
+                                </span>
+                            </h1>
+                            <button 
+                                class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                (click)="changeModePage('addProduct')"    
+                            >Go</button>
+                        </header>
+                    </div>
+                </article>
+            </div>
+            <div 
+                class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3"
+                *ngIf="checkRole('ProductMovementManager')"
+            >
+                <article 
+                    class="overflow-hidden rounded-lg shadow-lg"
+                    
+                >
+                    <div *ngIf="getAvaiablesPermissions('MovementsProductManager').canCreate" >
+                        <div class="card">
+                            <div 
+                                class="front"                                                        
+                                (click)="returnCard('movementProduct')"
+                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                            >
+                                <img 
+                                    class="rounded-lg block h-48 w-full "
+                                    src="assets/images/add_movements1.jpg"
+                                >
+                            </div>
+                            <div 
+                                class="back rounded-lg"                        
+                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                (click)="returnCard('addMovementProduct')"
+                            >
+                                <span class="text-clip overflow-hidden text-white">
+                                    Add movement products - description
+                                </span>
+                            </div>
+                        </div>
+
+                        <header class="flex items-center justify-between leading-tight p-2 md:p-4">
+                            <h1 class="text-lg font-bold">
+                                <span class="text-blue-900">
+                                    Add movement products
+                                </span>
+                            </h1>
+                            <button 
+                                class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                                (click)="changeModePage('addMovements')"
+                            >Go</button>
+                        </header>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </div>
+</div>
 

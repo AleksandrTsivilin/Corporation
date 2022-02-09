@@ -1,9 +1,12 @@
+import { ThisReceiver } from '@angular/compiler';
 import { Component, OnInit, Output } from '@angular/core';
 
 import { AvaiableUser } from 'src/app/interfaces/auth/avaiablesUserForm';
 import { TokenData } from 'src/app/interfaces/auth/tokenData';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';
+import { StateCard } from 'src/app/interfaces/roleselector/stateCards';
+import { Tab } from 'src/app/interfaces/roleselector/tab';
 
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -31,9 +34,11 @@ export class RoleSelectorComponent implements OnInit {
     path:"",
     isActive:true
   }
+  stateCards:StateCard []=[];
 
-  openedTabs:string []=[];
-
+  //openedTabs:string []=[];
+  openedTabs:Tab[]=[];
+  isFrontSideCard:boolean = true;
   
   constructor(private readonly authService : AuthService) { }
 
@@ -42,7 +47,8 @@ export class RoleSelectorComponent implements OnInit {
       if (tokenData !==null) {
         this.tokenData=tokenData;
       }
-    })  
+    }) 
+    this.stateCards=this.setStateCards(); 
   }
 
   checkRole(title:string){ 
@@ -52,35 +58,34 @@ export class RoleSelectorComponent implements OnInit {
   
 
   getAvaiablesPermissions(selectedRole:string):AvaiablesPermissions{
-    // const permissionTitles=this.tokenData.roles
-    //   .filter(role=>role.Title===selectedRole)
-    //   .map(r=>r.Permissions)[0]
-    //   .map(p=>p.Title);      
-     
-    // return {
-    //   canCreate:permissionTitles.includes("Create"),
-    //   canRead:permissionTitles.includes("Read") || 
-    //     permissionTitles.includes("Update") ||
-    //     permissionTitles.includes("Delete"),
-    //   canUpdate:permissionTitles.includes("Update"),
-    //   canDelete:permissionTitles.includes("Delete"),
-    //   canMove:permissionTitles.includes("move")
-    // }
+    const permissionsByRole = this.tokenData.avaiables
+      .filter(avaiable=>avaiable.role.title === selectedRole)
+      .map(avaiable=>avaiable.permissions)[0]
+      .map(permission=>permission.title);
+    
     return {
-      canCreate:true,
-      canRead:true,
-      canUpdate:true,
-      canDelete:true,
-      canMove:true
+      canCreate:permissionsByRole.includes("Create"),
+      canRead:permissionsByRole.includes("Read") || 
+        permissionsByRole.includes("Update") ||
+        permissionsByRole.includes("Delete"),
+      canUpdate:permissionsByRole.includes("Update"),
+      canDelete:permissionsByRole.includes("Delete"),
+      canMove:permissionsByRole.includes("move")
     }
+  }
+  getStateCard(key:string){
+    return this.stateCards
+      .filter(card=>card.key===key)[0].isFrontSide;
   }
   changeModePage(path:string){
     this.pageState={
       path:path,
       isActive:false
     }
-    if (!this.openedTabs.includes(path))
-        this.openedTabs.push(path);
+    if (!this.openedTabs.map(tab=>tab.title).includes(path)){
+      this.openedTabs.map(tab=>tab.isActive=false);
+      this.openedTabs.push({title:path,isActive:true});
+    }        
   }
 
 
@@ -90,16 +95,21 @@ export class RoleSelectorComponent implements OnInit {
       isActive:true
     }
   }
-  moveToTab(title:string){
-    console.log(title)
+  moveToTab(selectedTab:Tab){
+    this.openedTabs.map(tab=>{
+      tab.title===selectedTab.title 
+        ? tab.isActive=true
+        : tab.isActive =false;
+    })
     this.pageState={
-      path:title,
+      path:selectedTab.title,
       isActive:false
     }
   }
   closeTab(title:string){
-    const indexTab=this.openedTabs.indexOf(title);
-    this.openedTabs=this.openedTabs.filter(tab=>tab!==title);
+    console.log(this.openedTabs)
+    const indexTab=this.openedTabs.map(tab=>tab.title).indexOf(title);
+    this.openedTabs=this.openedTabs.filter(tab=>tab.title!==title);
     if (this.openedTabs.length===0) 
     {
       this.returnToSelector();
@@ -107,7 +117,45 @@ export class RoleSelectorComponent implements OnInit {
     }
     
     indexTab === this.openedTabs.length
-      ?this.moveToTab( this.openedTabs[(this.openedTabs.length-1)])
+      ?this.moveToTab(this.openedTabs[(this.openedTabs.length-1)])
       :this.moveToTab(this.openedTabs[indexTab]); 
+  }
+
+  returnCard(key:string){
+    this.stateCards = this.stateCards.map(card=>{
+      if (card.key!==key) return card;
+      return {key:card.key,isFrontSide:!card.isFrontSide}
+    });
+    
+    //this.isFrontSideCard = !this.isFrontSideCard;
+  }
+
+  private setStateCards() : StateCard[]{
+    return [
+      {
+        key:"personal_data",
+        isFrontSide:true
+      },
+      {
+        key:"users",
+        isFrontSide:true
+      },
+      {
+        key:"addUser",
+        isFrontSide:true
+      },
+      {
+        key:"products",
+        isFrontSide:true
+      },
+      {
+        key:"addProduct",
+        isFrontSide:true
+      },
+      {
+        key:"addMovementProduct",
+        isFrontSide:true
+      }
+    ]
   }
 }
