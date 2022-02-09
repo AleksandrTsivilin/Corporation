@@ -163,3 +163,68 @@
     
     
 }
+
+.logo-container{
+    //@apply flex-none;
+    @apply w-48;
+    @apply border-2 border-white;
+}
+
+
+.tag-line-container{
+    @apply flex ;
+    //@apply h-auto;
+    @apply text-center;
+    @apply text-red-600;
+    @apply text-6xl;
+    @apply font-bold;
+    //@apply m-auto;
+
+    .tag-line{
+        //@apply h-auto;
+        @apply flex;
+        @apply my-auto;
+        
+    }
+}
+
+.global-information-container{
+    @apply flex-none;
+    
+    @apply pb-8;
+    .global-information{
+        
+
+        
+
+        .info-card-container{
+            @apply  flex justify-evenly;
+            
+            @apply gap-x-9;
+            
+            .info-card{
+                
+                @apply text-red-600;
+                @apply font-bold;
+                
+
+                .title{
+
+                }
+                .value-unit{
+                    @apply flex;
+                    @apply gap-x-2;
+                }
+                .value{
+                    @apply text-6xl;
+
+                }
+                .unit{
+                    @apply pt-2;
+                    
+                }
+            }
+        }
+    }
+
+}

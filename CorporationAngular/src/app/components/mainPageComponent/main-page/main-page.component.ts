@@ -40,12 +40,18 @@ export class MainPageComponent implements OnInit {
     this.router.events.subscribe(x=>{
       const path = this.location.path();
       if (path!=="") this.isShortMainPage=true;
+      else this.isShortMainPage=false;
+      
     })
     
     this.getGlobalInformation();
   }
   
+  openMenu(){
+    console.log("open menu")
+  }
   toMainPage(){
+    console.log("to mainPage")
     this.router.navigate([''])
     this.isShortMainPage=false;
   }

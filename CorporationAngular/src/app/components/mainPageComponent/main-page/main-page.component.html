@@ -1,6 +1,136 @@
-
-
-<div class="main-page-container">
+<!-- component -->
+<div 
+    class="h-screen flex flex-col"
+    *ngIf="!isShortMainPage else setShortMainPage"
+    style="background-image: url('../../assets/images/mainPage.jpg') "
+>
+    <section class="flex-none">
+        <nav 
+            class="flex items-center justify-between flex-wrap bg-teal p-6"
+            >
+            <div class="lg:pl-24 md:pl-2 hidden sm:block flex items-center flex-no-shrink text-white mr-6">
+                <div 
+                    class="logo-container"
+                    (click)="toMainPage()"
+                >
+                    <img src="assets/images/logo_main_paige.png">
+                </div>
+                
+            <!-- <svg class="h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
+            <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span> -->
+            </div>
+            <div class="block lg:hidden">
+            <button 
+                class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white"
+                (click)="openMenu()"
+            >
+            <img 
+                src="assets/images/icon_menu.png"
+            >
+            </button>
+            </div>
+            <div class="w-full block flex-justify-end text-white font-bold text-size-2xl lg:flex lg:items-center lg:w-auto">
+            <div class=" lg:flex-grow hidden lg:block" >
+                <a routerLink="" 
+                    class="block mt-4 lg:inline-block lg:mt-0   hover:text-white mr-4"
+                    (click)="toMainPage()"
+                >
+                    main
+                </a>
+                <a routerLink="roleSelector" 
+                    class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+                    *ngIf="isLogin"
+                    
+                >
+                    services
+                </a>
+                <a routerLink="loginForm" 
+                    class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+                >
+                sign in
+                </a>
+            </div>
+            </div>
+        </nav>
+    </section>
+    <section class="flex justify-center flex-1">
+        <div 
+            class="tag-line-container"
+            *ngIf="!isShortMainPage"
+            >
+                <div class="tag-line">
+                    Let's Make Things Better
+                </div>             
+        </div>
+    </section>
+    <section class="flex-none">
+        <div 
+            class="global-information-container"
+            *ngIf="!isShortMainPage"
+        >
+            <div class="global-information">
+                <div class="info-card-container">
+                    <div class="info-card">
+                        <div class="title">
+                            Duration
+                        </div>
+                        <div class="value-unit">
+                            <div class="value">
+                                {{duration}}
+                            </div>
+                            <div class="unit">
+                                years
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="info-card">
+                        <div class="title">
+                            Area of
+                        </div>
+                        <div class="value-unit">
+                            <div class="value">
+                                {{areaOf}}
+                            </div>
+                            <div class="unit">
+                                hectares
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="info-card">
+                        <div class="title">
+                            Investments,$
+                        </div>
+                        <div class="value-unit">
+                            <div class="value">
+                                {{investments}}
+                            </div>
+                            <div class="unit">
+                                million
+                            </div>
+                        </div>
+                    </div>
+                
+                    <div class="info-card">
+                        <div class="title">
+                            Geography
+                        </div>
+                        <div class="value-unit">
+                            <div class="value">
+                                {{geography}}
+                            </div>
+                            <div class="unit">
+                                countries
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+<!-- <div class="main-page-container">
     <div 
         class="main-page"
         *ngIf="!isShortMainPage else setShortMainPage"        
@@ -120,59 +250,59 @@
             </div>
         </div>
     </div>    
-</div>
+</div> -->
 <div >
     <router-outlet></router-outlet>
 </div>
 
 <ng-template #setShortMainPage>
-    <div class="main-page-container">
-        <div 
-            class="main-page-short"       
-        >
-            <div class="main-header-container">
-                <div class="main-header">
-                    <div 
-                        class="logo-container"
-                        (click)="toMainPage()"
-                    >
-                        <img src="assets/images/logo_main_paige.png">
-                    </div>
-                    <div class="navigation-container">
-                        <div class="navigation">
-                            <div 
-                                class="navigation-tag"
-                                (click)="toMainPage()">
-                                <a routerLink="">main</a>
-                            </div>
-                            <div class="navigation-tag">
-                                about us
-                            </div>
-                            <div 
-                                class="navigation-tag"
-                                *ngIf="isLogin"
-                                (click)="toShortMainPage()"
-                            >
-                                <a routerLink="roleSelector">
-                                    services
-                                </a>
-                            </div>
-                            <div class="navigation-tag">
-                                contacts
-                            </div>
-                            <div 
-                                class="navigation-tag"
-                                *ngIf="!isLogin; else logout"
-                            >
-                                <div (click)="toLogin()">sign in</div>
-                            </div>
-                            
-                        </div>
-                    </div>
+    <nav 
+            class="bg-blue-900 flex items-center justify-between flex-wrap bg-teal p-6"
+            >
+            <div class="lg:pl-24 md:pl-2 hidden sm:block flex items-center flex-no-shrink text-white mr-6">
+                <div 
+                    class="logo-container"
+                    (click)="toMainPage()"
+                >
+                    <img src="assets/images/logo_main_paige.png">
                 </div>
+                
+            <!-- <svg class="h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
+            <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span> -->
             </div>
-        </div>   
-    </div>
+            <div class="block lg:hidden">
+            <button 
+                class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white"
+                (click)="openMenu()"
+            >
+            <img 
+                src="assets/images/icon_menu.png"
+            >
+            </button>
+            </div>
+            <div class="w-full block flex-justify-end text-white font-bold text-size-2xl lg:flex lg:items-center lg:w-auto">
+            <div class=" lg:flex-grow hidden lg:block" >
+                <a routerLink="" 
+                    class="block mt-4 lg:inline-block lg:mt-0   hover:text-white mr-4"
+                    (click)="toMainPage()"
+                >
+                     main
+                </a>
+                <a routerLink="roleSelector" 
+                    class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+                    *ngIf="isLogin"
+                    (click)="toShortMainPage()"
+                >
+                services
+                </a>
+                <a routerLink="loginForm" 
+                    class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+                >
+                sign in
+                </a>
+            </div>
+            </div>
+        </nav>
      
 </ng-template>
 
