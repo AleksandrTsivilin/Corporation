@@ -72,7 +72,7 @@ export class RoleSelectorComponent implements OnInit {
       canMove:permissionsByRole.includes("move")
     }
   }
-  getStateCard(key:string){
+  getStateCard(key:string):boolean{
     return this.stateCards
       .filter(card=>card.key===key)[0].isFrontSide;
   }

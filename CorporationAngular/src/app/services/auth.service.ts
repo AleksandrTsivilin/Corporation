@@ -52,7 +52,6 @@ export class AuthService {
   }
 
   addUser(newUser:NewUser){
-    console.log("addUser service")
     const addUserUrl = "https://localhost:5001/api/AuthToken/registration";
     return this.client.post<Token>(addUserUrl,newUser)
     .pipe(
@@ -71,7 +70,6 @@ export class AuthService {
     
     const dataPart=token.token?.split('.')[1];
       const dataJsonString=atob(dataPart);
-      
       const dataJson=JSON.parse(dataJsonString);
       
       const idStr = dataJson["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
@@ -83,8 +81,7 @@ export class AuthService {
       const avaiablesJson = dataJson["avaiables"];
       const department = dataJson["department"];
       const factory = dataJson["factory"];
-      const region = dataJson["region"]
-      console.log(department)
+      const region = dataJson["region"];
       
       const jsonAvaiables = JSON.parse(avaiablesJson);
       

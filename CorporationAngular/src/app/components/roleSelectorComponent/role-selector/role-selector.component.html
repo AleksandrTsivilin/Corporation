@@ -296,12 +296,12 @@
                     class="overflow-hidden rounded-lg shadow-lg"
                     
                 >
-                    <div *ngIf="getAvaiablesPermissions('MovementsProductManager').canCreate" >
+                    <div *ngIf="getAvaiablesPermissions('ProductMovementManager').canCreate" >
                         <div class="card">
                             <div 
                                 class="front"                                                        
                                 (click)="returnCard('movementProduct')"
-                                [ngClass]="{'cardBackSide': !getStateCard('movementProduct')}"
+                                [ngClass]="{'cardBackSide': !getStateCard('addMovementProduct')}"
                             >
                                 <img 
                                     class="rounded-lg block h-48 w-full "
@@ -310,7 +310,7 @@
                             </div>
                             <div 
                                 class="back rounded-lg"                        
-                                [ngClass]="{'cardBackSide': !getStateCard('movementProduct')}"
+                                [ngClass]="{'cardBackSide': !getStateCard('addMovementProduct')}"
                                 (click)="returnCard('addMovementProduct')"
                             >
                                 <span class="text-clip overflow-hidden text-white">
