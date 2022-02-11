@@ -19,19 +19,4 @@ export class UserService {
             user.fullname=user.employee.lastname+user.employee.firstname))
       );
   }
-
-  // update(updateUser:UserInfo){
-  //   const urlUpdate="https://localhost:5001/api/Admin";
-  //   return this.client.put(urlUpdate,updateUser);
-  // }
-
-  // remove(userId:number | null){
-  //   const urlDelete="https://localhost:5001/api/Admin";
-  //   if (userId!==null){
-  //     let params = new HttpParams().set("userId",userId);
-  //     return this.client.delete(urlDelete,{params});
-  //   }
-  //   return null;
-    
-  // }
 }

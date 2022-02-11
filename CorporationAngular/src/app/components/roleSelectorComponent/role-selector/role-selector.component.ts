@@ -36,7 +36,6 @@ export class RoleSelectorComponent implements OnInit {
   }
   stateCards:StateCard []=[];
 
-  //openedTabs:string []=[];
   openedTabs:Tab[]=[];
   isFrontSideCard:boolean = true;
   
@@ -127,7 +126,6 @@ export class RoleSelectorComponent implements OnInit {
       return {key:card.key,isFrontSide:!card.isFrontSide}
     });
     
-    //this.isFrontSideCard = !this.isFrontSideCard;
   }
 
   private setStateCards() : StateCard[]{

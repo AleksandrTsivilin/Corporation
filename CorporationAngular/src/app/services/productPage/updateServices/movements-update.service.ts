@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, fromEventPattern } from 'rxjs';
 import { MovementProduct } from 'src/app/interfaces/product/MovementProductManagerPage/movementProduct';
 import { MovementProductForm } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
-//import { FormMoveProducts, MovementsProduct } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
+
 import { MovementsSignalrService } from '../signalrServices/movements-signalr.service';
 
 @Injectable({

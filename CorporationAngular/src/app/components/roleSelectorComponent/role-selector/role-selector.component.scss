@@ -33,15 +33,11 @@
     width: w-full;
     height: h-48;
     position: relative;
-    //perspective: 1000px;
     border: 1px solid #fff;
   }
   .front {
-    //position: absolute;
     width: 100%;
     @apply h-48;
-    //left: 0;
-    //top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -57,25 +53,14 @@
     left: 0;
     top: 0;
     display: flex;
-    //justify-content: center;
-    //align-items: center;
     transition: 1s;
     backface-visibility: hidden;
-    //background-color: #fff;
    }
   .front img {
-    //max-width: 100%;
-    //min-width: 100%;
-    //height: auto;
   }
   .back {
     transform: rotateY(180deg);
   }
-
-//   .card:hover .front {
-//     transform: rotateY(180deg);}
-//   .card:hover .back {
-//     transform: rotateY(360deg);}
 
 .cardFronSide{
     transform: rotateY(180deg);
@@ -98,14 +83,12 @@
   .tooltip .tooltiptext {
     visibility: hidden;
     width: 120px;
-    //background-color: blue;
     color: black#fff;
     text-align: center;
     border-radius: 6px;
     padding: 5px 0;
     position: absolute;
     z-index: 1;
-    //top:125%;
     bottom: 125%;
     left: 50%;
     margin-left: -60px;

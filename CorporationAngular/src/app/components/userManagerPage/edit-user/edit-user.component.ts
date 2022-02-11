@@ -131,11 +131,7 @@ export class EditUserComponent implements OnInit {
       const permissionsAction=this.getPermissionsAction(avaiable.permissions); 
       
       this.addAvaiableAction(avaiable.role,permissionsAction,avaiable.access.id);
-      // this.avaiablesAction.push({
-      //   role:avaiable.role,
-      //   permissions:permissionsAction,
-      //   accessId:avaiable.access.id
-      // })
+      
     });
   }
 
@@ -172,11 +168,7 @@ export class EditUserComponent implements OnInit {
       isSelected:permission.isSelected
     }));
     this.addAvaiableAction(avaiable.role,permissionsAction,avaiable.accessId)
-    // this.avaiablesAction.push({
-    //   role:avaiable.role,
-    //   permissions: permissionsAction,
-    //   accessId:avaiable.accessId
-    // })
+    
   }
   private addAvaiableAction(
     role:RoleInfo,

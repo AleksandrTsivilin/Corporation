@@ -3,11 +3,7 @@ import { AccessAction } from "./accessAction";
 import { AccessInfo } from "./accessInfo";
 import { RoleInfo } from "./roleInfo";
 
-// export interface AvaiableUserAction{
-//     role:RoleInfo ,
-//     permissions:PermissionAction[],
-//     access:AccessAction[] 
-// }
+
 
 export interface AvaiableUserAction{
     role:RoleInfo,

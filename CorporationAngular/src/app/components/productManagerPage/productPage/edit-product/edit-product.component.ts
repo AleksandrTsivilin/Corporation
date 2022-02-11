@@ -86,40 +86,7 @@ export class EditProductComponent implements OnInit {
     return convertToNumber>0;
   }
 
-  // startAddGroup(path:string){
-  //   this.pageState={
-  //     path:path,
-  //     isActive:false
-
-  //   };
-  // }
-
-  // addedGroup(){
-  //   this.pageState={
-  //     path:"",
-  //     isActive:true
-  //   }
-  // }
-
-  // ManufacturerOnLis(): void {
-  //   this.signalrService.hubConnection?.on("manufacturerAdd", (newManufacturer:Manufacturer) => {
-  //     this.manufacturers.push(newManufacturer);
-  //   });
-  // }
-
-  // CategoryOnLis(): void {
-  //   this.signalrService.hubConnection?.on("categoryAdd", (newCategory:Category) => {
-  //     this.categories.push(newCategory);
-  //     console.log(this.categories)
-  //   });
-  // }
-
-  // UnitOnLis(): void {
-  //   this.signalrService.hubConnection?.on("unitAdd", (newUnit:Unit) => {
-  //     this.units.push(newUnit);      
-  //   });
-  // }
-
+  
   private getManufacturer() {
     this.manufacturerService.getManufacturers()
       .subscribe((result)=>{

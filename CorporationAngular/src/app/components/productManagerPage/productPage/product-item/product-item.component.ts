@@ -50,7 +50,4 @@ export class ProductItemComponent implements OnInit {
     this.openProductInfo.emit();
   }
 
-  
-  
-
 }

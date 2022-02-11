@@ -24,8 +24,7 @@ export class LoginFormComponent implements OnInit {
   }
   onSubmit(){    
     this.authService.login(this.loginForm)
-      .subscribe(result=>{
-        //console.log(result);        
+      .subscribe(result=>{       
         this.toastr.success("authorization is success");
         this.router.navigate(['roleSelector']);
 

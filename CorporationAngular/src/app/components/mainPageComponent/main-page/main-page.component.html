@@ -1,4 +1,4 @@
-<!-- component -->
+
 <div 
     class="h-screen flex flex-col"
     *ngIf="!isShortMainPage else setShortMainPage"
@@ -15,9 +15,6 @@
                 >
                     <img src="assets/images/logo_main_paige.png">
                 </div>
-                
-            <!-- <svg class="h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
-            <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span> -->
             </div>
             <div class="block lg:hidden">
             <button 
@@ -32,7 +29,7 @@
             <div class="w-full block flex-justify-end text-white font-bold text-size-2xl lg:flex lg:items-center lg:w-auto">
             <div class=" lg:flex-grow hidden lg:block" >
                 <a routerLink="" 
-                    class="block mt-4 lg:inline-block lg:mt-0   hover:text-white mr-4"
+                    class="block mt-4 lg:inline-block lg:mt-0 mr-4"
                     (click)="toMainPage()"
                 >
                     main
@@ -46,6 +43,7 @@
                 </a>
                 <a routerLink="loginForm" 
                     class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+                    *ngIf="!isLogin; else logout"
                 >
                 sign in
                 </a>
@@ -130,127 +128,6 @@
         </div>
     </section>
 </div>
-<!-- <div class="main-page-container">
-    <div 
-        class="main-page"
-        *ngIf="!isShortMainPage else setShortMainPage"        
-        style="background-image: url('../../assets/images/mainPage.jpg') "
-    >
-        <div class="main-header-container">
-            <div class="main-header">
-                <div 
-                    class="logo-container"
-                    (click)="toMainPage()">
-                    <img src="assets/images/logo_main_paige.png">
-                </div>
-                <div class="navigation-container">
-                    <div class="navigation">
-                        <div 
-                            class="navigation-tag"
-                            (click)="toMainPage()">
-                            <a routerLink="">main</a>
-                        </div>
-                        <div class="navigation-tag">
-                            about us
-                        </div>
-                        <div 
-                            class="navigation-tag"
-                            *ngIf="isLogin"
-                            (click)="toShortMainPage()"
-                        >
-                            <a routerLink="roleSelector">
-                                services
-                            </a>
-                        </div>
-                        <div class="navigation-tag">
-                            contacts
-                        </div>
-                        <div 
-                            class="navigation-tag"
-                            *ngIf="!isLogin; else logout"
-                        >
-                            <div (click)="toLogin()">sign in</div>
-                        </div>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
-       
-        <div 
-            class="tag-line-container"
-            *ngIf="!isShortMainPage"
-            >
-                <div class="tag-line">
-                    Let's Make Things Better
-                </div>             
-        </div>
-        <div 
-            class="global-information-container"
-            *ngIf="!isShortMainPage"
-        >
-            <div class="global-information">
-                <div class="info-card-container">
-                    <div class="info-card">
-                        <div class="title">
-                            Duration
-                        </div>
-                        <div class="value-unit">
-                            <div class="value">
-                                {{duration}}
-                            </div>
-                            <div class="unit">
-                                years
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="info-card">
-                        <div class="title">
-                            Area of
-                        </div>
-                        <div class="value-unit">
-                            <div class="value">
-                                {{areaOf}}
-                            </div>
-                            <div class="unit">
-                                hectares
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="info-card">
-                        <div class="title">
-                            Investments,$
-                        </div>
-                        <div class="value-unit">
-                            <div class="value">
-                                {{investments}}
-                            </div>
-                            <div class="unit">
-                                million
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="info-card">
-                        <div class="title">
-                            Geography
-                        </div>
-                        <div class="value-unit">
-                            <div class="value">
-                                {{geography}}
-                            </div>
-                            <div class="unit">
-                                countries
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>    
-</div> -->
 <div >
     <router-outlet></router-outlet>
 </div>
@@ -266,9 +143,8 @@
                 >
                     <img src="assets/images/logo_main_paige.png">
                 </div>
-                
-            <!-- <svg class="h-8 w-8 mr-2" width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg"><path d="M13.5 22.1c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05zM0 38.3c1.8-7.2 6.3-10.8 13.5-10.8 10.8 0 12.15 8.1 17.55 9.45 3.6.9 6.75-.45 9.45-4.05-1.8 7.2-6.3 10.8-13.5 10.8-10.8 0-12.15-8.1-17.55-9.45-3.6-.9-6.75.45-9.45 4.05z"/></svg>
-            <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span> -->
+             
+            <!-- <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span>  -->
             </div>
             <div class="block lg:hidden">
             <button 
@@ -297,6 +173,7 @@
                 </a>
                 <a routerLink="loginForm" 
                     class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+                    *ngIf="!isLogin; else logout"
                 >
                 sign in
                 </a>
@@ -307,7 +184,9 @@
 </ng-template>
 
 <ng-template #logout>
-    <div class="navigation-tag">
-        <div (click)=toLogout()>Log out</div>
-    </div>
+    <a routerLink="" 
+        class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+        (click)=toLogout()>
+        log out
+    </a>
 </ng-template>

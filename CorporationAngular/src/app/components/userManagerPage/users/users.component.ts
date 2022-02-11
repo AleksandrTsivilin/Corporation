@@ -126,12 +126,7 @@ export class UsersComponent implements OnInit {
   remove(userId:number){
     console.log(userId)
     this.updateService.banUser(userId);
-    // this.userService.remove(userId)
-    //   ?.subscribe((result)=>
-    //   {
-    //     console.log("user removed");
-    //   },
-    //   ()=>{})
+    
   }
 
   openUserInfo(selectedUser:UserInfo){

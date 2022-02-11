@@ -1,7 +1,6 @@
-import { HttpParams } from '@angular/common/http';
+
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { ProductStorageChanges } from 'src/app/interfaces/productManagerPage/changesProducts';
 import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { ProductSignalrService } from '../signalrServices/product-signalr.service';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
-//import { Manufacturer } from 'src/app/interfaces/formAddProduct';
+
 
 @Injectable({
   providedIn: 'root'

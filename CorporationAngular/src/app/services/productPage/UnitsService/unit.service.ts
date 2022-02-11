@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
-//import { Unit } from 'src/app/interfaces/formAddProduct';
+
 
 @Injectable({
   providedIn: 'root'
