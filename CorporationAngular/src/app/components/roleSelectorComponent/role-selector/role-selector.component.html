@@ -130,7 +130,7 @@
                             <div 
                                 class="front"                                 
                                 (click)="returnCard('users')"
-                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('users')}"
                             >
                                 <img 
                                     class="rounded-lg block h-48 w-full "
@@ -139,7 +139,7 @@
                             </div>
                             <div 
                                 class="back rounded-lg"                        
-                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('users')}"
                                 (click)="returnCard('users')"
                             >
                                 <span class="text-clip overflow-hidden text-white">
@@ -171,7 +171,7 @@
                             <div 
                                 class="front"                                                       
                                 (click)="returnCard('addUser')"
-                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('addUser')}"
                             >
                                 <img 
                                     class="rounded-lg block h-48 w-full "
@@ -180,7 +180,7 @@
                             </div>
                             <div 
                                 class="back rounded-lg"                        
-                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('addUser')}"
                                 (click)="returnCard('addUser')"
                             >
                                 <span class="text-clip overflow-hidden text-white">
@@ -215,7 +215,7 @@
                             <div 
                                 class="front"                                                         
                                 (click)="returnCard('products')"
-                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('products')}"
                             >
                                 <img 
                                     class="rounded-lg block h-48 w-full "
@@ -224,7 +224,7 @@
                             </div>
                             <div 
                                 class="back rounded-lg"                        
-                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('products')}"
                                 (click)="returnCard('products')"
                             >
                                 <span class="text-clip overflow-hidden text-white">
@@ -257,7 +257,7 @@
                             <div 
                                 class="front"                        
                                 (click)="returnCard('addProduct')"
-                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('addProduct')}"
                             >
                                 <img 
                                     class="rounded-lg block h-48 w-full "
@@ -266,7 +266,7 @@
                             </div>
                             <div 
                                 class="back rounded-lg"                        
-                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('addProduct')}"
                                 (click)="returnCard('addProduct')"
                             >
                                 <span class="text-clip overflow-hidden text-white">
@@ -301,7 +301,7 @@
                             <div 
                                 class="front"                                                        
                                 (click)="returnCard('movementProduct')"
-                                [ngClass]="{'cardFrontSide': isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('movementProduct')}"
                             >
                                 <img 
                                     class="rounded-lg block h-48 w-full "
@@ -310,7 +310,7 @@
                             </div>
                             <div 
                                 class="back rounded-lg"                        
-                                [ngClass]="{'cardBackSide': !isFrontSideCard}"
+                                [ngClass]="{'cardBackSide': !getStateCard('movementProduct')}"
                                 (click)="returnCard('addMovementProduct')"
                             >
                                 <span class="text-clip overflow-hidden text-white">

@@ -106,7 +106,6 @@ export class RoleSelectorComponent implements OnInit {
     }
   }
   closeTab(title:string){
-    console.log(this.openedTabs)
     const indexTab=this.openedTabs.map(tab=>tab.title).indexOf(title);
     this.openedTabs=this.openedTabs.filter(tab=>tab.title!==title);
     if (this.openedTabs.length===0) 
@@ -125,7 +124,6 @@ export class RoleSelectorComponent implements OnInit {
       if (card.key!==key) return card;
       return {key:card.key,isFrontSide:!card.isFrontSide}
     });
-    
   }
 
   private setStateCards() : StateCard[]{
