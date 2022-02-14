@@ -16,6 +16,7 @@ import { AccessService } from 'src/app/services/userManager/accessServices/acces
 import { AvaiableUserAction } from 'src/app/interfaces/userManagerPage/avaiableUserAction';
 import { AvaiableUser } from 'src/app/interfaces/auth/avaiablesUserForm';
 import { NewUserWithAvaiables } from 'src/app/interfaces/userManagerPage/newUserWithAvaiables';
+import { BehaviorSubject } from 'rxjs';
 
 
 
@@ -57,7 +58,7 @@ export class EditUserComponent implements OnInit {
   }
   
   allRoles:RoleInfo [] = [];
-  
+  freeRoles:RoleInfo[] =[];
   private allPermissions:PermissionInfo [] = [];
   allAccesses:AccessInfo [] = [];
   isOpenCreateAvaiable:boolean =false;
@@ -74,6 +75,7 @@ export class EditUserComponent implements OnInit {
   ngOnInit(): void {   
     this.getAllPermissions();
     this.getAllAccesses();
+    this.getAllRole();
   }
   
   closePage(){
@@ -90,14 +92,27 @@ export class EditUserComponent implements OnInit {
         accessId:avaiableAction.accessId
       })
     })
+    console.log(avaiables);
     this.updateUser.emit(avaiables)
+    this.closeDialog.emit();
+    //this.updateUser.emit(avaiables)
     
+  }
+
+  isValidEditAvaiablesForm(avaiables:AvaiableUserAction[]):boolean{
+    const allIsSelectedPermissions = avaiables
+      .map(avaiable=>
+        this.isSelectedPermission(avaiable.permissions));
+    return !allIsSelectedPermissions.includes(false);
   }
   
 
   startAddAvaiables(){
     this.isOpenCreateAvaiable=true;
-    this.getAllRole();    
+    this.freeRoles=this.allRoles.filter((r)=>{
+      return !this.avaiablesAction.map(avaiable=>avaiable.role.id).includes(r.id);
+    });
+    
     const permissionsAction = this.getPermissionsAction([])
     
     this.newAvaiableAction={
@@ -124,7 +139,19 @@ export class EditUserComponent implements OnInit {
     this.avaiablesAction = this.avaiablesAction
     .filter(avaiable=>avaiable.role.id!==roleId)
   }
- 
+  closeCreateAvaiable(){
+    this.isOpenCreateAvaiable=false;
+  }
+  isSelectedRole(){
+    return this.newAvaiableUser.roleId!==null;
+  }
+  isSelectedPermission(permissions:PermissionAction[]){
+    //console.log(permissions.some(permission=>permission.isSelected))
+    return permissions.some(permission=>permission.isSelected);
+  }
+  isSelectedAccess(accessId:number){
+    return accessId!==0;
+  }
   private createAvaiablesUser(avaiables:AvaiableUser[]){
     this.avaiablesAction=[];
     avaiables.forEach(avaiable => {
@@ -198,7 +225,7 @@ export class EditUserComponent implements OnInit {
   private getAllRole(){
     this.roleService.getRoles()
       .subscribe(roles=>{
-        this.allRoles=roles
+        this.allRoles=roles;
       })
   }
 

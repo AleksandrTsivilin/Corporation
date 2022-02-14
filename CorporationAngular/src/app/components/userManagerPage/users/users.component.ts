@@ -5,6 +5,7 @@ import { HeaderTable } from 'src/app/interfaces/header-table';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';
 import { UserUpdateService } from 'src/app/services/userManager/userServices/user-update.service';
+import { ConstantPool } from '@angular/compiler';
 
 
 
@@ -111,7 +112,7 @@ export class UsersComponent implements OnInit {
       employee:rawUserInfo.employee,
       avaiables:rawUserInfo.avaiables,
       fullname:null,
-      department:{id:0,title:""},
+      department:rawUserInfo.department,
       isBanned:false
     }
     this.setStatePage("editUser",false);

@@ -1,3 +1,321 @@
+<div class="mx-2">
+  <div class="flex justify-end pr-1 gap-x-1">
+      <button 
+          type="button"
+          class="border-2 border-red-600 bg-red-300 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"                    
+          (click)="closePage()"
+      >
+          ❌
+      </button>
+  </div>
+  <div 
+      class="text-center  py-4  font-bold text-2xl text-blue-600 border-b-2 border-blue-300"    
+  >
+      edit user 
+  </div>
+  <div>
+    <div 
+      class="text-center font-bold text-xl text-blue-600 space-y-4 pt-2"
+    >
+      User info  
+    </div>
+  </div>
+  <div class="">
+      <div class="min-h-full flex py-4  px-4 sm:px-6 lg:px-8">
+          <div class="max-w-md w-full space-y-4">
+              
+              <div class="flex gap-x-2">
+                    <div class="flex-1">username : </div>
+                    <div class="flex-1">{{editUser.username}}</div>
+              </div>
+              <div class="flex gap-x-2 justify-around">
+                  <div class="flex-1">surname :</div>
+                  <div class="flex-1">{{editUser.employee.lastname}}</div>
+              </div>
+              <div class="flex gap-x-2 justify-around">
+                <div class="flex-1">name :</div>
+                <div class="flex-1">{{editUser.employee.firstname}}</div>
+              </div>
+              <div class="flex gap-x-2 justify-around">
+                <div class="flex-1">department :</div>
+                <div class="flex-1">{{editUser.department.title}}</div>
+              </div>
+              
+              
+          </div>          
+      </div>
+      <hr class=" mb-2 border-b-2 border-blue-300">
+      <div>
+        <div class="flex flex justify-end">
+          <button 
+            class="py-2 px-4 w-40 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-500 hover:bg-indigo-700 "
+            type="button"
+            (click)=startAddAvaiables()
+          >
+            add avaiables
+          </button>
+        </div>
+        <div *ngIf="isOpenCreateAvaiable">
+          <div 
+            class="text-center font-bold text-xl text-blue-600 space-y-4 py-2"
+          >
+            Create avaiables user  
+          </div>
+          <form
+            (ngSubmit)="saveNewAvaiable();newAvaiableForm.resetForm()"
+            #newAvaiableForm="ngForm"
+          >
+            <div class="flex gap-x-4">
+              <div class="flex-1 flex flex-col">
+                <div class="flex-none text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+                  <span class="px-1 py-1">role</span>
+                </div>
+                <div class="flex flex-1 h-48">
+                  <div class="flex m-auto">
+                    <div class="flex-col">
+                      <div
+                        class="text-red-500 font-bold pl-2"
+                        *ngIf="!isSelectedRole() else addedSpace"
+                      >
+                        ⚠️make a choise
+                      </div>
+                      <div>
+                        <select 
+                          class="appearance-none rounded-md w-full mt-1"
+                          (change)="onSelectRole($event)"
+                          [(ngModel)]=newAvaiableUser.roleId
+                          name="role"
+                        >
+                          
+                          <option 
+                            class=" text-xs font-ligth"
+                            *ngFor="let role of freeRoles"
+                            [value]="role.id"
+                          >
+                            {{role.title}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 space-y-4">
+                <div class="text-center text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+                  <span>permissions</span>
+                </div>
+                <div class="flex">
+                  <div class="flex-1 space-y-4">
+                    <div 
+                      *ngFor="let permission of newAvaiableAction.permissions"
+                    >        
+                      <div class="pl-4">
+                        <input
+                          type="checkbox"
+                          [(ngModel)]="permission.isSelected"
+                          name="{{permission}}"
+                          [checked]="permission.isSelected"
+                        >
+                        <span class="pl-4">{{permission.title}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div 
+                    class="flex-1 h-full m-auto"
+                    *ngIf="!isSelectedPermission(newAvaiableAction.permissions)"
+                  >
+                    <div class="text-red-500 font-bold">⚠️make a choise</div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-1 space-y-4">
+                <div class="text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+                  <span>access</span>
+                </div>
+                <div class="flex">
+                  <div class="flex-1 space-y-4">
+                    <div
+                      class="custom-control custom-radio"
+                      *ngFor="let access of allAccesses;let accIndex=index"
+                    >  
+                      <div class="pl-4">
+                        <input
+                          class="custom-control-input"
+                          type="radio"
+                          [(ngModel)]="newAvaiableAction.accessId"
+                          [value]="access.id"
+                          name="access{{accIndex}}"
+                        >
+                      
+                        <span class="pl-4">{{access.title}}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                      class="flex-1 h-full m-auto"
+                      *ngIf="!isSelectedAccess(newAvaiableAction.accessId)"
+                    >
+                      <div class="text-red-500 font-bold">⚠️make a choise</div>
+                  </div>
+                </div>
+              </div>
+              <div class="flex-none">
+                <button 
+                  class="pt-2"
+                  type="button" 
+                  (click)="closeCreateAvaiable(); newAvaiableForm.resetForm()"
+                >
+                  <img 
+                    class="w-6  h-auto"
+                    src="assets/images/button_delete.png"
+                >
+                </button>
+              </div>
+            </div>
+            <div class="flex justify-end">
+              <button
+                class="group relative py-2 px-4 pr-8 w-40 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                type="button"
+                (click)="saveNewAvaiable(); newAvaiableForm.resetForm()"
+                [disabled]="!isSelectedRole()||!isSelectedPermission(newAvaiableAction.permissions)"
+              > 
+                <span 
+                  class="absolute right-0 inset-y-0 flex items-center pr-2 pl-10"
+                  *ngIf="!isSelectedRole()||!isSelectedPermission(newAvaiableAction.permissions)"
+                >
+                    🔓
+                </span>
+                create avaiable
+              </button>
+            </div>
+          </form>
+        </div>          
+        <div 
+          class="text-center font-bold text-xl text-blue-600 space-y-4 py-2"
+        >
+          Avaiables user  
+        </div>
+      </div>
+      <form
+        (ngSubmit)="onSubmit(); editAvaiablesForm.resetForm()"
+        #editAvaiablesForm="ngForm"
+      >
+      <div *ngFor="let avaiable of avaiablesAction ; let avaiableIndex=index">
+        <div class="flex gap-x-4">
+          <div class="flex-1 flex flex-col">
+            
+              <div class="flex-none text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+                <span class="px-1 py-1">role</span>
+              </div>
+              
+              <div class="flex flex-1  text-center min-h-48">              
+                <div class="flex m-auto">
+                  <div class="my-auto text-center ">{{avaiable.role.title}}</div>
+                </div>
+              </div>
+             
+            
+          </div>
+          <div class="flex-1 space-y-4 min-h-48">
+            <div class="text-center text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+              <span>permissions</span>
+            </div>
+            <div class="flex">
+              <div class="flex-1 space-y-4">
+                <div 
+                  *ngFor="let permission of avaiable.permissions; let i=index">
+                  <div class="pl-4">
+                    <input
+                      type="checkbox"
+                      [(ngModel)]="permission.isSelected"
+                      name="{{avaiable.role.title}}+{{i}}"
+                      [checked]="permission.isSelected"
+                    >
+                    <span class="pl-4">{{permission.title}}</span>
+                  </div>
+                </div>
+              </div>
+              
+              <div 
+                class="flex-1 h-full m-auto"
+                *ngIf="!isSelectedPermission(avaiable.permissions)"
+              >
+                <div class="text-red-500 font-bold">⚠️make a choise</div>
+              </div>
+            </div>
+          </div>
+          <div class="flex-1 space-y-4">
+            <div class="text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+              <span>access</span>
+            </div>
+            <div 
+              class="custom-control custom-radio"
+              *ngFor="let access of allAccesses;let accIndex=index"
+            >
+              <div class="pl-4">
+                <input
+                  class="custom-control-input"
+                  type="radio"
+                  [(ngModel)]="avaiable.accessId"
+                  [value]="access.id"
+                  name="access{{avaiableIndex}}"
+                >              
+                <span class="pl-4">{{access.title}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="flex-none">
+            <button 
+              class="pt-2"
+              type="button" 
+              (click) = "removeAvaiable(avaiable.role.id)" 
+            > 
+              <img 
+                class="w-6  h-auto"
+                src="assets/images/button_delete.png"
+            >
+            </button>
+            
+          </div>
+        </div>
+        <hr class=" my-2 border-b-2 border-blue-300">
+      </div>
+      <div class="flex justify-end">
+        <button
+          class="group relative py-2 px-4 pr-8 w-40 border border-transparent text-sm font-medium rounded-md text-white bg-green-500 hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+          type="submit"
+          
+          [disabled]="!isValidEditAvaiablesForm(avaiablesAction)"
+        > 
+          <span 
+            class="absolute right-0 inset-y-0 flex items-center pr-2 pl-10"
+            *ngIf="!isValidEditAvaiablesForm(avaiablesAction)"
+          >
+              🔓
+          </span>
+            save changes
+          </button>
+        </div>
+        
+      </form>
+      
+      
+      
+  </div>
+</div>
+
+
+
+
+
+
+<ng-template #addedSpace>
+  <br>
+</ng-template>
+
+
+
+
 <!-- 
 
 
@@ -110,7 +428,12 @@
   </div>
   
 </div> -->
-<button 
+
+
+
+
+<!-- raw html -->
+<!-- <button 
     class="btn"
     (click)="closePage()"
 >
@@ -133,8 +456,8 @@
 </div>
 <div>
   <span>{{editUser.employee.firstname}}</span>
-</div>
-<div>
+</div> -->
+<!-- <div>
   <span>Avaiables user</span>
   <button
     type="button"
@@ -142,8 +465,8 @@
   >
     add avaiable
   </button>
-</div>
-<div *ngIf="isOpenCreateAvaiable">
+</div> -->
+<!-- <div *ngIf="isOpenCreateAvaiable">
   <form
     (ngButton)="saveNewAvaiable()"
     #newAvaiableForm="ngForm"
@@ -200,8 +523,8 @@
       <span>{{access.title}}</span>
     </div>
   </form>
-</div>
-<form
+</div> -->
+<!-- <form
   (ngSubmit)="onSubmit();"
   #editAvaiablesForm="ngForm" 
 >
@@ -247,7 +570,7 @@
   >
     save changes
   </button>
-</form>
+</form> -->
 
 
 
