@@ -14,6 +14,7 @@ import { ProductUpdateService } from 'src/app/services/productPage/updateService
 import { RegionService } from 'src/app/services/regionManager/region.service';
 import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-products',
@@ -32,6 +33,8 @@ export class ProductsComponent implements OnInit {
 
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
+  search:string="";
+  filterProductsInfo:ProductInfo[]=[];
 
   storages:StorageInfo[]=[];
   factories: FactoryInfo[]=[];
@@ -60,6 +63,8 @@ export class ProductsComponent implements OnInit {
   private editedProductId:number=0;
   private _ascDirection = 1;
   private _sortCriteria="";
+  
+  private search$=new BehaviorSubject<string>("");
 
 
   pageState:PageState={
@@ -84,18 +89,14 @@ export class ProductsComponent implements OnInit {
     this.getFactories();
     this.getRegions();
 
-    this.updateService.changesProductStorage$
-      .subscribe((changes)=>{
-        this.updateProducts(changes);  
-    })
-
-    this.updateMovementService.movementsProduct$
-      .subscribe((changes)=>{
-        this.updateProducts(changes);
-      })
+    this.setProductsInfoLis();
+    
+    this.setDefaultSearch();
 }
 
-
+startSearch(){
+  this.search$.next(this.search);
+}
  
   startEdit(editProduct:ProductInfo){
 
@@ -146,7 +147,7 @@ export class ProductsComponent implements OnInit {
       : this._ascDirection = 1;
     
     this._sortCriteria=criteria;
-    let orderedUsersInfo= this.productsInfo.sort((a:ProductInfo,b:ProductInfo)=>{
+    let orderedUsersInfo= this.filterProductsInfo.sort((a:ProductInfo,b:ProductInfo)=>{
       let orderItemFirst=a[criteria];
       let orderItemSecond=b[criteria];
       const less = -1 * this._ascDirection;
@@ -161,7 +162,7 @@ export class ProductsComponent implements OnInit {
       }
       
     })
-    this.productsInfo=orderedUsersInfo;
+    this.filterProductsInfo=orderedUsersInfo;
   }
   private setStatePage(path: string, isActive: boolean) {
     this.pageState={
@@ -219,7 +220,8 @@ export class ProductsComponent implements OnInit {
   private getProducts(){
      this.service.getProductsByAccess()
       .subscribe((result)=>{    
-        this.productsInfo=result;        
+        this.productsInfo=result; 
+        this.updateFilterProductsInfo(this.productsInfo);       
         this.setStatePage("",true);
         
         
@@ -247,6 +249,41 @@ export class ProductsComponent implements OnInit {
     this.regionService.getRegionsByAccess()
       .subscribe(regions=>{
         this.regions = regions;
+      })
+  }
+
+  private setDefaultSearch(){
+    this.search$.pipe(
+      
+      debounceTime(1000))
+      .subscribe(res=>{
+        this.filterProductsInfo=this.productsInfo
+          .filter(product=>product.title.startsWith(res));
+      });
+  }
+
+  private setProductsInfoLis(){
+    this.updateService.changesProductStorage$
+      .subscribe((changes)=>{
+        this.updateProducts(changes);  
+    })
+
+    this.updateMovementService.movementsProduct$
+      .subscribe((changes)=>{
+        this.updateProducts(changes);
+      })
+  }
+
+  private updateFilterProductsInfo(products:ProductInfo[]){
+    this.search$.value===""
+      ? this.filterProductsInfo=products
+      : products.map(product=>{
+        this.filterProductsInfo = this.filterProductsInfo
+          .map(filteredUser=>{
+            return product.id === filteredUser.id
+              ? product
+              : filteredUser;
+          })
       })
   }
 

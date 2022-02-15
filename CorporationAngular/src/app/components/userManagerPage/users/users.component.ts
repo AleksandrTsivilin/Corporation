@@ -93,7 +93,7 @@ export class UsersComponent implements OnInit {
       : this._ascDirection = 1;
     
     this._sortCriteria=criteria;
-    let orderedUsersInfo= this.usersInfo.sort((a:UserInfo,b:UserInfo)=>{
+    let orderedUsersInfo= this.filterUserInfo.sort((a:UserInfo,b:UserInfo)=>{
       
       let orderItemFirst=a[criteria];
       let orderItemSecond=b[criteria];
@@ -108,7 +108,7 @@ export class UsersComponent implements OnInit {
       }
       
     })
-    this.usersInfo=orderedUsersInfo;
+    this.filterUserInfo=orderedUsersInfo;
   }  
 
   startEdit(rawUserInfo:UserInfo){
