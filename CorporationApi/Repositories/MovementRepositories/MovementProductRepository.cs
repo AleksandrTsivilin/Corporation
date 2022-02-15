@@ -35,7 +35,8 @@ namespace Repositories.MovementRepositories
                         .FirstOrDefault(ps => ps.Product.Id == movement.ProductId);
 
                     if (productStorageFrom is null) continue;
-
+                    if (productStorageFrom.CountProduct < movement.MovedCount)
+                        throw new Exception();
 
                     var productStorageTo = _context.Product_Storage
                         .Where(ps => ps.Storage.Id == model.To)
@@ -51,12 +52,20 @@ namespace Repositories.MovementRepositories
                         });
 
                         productStorageFrom.CountProduct -= movement.MovedCount;
+                        if (productStorageFrom.CountProduct == 0)
+                        {
+                            _context.Product_Storage.Remove(productStorageFrom);
+                        }
                         _context.SaveChanges();
                     }
                     else
                     {
                         productStorageTo.CountProduct += movement.MovedCount;
                         productStorageFrom.CountProduct -= movement.MovedCount;
+                        if (productStorageFrom.CountProduct == 0)
+                        {
+                            _context.Product_Storage.Remove(productStorageFrom);
+                        }
                         _context.SaveChanges();
                     }
                 }

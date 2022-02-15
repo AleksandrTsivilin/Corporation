@@ -1,18 +1,13 @@
-using CorporationApi.Controllers;
 using CorporationApi.HubConfig;
 using DataBase;
-using DataBase.Entities.EmployeeEntities;
 using DataBase.Entities.ProductEntities;
 using DataBase.Entities.UserEntities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Repositories;
@@ -28,7 +23,6 @@ using Repositories.UserRepositories;
 using Services.AuthServices;
 using Services.EmployeeServices;
 using Services.IdentityUserServices;
-using Services.ProductService;
 using Services.ProductService.MovementsService;
 using Services.ProductServices.CategoriesService;
 using Services.ProductServices.FactoryServices;
@@ -42,12 +36,8 @@ using Services.UserServices;
 using Services.UserServices.AccessServices;
 using Services.UserServices.PermissionServices;
 using Services.UserServices.RoleServices;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace CorporationApi
 {
