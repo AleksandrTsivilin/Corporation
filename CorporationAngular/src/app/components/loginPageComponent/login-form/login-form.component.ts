@@ -27,7 +27,6 @@ export class LoginFormComponent implements OnInit {
       .subscribe(result=>{       
         this.toastr.success("authorization is success");
         this.router.navigate(['roleSelector']);
-
       },(result)=>{
         this.toastr.error("user is not found")
       })
