@@ -6,6 +6,8 @@ import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { PageState } from 'src/app/interfaces/pageState';
 import { UserUpdateService } from 'src/app/services/userManager/userServices/user-update.service';
 import { ConstantPool } from '@angular/compiler';
+import { BehaviorSubject } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 
 
@@ -34,8 +36,12 @@ export class UsersComponent implements OnInit {
   
 
   usersInfo:UserInfo[]=[];
+  filterUserInfo:UserInfo[]=[];
 
   headersTable:HeaderTable[]=[];
+
+  search:string="";
+  search$=new BehaviorSubject <string>("");
 
   pageState:PageState={
     path:"loadingPage",
@@ -67,15 +73,15 @@ export class UsersComponent implements OnInit {
   ngOnInit(): void {
     this.getUsers();
     this.headersTable=this.getHeadersTable(); 
-    this.updateService.changesDepartmentUser$.subscribe(changedDepartment=>{
-      const checkChanges = this.usersInfo.map(user=>user.department.id)
-        .includes(changedDepartment);
-      if (checkChanges) this.getUsers();
-    }) 
+    this.setUsersInfoLis();    
+
+    this.setDefaultSearch();
   }
   
 
-  
+  startSearch(event:any){
+    this.search$.next(this.search)
+  }
 
   sortCol(header:HeaderTable){
    
@@ -125,7 +131,6 @@ export class UsersComponent implements OnInit {
   }
 
   remove(userId:number){
-    console.log(userId)
     this.updateService.banUser(userId);
     
   }
@@ -153,10 +158,24 @@ export class UsersComponent implements OnInit {
     this.userService.getUsersByAccess()
         .subscribe((result)=>{
           this.usersInfo=result;
+          this.updateFilterUserInfo(this.usersInfo);
           this.setStatePage("",true);
         },
         ()=>{
           this.setStatePage("responce500",false)
+      })
+  }
+
+  private updateFilterUserInfo(users:UserInfo[]){
+    this.search$.value===""
+      ? this.filterUserInfo=users
+      : users.map(user=>{
+        this.filterUserInfo = this.filterUserInfo
+          .map(filteredUser=>{
+            return user.id === filteredUser.id
+              ? user
+              : filteredUser;
+          })
       })
   }
 
@@ -194,5 +213,22 @@ export class UsersComponent implements OnInit {
       path:path,
       isActive:isActive
     }
+  }
+  private setDefaultSearch(){
+    this.search$.pipe(
+      
+    debounceTime(1000))
+    .subscribe(res=>{
+      this.filterUserInfo=this.usersInfo
+        .filter(user=>user.username.startsWith(res));
+    });
+  }
+
+  private setUsersInfoLis(){
+    this.updateService.changesDepartmentUser$.subscribe(changedDepartment=>{
+      const checkChanges = this.usersInfo.map(user=>user.department.id)
+        .includes(changedDepartment);
+      if (checkChanges) this.getUsers();
+    });
   }
 }
