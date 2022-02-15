@@ -43,8 +43,6 @@ export class UserUpdateService {
   }
 
   updateUser(avaiables:AvaiableUserForm,userId:number){
-    console.log(avaiables)
-    console.log(userId)
     this.signalr.hubConnection?.invoke("UpdateUserAvaiables",avaiables,userId)
       .then()
       .catch(err=>{console.error(err)})

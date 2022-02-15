@@ -9,7 +9,6 @@ export class UserSignalrService {
   hubConnection:signalR.HubConnection | undefined
   isConnection:boolean=false;
   startConnection=()=>{
-    console.log("startConnection signalrService")
     this.hubConnection=new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:5001/userHub', 
       {
@@ -20,7 +19,6 @@ export class UserSignalrService {
       this.hubConnection
         .start()
         .then(()=>{ 
-          console.log("hubConnection signalrService")
           this.isConnection=true;
         })
         .catch(err=>{console.log("some errors")})

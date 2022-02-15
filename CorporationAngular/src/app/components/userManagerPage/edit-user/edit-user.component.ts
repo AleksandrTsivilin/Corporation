@@ -92,11 +92,8 @@ export class EditUserComponent implements OnInit {
         accessId:avaiableAction.accessId
       })
     })
-    console.log(avaiables);
     this.updateUser.emit(avaiables)
-    this.closeDialog.emit();
-    //this.updateUser.emit(avaiables)
-    
+    this.closeDialog.emit();    
   }
 
   isValidEditAvaiablesForm(avaiables:AvaiableUserAction[]):boolean{

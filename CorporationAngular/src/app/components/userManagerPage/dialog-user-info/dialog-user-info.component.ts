@@ -27,7 +27,6 @@ export class DialogUserInfoComponent implements OnInit {
   }
 
   closeUserInfo(){
-    console.log(this.userInfo.avaiables)
     this.close.emit();
   }
 
