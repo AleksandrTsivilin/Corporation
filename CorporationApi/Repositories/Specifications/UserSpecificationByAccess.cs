@@ -15,19 +15,22 @@ namespace Repositories.Specifications
             switch (identity.Access)
             {
                 case "Full":
-                    Expression = user => true;
+                    Expression = user => user.Id != identity.UserId;
                     break;
                 case "Region":
                     Expression = user => 
-                        user.Department.Factory.Region.Id == identity.Location.RegionId;
+                        user.Department.Factory.Region.Id == identity.Location.RegionId
+                        && user.Id != identity.UserId;
                     break;
                 case "Factory":
                     Expression = user =>
-                        user.Department.Factory.Id == identity.Location.FactoryId;
+                        user.Department.Factory.Id == identity.Location.FactoryId
+                        && user.Id != identity.UserId;
                     break;
                 case "Department":
                     Expression = user =>
-                        user.DepartmentId == identity.Location.DepartmentId;
+                        user.DepartmentId == identity.Location.DepartmentId
+                        && user.Id != identity.UserId;
                     break;
             }
         }
