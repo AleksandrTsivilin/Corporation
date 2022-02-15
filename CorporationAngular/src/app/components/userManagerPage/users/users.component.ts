@@ -139,7 +139,7 @@ export class UsersComponent implements OnInit {
       employee:selectedUser.employee,
       avaiables:selectedUser.avaiables,
       fullname:null,
-      department:{id:0,title:""},
+      department:selectedUser.department,
       isBanned:false
     }
   }

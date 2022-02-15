@@ -1,56 +1,112 @@
-<div class="dialog-page">
-    
-    <div class="dialog">
-        <div class="btn-section">
-            <button 
-                class="btn"
-                (click)="closeUserInfo()"
-            >
-                ❌
-            </button>
-        </div>
-        <div class="header"><h1>user info</h1></div>
-        <div class="user-info">
-            <div class="item-info">
-                <div class="title">username</div>
-                <div class="value">{{userInfo.username}}</div>
-            </div>
 
-            <div class="item-info">
-                <div class="title">fullname</div>
-                <div 
-                    class="value"
-                >
-                    {{userInfo.employee.lastname}} {{userInfo.employee.firstname}}
+<div class="mx-2">
+    <div class="flex justify-end pr-1 gap-x-1">
+        <button 
+            type="button"
+            class="border-2 border-red-600 bg-red-300 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"                    
+            (click)="closeUserInfo()"
+        >
+            ❌
+        </button>
+    </div>
+    <div 
+        class="text-center  py-4  font-bold text-2xl text-blue-600 border-b-2 border-blue-300"    
+    >
+        user {{userInfo.username}} 
+    </div>
+    <div>
+      <div 
+        class="text-center font-bold text-xl text-blue-600 space-y-4 pt-2"
+      >
+        User info  
+      </div>
+    </div>
+    <div class="">
+        <div class="min-h-full flex py-4  px-4 sm:px-6 lg:px-8">
+            <div class="max-w-md w-full space-y-4">
+                
+                <div class="flex gap-x-2 justify-around">
+                    <div class="flex-1">Fullname :</div>
+                    <div class="flex-1">{{userInfo.employee.lastname}} {{userInfo.employee.firstname}}</div>
                 </div>
-            </div>
-            
-        </div>
-        <div class="header">avaiables user</div>
-        <div class="user-info">
-            <div class="item-info">
-                <div class="sub-header">Role</div>
-                <div class="sub-header">Permissions</div>
-            </div>
-            <div 
-                class="item-info"
-                *ngFor="let avaiable of userInfo.avaiables"
-            >               
-                <div class="title">{{avaiable.role.title}}</div>
-                <div class="title">{{avaiable.access.title}}</div>
-                <div class="value" >
-                    <ul 
-                    
-                        *ngFor="let permission of avaiable.permissions"
-                    >
-                        <li >{{permission.title}}</li>
-                    </ul>
+                <div class="flex gap-x-2 justify-around">
+                  <div class="flex-1">department :</div>
+                  <div class="flex-1">{{userInfo.department.title}}</div>
                 </div>
                 
-            </div>
+                
+            </div>          
         </div>
+        <hr class=" mb-2 border-b-2 border-blue-300">
+        <div>        
+                    
+          <div 
+            class="text-center font-bold text-xl text-blue-600 space-y-4 py-2"
+          >
+            Avaiables user  
+          </div>
+        </div>
+        <div *ngFor="let avaiable of userInfo.avaiables ; let avaiableIndex=index">
+            <div class="flex gap-x-4">
+              <div class="flex-1 flex flex-col space-y-4">
+                
+                  <div class="flex-none text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+                    <span class="px-1 py-1">role</span>
+                  </div>
+                  
+                  <div class="flex flex-1  text-center min-h-48">              
+                    <div class="flex m-auto">
+                        <div class="my-auto text-center ">
+                            {{avaiable.role.title}}
+                        </div>
+                    </div>
+                  </div>
+                 
+                
+              </div>
+              <div class="flex-1 space-y-4 min-h-48">
+                <div class="text-center text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+                  <span>permissions</span>
+                </div>
+                    <div class="flex-1 space-y-4">
+                        <div 
+                            *ngFor="let permission of avaiable.permissions; let i=index"
+                        >
+                            <div class="pl-4">
+                                <span class="pl-4">{{permission.title}}</span>
+                            </div>
+                        </div>
+                    </div>
+              </div>
+              <div class="flex-1 flex flex-col space-y-4">
+                
+                <div class="flex-none text-center text-white text-xl font-bold bg-blue-900 rounded-lg py-2">
+                  <span class="px-1 py-1">access</span>
+                </div>
+                
+                <div class="flex flex-1  text-center min-h-48">              
+                  <div class="flex m-auto">
+                      <div class="my-auto text-center ">
+                          {{avaiable.access.title}}
+                      </div>
+                  </div>
+                </div>
+               
+              
+            </div>
+              
+            </div>
+            <hr class=" my-2 border-b-2 border-blue-300">
+          </div>
+        
         
         
     </div>
-    
-</div>
+  </div>
+  
+  
+  
+  
+  
+  
+  
