@@ -17,7 +17,8 @@ export class MainPageComponent implements OnInit {
   investments:number=0;
   geography:number=0;
   isShortMainPage:boolean = false;
-
+  
+  mobileMenuOpen:boolean =false;
   private counterDelay=20;
 
   constructor(
@@ -47,8 +48,13 @@ export class MainPageComponent implements OnInit {
     this.getGlobalInformation();
   }
   
+  toggleMobileMenu(){
+    this.mobileMenuOpen=!this.mobileMenuOpen;
+  }
   openMenu(){
     console.log("open menu")
+    //this.mobileMenuOpen=true;
+    
   }
   toMainPage(){
     console.log("to mainPage")
@@ -60,7 +66,7 @@ export class MainPageComponent implements OnInit {
   }
 
   toLogin(){ 
-    this.isShortMainPage = true;
+    this.isShortMainPage = false;
     this.router.navigate(["loginForm"]);
   }
 

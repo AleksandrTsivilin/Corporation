@@ -1,171 +1,33 @@
 
 
-.main-page-container{
-    .main-page{
-        height: 800px;
-        @apply flex flex-col ;
-
-        .main-header-container{
-            @apply flex-none;
-            .main-header{
-                @apply flex;
-                @apply h-auto;
-                @apply p-2;
-                @apply py-4;
-                @apply mx-48;
-        
-                .logo-container{
-                    @apply flex-none;
-                    @apply w-48;
-                    @apply border-2 border-white;
-                }
-        
-                .logo-container:hover{
-                    @apply cursor-pointer;
-                    @apply border-2 border-blue-900;
-                }
-                .navigation-container{
-                    @apply flex-1;
-                    @apply my-auto;
-                    @apply text-white;
-                    @apply text-xl;
-                    @apply font-bold;
-        
-                    .navigation{
-                        @apply flex justify-end;
-                        @apply gap-x-9;
-        
-                        .navigation-tag:hover{
-                            @apply text-red-600;
-                            @apply cursor-pointer;
-                            @apply pb-0;
-                            @apply border-b-2 border-red-600;
-                        }
-                        .navigation-tag{
-                            @apply pb-2;
-                        }
-                        
-                    }
-                }
-            }
-        }
-        .tag-line-container{
-            @apply flex flex-1;
-          
-            @apply text-center;
-            @apply text-red-600;
-            @apply text-6xl;
-            @apply font-bold;
-            @apply m-auto;
-    
-            .tag-line{
-                
-                @apply my-auto;
-                
-            }
-        }
-
-        .global-information-container{
-            @apply flex-none;
-            
-            @apply pb-8;
-            .global-information{
-                
-
-                
-    
-                .info-card-container{
-                    @apply  flex justify-evenly;
-                    
-                    @apply gap-x-9;
-                    
-                    .info-card{
-                        
-                        @apply text-red-600;
-                        @apply font-bold;
-                        
-    
-                        .title{
-    
-                        }
-                        .value-unit{
-                            @apply flex;
-                            @apply gap-x-2;
-                        }
-                        .value{
-                            @apply text-6xl;
-    
-                        }
-                        .unit{
-                            @apply pt-2;
-                            
-                        }
-                    }
-                }
-            }
-    
-        }
-        
-    }
-    .main-page-short{
-        @apply h-auto ;
-        @apply bg-blue-900;
-
-        
-        .main-header-container{
-           
-            .main-header{
-                @apply flex;
-                @apply h-auto;
-                @apply p-2;
-                @apply py-4;
-                @apply mx-48;
-        
-                .logo-container{
-                    @apply flex-none;
-                    @apply w-48;
-                    @apply border-2 border-white;
-                }
-        
-                .logo-container:hover{
-                    @apply cursor-pointer;
-                    @apply border-2 border-blue-900;
-                }
-                .navigation-container{
-                    @apply flex-1;
-                    @apply my-auto;
-                    @apply text-white;
-                    @apply text-xl;
-                    @apply font-bold;
-        
-                    .navigation{
-                        @apply flex justify-end;
-                        @apply gap-x-9;
-        
-                        .navigation-tag:hover{
-                            @apply text-red-600;
-                            @apply cursor-pointer;
-                            @apply pb-0;
-                            @apply border-b-2 border-red-600;
-                        }
-                        .navigation-tag{
-                            @apply pb-2;
-                        }
-                        
-                    }
-                }
-            }
-        }
-    }
-
-    
-
-    
-    
+.active-link:hover{
+    @apply text-red-600;
+    @apply border-b-2 border-red-600;
 }
 
+.container-main-page{
+    transition: 0.5s;
+    transform: translateX(0%);
+}
+.container-main-page-active{
+    transform: translateX(30%)
+}
+.container-cover{
+    width: full;
+    height: 800px;
+    
+}
+.container-cover-short{
+    width: full;
+    @apply bg-blue-900;
+    transition: 0.5s;
+    transform: translateX(0%);
+}
+
+.container-cover-active{
+    transform: translateX(30%)
+}
 .logo-container{
-    //@apply flex-none;
     @apply w-48;
     @apply border-2 border-white;
 }
@@ -173,15 +35,12 @@
 
 .tag-line-container{
     @apply flex ;
-    //@apply h-auto;
     @apply text-center;
     @apply text-red-600;
     @apply text-6xl;
     @apply font-bold;
-    //@apply m-auto;
-
+    @apply mx-2;
     .tag-line{
-        //@apply h-auto;
         @apply flex;
         @apply my-auto;
         
@@ -227,4 +86,69 @@
         }
     }
 
+}
+
+.mobile-menu{  
+    position: fixed;
+    width: 30%;    
+    height: 100%;
+    @apply bg-blue-700;
+    @apply text-white;
+    @apply font-bold;
+    left:0px;
+    top: 0;
+    
+    @apply space-y-4;
+    
+    transition: 0.5s;
+    transform: translateX(-100%);
+}
+
+.mobile-menu-active{    
+    transform: translateX(0);
+}
+
+.menu-btn{
+    display: block;
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: white;
+    position: relative;
+
+    .animation-menu-btn,
+    .animation-menu-btn::before,
+    .animation-menu-btn::after
+    {
+        position: absolute;
+        height: 2px;
+        width: 20px;
+        top:50%; 
+        left: 50%;
+        margin-left: -10px;
+        margin-top: -1px;
+        @apply bg-blue-900;
+    }
+    .animation-menu-btn::before,
+    .animation-menu-btn::after{
+        content: "";
+        transition: 0.3s;
+    }
+    .animation-menu-btn::before{
+        transform: translateY(-5px);
+    }
+    .animation-menu-btn::after{
+        transform: translateY(5px);
+    }
+    
+    .animation-menu-btn-active::before{
+        transform: rotate(-35deg);
+        width: 10px;
+        transform-origin: left bottom;
+    }
+    .animation-menu-btn-active::after{
+        transform: rotate(35deg);
+        width: 10px;
+        transform-origin: left top;
+    }
 }

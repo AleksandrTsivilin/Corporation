@@ -1,191 +1,260 @@
 
-<div 
-    class="h-screen flex flex-col"
-    *ngIf="!isShortMainPage else setShortMainPage"
-    style="background-image: url('../../assets/images/mainPage.jpg') "
->
-    <section class="flex-none">
-        <nav 
-            class="flex items-center justify-between flex-wrap bg-teal p-6"
-            >
-            <div class="lg:pl-24 md:pl-2 hidden sm:block flex items-center flex-no-shrink text-white mr-6">
-                <div 
-                    class="logo-container"
-                    (click)="toMainPage()"
-                >
-                    <img src="assets/images/logo_main_paige.png">
-                </div>
-            </div>
-            <div class="block lg:hidden">
-            <button 
-                class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white"
-                (click)="openMenu()"
-            >
-            <img 
-                src="assets/images/icon_menu.png"
-            >
-            </button>
-            </div>
-            <div class="w-full block flex-justify-end text-white font-bold text-size-2xl lg:flex lg:items-center lg:w-auto">
-            <div class=" lg:flex-grow hidden lg:block" >
+<div class="flex">
+
+    <div 
+        class="mobile-menu flex"
+        
+        [ngClass]="{'mobile-menu-active':mobileMenuOpen}"
+    >
+        
+        
+        <ul class=" p-4 pt-24 space-y-4">
+            <li>
                 <a routerLink="" 
-                    class="block mt-4 lg:inline-block lg:mt-0 mr-4"
-                    (click)="toMainPage()"
-                >
+                    class="active-link"
+                    (click)="toggleMobileMenu()">
                     main
                 </a>
+            </li>
+            <li 
+                *ngIf="isLogin"
+            >
                 <a routerLink="roleSelector" 
-                    class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
-                    *ngIf="isLogin"
-                    
+                    class="active-link"
+                    (click)="toggleMobileMenu()"
                 >
                     services
                 </a>
+            </li>
+            <li (click)="toggleMobileMenu()">
                 <a routerLink="loginForm" 
-                    class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+                    class="active-link"
                     *ngIf="!isLogin; else logout"
+                    
                 >
-                sign in
-                </a>
-            </div>
-            </div>
-        </nav>
-    </section>
-    <section class="flex justify-center flex-1">
+                    sing in
+                </a>                
+            </li>
+        </ul>
+    </div>
+    <div 
+        class="flex-1 container-main-page overflow-hidden"
+        [ngClass]="{'container-main-page-active':mobileMenuOpen}"
+    >
         <div 
-            class="tag-line-container"
-            *ngIf="!isShortMainPage"
-            >
-                <div class="tag-line">
-                    Let's Make Things Better
-                </div>             
-        </div>
-    </section>
-    <section class="flex-none">
-        <div 
-            class="global-information-container"
-            *ngIf="!isShortMainPage"
+            class="flex flex-col container-cover "
+            *ngIf="!isShortMainPage else setShortMainPage"
+            style="background-image: url('../../assets/images/mainPage.jpg') "
+            
         >
-            <div class="global-information">
-                <div class="info-card-container">
-                    <div class="info-card">
-                        <div class="title">
-                            Duration
-                        </div>
-                        <div class="value-unit">
-                            <div class="value">
-                                {{duration}}
-                            </div>
-                            <div class="unit">
-                                years
-                            </div>
+            <section
+                class="flex-none"
+            >
+                <nav
+                    class="flex items-center mt-4"
+                >
+                    <div class="flex-none  ml-2 md:hidden ">
+                        <button 
+                            class="menu-btn"
+                            (click)="toggleMobileMenu()"
+                        >
+                            <span 
+                                class="animation-menu-btn"
+                                [ngClass]="{'animation-menu-btn-active':mobileMenuOpen}"
+                            ></span>
+                        </button>
+                    </div>
+                    <div class="flex">
+                        <div
+                            class="flex-none w-48 ml-16 sm:w-48 sm:ml-16 md:w-64 md:ml-24 lg:w-96 lg:ml-36"
+                            (click)="toMainPage()"
+                        >
+                            <img 
+                                class="" 
+                                src="assets/images/logo_main_paige.png"
+                            >
                         </div>
                     </div>
-                
-                    <div class="info-card">
-                        <div class="title">
-                            Area of
-                        </div>
-                        <div class="value-unit">
-                            <div class="value">
-                                {{areaOf}}
-                            </div>
-                            <div class="unit">
-                                hectares
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="info-card">
-                        <div class="title">
-                            Investments,$
-                        </div>
-                        <div class="value-unit">
-                            <div class="value">
-                                {{investments}}
-                            </div>
-                            <div class="unit">
-                                million
-                            </div>
+                    <div 
+                        class="w-full flex flex-1 justify-end text-white font-bold text-xl md:items-center hidden md:block"
+                    >
+                        <div class=" flex justify-end" >
+                            <a routerLink="" 
+                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                (click)="toMainPage()"
+                            >
+                                main
+                            </a>
+                            <a routerLink="roleSelector" 
+                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                *ngIf="isLogin"
+                                
+                            >
+                                services
+                            </a>
+                            <a routerLink="loginForm" 
+                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                *ngIf="!isLogin; else logout"
+                            >
+                                sign in
+                            </a>
                         </div>
                     </div>
-                
-                    <div class="info-card">
-                        <div class="title">
-                            Geography
-                        </div>
-                        <div class="value-unit">
-                            <div class="value">
-                                {{geography}}
+                    
+                </nav>
+            </section>
+            <section class="flex justify-center flex-1">
+                <div 
+                    class="tag-line-container"
+                    *ngIf="!isShortMainPage"
+                    >
+                        <div class="tag-line">
+                            Let's Make Things Better
+                        </div>             
+                </div>
+            </section>  
+            <section class="flex-none hidden md:block">
+                <div 
+                    class="global-information-container"
+                    *ngIf="!isShortMainPage"
+                >
+                    <div class="global-information">
+                        <div class="info-card-container">
+                            <div class="info-card">
+                                <div class="title">
+                                    Duration
+                                </div>
+                                <div class="value-unit">
+                                    <div class="value">
+                                        {{duration}}
+                                    </div>
+                                    <div class="unit">
+                                        years
+                                    </div>
+                                </div>
                             </div>
-                            <div class="unit">
-                                countries
+                        
+                            <div class="info-card">
+                                <div class="title">
+                                    Area of
+                                </div>
+                                <div class="value-unit">
+                                    <div class="value">
+                                        {{areaOf}}
+                                    </div>
+                                    <div class="unit">
+                                        hectares
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="info-card">
+                                <div class="title">
+                                    Investments,$
+                                </div>
+                                <div class="value-unit">
+                                    <div class="value">
+                                        {{investments}}
+                                    </div>
+                                    <div class="unit">
+                                        million
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="info-card">
+                                <div class="title">
+                                    Geography
+                                </div>
+                                <div class="value-unit">
+                                    <div class="value">
+                                        {{geography}}
+                                    </div>
+                                    <div class="unit">
+                                        countries
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
-    </section>
-</div>
-<div >
-    <router-outlet></router-outlet>
+        <div >
+            <router-outlet></router-outlet>
+        </div>
+    </div>
 </div>
 
 <ng-template #setShortMainPage>
-    <nav 
-            class="bg-blue-900 flex items-center justify-between flex-wrap bg-teal p-6"
+    <div class="flex">
+        <div
+            class="flex-1  container-cover-short"            
+            [ngClass]="{'container-main-page-active':mobileMenuOpen}"
+        >
+            <section
+                class=""
             >
-            <div class="lg:pl-24 md:pl-2 hidden sm:block flex items-center flex-no-shrink text-white mr-6">
-                <div 
-                    class="logo-container"
-                    (click)="toMainPage()"
+                <nav
+                    class="flex w-full items-center mt-4"
                 >
-                    <img src="assets/images/logo_main_paige.png">
-                </div>
-             
-            <!-- <span class="font-semibold text-xl tracking-tight">Tailwind CSS</span>  -->
-            </div>
-            <div class="block lg:hidden">
-            <button 
-                class="flex items-center px-3 py-2 border rounded text-teal-lighter border-teal-light hover:text-white hover:border-white"
-                (click)="openMenu()"
-            >
-            <img 
-                src="assets/images/icon_menu.png"
-            >
-            </button>
-            </div>
-            <div class="w-full block flex-justify-end text-white font-bold text-size-2xl lg:flex lg:items-center lg:w-auto">
-            <div class=" lg:flex-grow hidden lg:block" >
-                <a routerLink="" 
-                    class="block mt-4 lg:inline-block lg:mt-0   hover:text-white mr-4"
-                    (click)="toMainPage()"
-                >
-                     main
-                </a>
-                <a routerLink="roleSelector" 
-                    class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
-                    *ngIf="isLogin"
-                    (click)="toShortMainPage()"
-                >
-                services
-                </a>
-                <a routerLink="loginForm" 
-                    class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
-                    *ngIf="!isLogin; else logout"
-                >
-                sign in
-                </a>
-            </div>
-            </div>
-        </nav>
-     
+                    <div class="flex-none  ml-2 md:hidden ">
+                        <button 
+                            class="menu-btn"
+                            (click)="toggleMobileMenu()"
+                        >
+                            <span 
+                                class="animation-menu-btn"
+                                [ngClass]="{'animation-menu-btn-active':mobileMenuOpen}"
+                            ></span>
+                        </button>
+                    </div>
+                    <div class="flex">
+                        <div
+                            class="flex-none w-48 my-4 ml-16 sm:w-48 sm:ml-16 md:w-64 md:ml-24 lg:w-96 lg:ml-36"
+                            (click)="toMainPage()"
+                        >
+                            <img 
+                                class="" 
+                                src="assets/images/logo_main_paige.png"
+                            >
+                        </div>
+                    </div>
+                    <div 
+                        class="w-full flex flex-1 justify-end text-white font-bold text-xl md:items-center hidden md:block"
+                    >
+                        <div class=" flex justify-end" >
+                            <a routerLink="" 
+                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                (click)="toMainPage()"
+                            >
+                                main
+                            </a>
+                            <a routerLink="roleSelector" 
+                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                *ngIf="isLogin"
+                                
+                            >
+                                services
+                            </a>
+                            <a routerLink="loginForm" 
+                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                *ngIf="!isLogin; else logout"
+                            >
+                                sign in
+                            </a>
+                        </div>
+                    </div>
+                    
+                </nav>
+            </section>
+        </div>
+    </div>
 </ng-template>
 
 <ng-template #logout>
     <a routerLink="" 
-        class="block mt-4 lg:inline-block lg:mt-0  hover:text-white mr-4"
+        class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
         (click)=toLogout()>
         log out
     </a>
