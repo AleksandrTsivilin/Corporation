@@ -11,5 +11,6 @@ namespace Repositories.ProductRepositories.FactoryRepositories
     public interface IFactoryRepository : IRepository<Factory>
     {
         Task<List<Factory>> GetByAccess(FactorySpecificationByAccess specification);
+        Task<List<Factory>> GetByRegionId(int id);
     }
 }

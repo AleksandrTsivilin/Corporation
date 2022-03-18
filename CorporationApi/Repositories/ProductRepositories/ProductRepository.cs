@@ -64,17 +64,6 @@ namespace Repositories.ProductRepositories
         public async Task<List<Product>> GetByAccess(
             ProductSpecificationByAccess specification)
         {
-            //var products = await _context.Products
-            //    .Include(p => p.Manufacture)
-            //    .Include(p => p.Category)
-            //    .Include(p => p.Unit)
-            //    .Include(p => p.ProductStorages)
-            //    .ThenInclude(ps => ps.Storage)
-            //    .ThenInclude(s => s.Department)
-            //    .ThenInclude(d => d.Factory)
-            //    .ThenInclude(f => f.Region)
-            //    .Where(specification.Expression)
-            //    .ToListAsync();
             var productStorage = await _context.Product_Storage
                 .Include(ps => ps.Product)
                     .ThenInclude(product => product.Manufacture)
@@ -87,10 +76,10 @@ namespace Repositories.ProductRepositories
                         .ThenInclude(department => department.Factory)
                             .ThenInclude(factory => factory.Region)
                 .Where(specification.Expression)
-                
+
                 .ToListAsync();
 
-           
+
             return productStorage.Select(ps=>ps.Product).Distinct<Product>().ToList();
         }
 
@@ -159,6 +148,53 @@ namespace Repositories.ProductRepositories
                 .ToListAsync();
 
             return productStorage.Select(ps => ps.Product).ToList();
+        }
+
+        public async Task<List<Product>> GetByFilter(
+            FilterProductModel filter,
+            ProductSpecificationByAccess specification)
+        {
+            var productStorage = await _context.Product_Storage
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Manufacture)
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Category)
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Unit)
+                .Include(ps => ps.Storage)
+                    .ThenInclude(storage => storage.Department)
+                        .ThenInclude(department => department.Factory)
+                            .ThenInclude(factory => factory.Region)
+                .Where(specification.Expression)
+                .Where(ps =>
+                    ((ps.Storage.Department.Factory.Region.Id == filter.RegionId
+                        && filter.RegionId > 0 && filter.FactoryId <= 0 && filter.StorageId <= 0)
+                    || (ps.Storage.Department.Factory.Id == filter.FactoryId
+                        && filter.FactoryId > 0 && filter.StorageId <= 0)
+                    || (ps.Storage.Id == filter.StorageId && filter.StorageId > 0)
+                    || (filter.RegionId <= 0 && filter.FactoryId <= 0 && filter.StorageId <= 0))
+                    && (ps.Product.Manufacture.Id == filter.ManufacturerId || filter.ManufacturerId <= 0)
+                    && (ps.Product.Category.Id == filter.CategoryId || filter.CategoryId <= 0)
+                    && (ps.Product.Unit.Id == filter.UnitId || filter.UnitId <= 0)
+                    && (ps.Product.Price >= filter.StartPrice && ps.Product.Price <= filter.EndPrice)
+                    //&& (ps.Product.ProductStorages.Sum(
+                    //    productStorage => productStorage.CountProduct) <= filter.EndCount)
+                 )
+
+                //.Where(ps => ps.Product.ProductStorages.Sum(
+                //     productStorage => productStorage.CountProduct) <= filter.EndCount)
+
+                //.GroupBy(ps => ps.ProductId)
+                //.Include(ps=>ps.Product)
+                //.Select(ps => ps.Product.ProductStorages.Sum(
+                //    productStorage => productStorage.CountProduct) <= filter.EndCount)
+                .ToListAsync();
+
+            //var productByCount= await 
+            return productStorage
+                .Where(ps => ps.CountProduct <= filter.EndCount && ps.CountProduct >= filter.StartCount)
+                .Select(ps => ps.Product).Distinct<Product>()                
+                .ToList();
         }
         private List<int> GetUpdatedStorages(ICollection<ProductStorage> productStorages)
         {

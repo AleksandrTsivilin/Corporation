@@ -27,5 +27,16 @@ namespace Services.ProductServices.FactoryServices
                 Title = factory.Title
             }).ToList();
         }
+
+        public async Task<List<FactoryModel>> GetFactoryByRegion(int id)
+        {
+            var factories = await _repository.GetByRegionId(id);
+            return factories
+                .Select(factory => new FactoryModel
+                {
+                    Id = factory.Id,
+                    Title = factory.Title
+                }).ToList();
+        }
     }
 }

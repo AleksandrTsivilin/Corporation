@@ -17,12 +17,33 @@ namespace Services.ProductServices.StoragesService
     public class StorageService : IStorageService
     {
         private readonly DBContext _context;
-        //private readonly IRepository<Storage> _repository;
         private readonly IStorageRepository _repository;
         public StorageService(DBContext context, IStorageRepository repository)
         {
             _context = context;
             _repository = repository;
+        }
+
+        public async Task<List<StorageModel>> GetByFactoryId(int id)
+        {
+            var storages = await _repository.GetByFactoryId(id);
+            return storages
+                .Select(storage => new StorageModel
+                {
+                    Id = storage.Id,
+                    Title = storage.Title
+                }).ToList();
+        }
+
+        public async Task<List<StorageModel>> GetByRegionId(int id)
+        {
+            var storages = await _repository.GetByRegionId(id);
+            return storages
+                .Select(storage => new StorageModel
+                {
+                    Id = storage.Id,
+                    Title = storage.Title
+                }).ToList();
         }
 
         public async Task<int> GetCount()
@@ -55,18 +76,11 @@ namespace Services.ProductServices.StoragesService
 
         public async Task<List<StorageModel>> GetStorages()
         {
-            //return await _context.Storages
-            //    .Select((storage) => new StorageModel()
-            //    {
-            //        Title = storage.Title
-            //    }).ToListAsync();
             var storages = await _repository.Get();
             return storages.Select((s) => new StorageModel()
             {
                 Title = s.Title
             }).ToList();
-            //Console.WriteLine(b);
-            //return b;
         }
     }
 }

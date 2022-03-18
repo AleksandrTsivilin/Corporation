@@ -12,5 +12,7 @@ namespace Repositories.ProductRepositories.StorageRepositories
     {
         Task <List<Storage>> GetByAccess(StorageSpecificationByAccess specification);
         Task<Storage> GetByUser(int departmentId);
+        Task<List<Storage>> GetByFactoryId(int id);
+        Task<List<Storage>> GetByRegionId(int id);
     }
 }

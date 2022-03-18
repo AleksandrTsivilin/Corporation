@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Models.ProductModels;
 using Repositories.Specifications;
 using Services.IdentityUserServices;
 using Services.ProductService;
@@ -41,6 +42,16 @@ namespace CorporationApi.Controllers
         {
             var identity = GetIdentityInfo();
             var products = await _service.GetProductsByUser(identity);
+            return Ok(products);
+        }
+
+        [HttpPost("ByFilter")]
+        public async Task<IActionResult> GetProductsByFilter([FromForm]FilterProductModel filter)
+        {
+            //Console.WriteLine(filter.RegionId);
+            var claims = HttpContext.User.Identity as ClaimsIdentity;
+            var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
+            var products = await _service.GetByFilter(filter,identityInfo);
             return Ok(products);
         }
 

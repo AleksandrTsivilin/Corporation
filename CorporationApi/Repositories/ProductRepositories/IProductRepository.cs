@@ -16,5 +16,6 @@ namespace Repositories.ProductRepositories
         Task<List<int>> Update(NewProductModel model, int id);
         Task<List<int>> Remove(int id);
         Task<List<Product>> GetByUser(int departmentId);
+        Task<List<Product>> GetByFilter(FilterProductModel filter, ProductSpecificationByAccess specification);
     }
 }

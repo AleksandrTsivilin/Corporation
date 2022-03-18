@@ -23,5 +23,12 @@ namespace Repositories.FactoryRepositories
                 .Where(specification.Expression)
                 .ToListAsync();
         }
+
+        public async Task<List<Factory>> GetByRegionId(int id)
+        {
+            return await _context.Factories
+                .Where(factory => factory.RegionId == id)
+                .ToListAsync();
+        }
     }
 }

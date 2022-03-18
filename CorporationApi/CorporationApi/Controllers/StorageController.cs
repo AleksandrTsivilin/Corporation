@@ -53,6 +53,20 @@ namespace CorporationApi.Controllers
             return Ok(count);
         }
 
+        [HttpGet("ByFactoryId")]
+        public async Task<IActionResult> GetByFactoryId(int id)
+        {
+            var storages = await Task.Run(() => _service.GetByFactoryId(id));
+            return Ok(storages);
+        }
+
+        [HttpGet("ByRegionId")]
+        public async Task<IActionResult> GetByRegionId(int id)
+        {
+            var storages = await Task.Run(() => _service.GetByRegionId(id));
+            return Ok(storages);
+        }
+
         private IdentityUserModel GetIdentityInfo(string key)
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;

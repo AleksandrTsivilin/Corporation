@@ -18,5 +18,6 @@ namespace Services.ProductServices.ProductService
         Task <List<int>> UpdateProduct(NewProductModel model, int id);
         Task <List<int>> RemoveProduct(int id);
         Task<List<ProductModel>> GetProductsByUser(IdentityUserModel identity);
+        Task<List<ProductModel>> GetByFilter(FilterProductModel filter, IdentityUserModel identity);
     }
 }

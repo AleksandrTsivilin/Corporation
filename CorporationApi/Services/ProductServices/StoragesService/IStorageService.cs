@@ -14,5 +14,7 @@ namespace Services.ProductServices.StoragesService
         Task<StorageModel> GetStorageByUser(IdentityUserModel identity);
         Task<List<StorageModel>> GetStorageByAccess(IdentityUserModel identity);
         Task<int> GetCount();
+        Task<List<StorageModel>> GetByFactoryId(int id);
+        Task<List<StorageModel>> GetByRegionId(int id);
     }
 }

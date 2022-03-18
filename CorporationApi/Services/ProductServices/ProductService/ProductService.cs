@@ -54,28 +54,6 @@ namespace Services.ProductServices.ProductService
                 }, //product.Unit.Title,
                 IsBanned = product.IsBanned
             }).ToList();
-            //return await _context.Products
-            //    .Include(p => p.Manufacture)
-            //    .Include(p => p.Category)
-            //    .Include(p => p.Unit)
-            //    .Include(p => p.ProductStorages)
-            //    .ThenInclude(ps => ps.Storage)
-            //    .ThenInclude(s => s.Department)
-            //    .ThenInclude(d => d.Factory)
-            //    .ThenInclude(f => f.Region)
-            //    //.Where(accessService.Expression)
-                //.Select((product) => new ProductModel()
-                //{
-                //    Id = product.Id,
-                //    Title = product.Title,
-                //    Price = product.Price,
-                //    Count = product.ProductStorages
-                //            .Sum(ps => ps.CountProduct),
-                //    Manufacturer = product.Manufacture.Title,
-                //    Category = product.Category.Title,
-                //    Unit = product.Unit.Title,
-                //    IsBanned = product.IsBanned
-                //}).ToListAsync();
         }
         public async Task<List<int>> AddProduct(NewProductModel model)
         {
@@ -99,6 +77,36 @@ namespace Services.ProductServices.ProductService
             return GetProductModels(products);
         }
 
+        public async Task<List<ProductModel>> GetByFilter(FilterProductModel filter, IdentityUserModel identity)
+        {
+            var specification = new ProductSpecificationByAccess(identity);
+            var products = await _repository.GetByFilter(filter,specification);
+
+            return products.Select(product => new ProductModel
+            {
+                Id = product.Id,
+                Title = product.Title,
+                Price = product.Price,
+                Count = product.ProductStorages
+                            .Sum(ps => ps.CountProduct),
+                Manufacturer = new ManufacturerModel
+                {
+                    Id = product.Manufacture.Id,
+                    Title = product.Manufacture.Title
+                },
+                Category = new CategoryModel
+                {
+                    Id = product.Category.Id,
+                    Title = product.Category.Title
+                }, //product.Category.Title,
+                Unit = new UnitModel
+                {
+                    Id = product.Unit.Id,
+                    Title = product.Unit.Title
+                }, //product.Unit.Title,
+                IsBanned = product.IsBanned
+            }).ToList();
+        }
         private List<ProductModel> GetProductModels(List<Product> products)
         {
             return products.Select(product => new ProductModel
@@ -127,6 +135,7 @@ namespace Services.ProductServices.ProductService
             }).ToList();
  
         }
+
     }
 
 

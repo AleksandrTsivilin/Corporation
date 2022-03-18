@@ -23,6 +23,24 @@ namespace Repositories.ProductRepositories.StorageRepositories
                 .ToListAsync();
         }
 
+        public async Task<List<Storage>> GetByFactoryId(int id)
+        {
+            return await _context.Storages
+                .Include(storage => storage.Department)
+                .Where(storage => storage.Department.FactoryId == id)
+                .ToListAsync();
+        }
+
+        public async Task<List<Storage>> GetByRegionId(int id)
+        {
+            return await _context.Storages
+                .Include(storage => storage.Department)
+                    .ThenInclude(department => department.Factory)
+                        .ThenInclude(factory => factory.Region)
+                .Where(storage => storage.Department.Factory.Region.Id == id)
+                .ToListAsync();
+        }
+
         public async Task<Storage> GetByUser(int departmentId)
         {
             return await _context.Storages
