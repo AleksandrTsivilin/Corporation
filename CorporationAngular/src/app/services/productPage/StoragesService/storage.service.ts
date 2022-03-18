@@ -24,4 +24,17 @@ export class StorageService {
     const urlGetCount="https://localhost:5001/api/Storage/count";
     return this.client.get<number>(urlGetCount);
   }
+
+  getStoragesByFactoryId(id:number){
+    const urlGetStoragesByFactoryId="https://localhost:5001/api/Storage/ByFactoryId";
+    const params = new HttpParams().set("id",id);
+    return this.client.get<StorageInfo[]>(urlGetStoragesByFactoryId,{params})
+  }
+
+  getStorageByRegionId(id:number){
+    const urlGetStorageByRegionId="https://localhost:5001/api/Storage/ByRegionId";
+    const params = new HttpParams().set("id",id);
+    return this.client.get<StorageInfo[]>(urlGetStorageByRegionId,{params});
+
+  }
 }

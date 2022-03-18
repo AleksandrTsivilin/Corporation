@@ -15,6 +15,13 @@ import { RegionService } from 'src/app/services/regionManager/region.service';
 import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
 import { debounceTime } from 'rxjs/operators';
+import { ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
+import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
+import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
+import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
+import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
+import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
+import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 
 @Component({
   selector: 'app-products',
@@ -39,6 +46,9 @@ export class ProductsComponent implements OnInit {
   storages:StorageInfo[]=[];
   factories: FactoryInfo[]=[];
   regions: RegionInfo[]=[];
+  manufacturers:ManufacturerInfo[]=[];
+  categories:CategoryInfo[]=[];
+  units:UnitInfo[]=[];
 
   newProductForm:NewProductForm={
     storageId:0,
@@ -59,7 +69,22 @@ export class ProductsComponent implements OnInit {
     unit:{id:0,title:""},
     isBanned:false
   }
+
+  productFilterForm:ProductFilterForm = {
+    regionId:0,
+    factoryId:0,
+    storageId:0,
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0,
+    startPrice:0,
+    endPrice:10000,
+    startCount:0,
+    endCount:10000
+  }
   
+  isOpenDetailedSearch:boolean =false;
+  isApplyFilter:boolean=false;
   private editedProductId:number=0;
   private _ascDirection = 1;
   private _sortCriteria="";
@@ -78,26 +103,104 @@ export class ProductsComponent implements OnInit {
     private readonly updateMovementService:MovementsUpdateService,
     private readonly storageService:StorageService,
     private readonly factoryService:FactoryService,
-    private readonly regionService:RegionService
+    private readonly regionService:RegionService,
+    private readonly manufacturerService:ManufacturerService,
+    private readonly categoryService:CategoryService,
+    private readonly unitService:UnitService
     ) { }
 
   ngOnInit(): void {
 
     this.headersTable=this.getHeadersTable(); 
-    this.getProducts();
-    this.getStorages();
-    this.getFactories();
-    this.getRegions();
+    this.getProducts();    
 
     this.setProductsInfoLis();
     
     this.setDefaultSearch();
-}
+  }
 
-startSearch(){
-  this.search$.next(this.search);
-}
- 
+  startSearch(){
+    this.search$.next(this.search);
+  }
+
+  toggleDetailedSearch(){
+    this.isOpenDetailedSearch=!this.isOpenDetailedSearch;
+    if (this.isApplyFilter) return;
+    if (this.isOpenDetailedSearch) this.getDataDetailedSearch();    
+  }  
+
+  onSubmitFilter(){
+    console.log(this.productFilterForm)
+    this.isApplyFilter=true;
+    this.service.getByFilter(this.productFilterForm)
+      .subscribe(products=>this.filterProductsInfo=products)
+  }
+  clearFilterForm(){
+    this.getDataDetailedSearch();
+    this.productFilterForm.startCount=0;
+    this.productFilterForm.endCount=10000;
+    this.productFilterForm.startPrice=0;
+    this.productFilterForm.endPrice=10000;
+    console.log(this.productFilterForm);
+    this.service.getProductsByAccess()
+      .subscribe(product=>this.filterProductsInfo=product);
+    this.isApplyFilter=false;
+  }
+  changeFilterRegion(){
+    console.log(this.productFilterForm)
+    const selectedRegionId=Number(this.productFilterForm.regionId);
+    console.log(selectedRegionId);
+    this.factoryService.getFactoryByRegionId(selectedRegionId)
+      .subscribe(factories=>{
+        this.factories=factories;
+        this.productFilterForm.factoryId=this.clearValueForm(this.productFilterForm.factoryId);
+        //this.productFilterForm.factoryId=this.productFilterForm.factoryId-1;
+  })
+    
+  this.storageService.getStorageByRegionId(selectedRegionId)
+    .subscribe(storages=>{
+      this.storages=storages;
+      this.productFilterForm.storageId=this.clearValueForm(this.productFilterForm.storageId);
+      //this.productFilterForm.storageId=this.productFilterForm.storageId-1;
+    })
+  }
+
+  changeFilterFactory(){
+    console.log("changeFilterFactory")
+    console.log(this.factories)
+    const selectedFactoryId=Number(this.productFilterForm.factoryId);
+    this.storageService.getStoragesByFactoryId(selectedFactoryId)
+      .subscribe(storages=>{
+        this.storages=storages;
+        //this.productFilterForm.storageId=this.productFilterForm.storageId-1;
+        Number(this.productFilterForm.storageId)>0
+          ? this.productFilterForm.storageId=0
+          : this.productFilterForm.storageId=this.productFilterForm.storageId-1;
+      })
+  }
+  changeFilterStartPrice(startPrice:number){
+    if (startPrice>this.productFilterForm.endPrice) 
+      this.productFilterForm.endPrice=startPrice+1;
+    this.productFilterForm.startPrice=startPrice;
+  }
+  changeFilterEndPrice(endPrice:number){
+    if(endPrice<this.productFilterForm.startPrice)
+      this.productFilterForm.startPrice=endPrice-1;
+    this.productFilterForm.endPrice=endPrice;
+  }
+
+  changeFilterStartCount(startCount:number){
+    if(startCount>this.productFilterForm.endCount)
+      this.productFilterForm.endCount=startCount+1;
+    this.productFilterForm.startCount=startCount;
+  }
+
+  changeFilterEndCount(endCount:number){
+    if(endCount<this.productFilterForm.startCount)
+      this.productFilterForm.startCount=endCount-1;
+    this.productFilterForm.endCount=endCount;
+  }
+
   startEdit(editProduct:ProductInfo){
 
     this.editedProductId=editProduct.id;
@@ -176,7 +279,7 @@ startSearch(){
     const isDoChanges = this.storages.some(storage=>changes.includes(storage.id));
     if (isDoChanges) this.getProducts(); 
   }
-  
+
 
   private getHeadersTable():HeaderTable[]{
     const headers= [{
@@ -218,8 +321,9 @@ startSearch(){
   }
 
   private getProducts(){
-     this.service.getProductsByAccess()
-      .subscribe((result)=>{    
+      this.service.getProductsByAccess()
+      .subscribe((result)=>{   
+        console.log(result); 
         this.productsInfo=result; 
         this.updateFilterProductsInfo(this.productsInfo);       
         this.setStatePage("",true);
@@ -229,12 +333,19 @@ startSearch(){
       this.setStatePage("responce500",false);
     })
   }
-
+  private getDataDetailedSearch(){
+    this.getStorages();
+    this.getFactories();
+    this.getRegions();
+    this.getManufacturers();
+    this.getCategories();
+    this.getUnits();
+  }
   private getStorages(){
     this.storageService.getStoragesByAccess("ProductManager")
       .subscribe(storages=>{
         this.storages=storages;
-        console.log(this.storages)
+        this.productFilterForm.storageId=this.clearValueForm(this.productFilterForm.storageId);
       })
   }
 
@@ -242,6 +353,7 @@ startSearch(){
     this.factoryService.getFactoriesByAcces()
       .subscribe(factories=>{
         this.factories=factories;
+        this.productFilterForm.factoryId=this.clearValueForm(this.productFilterForm.factoryId);
       })
   }
 
@@ -249,6 +361,31 @@ startSearch(){
     this.regionService.getRegionsByAccess()
       .subscribe(regions=>{
         this.regions = regions;
+        this.productFilterForm.regionId=this.clearValueForm(this.productFilterForm.regionId);
+      })
+  }
+
+  private getManufacturers(){
+    this.manufacturerService.getManufacturers()
+      .subscribe(manufacturers=>{
+        this.manufacturers=manufacturers;
+        this.productFilterForm.manufacturerId=this.clearValueForm(this.productFilterForm.manufacturerId);
+      })
+  }
+
+  private getCategories(){
+    this.categoryService.getCategories()
+      .subscribe(categories=>{
+        this.categories=categories;
+        this.productFilterForm.categoryId=this.clearValueForm(this.productFilterForm.categoryId);
+      })
+  }
+
+  private getUnits(){
+    this.unitService.getUnits()
+      .subscribe(units=>{
+        this.units=units;
+        this.productFilterForm.unitId=this.clearValueForm(this.productFilterForm.unitId);
       })
   }
 
@@ -285,6 +422,12 @@ startSearch(){
               : filteredUser;
           })
       })
+  }
+
+  private clearValueForm(value:number):number{
+    return value>0
+      ? 0
+      : value-1;
   }
 
 }

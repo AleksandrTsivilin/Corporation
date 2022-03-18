@@ -8,6 +8,12 @@
 
 .table-container{
   height: 800px;
+  transition: 0.3s;
+  transform: translateY(0%);
+}
+
+.table-container-active{
+  transform: translateY(400px)
 }
 
 .product-item:hover{
@@ -54,4 +60,36 @@
   .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+  }
+
+  .detailed-search-container{
+    position: relative;     
+    //background-color: aqua;       
+  }
+  .detailed-search{
+    position: absolute;
+    @apply invisible; 
+    @apply w-full;   
+    //top:0;
+    //left: 0;
+    //width: 100%;
+    transition: 0.3s;
+    transform: translateY(-100%);
+    opacity: 0;    
+    //@apply flex;
+    //@apply text-white font-bold;
+    //@apply w-full;
+    //@apply mr-80;
+  }
+
+  .detailed-search-active{
+    width: 100%;
+    @apply visible;
+    transform: translateY(0);
+    opacity: 1;
+    @apply pr-16;
+  }
+
+  .filter-price-active:hover{
+    @apply border-2 border-blue-500;
   }

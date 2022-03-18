@@ -38,6 +38,7 @@ import { WarningDialogMovementsComponent } from './components/productManagerPage
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

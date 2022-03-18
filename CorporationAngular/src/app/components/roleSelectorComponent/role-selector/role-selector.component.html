@@ -33,14 +33,14 @@
 
 
 <ng-template #toMoveNextPage>
-    <div [ngSwitch]='pageState.path' class="h-full   pb-16 ">
+    <div [ngSwitch]='pageState.path' class="h-full   pb-16">
         <app-personal-user-data
             *ngSwitchCase="'personal_data'"
         >
         </app-personal-user-data>
         <app-products 
             *ngSwitchCase="'products'"
-            class="h-full   pb-16 "
+            class="h-full   pb-16"
             [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
             
         ></app-products>
