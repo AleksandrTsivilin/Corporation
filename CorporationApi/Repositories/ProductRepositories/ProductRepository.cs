@@ -177,20 +177,13 @@ namespace Repositories.ProductRepositories
                     && (ps.Product.Category.Id == filter.CategoryId || filter.CategoryId <= 0)
                     && (ps.Product.Unit.Id == filter.UnitId || filter.UnitId <= 0)
                     && (ps.Product.Price >= filter.StartPrice && ps.Product.Price <= filter.EndPrice)
-                    //&& (ps.Product.ProductStorages.Sum(
-                    //    productStorage => productStorage.CountProduct) <= filter.EndCount)
+
                  )
 
-                //.Where(ps => ps.Product.ProductStorages.Sum(
-                //     productStorage => productStorage.CountProduct) <= filter.EndCount)
 
-                //.GroupBy(ps => ps.ProductId)
-                //.Include(ps=>ps.Product)
-                //.Select(ps => ps.Product.ProductStorages.Sum(
-                //    productStorage => productStorage.CountProduct) <= filter.EndCount)
                 .ToListAsync();
 
-            //var productByCount= await 
+            
             return productStorage
                 .Where(ps => ps.CountProduct <= filter.EndCount && ps.CountProduct >= filter.StartCount)
                 .Select(ps => ps.Product).Distinct<Product>()                
