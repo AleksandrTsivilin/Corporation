@@ -1,5 +1,7 @@
 
-
+.product-container{
+  height: 100vh;
+}
 
 .active-header{
     @apply cursor-pointer;
@@ -7,9 +9,18 @@
 }
 
 .table-container{
-  height: 800px;
+  //height: 500px;
+  height: 60%;
+  //height: 60%;
+  overflow-y: scroll;
+  
   transition: 0.3s;
   transform: translateY(0%);
+
+  // .table-size{
+  //   height: 300px;
+  //   overflow: scroll;
+  // }
 }
 
 .table-container-active{

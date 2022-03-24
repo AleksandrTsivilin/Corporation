@@ -32,46 +32,7 @@
 
 
 
-<ng-template #toMoveNextPage>
-    <div [ngSwitch]='pageState.path' class="h-full   pb-16">
-        <app-personal-user-data
-            *ngSwitchCase="'personal_data'"
-        >
-        </app-personal-user-data>
-        <app-products 
-            *ngSwitchCase="'products'"
-            class="h-full   pb-16"
-            [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
-            
-        ></app-products>
-        
-        <app-add-product
-            *ngSwitchCase="'addProduct'"
-        ></app-add-product>
-        
-        <app-users
-            *ngSwitchCase="'users'"
-            [avaiablesPermissions]="getAvaiablesPermissions('UserManager')"
-        >
-        </app-users>
-        <app-add-user
-            *ngSwitchCase="'addUser'"
-        >                        
-        </app-add-user>
-       
-        <h1            
-            *ngSwitchCase="'movementsProducts'"
-        >{{pageState.path}}</h1>
-        
-        <app-product-movements
-            class="h-full   pb-16 "
-            *ngSwitchCase="'addMovements'"
-        >
-        </app-product-movements>
-    </div>
-    
-    
-</ng-template>
+
 
 
 <div *ngIf="pageState.isActive else toMoveNextPage">
@@ -337,3 +298,45 @@
     </div>
 </div>
 
+<ng-template #toMoveNextPage>
+    <div class="t-container">
+        <div [ngSwitch]='pageState.path' >
+            <app-personal-user-data
+                *ngSwitchCase="'personal_data'"
+            >
+            </app-personal-user-data>
+            <app-products 
+                *ngSwitchCase="'products'"
+                class="h-full   pb-16 overflow-y-scroll"
+                [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
+                
+            ></app-products>
+            
+            <app-add-product
+                *ngSwitchCase="'addProduct'"
+            ></app-add-product>
+            
+            <app-users
+                *ngSwitchCase="'users'"
+                [avaiablesPermissions]="getAvaiablesPermissions('UserManager')"
+            >
+            </app-users>
+            <app-add-user
+                *ngSwitchCase="'addUser'"
+            >                        
+            </app-add-user>
+        
+            <h1            
+                *ngSwitchCase="'movementsProducts'"
+            >{{pageState.path}}</h1>
+            
+            <app-product-movements
+                class="h-full   pb-16 "
+                *ngSwitchCase="'addMovements'"
+            >
+            </app-product-movements>
+        </div>
+    </div>
+    
+    
+</ng-template>

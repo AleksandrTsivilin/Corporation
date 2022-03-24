@@ -1,5 +1,5 @@
 
-<div class="flex">
+ <div class="flex">
 
     <div 
         class="mobile-menu flex"
@@ -41,7 +41,8 @@
         class="flex-1 container-main-page overflow-hidden"
         [ngClass]="{'container-main-page-active':mobileMenuOpen}"
     >
-        <div 
+        <div [ngClass]="{'size-main-page-container': isShortMainPage}">
+            <div 
             class="flex flex-col container-cover "
             *ngIf="!isShortMainPage else setShortMainPage"
             style="background-image: url('../../assets/images/mainPage.jpg') "
@@ -179,15 +180,16 @@
                     </div>
                 </div>
             </section>
-        </div>
-        <div >
-            <router-outlet></router-outlet>
+            </div>
+            <div >
+                <router-outlet></router-outlet>
+            </div>
         </div>
     </div>
-</div>
+</div> 
 
-<ng-template #setShortMainPage class="h-full">
-    <div class="flex">
+<ng-template #setShortMainPage>
+    <div class="flex h-1/5">
         <div
             class="flex-1  container-cover-short"            
             [ngClass]="{'container-main-page-active':mobileMenuOpen}"

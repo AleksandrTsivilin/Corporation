@@ -1,11 +1,11 @@
 
 
 
+<div *ngIf="pageState.isActive else toMoveNextPage" class="h-full">
 
-<div *ngIf="pageState.isActive else toMoveNextPage">
 
-
-  <div class="-my-2 py-2  sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+  <div class="product-container my-2 py-2  sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
+    
     <div class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
         <div class="flex justify-between">
             <div class="inline-flex border rounded w-7/12 px-2 lg:px-6 h-12 bg-transparent">
@@ -34,7 +34,7 @@
         </div>
     </div>
     <div 
-      class="detailed-search-container align-middle w-full py-4 px-12"
+      class="detailed-search-container align-middle w-full py-4 px-12 "
     >
       <div 
         class="detailed-search"
@@ -292,13 +292,13 @@
       </div>
       
     </div>
-    
-    <div 
-      class="table-container   min-w-full shadow overflow-y-scroll bg-white shadow-dashboard px-8  rounded-bl-lg rounded-br-lg"
-      [ngClass]="{'table-container-active':isOpenDetailedSearch}"
-    >
-      
-          <table class="min-w-full ">
+    <div class="h-full">
+      <div 
+        class="table-container min-w-full shadow overflow-y-scroll bg-white shadow-dashboard px-8  rounded-bl-lg rounded-br-lg"
+        [ngClass]="{'table-container-active':isOpenDetailedSearch}"
+      >
+        
+          <table class="min-w-full">
             <thead>
                 <tr>
                   
@@ -336,25 +336,37 @@
               >  
               </tr>                 
             </tbody>
-        </table>
+          </table>
       </div>
     </div>
+  </div>
 
-</div>
+</div> 
 
+
+<!-- <div class="h-full bg-green-500">
+    <div class="h-full">aaa</div>
+</div> -->
 
 
 <ng-template #toMoveNextPage>
+  <div class="h-full">
+
+  
   <div [ngSwitch]="pageState.path"
-  class="h-full" >
+    class="h-full"
+  >
     <app-edit-product
+      class="h-full"
       *ngSwitchCase="'editProduct'"
       [newProductForm]="newProductForm"
       (updateProduct)="update($event)"
       (close)="closeEditPage()"
     >     
     </app-edit-product> 
+    
     <app-loading-page
+      class="h-full"
       *ngSwitchCase="'loadingPage'"
       [title]="'products'"
     >
@@ -370,6 +382,7 @@
       (close)="closeProductInfo()"
     >
     </app-product-item-info>
+  </div>
   </div>
 </ng-template>
 

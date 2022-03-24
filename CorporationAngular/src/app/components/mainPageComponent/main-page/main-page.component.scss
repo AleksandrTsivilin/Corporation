@@ -9,6 +9,9 @@
     transition: 0.5s;
     transform: translateX(0%);
 }
+.size-main-page-container{
+    height: 100vh;
+}
 .container-main-page-active{
     transform: translateX(30%)
 }
