@@ -183,10 +183,11 @@ namespace Repositories.ProductRepositories
 
                 .ToListAsync();
 
-            
             return productStorage
-                .Where(ps => ps.CountProduct <= filter.EndCount && ps.CountProduct >= filter.StartCount)
-                .Select(ps => ps.Product).Distinct<Product>()                
+                .Where(ps =>
+                    ps.Product.ProductStorages.Sum(ps=>ps.CountProduct) < filter.EndCount
+                    && ps.Product.ProductStorages.Sum(ps => ps.CountProduct) > filter.StartCount)
+                .Select(ps => ps.Product).Distinct<Product>()
                 .ToList();
         }
         private List<int> GetUpdatedStorages(ICollection<ProductStorage> productStorages)
