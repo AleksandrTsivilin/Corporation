@@ -8,6 +8,7 @@ namespace Repositories.Models.ProductModels
 {
     public class FilterProductModel
     {
+        public string Title { get; set; }
         public int RegionId { get; set; }
         public int FactoryId { get; set; }
         public int StorageId { get; set; }

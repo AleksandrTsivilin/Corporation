@@ -177,7 +177,7 @@ namespace Repositories.ProductRepositories
                     && (ps.Product.Category.Id == filter.CategoryId || filter.CategoryId <= 0)
                     && (ps.Product.Unit.Id == filter.UnitId || filter.UnitId <= 0)
                     && (ps.Product.Price >= filter.StartPrice && ps.Product.Price <= filter.EndPrice)
-
+                    && (ps.Product.Title.StartsWith(filter.Title) || filter.Title == null)
                  )
 
 
@@ -189,6 +189,26 @@ namespace Repositories.ProductRepositories
                     && ps.Product.ProductStorages.Sum(ps => ps.CountProduct) > filter.StartCount)
                 .Select(ps => ps.Product).Distinct<Product>()
                 .ToList();
+        }
+        public async Task<List<Product>> GetByFilterByTitle(string title, ProductSpecificationByAccess specification)
+        {
+            var productStorage = await _context.Product_Storage
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Manufacture)
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Category)
+                .Include(ps => ps.Product)
+                    .ThenInclude(product => product.Unit)
+                .Include(ps => ps.Storage)
+                    .ThenInclude(storage => storage.Department)
+                        .ThenInclude(department => department.Factory)
+                            .ThenInclude(factory => factory.Region)
+                .Where(specification.Expression)
+                .Where(ps => ps.Product.Title.StartsWith(title) || title == null)
+
+                .ToListAsync();
+            return productStorage.Select(ps => ps.Product).Distinct<Product>().ToList(); ;
+
         }
         private List<int> GetUpdatedStorages(ICollection<ProductStorage> productStorages)
         {

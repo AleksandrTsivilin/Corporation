@@ -31,8 +31,9 @@ namespace CorporationApi.Controllers
         [HttpGet("productsByAccess")]
         public async Task<IActionResult> GetProductsByAccess()
         {
-            var claims = HttpContext.User.Identity as ClaimsIdentity;
-            var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
+            //var claims = HttpContext.User.Identity as ClaimsIdentity;
+            //var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
+            var identityInfo = GetIdentityInfo("ProductManager");
             var product = await Task.Run(() => _service.GetProductsByAccess(identityInfo));
             return Ok(product);
         }
@@ -40,7 +41,7 @@ namespace CorporationApi.Controllers
         [HttpGet("ByUser")]
         public async Task<IActionResult> GetProductsByUser(int id)
         {
-            var identity = GetIdentityInfo();
+            var identity = GetIdentityInfo("ProductMovementManager");
             var products = await _service.GetProductsByUser(identity);
             return Ok(products);
         }
@@ -49,16 +50,28 @@ namespace CorporationApi.Controllers
         public async Task<IActionResult> GetProductsByFilter([FromForm]FilterProductModel filter)
         {
             //Console.WriteLine(filter.RegionId);
-            var claims = HttpContext.User.Identity as ClaimsIdentity;
-            var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
+            //var claims = HttpContext.User.Identity as ClaimsIdentity;
+            //var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
+            var identityInfo = GetIdentityInfo("ProductManager");
             var products = await _service.GetByFilter(filter,identityInfo);
             return Ok(products);
         }
 
-        private IdentityUserModel GetIdentityInfo()
+        [HttpGet("filterByTitle")]
+        public async Task<IActionResult> GetProductsByFilterByTitle(string title)
+        {
+            //Console.WriteLine(filter.RegionId);
+            //var claims = HttpContext.User.Identity as ClaimsIdentity;
+            //var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
+            var identityInfo = GetIdentityInfo("ProductManager");
+            var products = await _service.GetByFilterByTitle(title, identityInfo);
+            return Ok(products);
+        }
+
+        private IdentityUserModel GetIdentityInfo(string key)
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;
-            return _identityService.GetIdentity(claims, "ProductMovementManager");
+            return _identityService.GetIdentity(claims, key);
         }
     }
 }
