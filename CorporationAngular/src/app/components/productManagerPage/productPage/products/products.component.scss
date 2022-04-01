@@ -93,6 +93,21 @@
     //@apply mr-80;
   }
 
+  .active-btn-detailed-search-outer{
+    @apply border border-green-600;
+  }
+  .non-active-btn-detailed-search-outer{
+    @apply border border-red-600;
+  }
+
+  .active-btn-detailed-search-inner{
+    @apply bg-green-600;
+  }
+
+  .non-active-btn-detailed-search-inner{
+    @apply bg-red-600;
+  }
+
   .detailed-search-active{
     width: 100%;
     @apply visible;
@@ -104,3 +119,4 @@
   .filter-price-active:hover{
     @apply border-2 border-blue-500;
   }
+

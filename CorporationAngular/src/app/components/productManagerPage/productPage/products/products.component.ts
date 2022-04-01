@@ -23,6 +23,7 @@ import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/cat
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -38,10 +39,12 @@ export class ProductsComponent implements OnInit {
     canMove:false
   }
 
+  
+
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
-  search:string="";
-  filterProductsInfo:ProductInfo[]=[];
+  //search:string="";
+  //filterProductsInfo:ProductInfo[]=[];
 
   storages:StorageInfo[]=[];
   factories: FactoryInfo[]=[];
@@ -71,6 +74,7 @@ export class ProductsComponent implements OnInit {
   }
 
   productFilterForm:ProductFilterForm = {
+    title:"",
     regionId:0,
     factoryId:0,
     storageId:0,
@@ -89,7 +93,7 @@ export class ProductsComponent implements OnInit {
   private _ascDirection = 1;
   private _sortCriteria="";
   
-  private search$=new BehaviorSubject<string>("");
+  //private search$=new BehaviorSubject<string>("");
 
 
   pageState:PageState={
@@ -116,11 +120,25 @@ export class ProductsComponent implements OnInit {
 
     this.setProductsInfoLis();
     
-    this.setDefaultSearch();
+    //this.setDefaultSearchByTitle();
   }
 
-  startSearch(){
-    this.search$.next(this.search);
+  // startSearch(){
+  //   console.log("start search")
+  //   this.search$.next(this.search);
+  // }
+
+  filterCurrentProductsByTitle(researchString:string){
+    this.productFilterForm.title=researchString;
+    this.productsInfo = this.productsInfo
+      .filter(product=>product.title.startsWith(researchString))
+  }
+
+  filterRefreshProductsByTitle(researchString:string){
+    this.productFilterForm.title=researchString;
+    console.log(this.productFilterForm)
+    this.service.getByFilter(this.productFilterForm)
+      .subscribe(products=>this.productsInfo=products)
   }
 
   toggleDetailedSearch(){
@@ -130,10 +148,9 @@ export class ProductsComponent implements OnInit {
   }  
 
   onSubmitFilter(){
-    console.log(this.productFilterForm)
     this.isApplyFilter=true;
     this.service.getByFilter(this.productFilterForm)
-      .subscribe(products=>this.filterProductsInfo=products)
+      .subscribe(products=>this.productsInfo=products)
   }
   clearFilterForm(){
     this.getDataDetailedSearch();
@@ -142,8 +159,8 @@ export class ProductsComponent implements OnInit {
     this.productFilterForm.startPrice=0;
     this.productFilterForm.endPrice=10000;
     console.log(this.productFilterForm);
-    this.service.getProductsByAccess()
-      .subscribe(product=>this.filterProductsInfo=product);
+    this.service.getByFilterByTitle(this.productFilterForm.title)
+      .subscribe(product=>this.productsInfo=product);
     this.isApplyFilter=false;
   }
   changeFilterRegion(){
@@ -250,7 +267,7 @@ export class ProductsComponent implements OnInit {
       : this._ascDirection = 1;
     
     this._sortCriteria=criteria;
-    let orderedUsersInfo= this.filterProductsInfo.sort((a:ProductInfo,b:ProductInfo)=>{
+    let orderedUsersInfo= this.productsInfo.sort((a:ProductInfo,b:ProductInfo)=>{
       let orderItemFirst=a[criteria];
       let orderItemSecond=b[criteria];
       const less = -1 * this._ascDirection;
@@ -265,7 +282,7 @@ export class ProductsComponent implements OnInit {
       }
       
     })
-    this.filterProductsInfo=orderedUsersInfo;
+    this.productsInfo=orderedUsersInfo;
   }
   private setStatePage(path: string, isActive: boolean) {
     this.pageState={
@@ -325,7 +342,7 @@ export class ProductsComponent implements OnInit {
       .subscribe((result)=>{   
         console.log(result); 
         this.productsInfo=result; 
-        this.updateFilterProductsInfo(this.productsInfo);       
+        //this.updateFilterProductsInfo(this.productsInfo);       
         this.setStatePage("",true);
         
         
@@ -389,15 +406,18 @@ export class ProductsComponent implements OnInit {
       })
   }
 
-  private setDefaultSearch(){
-    this.search$.pipe(
+  // private setDefaultSearchByTitle(){
+    
+  //   this.search$.pipe(
       
-      debounceTime(1000))
-      .subscribe(res=>{
-        this.filterProductsInfo=this.productsInfo
-          .filter(product=>product.title.startsWith(res));
-      });
-  }
+  //     debounceTime(1000))
+  //     .subscribe(res=>{
+  //       console.log("setDefaultSearch")
+        
+  //       this.productsInfo=this.productsInfo
+  //         .filter(product=>product.title.startsWith(res));
+  //     });
+  // }
 
   private setProductsInfoLis(){
     this.updateService.changesProductStorage$
@@ -411,18 +431,18 @@ export class ProductsComponent implements OnInit {
       })
   }
 
-  private updateFilterProductsInfo(products:ProductInfo[]){
-    this.search$.value===""
-      ? this.filterProductsInfo=products
-      : products.map(product=>{
-        this.filterProductsInfo = this.filterProductsInfo
-          .map(filteredUser=>{
-            return product.id === filteredUser.id
-              ? product
-              : filteredUser;
-          })
-      })
-  }
+  // private updateFilterProductsInfo(products:ProductInfo[]){
+  //   this.search$.value===""
+  //     ? this.filterProductsInfo=products
+  //     : products.map(product=>{
+  //       this.filterProductsInfo = this.filterProductsInfo
+  //         .map(filteredUser=>{
+  //           return product.id === filteredUser.id
+  //             ? product
+  //             : filteredUser;
+  //         })
+  //     })
+  // }
 
   private clearValueForm(value:number):number{
     return value>0

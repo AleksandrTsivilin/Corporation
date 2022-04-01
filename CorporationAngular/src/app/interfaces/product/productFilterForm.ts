@@ -1,4 +1,5 @@
 export interface ProductFilterForm{
+    title:string,
     regionId:number,
     factoryId:number,
     storageId:number,

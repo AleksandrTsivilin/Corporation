@@ -45,15 +45,17 @@ export class ProductsService {
     return this.client.get<StorageInfo []>(urlGetStorage);
   }
 
-  getStorageByUser(userId:number){
-    const urlGetStorageByUser="https://localhost:5001/api/Product/storageByUser";
-    let params=new HttpParams();
-    params.append("userId",userId)
-    return this.client.get<StorageInfo>(urlGetStorageByUser,{params})
-  }
+  // getStorageByUser(userId:number){
+  //   console.log("getStorageByUser")
+  //   const urlGetStorageByUser="https://localhost:5001/api/Product/storageByUser";
+  //   let params=new HttpParams();
+  //   params.append("userId",userId);
+  //   return this.client.get<StorageInfo>(urlGetStorageByUser,{params})
+  // }
   getByFilter(filter:ProductFilterForm){
     const urlGetByFilter="https://localhost:5001/api/Product/ByFilter";
     var formData= new FormData();
+    formData.append("Title",filter.title)
     formData.append("regionId",filter.regionId?.toString());
     formData.append("factoryId",filter.factoryId?.toString());
     formData.append("storageId",filter.storageId?.toString());
@@ -64,8 +66,17 @@ export class ProductsService {
     formData.append("endPrice",filter.endPrice.toString());
     formData.append("startCount",filter.startCount.toString());
     formData.append("endCount",filter.endCount.toString());
+    console.log(formData)
     return this.client.post<ProductInfo[]>(urlGetByFilter,formData)
     //params= new HttpParams().set("filter",filter)
+  }
+
+  getByFilterByTitle(title:string){
+    console.log(title)
+    const urlGetFilterByTitle = "https://localhost:5001/api/Product/filterByTitle"
+    let params = new HttpParams().set("title",title);
+    console.log(params.get("title"))
+    return this.client.get<ProductInfo[]>(urlGetFilterByTitle,{params});
   }
   
 }

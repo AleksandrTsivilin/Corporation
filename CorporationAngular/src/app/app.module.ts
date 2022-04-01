@@ -32,6 +32,10 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { PersonalUserDataComponent } from './components/personalDataPage/personal-user-data/personal-user-data.component';
 import { ProductItemInfoComponent } from './components/productManagerPage/productPage/product-item-info/product-item-info.component';
 import { WarningDialogMovementsComponent } from './components/productManagerPage/moveProductPage/warning-dialog-movements/warning-dialog-movements.component';
+import { FilterByTitleComponent } from './components/productManagerPage/productPage/filter-by-title/filter-by-title.component';
+
+
+
 
 
 
@@ -65,7 +69,11 @@ import { WarningDialogMovementsComponent } from './components/productManagerPage
     AddUserComponent,
     PersonalUserDataComponent,
     ProductItemInfoComponent,
-    WarningDialogMovementsComponent
+    WarningDialogMovementsComponent,
+    FilterByTitleComponent,
+    
+    
+    
     
     
   ],
