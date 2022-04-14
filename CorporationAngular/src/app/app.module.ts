@@ -33,6 +33,9 @@ import { PersonalUserDataComponent } from './components/personalDataPage/persona
 import { ProductItemInfoComponent } from './components/productManagerPage/productPage/product-item-info/product-item-info.component';
 import { WarningDialogMovementsComponent } from './components/productManagerPage/moveProductPage/warning-dialog-movements/warning-dialog-movements.component';
 import { FilterByTitleComponent } from './components/productManagerPage/productPage/filter-by-title/filter-by-title.component';
+import { FilterByCriteriaComponent } from './components/productManagerPage/productPage/filter-by-criteria/filter-by-criteria.component';
+
+
 
 
 
@@ -71,6 +74,7 @@ import { FilterByTitleComponent } from './components/productManagerPage/productP
     ProductItemInfoComponent,
     WarningDialogMovementsComponent,
     FilterByTitleComponent,
+    FilterByCriteriaComponent
     
     
     

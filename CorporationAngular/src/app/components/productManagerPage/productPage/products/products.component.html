@@ -1,5 +1,4 @@
 
-<!-- <app-testasync></app-testasync> -->
 
 <div *ngIf="pageState.isActive else toMoveNextPage" class="h-full">
 
@@ -13,27 +12,7 @@
               (filterCurrentProducts)="filterCurrentProductsByTitle($event)"
               (filterRefreshProducts)="filterRefreshProductsByTitle($event)"
             ></app-filter-by-title>
-             <!-- <div class="inline-flex border rounded w-7/12 px-2 lg:px-6 h-12 bg-transparent">
-               
-                <div class="flex flex-wrap items-stretch w-full h-full mb-6 relative">
-                    <app-filter-by-title class="w-full"></app-filter-by-title>
-                    <input 
-                      type="text" 
-                      class="flex-shrink flex-grow flex-auto leading-normal tracking-wide w-px flex-1 border border-none border-l-0 rounded  px-3 relative focus:outline-none text-xxs lg:text-xs lg:text-base text-gray-500 font-thin" 
-                      placeholder="Search"
-                      [(ngModel)]="search"
-                      (ngModelChange)="startSearch()"
-                    >
-                </div>
-            </div>  -->
-            <!-- <div class="my-auto">
-              <div class="flex gap-x-2">
-                <div class="text-green-500">detailed search</div>
-                <div class="flex w-3 h-3 my-auto bg-white rounded-full border border-green-600">
-                  <div class="flex w-2 h-2 m-auto rounded-full bg-green-500 border-green-600"></div>
-                </div>
-              </div>
-            </div> -->
+             
             <div 
               class="flex justify-end"
             >
@@ -55,13 +34,7 @@
                   </div>
                 </span>
               </button>
-              <!-- <button 
-                  class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  (click)="toggleDetailedSearch()"    
-                  type="button"
-              >
-                detailed search
-              </button> -->
+              
             </div>
         </div>
     </div>
@@ -71,256 +44,14 @@
       <div 
         class="detailed-search"
         [ngClass]="{'detailed-search-active':isOpenDetailedSearch}"
-        
+        *ngIf="isOpenDetailedSearch"
       >
-        <div class="w-full">
-          <form 
-            class="w-full space-y-4"
-            #filterForm="ngForm"
-          >
-            <div class="flex gap-x-4">
-              <div class="flex-1 w-1/3">
-                <div class="pl-2">regions</div>
-                <select 
-                    class="appearance-none rounded-md w-full mt-1"
-                    [(ngModel)]=productFilterForm.regionId
-                    name="regions"
-                    (change)="changeFilterRegion()"
-                >
-                    <option
-                        class=" text-xs font-ligth text-gray-700"
-                        *ngFor="let region of regions" 
-                        [value]="region.id"
-                        name="region"                   
-                    >
-                        {{region.title}}
-                    </option>
-                </select>
-              </div>
-              <div class="flex-1 w-1/3">
-                <div class="pl-2">factories</div>
+        <app-filter-by-criteria
+          [startFilterForm]="productFilterForm"
+          (submitForm)="toFilterByCriteria($event)"
+          (resetForm)="resetFilterByCriteria()"
+        ></app-filter-by-criteria>
                 
-                <select 
-                    class="appearance-none rounded-md w-full mt-1"
-                    [(ngModel)]=productFilterForm.factoryId
-                    name="factories"
-                    (change)="changeFilterFactory()"              
-                    
-                >
-                    <option
-                        class="appearance-none text-xs font-ligth text-grey-700"
-                        *ngFor="let factory of factories" 
-                        
-                        [value]="factory.id"                  
-                        name="factory" 
-
-                    >
-                        {{factory.title}}
-                    </option>
-                </select>
-                
-              </div>
-              <div class="flex-1 w-1/3">
-                <div class="pl-2">storages</div>
-                <select 
-                    class="appearance-none rounded-md w-full mt-1"
-                    [(ngModel)]=productFilterForm.storageId
-                    name="storages"
-                >
-                    <option
-                        class="appearance-none text-xs font-ligth text-grey-700"
-                        *ngFor="let storage of storages" 
-                        [value]="storage.id"
-                        name="storage"                   
-                    >
-                      {{storage.title}}
-                    </option>
-                </select>
-              </div>
-            </div>
-            <div class="flex gap-x-4">
-              <div class="flex-1 w-1/3">
-                <div class="pl-2">manufacturers</div>
-                <select 
-                    class="appearance-none rounded-md w-full mt-1"
-                    [(ngModel)]=productFilterForm.manufacturerId
-                    name="manufacturers"
-                    
-                >
-                    <option
-                        class="appearance-none text-xs font-ligth text-gray-700"
-                        *ngFor="let manufacturer of manufacturers" 
-                        [value]="manufacturer.id"
-                        name="manufacturer"                   
-                    >
-                        {{manufacturer.title}}
-                    </option>
-                </select>
-              </div>
-              <div class="flex-1 w-1/3">
-                <div class="pl-2">categories</div>
-                <select 
-                    class="appearance-none rounded-md w-full mt-1"
-                    [(ngModel)]=productFilterForm.categoryId
-                    name="categories"
-                    
-                >
-                    <option
-                        class="appearance-none text-xs font-ligth text-gray-700"
-                        *ngFor="let category of categories" 
-                        [value]="category.id"
-                        name="category"                   
-                    >
-                        {{category.title}}
-                    </option>
-                </select>
-              </div>
-              <div class="flex-1 w-1/3">
-                <div class="pl-2">units</div>
-                <select 
-                    class="appearance-none rounded-md w-full mt-1"
-                    [(ngModel)]=productFilterForm.unitId
-                    name="categories"
-                    
-                >
-                    <option
-                        class="appearance-none text-xs font-ligth text-gray-700"
-                        *ngFor="let unit of units" 
-                        [value]="unit.id"
-                        name="unit"                   
-                    >
-                        {{unit.title}}
-                    </option>
-                </select>
-              </div>
-            </div>
-            <div class="flex gap-x-4 juctify-center">
-              <div class="flex-1 w-1/3 juctify-center space-y-4 border-2 border-gray-400 rounded-md filter-price-active">
-                <div class="text-center">count</div>
-                <div class="flex-col px-2">
-                  <div class="flex py-2">
-                    <div class="flex-none w-1/4 my-auto">
-                      <span >start : </span>
-                    </div>
-                    <div class="flex-none w-1/2 flex justify-items-center">
-                      <input
-                        class="w-full"
-                        type="range"
-                        min="0"
-                        max="10000"
-                        [(ngModel)]="productFilterForm.startCount"
-                        name="startCount"
-                        (ngModelChange)="changeFilterStartCount($event)"
-                      >
-                    </div>
-                    <div class="flex-none w-1/4 pl-2">
-                      <span>{{productFilterForm.startCount}}</span>
-                    </div>
-                    
-                  </div>
-                  <div class="flex py-2">
-                    <div class="flex-none w-1/4 my-auto">
-                      <span >end : </span>
-                    </div>
-                    <div class="flex-none w-1/2 flex justify-items-center">
-                      <input
-                        class="w-full"
-                        type="range"
-                        min="0"
-                        max="10000"
-                        [(ngModel)]="productFilterForm.endCount"
-                        name="endCount"
-                        (ngModelChange)="changeFilterEndCount($event)"
-                      >
-                    </div>
-                    <div class="flex-none w-1/4 pl-2">
-                      <span>{{productFilterForm.endCount}}</span>
-                    </div>
-                    
-                  </div>
-                  
-                </div>
-              </div>
-              <div class="flex-1 w-1/3 juctify-center space-y-4 border-2 border-gray-400 rounded-md filter-price-active">
-                <div class="text-center">price</div>
-                <div class="flex-col px-2">
-                  <div class="flex py-2">
-                    <div class="flex-none w-1/4 my-auto">
-                      <span >start : </span>
-                    </div>
-                    <div class="flex-none w-1/2 flex justify-items-center">
-                      <input
-                        class="w-full"
-                        type="range"
-                        min="0"
-                        max="10000"
-                        [(ngModel)]="productFilterForm.startPrice"
-                        name="startPrice"
-                        (ngModelChange)="changeFilterStartPrice($event)"
-                      >
-                    </div>
-                    <div class="flex-none w-1/4 pl-2">
-                      <span>{{productFilterForm.startPrice}}</span>
-                    </div>
-                    
-                  </div>
-                  <div class="flex py-2">
-                    <div class="flex-none w-1/4 my-auto">
-                      <span >start : </span>
-                    </div>
-                    <div class="flex-none w-1/2 flex justify-items-center">
-                      <input
-                        class="w-full"
-                        type="range"
-                        min="0"
-                        max="10000"
-                        [(ngModel)]="productFilterForm.endPrice"
-                        name="endPrice"
-                        (ngModelChange)="changeFilterEndPrice($event)"
-                      >
-                    </div>
-                    <div class="flex-none w-1/4 pl-2">
-                      <span>{{productFilterForm.endPrice}}</span>
-                    </div>
-                    
-                  </div>
-                  
-                </div>
-                
-                
-              </div>
-              <div class="flex-1 w-1/3">            
-              </div>
-            </div>
-            <div class="flex justify-around">
-              <div>
-                <button 
-                  class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  (click)="onSubmitFilter()"
-                >
-                  apply
-                </button>
-              </div>
-              <div>
-                <button
-                  class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                  (click)="clearFilterForm()"
-                >
-                  clear
-                </button>
-              </div>
-              <div>
-                <button
-                  class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
-                >
-                  apply and save
-                </button>
-              </div>
-            </div>
-          </form>
-        </div>
-        
-        
       </div>
       
     </div>
@@ -423,12 +154,5 @@
   <h1>{{storages[0].title}}</h1>
 </ng-template>
 
-<ng-template #showTitleFactory>
-  <h1>{{factories[0].title}}</h1>
-</ng-template>
-
-<ng-template #showTitleRegion>
-  <h1>{{regions[0].title}}</h1>
-</ng-template>
 
 

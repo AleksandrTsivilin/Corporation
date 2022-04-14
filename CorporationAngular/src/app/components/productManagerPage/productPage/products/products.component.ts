@@ -24,6 +24,8 @@ import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 
 
+
+
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -43,15 +45,13 @@ export class ProductsComponent implements OnInit {
 
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
-  //search:string="";
-  //filterProductsInfo:ProductInfo[]=[];
 
   storages:StorageInfo[]=[];
-  factories: FactoryInfo[]=[];
-  regions: RegionInfo[]=[];
-  manufacturers:ManufacturerInfo[]=[];
-  categories:CategoryInfo[]=[];
-  units:UnitInfo[]=[];
+  //factories: FactoryInfo[]=[];
+  //regions: RegionInfo[]=[];
+  //manufacturers:ManufacturerInfo[]=[];
+  //categories:CategoryInfo[]=[];
+  //units:UnitInfo[]=[];
 
   newProductForm:NewProductForm={
     storageId:0,
@@ -93,8 +93,6 @@ export class ProductsComponent implements OnInit {
   private _ascDirection = 1;
   private _sortCriteria="";
   
-  //private search$=new BehaviorSubject<string>("");
-
 
   pageState:PageState={
     path:"loadingPage",
@@ -105,12 +103,12 @@ export class ProductsComponent implements OnInit {
     private readonly service:ProductsService,
     private readonly updateService:ProductUpdateService,
     private readonly updateMovementService:MovementsUpdateService,
-    private readonly storageService:StorageService,
-    private readonly factoryService:FactoryService,
-    private readonly regionService:RegionService,
-    private readonly manufacturerService:ManufacturerService,
-    private readonly categoryService:CategoryService,
-    private readonly unitService:UnitService
+    // private readonly storageService:StorageService,
+    // private readonly factoryService:FactoryService,
+    // private readonly regionService:RegionService,
+    // private readonly manufacturerService:ManufacturerService,
+    // private readonly categoryService:CategoryService,
+    // private readonly unitService:UnitService
     ) { }
 
   ngOnInit(): void {
@@ -120,13 +118,7 @@ export class ProductsComponent implements OnInit {
 
     this.setProductsInfoLis();
     
-    //this.setDefaultSearchByTitle();
   }
-
-  // startSearch(){
-  //   console.log("start search")
-  //   this.search$.next(this.search);
-  // }
 
   filterCurrentProductsByTitle(researchString:string){
     this.productFilterForm.title=researchString;
@@ -142,81 +134,46 @@ export class ProductsComponent implements OnInit {
   }
 
   toggleDetailedSearch(){
-    this.isOpenDetailedSearch=!this.isOpenDetailedSearch;
-    if (this.isApplyFilter) return;
-    if (this.isOpenDetailedSearch) this.getDataDetailedSearch();    
+    if (!this.isApplyFilter) this.resetProductFilterForm();
+    this.isOpenDetailedSearch=!this.isOpenDetailedSearch;   
   }  
 
-  onSubmitFilter(){
+  toFilterByCriteria(filterForm:ProductFilterForm){
+  
+    this.productFilterForm.regionId=filterForm.regionId;
+    this.productFilterForm.factoryId = filterForm.factoryId;
+    this.productFilterForm.storageId = filterForm.storageId;
+    this.productFilterForm.manufacturerId = filterForm.manufacturerId;
+    this.productFilterForm.categoryId = filterForm.categoryId;
+    this.productFilterForm.unitId = filterForm.unitId;
+    this.productFilterForm.startPrice = filterForm.startPrice;
+    this.productFilterForm.endPrice = filterForm.endPrice;
+    this.productFilterForm.startCount = filterForm.startCount;
+    this.productFilterForm.endCount = filterForm.endCount;
+    
     this.isApplyFilter=true;
     this.service.getByFilter(this.productFilterForm)
       .subscribe(products=>this.productsInfo=products)
   }
-  clearFilterForm(){
-    this.getDataDetailedSearch();
-    this.productFilterForm.startCount=0;
-    this.productFilterForm.endCount=10000;
-    this.productFilterForm.startPrice=0;
-    this.productFilterForm.endPrice=10000;
-    console.log(this.productFilterForm);
-    this.service.getByFilterByTitle(this.productFilterForm.title)
-      .subscribe(product=>this.productsInfo=product);
+
+  resetFilterByCriteria(){
     this.isApplyFilter=false;
-  }
-  changeFilterRegion(){
-    console.log(this.productFilterForm)
-    const selectedRegionId=Number(this.productFilterForm.regionId);
-    console.log(selectedRegionId);
-    this.factoryService.getFactoryByRegionId(selectedRegionId)
-      .subscribe(factories=>{
-        this.factories=factories;
-        this.productFilterForm.factoryId=this.clearValueForm(this.productFilterForm.factoryId);
-        //this.productFilterForm.factoryId=this.productFilterForm.factoryId-1;
-  })
-    
-  this.storageService.getStorageByRegionId(selectedRegionId)
-    .subscribe(storages=>{
-      this.storages=storages;
-      this.productFilterForm.storageId=this.clearValueForm(this.productFilterForm.storageId);
-      //this.productFilterForm.storageId=this.productFilterForm.storageId-1;
-    })
+    this.resetProductFilterForm();
+    this.service.getByFilter(this.productFilterForm)
+      .subscribe(products=>this.productsInfo=products);
   }
 
-  changeFilterFactory(){
-    console.log("changeFilterFactory")
-    console.log(this.factories)
-    const selectedFactoryId=Number(this.productFilterForm.factoryId);
-    this.storageService.getStoragesByFactoryId(selectedFactoryId)
-      .subscribe(storages=>{
-        this.storages=storages;
-        //this.productFilterForm.storageId=this.productFilterForm.storageId-1;
-        Number(this.productFilterForm.storageId)>0
-          ? this.productFilterForm.storageId=0
-          : this.productFilterForm.storageId=this.productFilterForm.storageId-1;
-      })
-  }
-  changeFilterStartPrice(startPrice:number){
-    if (startPrice>this.productFilterForm.endPrice) 
-      this.productFilterForm.endPrice=startPrice+1;
-    this.productFilterForm.startPrice=startPrice;
-  }
-  changeFilterEndPrice(endPrice:number){
-    if(endPrice<this.productFilterForm.startPrice)
-      this.productFilterForm.startPrice=endPrice-1;
-    this.productFilterForm.endPrice=endPrice;
-  }
-
-  changeFilterStartCount(startCount:number){
-    if(startCount>this.productFilterForm.endCount)
-      this.productFilterForm.endCount=startCount+1;
-    this.productFilterForm.startCount=startCount;
-  }
-
-  changeFilterEndCount(endCount:number){
-    if(endCount<this.productFilterForm.startCount)
-      this.productFilterForm.startCount=endCount-1;
-    this.productFilterForm.endCount=endCount;
-  }
+  // clearFilterForm(){
+  //   //this.getDataDetailedSearch();
+  //   this.productFilterForm.startCount=0;
+  //   this.productFilterForm.endCount=10000;
+  //   this.productFilterForm.startPrice=0;
+  //   this.productFilterForm.endPrice=10000;
+  //   this.service.getByFilterByTitle(this.productFilterForm.title)
+  //     .subscribe(product=>this.productsInfo=product);
+  //   this.isApplyFilter=false;
+  // }
+  
 
   startEdit(editProduct:ProductInfo){
 
@@ -252,7 +209,6 @@ export class ProductsComponent implements OnInit {
   openProductInfo(product:ProductInfo){
     this.setStatePage("productInfo",false);
     this.selectedProduct = product;
-    console.log(this.selectedProduct)
   }
 
   closeProductInfo(){
@@ -292,6 +248,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private updateProducts(changes:number[]){
+    console.log('updateProduct')
     if (changes.length===0) return;
     const isDoChanges = this.storages.some(storage=>changes.includes(storage.id));
     if (isDoChanges) this.getProducts(); 
@@ -350,74 +307,7 @@ export class ProductsComponent implements OnInit {
       this.setStatePage("responce500",false);
     })
   }
-  private getDataDetailedSearch(){
-    this.getStorages();
-    this.getFactories();
-    this.getRegions();
-    this.getManufacturers();
-    this.getCategories();
-    this.getUnits();
-  }
-  private getStorages(){
-    this.storageService.getStoragesByAccess("ProductManager")
-      .subscribe(storages=>{
-        this.storages=storages;
-        this.productFilterForm.storageId=this.clearValueForm(this.productFilterForm.storageId);
-      })
-  }
-
-  private getFactories(){
-    this.factoryService.getFactoriesByAcces()
-      .subscribe(factories=>{
-        this.factories=factories;
-        this.productFilterForm.factoryId=this.clearValueForm(this.productFilterForm.factoryId);
-      })
-  }
-
-  private getRegions(){
-    this.regionService.getRegionsByAccess()
-      .subscribe(regions=>{
-        this.regions = regions;
-        this.productFilterForm.regionId=this.clearValueForm(this.productFilterForm.regionId);
-      })
-  }
-
-  private getManufacturers(){
-    this.manufacturerService.getManufacturers()
-      .subscribe(manufacturers=>{
-        this.manufacturers=manufacturers;
-        this.productFilterForm.manufacturerId=this.clearValueForm(this.productFilterForm.manufacturerId);
-      })
-  }
-
-  private getCategories(){
-    this.categoryService.getCategories()
-      .subscribe(categories=>{
-        this.categories=categories;
-        this.productFilterForm.categoryId=this.clearValueForm(this.productFilterForm.categoryId);
-      })
-  }
-
-  private getUnits(){
-    this.unitService.getUnits()
-      .subscribe(units=>{
-        this.units=units;
-        this.productFilterForm.unitId=this.clearValueForm(this.productFilterForm.unitId);
-      })
-  }
-
-  // private setDefaultSearchByTitle(){
-    
-  //   this.search$.pipe(
-      
-  //     debounceTime(1000))
-  //     .subscribe(res=>{
-  //       console.log("setDefaultSearch")
-        
-  //       this.productsInfo=this.productsInfo
-  //         .filter(product=>product.title.startsWith(res));
-  //     });
-  // }
+  
 
   private setProductsInfoLis(){
     this.updateService.changesProductStorage$
@@ -431,23 +321,18 @@ export class ProductsComponent implements OnInit {
       })
   }
 
-  // private updateFilterProductsInfo(products:ProductInfo[]){
-  //   this.search$.value===""
-  //     ? this.filterProductsInfo=products
-  //     : products.map(product=>{
-  //       this.filterProductsInfo = this.filterProductsInfo
-  //         .map(filteredUser=>{
-  //           return product.id === filteredUser.id
-  //             ? product
-  //             : filteredUser;
-  //         })
-  //     })
-  // }
-
-  private clearValueForm(value:number):number{
-    return value>0
-      ? 0
-      : value-1;
+  private resetProductFilterForm(){
+    this.productFilterForm.regionId=0;
+    this.productFilterForm.factoryId=0;
+    this.productFilterForm.storageId=0;
+    this.productFilterForm.manufacturerId=0;
+    this.productFilterForm.categoryId=0;
+    this.productFilterForm.unitId=0;
+    this.productFilterForm.startCount=0;
+    this.productFilterForm.endCount=10000;
+    this.productFilterForm.startPrice=0;
+    this.productFilterForm.endPrice=10000;
+    
   }
 
 }
