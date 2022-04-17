@@ -1,0 +1,41 @@
+.active-clear-btn{
+
+}
+
+.non-active-clear-btn{
+    visibility: hidden;
+}
+
+
+.animation-btn::before,
+.animation-btn::after{
+    position: absolute;
+    height: 2px;
+    width: 10px;
+    top:50%; 
+    right: 50%;
+    margin-right: -5px;
+    margin-top: -1px;
+    //margin: auto;
+    @apply bg-red-500;
+}
+
+.animation-btn::before,
+.animation-btn::after{
+    content: "";
+}
+
+.animation-btn::after{
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.animation-btn::before{
+    transform: rotate(-45deg);
+    transform-origin: center;
+}
+
+
+
+
+

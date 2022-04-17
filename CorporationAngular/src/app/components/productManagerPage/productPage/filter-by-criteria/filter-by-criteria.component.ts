@@ -69,6 +69,7 @@ export class FilterByCriteriaComponent implements OnInit {
     private readonly unitService:UnitService) { }
 
   ngOnInit(): void {
+    console.log(this.startFilterForm)
     this.createRawFilterForm(this.startFilterForm);
     this.getRegions();
     this.getFactories();

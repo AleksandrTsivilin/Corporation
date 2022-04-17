@@ -66,7 +66,7 @@ export class ProductsService {
     formData.append("endPrice",filter.endPrice.toString());
     formData.append("startCount",filter.startCount.toString());
     formData.append("endCount",filter.endCount.toString());
-    console.log(formData)
+    console.log(filter)
     return this.client.post<ProductInfo[]>(urlGetByFilter,formData)
     //params= new HttpParams().set("filter",filter)
   }

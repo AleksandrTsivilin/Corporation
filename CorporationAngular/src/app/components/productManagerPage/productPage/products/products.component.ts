@@ -47,12 +47,7 @@ export class ProductsComponent implements OnInit {
   productsInfo:ProductInfo[]=[];
 
   storages:StorageInfo[]=[];
-  //factories: FactoryInfo[]=[];
-  //regions: RegionInfo[]=[];
-  //manufacturers:ManufacturerInfo[]=[];
-  //categories:CategoryInfo[]=[];
-  //units:UnitInfo[]=[];
-
+ 
   newProductForm:NewProductForm={
     storageId:0,
     title:"",
@@ -103,7 +98,7 @@ export class ProductsComponent implements OnInit {
     private readonly service:ProductsService,
     private readonly updateService:ProductUpdateService,
     private readonly updateMovementService:MovementsUpdateService,
-    // private readonly storageService:StorageService,
+    private readonly storageService:StorageService,
     // private readonly factoryService:FactoryService,
     // private readonly regionService:RegionService,
     // private readonly manufacturerService:ManufacturerService,
@@ -112,9 +107,9 @@ export class ProductsComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-
     this.headersTable=this.getHeadersTable(); 
-    this.getProducts();    
+    this.getProducts();  
+    this.getStorages();  
 
     this.setProductsInfoLis();
     
@@ -127,8 +122,8 @@ export class ProductsComponent implements OnInit {
   }
 
   filterRefreshProductsByTitle(researchString:string){
+    console.log("aaaaaaaa")
     this.productFilterForm.title=researchString;
-    console.log(this.productFilterForm)
     this.service.getByFilter(this.productFilterForm)
       .subscribe(products=>this.productsInfo=products)
   }
@@ -139,7 +134,7 @@ export class ProductsComponent implements OnInit {
   }  
 
   toFilterByCriteria(filterForm:ProductFilterForm){
-  
+    console.log(filterForm)
     this.productFilterForm.regionId=filterForm.regionId;
     this.productFilterForm.factoryId = filterForm.factoryId;
     this.productFilterForm.storageId = filterForm.storageId;
@@ -152,8 +147,9 @@ export class ProductsComponent implements OnInit {
     this.productFilterForm.endCount = filterForm.endCount;
     
     this.isApplyFilter=true;
-    this.service.getByFilter(this.productFilterForm)
-      .subscribe(products=>this.productsInfo=products)
+    this.getProductsByFilter();
+    // this.service.getByFilter(this.productFilterForm)
+    //   .subscribe(products=>this.productsInfo=products)
   }
 
   resetFilterByCriteria(){
@@ -198,7 +194,8 @@ export class ProductsComponent implements OnInit {
   }
 
   update(updateProduct:NewProductForm){
-    this.updateService.updateProduct(updateProduct,this.editedProductId);    
+    this.updateService.updateProduct(updateProduct,this.editedProductId); 
+    this.setStatePage("",true);   
   }
 
   closeEditPage(){
@@ -214,6 +211,7 @@ export class ProductsComponent implements OnInit {
   closeProductInfo(){
     this.setStatePage("",true);
   }
+
   sortCol(header:HeaderTable){
     console.log("sortBy");
     if (!header.isActive) return;
@@ -240,6 +238,7 @@ export class ProductsComponent implements OnInit {
     })
     this.productsInfo=orderedUsersInfo;
   }
+
   private setStatePage(path: string, isActive: boolean) {
     this.pageState={
       path:path,
@@ -248,10 +247,9 @@ export class ProductsComponent implements OnInit {
   }
 
   private updateProducts(changes:number[]){
-    console.log('updateProduct')
     if (changes.length===0) return;
     const isDoChanges = this.storages.some(storage=>changes.includes(storage.id));
-    if (isDoChanges) this.getProducts(); 
+    if (isDoChanges) this.getProductsByFilter();
   }
 
 
@@ -296,16 +294,28 @@ export class ProductsComponent implements OnInit {
 
   private getProducts(){
       this.service.getProductsByAccess()
-      .subscribe((result)=>{   
-        console.log(result); 
-        this.productsInfo=result; 
-        //this.updateFilterProductsInfo(this.productsInfo);       
+      .subscribe((result)=>{  
+        this.productsInfo=result;        
         this.setStatePage("",true);
         
         
     },(err)=>{
       this.setStatePage("responce500",false);
     })
+  }
+
+  private getProductsByFilter(){
+    this.service.getByFilter(this.productFilterForm)
+      .subscribe(products=>{
+        this.productsInfo=products
+      })
+  }
+
+  private getStorages(){
+    this.storageService.getStoragesByAccess("ProductManager")
+      .subscribe(storages=>{
+        this.storages=storages
+      })
   }
   
 

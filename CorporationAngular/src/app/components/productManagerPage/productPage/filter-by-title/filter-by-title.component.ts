@@ -11,10 +11,10 @@ import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 export class FilterByTitleComponent implements OnInit {
 
   
-  //@Input() productsInfo: ProductInfo[]=[];
+  @Input() search:string="";
   @Output() filterRefreshProducts=new EventEmitter<string>();
   @Output() filterCurrentProducts = new EventEmitter<string>();
-  search:string="";
+  
 
   private search$=new BehaviorSubject<string>("");
   private prevSearch:string=""
@@ -22,11 +22,23 @@ export class FilterByTitleComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    this.prevSearch=this.search;
+    this.search$.next(this.search)
     this.setSearchLis();
   }
 
   startSearch(){
-    console.log("start search")
+    this.search$.next(this.search);
+  }
+
+  isEmptySearch():boolean{
+    console.log(this.search)
+    console.log(this.search.length==0)
+    return this.search.length==0;
+  }
+
+  clearSearch(){
+    this.search="";
     this.search$.next(this.search);
   }
 
