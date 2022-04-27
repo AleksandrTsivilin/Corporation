@@ -24,7 +24,8 @@ import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 
 
-
+export const maxCount:number=300;
+export const maxPrice:number=15000;
 
 @Component({
   selector: 'app-products',
@@ -77,9 +78,9 @@ export class ProductsComponent implements OnInit {
     categoryId:0,
     unitId:0,
     startPrice:0,
-    endPrice:10000,
+    endPrice:maxPrice,
     startCount:0,
-    endCount:10000
+    endCount:maxCount
   }
   
   isOpenDetailedSearch:boolean =false;
@@ -134,18 +135,7 @@ export class ProductsComponent implements OnInit {
   }  
 
   toFilterByCriteria(filterForm:ProductFilterForm){
-    console.log(filterForm)
-    this.productFilterForm.regionId=filterForm.regionId;
-    this.productFilterForm.factoryId = filterForm.factoryId;
-    this.productFilterForm.storageId = filterForm.storageId;
-    this.productFilterForm.manufacturerId = filterForm.manufacturerId;
-    this.productFilterForm.categoryId = filterForm.categoryId;
-    this.productFilterForm.unitId = filterForm.unitId;
-    this.productFilterForm.startPrice = filterForm.startPrice;
-    this.productFilterForm.endPrice = filterForm.endPrice;
-    this.productFilterForm.startCount = filterForm.startCount;
-    this.productFilterForm.endCount = filterForm.endCount;
-    
+    this.productFilterForm=this.getProductFilterFormByCriteria(filterForm);    
     this.isApplyFilter=true;
     this.getProductsByFilter();
     // this.service.getByFilter(this.productFilterForm)
@@ -155,8 +145,16 @@ export class ProductsComponent implements OnInit {
   resetFilterByCriteria(){
     this.isApplyFilter=false;
     this.resetProductFilterForm();
-    this.service.getByFilter(this.productFilterForm)
-      .subscribe(products=>this.productsInfo=products);
+    this.getProductsByFilter();
+    // this.service.getByFilter(this.productFilterForm)
+    //   .subscribe(products=>this.productsInfo=products);
+  }
+
+  resetOptionFilterByCriteria(filter:ProductFilterForm){
+    console.log(filter)
+    this.productFilterForm=this.getProductFilterFormByCriteria(filter);
+    if (this.isEmptyProductFilterForm(filter)) this.isApplyFilter=false;
+    this.getProductsByFilter();
   }
 
   // clearFilterForm(){
@@ -331,6 +329,22 @@ export class ProductsComponent implements OnInit {
       })
   }
 
+  private getProductFilterFormByCriteria(filterForm:ProductFilterForm) : ProductFilterForm{
+    const title = filterForm.title;
+    return {
+      title : title,
+      regionId : filterForm.regionId,
+      factoryId : filterForm.factoryId,
+      storageId : filterForm.storageId,
+      manufacturerId : filterForm.manufacturerId,
+      categoryId : filterForm.categoryId,
+      unitId : filterForm.unitId,
+      startPrice : filterForm.startPrice,
+      endPrice : filterForm.endPrice,
+      startCount : filterForm.startCount,
+      endCount : filterForm.endCount
+    }
+  }
   private resetProductFilterForm(){
     this.productFilterForm.regionId=0;
     this.productFilterForm.factoryId=0;
@@ -339,10 +353,31 @@ export class ProductsComponent implements OnInit {
     this.productFilterForm.categoryId=0;
     this.productFilterForm.unitId=0;
     this.productFilterForm.startCount=0;
-    this.productFilterForm.endCount=10000;
+    this.productFilterForm.endCount=maxCount;
     this.productFilterForm.startPrice=0;
-    this.productFilterForm.endPrice=10000;
+    this.productFilterForm.endPrice=maxPrice;
     
+  }
+
+  private isEmptyProductFilterForm(form : ProductFilterForm):boolean{
+    return !this.isDefaultValue(form.regionId)
+        || !this.isDefaultValue(form.factoryId)
+        || !this.isDefaultValue(form.storageId)
+        || !this.isDefaultValue(form.manufacturerId)
+        || !this.isDefaultValue(form.categoryId)
+        || !this.isDefaultValue(form.unitId)
+        || !this.isDefaultValue(form.startCount)
+        || form.endCount !=maxCount
+        || !this.isDefaultValue(form.startPrice)
+        || form.endPrice !=maxPrice
+        ? false : true;
+
+
+    
+  }
+
+  private isDefaultValue(value:Number) : boolean{
+    return value==0;
   }
 
 }

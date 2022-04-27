@@ -32,8 +32,6 @@ export class FilterByTitleComponent implements OnInit {
   }
 
   isEmptySearch():boolean{
-    console.log(this.search)
-    console.log(this.search.length==0)
     return this.search.length==0;
   }
 

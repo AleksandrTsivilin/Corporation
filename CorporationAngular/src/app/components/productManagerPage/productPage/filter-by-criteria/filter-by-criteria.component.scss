@@ -1,0 +1,37 @@
+
+.animation-btn::before,
+.animation-btn::after{
+    position: absolute;
+    height: 2px;
+    width: 10px;
+    
+    top:50%; 
+    right: 50%;
+    margin-right: -5px;
+    margin-top: -1px;    
+    @apply bg-red-500;
+}
+
+.animation-btn::before,
+.animation-btn::after{
+    content: "";
+}
+
+.animation-btn::after{
+    transform: rotate(45deg);
+    transform-origin: center;
+}
+
+.animation-btn::before{
+    transform: rotate(-45deg);
+    transform-origin: center;
+}
+
+.cell-option{
+    height: 42px;
+    width: 100%;
+    padding: 8px 40px 8px 12px;
+    @apply border-2 border-blue-500;
+    @apply rounded-md;
+    @apply mt-1;
+}
