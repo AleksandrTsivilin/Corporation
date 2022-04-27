@@ -305,13 +305,11 @@
                 *ngSwitchCase="'personal_data'"
             >
             </app-personal-user-data>
-            <app-products 
-                *ngSwitchCase="'products'"
-                class="h-full   pb-16 overflow-y-scroll"
-                [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"
-                
-            ></app-products>
-            
+            <app-template-manager 
+                *ngSwitchCase="'products'"                
+                [avaiablesPermissions]="getAvaiablesPermissions('ProductManager')"                
+            ></app-template-manager>
+            <!-- class="h-full   pb-16 overflow-y-scroll" -->
             <app-add-product
                 *ngSwitchCase="'addProduct'"
             ></app-add-product>

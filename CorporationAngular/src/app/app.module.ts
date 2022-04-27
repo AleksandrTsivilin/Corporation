@@ -34,6 +34,8 @@ import { ProductItemInfoComponent } from './components/productManagerPage/produc
 import { WarningDialogMovementsComponent } from './components/productManagerPage/moveProductPage/warning-dialog-movements/warning-dialog-movements.component';
 import { FilterByTitleComponent } from './components/productManagerPage/productPage/filter-by-title/filter-by-title.component';
 import { FilterByCriteriaComponent } from './components/productManagerPage/productPage/filter-by-criteria/filter-by-criteria.component';
+import { TemplateManagerComponent } from './components/productManagerPage/productPage/template-manager/template-manager.component';
+
 
 
 
@@ -74,7 +76,8 @@ import { FilterByCriteriaComponent } from './components/productManagerPage/produ
     ProductItemInfoComponent,
     WarningDialogMovementsComponent,
     FilterByTitleComponent,
-    FilterByCriteriaComponent
+    FilterByCriteriaComponent,
+    TemplateManagerComponent
     
     
     
