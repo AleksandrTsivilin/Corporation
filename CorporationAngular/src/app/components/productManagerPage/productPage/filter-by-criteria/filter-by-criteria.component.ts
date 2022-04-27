@@ -1,4 +1,4 @@
-import { ThisReceiver } from '@angular/compiler';
+
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
@@ -178,25 +178,17 @@ export class FilterByCriteriaComponent implements OnInit {
     this.rawFilterForm.factoryId=this.resetValueForm();
     this.rawFilterForm.storageId=this.resetValueForm();
     this.resetOption(this.startFilterForm.regionId);
-    // this.rawFilterForm.factoryId=0;
-    // this.rawFilterForm.storageId=0;
-   
   }
 
   resetSelectedFactory(){
     this.rawFilterForm.factoryId=this.resetValueForm();
     this.rawFilterForm.storageId=this.resetValueForm();
     this.resetOption(this.startFilterForm.factoryId);
-    // this.rawFilterForm.storageId=0;
-    // if (!this.isDefaultValue(this.startFilterForm.factoryId))
-    //   this.resetOptionForm.emit(this.rawFilterForm);
   }
 
   resetSelectedStorage(){
     this.rawFilterForm.storageId=this.resetValueForm();
     this.resetOption(this.startFilterForm.storageId);
-    // if (!this.isDefaultValue(this.startFilterForm.storageId))
-    //   this.resetOptionForm.emit(this.rawFilterForm);
   }
 
   resetSelectedManufacturer(){

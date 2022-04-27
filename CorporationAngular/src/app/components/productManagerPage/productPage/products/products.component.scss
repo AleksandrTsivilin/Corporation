@@ -9,18 +9,11 @@
 }
 
 .table-container{
-  //height: 500px;
   height: 60%;
-  //height: 60%;
   overflow-y: scroll;
   
   transition: 0.3s;
   transform: translateY(0%);
-
-  // .table-size{
-  //   height: 300px;
-  //   overflow: scroll;
-  // }
 }
 
 .table-container-active{
@@ -74,23 +67,15 @@
   }
 
   .detailed-search-container{
-    position: relative;     
-    //background-color: aqua;       
+    position: relative;    ;       
   }
   .detailed-search{
     position: absolute;
     @apply invisible; 
     @apply w-full;   
-    //top:0;
-    //left: 0;
-    //width: 100%;
     transition: 0.3s;
     transform: translateY(-100%);
     opacity: 0;    
-    //@apply flex;
-    //@apply text-white font-bold;
-    //@apply w-full;
-    //@apply mr-80;
   }
 
   .active-btn-detailed-search-outer{

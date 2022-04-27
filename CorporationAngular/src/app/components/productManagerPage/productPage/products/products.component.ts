@@ -1,27 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
-import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 import { HeaderTable } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
-import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
-import { FactoryService } from 'src/app/services/factoryManager/factory.service';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
-import { RegionService } from 'src/app/services/regionManager/region.service';
 import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
-import { debounceTime } from 'rxjs/operators';
 import { ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
-import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
-import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
-import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
-import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
-import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
-import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 
 
 export const maxCount:number=300;
@@ -99,12 +87,7 @@ export class ProductsComponent implements OnInit {
     private readonly service:ProductsService,
     private readonly updateService:ProductUpdateService,
     private readonly updateMovementService:MovementsUpdateService,
-    private readonly storageService:StorageService,
-    // private readonly factoryService:FactoryService,
-    // private readonly regionService:RegionService,
-    // private readonly manufacturerService:ManufacturerService,
-    // private readonly categoryService:CategoryService,
-    // private readonly unitService:UnitService
+    private readonly storageService:StorageService
     ) { }
 
   ngOnInit(): void {
@@ -123,7 +106,6 @@ export class ProductsComponent implements OnInit {
   }
 
   filterRefreshProductsByTitle(researchString:string){
-    console.log("aaaaaaaa")
     this.productFilterForm.title=researchString;
     this.service.getByFilter(this.productFilterForm)
       .subscribe(products=>this.productsInfo=products)
@@ -138,36 +120,20 @@ export class ProductsComponent implements OnInit {
     this.productFilterForm=this.getProductFilterFormByCriteria(filterForm);    
     this.isApplyFilter=true;
     this.getProductsByFilter();
-    // this.service.getByFilter(this.productFilterForm)
-    //   .subscribe(products=>this.productsInfo=products)
   }
 
   resetFilterByCriteria(){
     this.isApplyFilter=false;
     this.resetProductFilterForm();
     this.getProductsByFilter();
-    // this.service.getByFilter(this.productFilterForm)
-    //   .subscribe(products=>this.productsInfo=products);
   }
 
   resetOptionFilterByCriteria(filter:ProductFilterForm){
-    console.log(filter)
     this.productFilterForm=this.getProductFilterFormByCriteria(filter);
     if (this.isEmptyProductFilterForm(filter)) this.isApplyFilter=false;
     this.getProductsByFilter();
   }
 
-  // clearFilterForm(){
-  //   //this.getDataDetailedSearch();
-  //   this.productFilterForm.startCount=0;
-  //   this.productFilterForm.endCount=10000;
-  //   this.productFilterForm.startPrice=0;
-  //   this.productFilterForm.endPrice=10000;
-  //   this.service.getByFilterByTitle(this.productFilterForm.title)
-  //     .subscribe(product=>this.productsInfo=product);
-  //   this.isApplyFilter=false;
-  // }
-  
 
   startEdit(editProduct:ProductInfo){
 
@@ -211,7 +177,6 @@ export class ProductsComponent implements OnInit {
   }
 
   sortCol(header:HeaderTable){
-    console.log("sortBy");
     if (!header.isActive) return;
     let criteria = header.title;
     criteria===this._sortCriteria
