@@ -17,7 +17,7 @@ namespace Repositories.ProductRepositories
     {
         private SpecificationProduct _specificationProduct;
         public ProductRepository(DBContext context)
-            : base(context) 
+            : base(context)
         {
             _specificationProduct = new SpecificationProduct();
         }
