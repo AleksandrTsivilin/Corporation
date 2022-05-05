@@ -1,0 +1,57 @@
+.modal-page-container{
+    @apply h-screen;
+    @apply w-full;
+    @apply flex;
+    @apply absolute;  
+    @apply inset-0;
+    @apply bg-gray-300 bg-opacity-25;   
+    
+    
+
+    .modal-container{  
+        @apply h-40;
+        @apply w-96;
+        @apply flex flex-col;
+        @apply space-y-2;
+        @apply rounded-md;
+        @apply border-2 border-blue-900;
+        @apply bg-white;
+
+        .title{
+            @apply flex-none;
+            @apply text-center;
+            @apply text-white;
+            @apply font-bold;
+            @apply bg-blue-900;
+            @apply py-1;
+        }
+
+        .message-container{
+            @apply flex-1 flex justify-center;
+            @apply break-words;
+            @apply px-2;
+
+            .message{
+                @apply flex;
+                @apply my-auto;
+                text-indent: 1em;
+            }
+        }
+
+        .btn-container{
+            @apply flex-none flex justify-end;
+            @apply space-x-2;
+            @apply px-2 pb-2;
+
+            .btn{
+                @apply w-12;
+                @apply px-2;
+                @apply py-1;
+                @apply border border-transparent;
+                @apply text-sm font-medium text-white;
+                @apply rounded-md;
+                @apply bg-green-600;
+            }
+        }
+    }
+}

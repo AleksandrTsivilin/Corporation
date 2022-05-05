@@ -10,6 +10,9 @@ import { ProductUpdateService } from 'src/app/services/productPage/updateService
 import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
 import { ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
+import { LoadingOptionProductPage } from 'src/app/interfaces/product/loadingOptionProductPage';
+import { Positions } from 'src/app/components/modals/modal/modal.component';
+import { ModalInfo } from 'src/app/interfaces/modal';
 
 
 export const maxCount:number=300;
@@ -30,7 +33,25 @@ export class ProductsComponent implements OnInit {
     canMove:false
   }
 
-  
+  @Input() productFilterForm:ProductFilterForm = {
+    title:"",
+    regionId:0,
+    factoryId:0,
+    storageId:0,
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0,
+    startPrice:0,
+    endPrice:maxPrice,
+    startCount:0,
+    endCount:maxCount
+  }
+
+  @Output() modalInfo:ModalInfo={
+    title:"",
+    message:"",
+    position:Positions.center
+  }
 
   headersTable:HeaderTable[]=[];
   productsInfo:ProductInfo[]=[];
@@ -55,31 +76,23 @@ export class ProductsComponent implements OnInit {
     category:{id:0,title:""},
     unit:{id:0,title:""},
     isBanned:false
-  }
-
-  productFilterForm:ProductFilterForm = {
-    title:"",
-    regionId:0,
-    factoryId:0,
-    storageId:0,
-    manufacturerId:0,
-    categoryId:0,
-    unitId:0,
-    startPrice:0,
-    endPrice:maxPrice,
-    startCount:0,
-    endCount:maxCount
-  }
+  }  
   
   isOpenDetailedSearch:boolean =false;
   isApplyFilter:boolean=false;
+  isShowModalWarning=false;
+  
+  loadingOptionProductPage:LoadingOptionProductPage={
+    isComplitedSearchByCriteria:true,
+    isComplitedSearchByTitle:true
+  }
   private editedProductId:number=0;
   private _ascDirection = 1;
   private _sortCriteria="";
   
 
   pageState:PageState={
-    path:"loadingPage",
+    path:"templatePage",
     isActive:false
   }
   
@@ -92,47 +105,84 @@ export class ProductsComponent implements OnInit {
 
   ngOnInit(): void {
     this.headersTable=this.getHeadersTable(); 
-    this.getProducts();  
-    this.getStorages();  
+    this.getStorages(); 
+    this.setProductsInfoLis();    
+  }
 
-    this.setProductsInfoLis();
+  toggleTemplate(){
     
+  }
+  closeTemplateManager(template:ProductFilterForm | null){
+    if (template!==null) {
+      this.productFilterForm=this.getProductFilterFormByCriteria(template);
+    }
+    this.getProducts();
+    
+   
   }
 
   filterCurrentProductsByTitle(researchString:string){
     this.productFilterForm.title=researchString;
+    this.loadingOptionProductPage.isComplitedSearchByTitle=false;
     this.productsInfo = this.productsInfo
       .filter(product=>product.title.startsWith(researchString))
+    this.loadingOptionProductPage.isComplitedSearchByTitle=true;
   }
 
   filterRefreshProductsByTitle(researchString:string){
     this.productFilterForm.title=researchString;
-    this.service.getByFilter(this.productFilterForm)
-      .subscribe(products=>this.productsInfo=products)
+    this.loadingOptionProductPage.isComplitedSearchByTitle=false;
+    this.getProductsByFilter();
   }
 
   toggleDetailedSearch(){
+    if (this.isOpenDetailedSearch) {
+      this.modalInfo={
+        title:"Are you sure close filter menu",
+        message:"You should save data",
+        position:Positions.center
+      }
+      this.isShowModalWarning=true;
+      return
+    }
+    
     if (!this.isApplyFilter) this.resetProductFilterForm();
     this.isOpenDetailedSearch=!this.isOpenDetailedSearch;   
   }  
 
-  toFilterByCriteria(filterForm:ProductFilterForm){
-    this.productFilterForm=this.getProductFilterFormByCriteria(filterForm);    
-    this.isApplyFilter=true;
+  closeWarningModal(answer:boolean){
+    console.log("product page modal warning")
+    if (answer) {
+      if (!this.isApplyFilter) this.resetProductFilterForm();
+      this.isOpenDetailedSearch=!this.isOpenDetailedSearch;  
+    }
+    this.isShowModalWarning=false;
+  }
+
+  applyFilterByCriteria(filterForm:ProductFilterForm){
+    this.isOpenDetailedSearch=false;
+    this.productFilterForm=this.getProductFilterFormByCriteria(filterForm); 
+    this.isEmptyProductFilterForm(filterForm)
+      ? this.isApplyFilter=false
+      : this.isApplyFilter=true   
+    //this.isApplyFilter=true;
+    this.loadingOptionProductPage.isComplitedSearchByCriteria=false;
     this.getProductsByFilter();
   }
 
-  resetFilterByCriteria(){
-    this.isApplyFilter=false;
-    this.resetProductFilterForm();
-    this.getProductsByFilter();
-  }
+  // resetFilterByCriteria(){
+  //   this.isApplyFilter=false;
+  //   this.resetProductFilterForm();
+  //   this.loadingOptionProductPage.isComplitedSearchByCriteria=false;
+  //   this.getProductsByFilter();
+  // }
 
-  resetOptionFilterByCriteria(filter:ProductFilterForm){
-    this.productFilterForm=this.getProductFilterFormByCriteria(filter);
-    if (this.isEmptyProductFilterForm(filter)) this.isApplyFilter=false;
-    this.getProductsByFilter();
-  }
+  // resetOptionFilterByCriteria(filter:ProductFilterForm){
+  //   this.productFilterForm=this.getProductFilterFormByCriteria(filter);
+  //   if (this.isEmptyProductFilterForm(filter)) this.isApplyFilter=false;
+  //   //this.loadingOptionProductPage.isComplitedSearchByCriteria=false;
+  //   this.getProductsByFilter();
+  // }
 
 
   startEdit(editProduct:ProductInfo){
@@ -256,6 +306,16 @@ export class ProductsComponent implements OnInit {
   }
 
   private getProducts(){
+    this.setStatePage("loadingPage",false)
+    if (this.isEmptyProductFilterForm(this.productFilterForm)){
+      this.getProductsByDefault();
+    }
+    else{
+      this.getProductsByFilter();
+      this.isApplyFilter=true;
+    }
+  }
+  private getProductsByDefault(){
       this.service.getProductsByAccess()
       .subscribe((result)=>{  
         this.productsInfo=result;        
@@ -271,6 +331,9 @@ export class ProductsComponent implements OnInit {
     this.service.getByFilter(this.productFilterForm)
       .subscribe(products=>{
         this.productsInfo=products
+        this.setStatePage("",true);
+        this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
+        this.loadingOptionProductPage.isComplitedSearchByTitle=true;
       })
   }
 

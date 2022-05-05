@@ -1,8 +1,69 @@
-<div class="template-manager-container">
-    <div>
-        <button>Apply</button>
-        <button>Cancel</button>
-    </div>
-    
-</div>
 
+<div 
+    class="template-manager-container"
+    
+>
+    <div
+        class="template-manager"  
+        *ngIf="pageState.isActive else toMoveNextPage"    
+    >
+        
+        
+            <div class="template-header">
+                <h1 class="header-text">Select template</h1>
+            </div>
+            <div class="btn-section">
+                <button 
+                    class="btn"
+                    (click)="close()"
+                >❌</button>
+            </div>
+            <div class="list-templates ">
+                <div 
+                    class="item-list"
+                    *ngFor="let template of templates"
+                >
+                    <div class="item-title">
+                        <div class="title">
+                            {{template.title}}
+                        </div>  
+                        <button class="menu-container">
+                            <div class="menu">
+                                <div class="point"></div>
+                                <div class="point"></div>
+                                <div class="point"></div>
+                            </div>
+                            
+                        </button>                  
+                    </div>
+                    <div class="item-control">
+                        <button 
+                            class="btn"
+                            (click)="apply(template.id)"
+                        >apply</button>
+                    </div>                
+                </div>
+            </div>
+        
+
+    </div>   
+ </div>
+
+
+ <ng-template #toMoveNextPage>
+    <div 
+        class="h-full w-full"
+        [ngSwitch]="pageState.path"
+    >
+        <app-modal
+            *ngSwitchCase="'modal'"
+            [modalInfo]="modalInfo"
+            (answer)="answerModal($event)"
+        ></app-modal>
+        <!-- <app-products
+            *ngSwitchCase="'products'"
+            [avaiablesPermissions]="avaiablesPermissions"
+            [productFilterForm]="selectedTemplate"
+        ></app-products> -->
+    </div>
+</ng-template>

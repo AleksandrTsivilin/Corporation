@@ -1,4 +1,28 @@
-<div class="w-full">
+
+<!-- <div
+    class="absolute  h-screen  w-full  bg-green-300 -bottom-28 right-12 z-40"
+    *ngIf="isShowModalWarning"    
+>
+    <app-warning-modal [modalInfo]="modalInfo"></app-warning-modal>
+
+</div> -->
+
+<!-- <div
+    class="flex absolute h-screen w-full inset-y-auto  bg-green-500  z-40"
+    *ngIf="isShowModalWarning"    
+>
+    <app-warning-modal [modalInfo]="modalInfo"></app-warning-modal>
+
+</div> -->
+<app-warning-modal 
+    *ngIf="isShowModalWarning" 
+    [modalInfo]="modalInfo"
+    (answer)="closeModalWarning($event)"
+></app-warning-modal>
+<div 
+    class="w-full "
+>   
+    
     <form 
         class="w-full space-y-4"
         #filterForm="ngForm"
@@ -14,24 +38,27 @@
                         (click)="resetSelectedRegion()"
                     >
                         <span class="animation-btn"></span>
-                    </button>
+                    </button>                                     
                 </div>
-                <select 
-                    class="appearance-none rounded-md w-full mt-1"
-                    *ngIf="regions.length>1 else showRegionTitle"
-                    [(ngModel)]=rawFilterForm.regionId
-                    name="regions"
-                    (change)="changeFilterRegion()"
-                >
-                    <option
-                        class=" text-xs font-ligth text-gray-700"
-                        *ngFor="let region of regions" 
-                        [value]="region.id"
-                        name="region"                   
+                <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingRegions else loadingOption">
+                    <select 
+                        class="appearance-none rounded-md w-full mt-1"
+                        *ngIf="regions.length>1 else showRegionTitle"                    
+                        [(ngModel)]=rawFilterForm.regionId
+                        name="regions"
+                        (change)="changeFilterRegion()"
                     >
-                        {{region.title}}
-                    </option>
-                </select>
+                        <option
+                            class=" text-xs font-ligth text-gray-700"
+                            *ngFor="let region of regions" 
+                            [value]="region.id"
+                            name="region"                   
+                        >
+                            {{region.title}}
+                        </option>
+                    </select>
+                </section>
+                
             </div>
             <div class="flex-1 w-1/3">
                 <div class=" pl-2 relative">
@@ -45,28 +72,29 @@
                         <span class="animation-btn"></span>
                     </button>
                 </div>
-                
-                <select 
+                <section *ngIf="loadingOptionFilterByCriteria.isCompliteLoadingFactories else loadingOption">
+                    <select                         
+                        class="appearance-none rounded-md w-full mt-1"
+                        *ngIf="factories.length>1 else showFactoryTitle"
+                        [(ngModel)]=rawFilterForm.factoryId
+                        name="factories"
+                        (change)="changeFilterFactory()"              
                         
-                    class="appearance-none rounded-md w-full mt-1"
-                    *ngIf="factories.length>1 else showFactoryTitle"
-                    [(ngModel)]=rawFilterForm.factoryId
-                    name="factories"
-                    (change)="changeFilterFactory()"              
-                    
-                >
-                    <option class="hidden" [value]="0"  disabled></option>
-                    <option
-                        class="appearance-none text-xs font-ligth text-grey-700"
-                        *ngFor="let factory of factories" 
-                        
-                        [value]="factory.id"                  
-                        name="factory" 
-
                     >
-                        {{factory.title}}
-                    </option>
-                </select>
+                        <option class="hidden" [value]="0"  disabled></option>
+                        <option
+                            class="appearance-none text-xs font-ligth text-grey-700"
+                            *ngFor="let factory of factories" 
+                            
+                            [value]="factory.id"                  
+                            name="factory" 
+
+                        >
+                            {{factory.title}}
+                        </option>
+                    </select>
+                </section>
+                
                 
             </div>
             <div class="flex-1 w-1/3">
@@ -81,22 +109,25 @@
                         <span class="animation-btn"></span>
                     </button>
                 </div>
-                <select 
-                    class="appearance-none rounded-md w-full mt-1"
-                    *ngIf="storages.length>1 else showStorageTitle"
-                    [(ngModel)]=rawFilterForm.storageId
-                    name="storages"
-                >
-                    <option class="hidden" [value]="0"  disabled></option>
-                    <option
-                        class="appearance-none text-xs font-ligth text-grey-700"
-                        *ngFor="let storage of storages" 
-                        [value]="storage.id"
-                        name="storage"                   
+                <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingStorages else loadingOption">
+                    <select 
+                        class="appearance-none rounded-md w-full mt-1"
+                        *ngIf="storages.length>1 else showStorageTitle"
+                        [(ngModel)]=rawFilterForm.storageId
+                        name="storages"
                     >
-                        {{storage.title}}
-                    </option>
-                </select>
+                        <option class="hidden" [value]="0"  disabled></option>
+                        <option
+                            class="appearance-none text-xs font-ligth text-grey-700"
+                            *ngFor="let storage of storages" 
+                            [value]="storage.id"
+                            name="storage"                   
+                        >
+                            {{storage.title}}
+                        </option>
+                    </select>
+                </section>
+                
             </div>
         </div>
         <div class="flex gap-x-4">
@@ -112,21 +143,23 @@
                         <span class="animation-btn"></span>
                     </button>
                 </div>
-            <select 
-                class="appearance-none rounded-md w-full mt-1"
-                [(ngModel)]=rawFilterForm.manufacturerId
-                name="manufacturers"
-                
-            >
-                <option
-                    class="appearance-none text-xs font-ligth text-gray-700"
-                    *ngFor="let manufacturer of manufacturers" 
-                    [value]="manufacturer.id"
-                    name="manufacturer"                   
-                >
-                    {{manufacturer.title}}
-                </option>
-            </select>
+                <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingManufacturers else loadingOption">
+                    <select 
+                        class="appearance-none rounded-md w-full mt-1"
+                        [(ngModel)]=rawFilterForm.manufacturerId
+                        name="manufacturers"
+                        
+                    >
+                        <option
+                            class="appearance-none text-xs font-ligth text-gray-700"
+                            *ngFor="let manufacturer of manufacturers" 
+                            [value]="manufacturer.id"
+                            name="manufacturer"                   
+                        >
+                            {{manufacturer.title}}
+                        </option>
+                    </select>
+                </section>
             </div>
             <div class="flex-1 w-1/3">
                 <div class=" pl-2 relative">
@@ -140,21 +173,23 @@
                         <span class="animation-btn"></span>
                     </button>
                 </div>
-            <select 
-                class="appearance-none rounded-md w-full mt-1"
-                [(ngModel)]=rawFilterForm.categoryId
-                name="categories"
-                
-            >
-                <option
-                    class="appearance-none text-xs font-ligth text-gray-700"
-                    *ngFor="let category of categories" 
-                    [value]="category.id"
-                    name="category"                   
-                >
-                    {{category.title}}
-                </option>
-            </select>
+                <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingCategories else loadingOption">   
+                    <select 
+                        class="appearance-none rounded-md w-full mt-1"
+                        [(ngModel)]=rawFilterForm.categoryId
+                        name="categories"
+                        
+                    >
+                        <option
+                            class="appearance-none text-xs font-ligth text-gray-700"
+                            *ngFor="let category of categories" 
+                            [value]="category.id"
+                            name="category"                   
+                        >
+                            {{category.title}}
+                        </option>
+                    </select>
+                </section>
             </div>
             <div class="flex-1 w-1/3">
                 <div class=" pl-2 relative">
@@ -168,21 +203,23 @@
                         <span class="animation-btn"></span>
                     </button>
                 </div>
-            <select 
-                class="appearance-none rounded-md w-full mt-1"
-                [(ngModel)]=rawFilterForm.unitId
-                name="unit"
-                
-            >
-                <option
-                    class="appearance-none text-xs font-ligth text-gray-700"
-                    *ngFor="let unit of units" 
-                    [value]="unit.id"
-                    name="unit"                   
-                >
-                    {{unit.title}}
-                </option>
-            </select>
+                <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingUnits else loadingOption">
+                    <select 
+                        class="appearance-none rounded-md w-full mt-1"
+                        [(ngModel)]=rawFilterForm.unitId
+                        name="unit"
+                        
+                    >
+                        <option
+                            class="appearance-none text-xs font-ligth text-gray-700"
+                            *ngFor="let unit of units" 
+                            [value]="unit.id"
+                            name="unit"                   
+                        >
+                            {{unit.title}}
+                        </option>
+                    </select>
+                </section>
             </div>
         </div>
         <div class="flex gap-x-4 juctify-center">
@@ -376,23 +413,29 @@
         <div class="flex justify-around">
             <div>
             <button 
-                class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                [ngClass]="isEmptyForm() ? 'btn-non-active' : 'btn-active'"
                 (click)="onSubmitFilter()"
+                type="button"
+                [disabled]=isEmptyForm()
             >
                 apply
             </button>
             </div>
             <div>
             <button
-                class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                class="btn-active"
                 (click)="clearFilterForm()"
+                type="button"
             >
                 clear
             </button>
             </div>
             <div>
             <button
-                class="px-8 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500"
+                [ngClass]="isEmptyForm() ? 'btn-non-active' : 'btn-active'"
+                (click)="onSubmitFilterWithSave()"
+                type="button"
+                [disabled]=isEmptyForm()
             >
                 apply and save
             </button>
@@ -400,10 +443,21 @@
         </div>
     </form>
 </div>
+
+<!-- <div class="absolute  w-full h-screen bg-green-500 ">
+    <app-warning-modal
+        
+        *ngIf="isShowModalWarning"
+        [modalInfo]="modalInfo"
+
+    ></app-warning-modal>  
+</div> -->
+
          
         
 <ng-template #showRegionTitle>
     <div *ngFor="let region of regions" class="cell-option">{{region.title}}</div>
+    
 </ng-template>
 
 <ng-template #showFactoryTitle>
@@ -413,3 +467,16 @@
 <ng-template #showStorageTitle>
     <div *ngFor="let storage of storages" class="cell-option">{{storage.title}}</div>
 </ng-template>
+
+<ng-template #loadingOption>
+    <div 
+        class="cell-option-non-active"
+    >
+        <span class="flex w-3 h-3 my-auto  rounded-full border-b-2 border-green-500 animate-spin"></span>
+    </div>
+</ng-template>
+
+
+
+
+

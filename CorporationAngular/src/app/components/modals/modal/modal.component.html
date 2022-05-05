@@ -1,0 +1,22 @@
+<div 
+    class="modal-page-container"
+>
+    <div 
+        class="modal-container"
+        [ngClass]="ModalPositions[modalInfo.position]"        
+    >
+        <div class="title">
+            <span>{{modalInfo.title}}</span>
+        </div>
+        <div class="message-container">
+            <div class="message">{{modalInfo.message}}</div>
+        </div>
+        <div class="btn-container">
+            <button class="btn" (click)="negativeAnswer()">No</button>
+            <button class="btn" (click)="positiveAnswer()">Yes</button>
+        </div>
+    </div>
+</div>
+
+
+

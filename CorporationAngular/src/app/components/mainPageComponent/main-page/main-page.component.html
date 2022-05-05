@@ -1,5 +1,5 @@
 
- <div class="flex">
+<div class="flex">
 
     <div 
         class="mobile-menu flex"
@@ -41,147 +41,147 @@
         class="flex-1 container-main-page overflow-hidden"
         [ngClass]="{'container-main-page-active':mobileMenuOpen}"
     >
-        <div [ngClass]="{'size-main-page-container': isShortMainPage}">
+        <div [ngClass]="{'main-page-container-fixed': isShortMainPage}">
             <div 
-            class="flex flex-col container-cover "
-            *ngIf="!isShortMainPage else setShortMainPage"
-            style="background-image: url('../../assets/images/mainPage.jpg') "
-            
-        >
-            <section
-                class="flex-none"
+                class="flex flex-col container-cover "
+                *ngIf="!isShortMainPage else setShortMainPage"
+                style="background-image: url('../../assets/images/mainPage.jpg') "
+                
             >
-                <nav
-                    class="flex items-center mt-4"
+                <section
+                    class="flex-none"
                 >
-                    <div class="flex-none  ml-2 md:hidden ">
-                        <button 
-                            class="menu-btn"
-                            (click)="toggleMobileMenu()"
-                        >
-                            <span 
-                                class="animation-menu-btn"
-                                [ngClass]="{'animation-menu-btn-active':mobileMenuOpen}"
-                            ></span>
-                        </button>
-                    </div>
-                    <div class="flex">
-                        <div
-                            class="flex-none w-48 ml-16 sm:w-48 sm:ml-16 md:w-64 md:ml-24 lg:w-96 lg:ml-36"
-                            (click)="toMainPage()"
-                        >
-                            <img 
-                                class="" 
-                                src="assets/images/logo_main_paige.png"
-                            >
-                        </div>
-                    </div>
-                    <div 
-                        class="w-full flex flex-1 justify-end text-white font-bold text-xl md:items-center hidden md:block"
+                    <nav
+                        class="flex items-center mt-4"
                     >
-                        <div class=" flex justify-end" >
-                            <a routerLink="" 
-                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                        <div class="flex-none  ml-2 md:hidden ">
+                            <button 
+                                class="menu-btn"
+                                (click)="toggleMobileMenu()"
+                            >
+                                <span 
+                                    class="animation-menu-btn"
+                                    [ngClass]="{'animation-menu-btn-active':mobileMenuOpen}"
+                                ></span>
+                            </button>
+                        </div>
+                        <div class="flex">
+                            <div
+                                class="flex-none w-48 ml-16 sm:w-48 sm:ml-16 md:w-64 md:ml-24 lg:w-96 lg:ml-36"
                                 (click)="toMainPage()"
                             >
-                                main
-                            </a>
-                            <a routerLink="roleSelector" 
-                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
-                                *ngIf="isLogin"
-                                
-                            >
-                                services
-                            </a>
-                            <a routerLink="loginForm" 
-                                class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
-                                *ngIf="!isLogin; else logout"
-                            >
-                                sign in
-                            </a>
+                                <img 
+                                    class="" 
+                                    src="assets/images/logo_main_paige.png"
+                                >
+                            </div>
                         </div>
+                        <div 
+                            class="w-full flex flex-1 justify-end text-white font-bold text-xl md:items-center hidden md:block"
+                        >
+                            <div class=" flex justify-end" >
+                                <a routerLink="" 
+                                    class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                    (click)="toMainPage()"
+                                >
+                                    main
+                                </a>
+                                <a routerLink="roleSelector" 
+                                    class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                    *ngIf="isLogin"
+                                    
+                                >
+                                    services
+                                </a>
+                                <a routerLink="loginForm" 
+                                    class="active-link block mt-4 md:inline-block md:mt-0 mr-4 border-b-2 border-transparent"
+                                    *ngIf="!isLogin; else logout"
+                                >
+                                    sign in
+                                </a>
+                            </div>
+                        </div>
+                        
+                    </nav>
+                </section>
+                <section class="flex justify-center flex-1">
+                    <div 
+                        class="tag-line-container"
+                        *ngIf="!isShortMainPage"
+                        >
+                            <div class="tag-line">
+                                Let's Make Things Better
+                            </div>             
                     </div>
-                    
-                </nav>
-            </section>
-            <section class="flex justify-center flex-1">
-                <div 
-                    class="tag-line-container"
-                    *ngIf="!isShortMainPage"
+                </section>  
+                <section class="flex-none hidden md:block">
+                    <div 
+                        class="global-information-container"
+                        *ngIf="!isShortMainPage"
                     >
-                        <div class="tag-line">
-                            Let's Make Things Better
-                        </div>             
-                </div>
-            </section>  
-            <section class="flex-none hidden md:block">
-                <div 
-                    class="global-information-container"
-                    *ngIf="!isShortMainPage"
-                >
-                    <div class="global-information">
-                        <div class="info-card-container">
-                            <div class="info-card">
-                                <div class="title">
-                                    Duration
-                                </div>
-                                <div class="value-unit">
-                                    <div class="value">
-                                        {{duration}}
+                        <div class="global-information">
+                            <div class="info-card-container">
+                                <div class="info-card">
+                                    <div class="title">
+                                        Duration
                                     </div>
-                                    <div class="unit">
-                                        years
+                                    <div class="value-unit">
+                                        <div class="value">
+                                            {{duration}}
+                                        </div>
+                                        <div class="unit">
+                                            years
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        
-                            <div class="info-card">
-                                <div class="title">
-                                    Area of
-                                </div>
-                                <div class="value-unit">
-                                    <div class="value">
-                                        {{areaOf}}
+                            
+                                <div class="info-card">
+                                    <div class="title">
+                                        Area of
                                     </div>
-                                    <div class="unit">
-                                        hectares
-                                    </div>
-                                </div>
-                            </div>
-                        
-                            <div class="info-card">
-                                <div class="title">
-                                    Investments,$
-                                </div>
-                                <div class="value-unit">
-                                    <div class="value">
-                                        {{investments}}
-                                    </div>
-                                    <div class="unit">
-                                        million
+                                    <div class="value-unit">
+                                        <div class="value">
+                                            {{areaOf}}
+                                        </div>
+                                        <div class="unit">
+                                            hectares
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        
-                            <div class="info-card">
-                                <div class="title">
-                                    Geography
-                                </div>
-                                <div class="value-unit">
-                                    <div class="value">
-                                        {{geography}}
+                            
+                                <div class="info-card">
+                                    <div class="title">
+                                        Investments,$
                                     </div>
-                                    <div class="unit">
-                                        countries
+                                    <div class="value-unit">
+                                        <div class="value">
+                                            {{investments}}
+                                        </div>
+                                        <div class="unit">
+                                            million
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <div class="info-card">
+                                    <div class="title">
+                                        Geography
+                                    </div>
+                                    <div class="value-unit">
+                                        <div class="value">
+                                            {{geography}}
+                                        </div>
+                                        <div class="unit">
+                                            countries
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
+                </section>
             </div>
-            <div >
+            <div [ngClass]="{'router-container-fixed': isShortMainPage}">
                 <router-outlet></router-outlet>
             </div>
         </div>

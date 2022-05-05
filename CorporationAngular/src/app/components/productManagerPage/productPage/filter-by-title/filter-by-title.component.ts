@@ -12,6 +12,7 @@ export class FilterByTitleComponent implements OnInit {
 
   
   @Input() search:string="";
+  @Input() isComplitedSearch:boolean=true;
   @Output() filterRefreshProducts=new EventEmitter<string>();
   @Output() filterCurrentProducts = new EventEmitter<string>();
   

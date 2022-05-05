@@ -1,8 +1,11 @@
 
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
+import { ModalInfo } from 'src/app/interfaces/modal';
 import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
+import { LoadingOptionFilterByCriteria, LoadingOptionProductPage } from 'src/app/interfaces/product/loadingOptionProductPage';
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
 import { ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
@@ -40,11 +43,25 @@ export class FilterByCriteriaComponent implements OnInit {
     endCount:maxCount
   }
 
+  @Output () modalInfo:ModalInfo={
+    title:"",
+    message:"",
+    position:Positions.topCenter
+  }
+
 
   @Output() submitForm =new EventEmitter<ProductFilterForm>();
-  @Output() resetForm =new EventEmitter();
-  @Output() resetOptionForm =new EventEmitter<ProductFilterForm>();
+  //@Output() resetForm =new EventEmitter();
+  //@Output() resetOptionForm =new EventEmitter<ProductFilterForm>();
 
+  loadingOptionFilterByCriteria:LoadingOptionFilterByCriteria={
+    isComplitedLoadingRegions:false,
+    isCompliteLoadingFactories:false,
+    isComplitedLoadingStorages:false,
+    isComplitedLoadingManufacturers:false,
+    isComplitedLoadingCategories:false,
+    isComplitedLoadingUnits:false
+  }
 
   rawFilterForm:ProductFilterForm={
     title:"",
@@ -70,6 +87,8 @@ export class FilterByCriteriaComponent implements OnInit {
   stepRangePrice:number=500;
   filterMaxCount=maxCount;
   filterMaxPrice=maxPrice;
+
+  isShowModalWarning:boolean=false;
 
   constructor(
     private readonly regionService:RegionService,
@@ -139,26 +158,57 @@ export class FilterByCriteriaComponent implements OnInit {
     this.rawFilterForm.endCount=endCount;
   }
 
+  isEmptyForm():boolean{
+    return this.isDefaultValue(this.rawFilterForm.regionId)
+            && this.isDefaultValue(this.rawFilterForm.factoryId)
+            && this.isDefaultValue(this.rawFilterForm.storageId)
+            && this.isDefaultValue(this.rawFilterForm.manufacturerId)
+            && this.isDefaultValue(this.rawFilterForm.categoryId)
+            && this.isDefaultValue(this.rawFilterForm.unitId)
+            && this.isDefaultValue(this.rawFilterForm.startCount)
+            && this.rawFilterForm.endCount===maxCount
+            && this.isDefaultValue(this.rawFilterForm.startPrice)
+            && this.rawFilterForm.endPrice===maxPrice
+  }
   onSubmitFilter(){
     this.submitForm.emit(this.rawFilterForm);
   }
 
   clearFilterForm(){
-    let currentTitle=this.startFilterForm.title
-    this.rawFilterForm={
-      title: currentTitle,
-      regionId:0,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:this.filterMaxCount,
-      startPrice:0,
-      endPrice:this.filterMaxPrice
+    
+    this.modalInfo={
+      title:"Are you sure clear filter",
+      message:"more data",
+      position:Positions.topCenter
+
     }
-    this.resetForm.emit();
+    this.isShowModalWarning=true;
+
+    // this.resetSelectedRegion();
+    // this.resetSelectedManufacturer();
+    // this.resetSelectedCategory();
+    // this.resetSelectedUnit();
+    // this.resetSelectedRangeCount();
+    // this.resetSelectedRangePrice();
+    //this.submitForm.emit(this.rawFilterForm)
+  }
+
+  closeModalWarning(answer:boolean){
+    if (answer){
+      this.resetSelectedRegion();
+      this.resetSelectedManufacturer();
+      this.resetSelectedCategory();
+      this.resetSelectedUnit();
+      this.resetSelectedRangeCount();
+      this.resetSelectedRangePrice();      
+      this.submitForm.emit(this.rawFilterForm);
+    }
+    this.isShowModalWarning=false;
+    
+  }
+
+  onSubmitFilterWithSave(){
+    console.log("onSubmitFilterWithSave")
   }
 
   isSelectedSomething(option:Number):boolean{
@@ -177,59 +227,55 @@ export class FilterByCriteriaComponent implements OnInit {
     this.rawFilterForm.regionId=this.resetValueForm();
     this.rawFilterForm.factoryId=this.resetValueForm();
     this.rawFilterForm.storageId=this.resetValueForm();
-    this.resetOption(this.startFilterForm.regionId);
+    this.getAllFactories();
+    this.getAllStorages();
   }
 
   resetSelectedFactory(){
     this.rawFilterForm.factoryId=this.resetValueForm();
     this.rawFilterForm.storageId=this.resetValueForm();
-    this.resetOption(this.startFilterForm.factoryId);
+    this.isDefaultValue(this.rawFilterForm.regionId)
+      ? this.getAllStorages()
+      : this.getStoragesByRegionId(this.rawFilterForm.regionId);
+    //this.getStorages();
   }
 
   resetSelectedStorage(){
     this.rawFilterForm.storageId=this.resetValueForm();
-    this.resetOption(this.startFilterForm.storageId);
   }
 
   resetSelectedManufacturer(){
     this.rawFilterForm.manufacturerId=this.resetValueForm();
-    this.resetOption(this.startFilterForm.manufacturerId);
   }
 
   resetSelectedCategory(){
     this.rawFilterForm.categoryId=this.resetValueForm();
-    this.resetOption(this.startFilterForm.categoryId)
   }
 
   resetSelectedUnit(){
     this.rawFilterForm.unitId=this.resetValueForm();
-    this.resetOption(this.startFilterForm.unitId);
   }
 
   resetSelectedRangeCount(){
     this.rawFilterForm.startCount=this.resetValueForm();
     this.rawFilterForm.endCount=this.filterMaxCount;
-    if (!this.isDefaultValue(this.startFilterForm.startCount) || this.startFilterForm.endCount<this.filterMaxCount)
-      this.resetOptionForm.emit(this.rawFilterForm);
-
   }
 
   resetSelectedRangePrice(){
     this.rawFilterForm.startPrice=this.resetValueForm();
     this.rawFilterForm.endPrice=this.filterMaxPrice;
-    console.log(this.rawFilterForm)
-    if (!this.isDefaultValue(this.startFilterForm.startPrice) || this.startFilterForm.endPrice<this.filterMaxPrice)
-      this.resetOptionForm.emit(this.rawFilterForm);
   }
 
   private getRegions(){
+    this.loadingOptionFilterByCriteria.isComplitedLoadingRegions=false;
     this.regionService.getRegionsByAccess()
       .subscribe(regions=>{
         this.regions = regions;
+        this.loadingOptionFilterByCriteria.isComplitedLoadingRegions=true;
       })
   }
 
-  private getFactories(){
+  private getFactories(){   
     this.isDefaultValue(this.startFilterForm.regionId)
       ? this.getAllFactories()
       : this.getFactoriesByRegionId(this.startFilterForm.regionId);
@@ -237,37 +283,46 @@ export class FilterByCriteriaComponent implements OnInit {
 
   private getStorages(){
 
+
+    if (!this.isDefaultValue(this.startFilterForm.regionId)
+    && this.isDefaultValue(this.startFilterForm.factoryId)){
+      this.getStoragesByRegionId(this.startFilterForm.regionId);  
+      return;    
+    }
+
     if (!this.isDefaultValue(this.startFilterForm.factoryId)){
-      this.getStoragesByFactoryId(this.startFilterForm.factoryId);
-      return;
+      this.getStoragesByFactoryId(this.startFilterForm.factoryId);  
+      return;    
     }
-
-    if (!this.isDefaultValue(this.startFilterForm.regionId)){
-      this.getStoragesByRegionId(this.startFilterForm.regionId);
-      return;
-    }
-
+    
+    
     this.getAllStorages();
   }
 
   private getManufacturers(){
+    this.loadingOptionFilterByCriteria.isComplitedLoadingManufacturers=false
     this.manufacturerService.getManufacturers()
       .subscribe(manufacturers=>{
         this.manufacturers=manufacturers;
+        this.loadingOptionFilterByCriteria.isComplitedLoadingManufacturers=true;
       })
   }
 
   private getCategories(){
+    this.loadingOptionFilterByCriteria.isComplitedLoadingCategories=false;
     this.categoryService.getCategories()
       .subscribe(categories=>{
         this.categories=categories;
+        this.loadingOptionFilterByCriteria.isComplitedLoadingCategories=true;
       })
   }
 
   private getUnits(){
+    this.loadingOptionFilterByCriteria.isComplitedLoadingUnits=false;
     this.unitService.getUnits()
       .subscribe(units=>{
         this.units=units;
+        this.loadingOptionFilterByCriteria.isComplitedLoadingUnits=true;
       })
   }
   
@@ -290,37 +345,48 @@ export class FilterByCriteriaComponent implements OnInit {
   
 
   private getAllFactories(){
+    this.loadingOptionFilterByCriteria.isCompliteLoadingFactories=false;
     this.factoryService.getFactoriesByAcces()
       .subscribe(factories=>{
-        this.factories=factories;        
+        this.factories=factories;   
+        this.loadingOptionFilterByCriteria.isCompliteLoadingFactories=true     
     })
   }
 
   private getFactoriesByRegionId(regionId:number){
+    this.loadingOptionFilterByCriteria.isCompliteLoadingFactories=false;
     this.factoryService.getFactoryByRegionId(regionId)
       .subscribe(factories=>{
         this.factories=factories; 
+        this.loadingOptionFilterByCriteria.isCompliteLoadingFactories=true;
     })
   }
 
   private getAllStorages(){
+    this.loadingOptionFilterByCriteria.isComplitedLoadingStorages=false;
       this.storageService.getStoragesByAccess("ProductManager")
         .subscribe(storages=>{
-          this.storages=storages;        
+          this.storages=storages; 
+          this.loadingOptionFilterByCriteria.isComplitedLoadingStorages=true;       
       })
   }
 
   private getStoragesByRegionId(regionId:number){
+    this.loadingOptionFilterByCriteria.isComplitedLoadingStorages=false;
     this.storageService.getStorageByRegionId(regionId)
       .subscribe(storages=>{
         this.storages=storages;
+        this.loadingOptionFilterByCriteria.isComplitedLoadingStorages=true;
+        
     })
   }
 
   private getStoragesByFactoryId(factoryId:number){
+    this.loadingOptionFilterByCriteria.isComplitedLoadingStorages=false;
     this.storageService.getStoragesByFactoryId(factoryId)
       .subscribe(storages=>{
         this.storages=storages;
+        this.loadingOptionFilterByCriteria.isComplitedLoadingStorages=true;
       })
   }
 
@@ -333,9 +399,9 @@ export class FilterByCriteriaComponent implements OnInit {
     return 0;
   }
 
-  private resetOption(option:number){
-    if (!this.isDefaultValue(option))
-        this.resetOptionForm.emit(this.rawFilterForm);
-  }
+  // private applyResetOption(option:number){
+  //   if (!this.isDefaultValue(option))
+  //       this.resetOptionForm.emit(this.rawFilterForm);
+  // }
   
 }

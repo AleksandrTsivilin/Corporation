@@ -9,15 +9,19 @@
     transition: 0.5s;
     transform: translateX(0%);
 }
-.size-main-page-container{
+.main-page-container-fixed{
     height: 100vh;
+}
+
+.router-container-fixed{
+    @apply h-4/5;
 }
 .container-main-page-active{
     transform: translateX(30%)
 }
 .container-cover{
     width: full;
-    height: 800px;
+    height: 600px;
     
 }
 .container-cover-short{

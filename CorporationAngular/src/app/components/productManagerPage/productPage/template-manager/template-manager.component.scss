@@ -1,5 +1,114 @@
-.template-manager-container{
-    height: 100%;
-    background-color: aqua;
-    margin: 10px;
+.template-manager-container{    
+    @apply h-full;
+    //@apply flex flex-col;
+
+
+    
+
+    .template-manager{
+        @apply h-full;
+        @apply w-full;
+        @apply flex flex-col;     
+        
+        .template-header{
+            @apply flex-none;
+            .header-text{
+                @apply text-blue-600;
+                @apply font-bold;
+                @apply text-2xl;
+                @apply mb-2 mx-2;
+                @apply py-4;
+                @apply text-center;
+                @apply border-b-2 border-blue-300;
+            }
+        }
+
+        .btn-section{
+            @apply flex-none flex justify-end;
+            @apply mx-2;
+
+                                
+            .btn{
+                @apply border-2 border-red-600;
+                @apply bg-red-300;
+                @apply rounded;
+            }
+
+            .btn:hover{
+                @apply bg-red-600;
+            }
+
+            .btn:focus{
+                @apply outline-none;
+                @apply ring-2;
+                @apply ring-offset-2;
+                @apply ring-red-600;
+            }
+        }
+        .list-templates{
+            //@apply h-full;
+            @apply flex-1;
+            @apply ml-20 mt-5;
+            @apply overflow-y-scroll;
+            @apply space-y-2;
+            
+            
+
+            .item-list{
+                @apply flex;
+                @apply space-x-2;
+                
+
+                .item-title{
+                    @apply flex;
+                    @apply w-1/4;
+                    @apply border-transparent;
+                    @apply rounded-l-lg;
+                    @apply px-4 py-2;
+                    @apply bg-blue-500;
+                    @apply text-white;
+
+                    .title{
+                        @apply flex-1;
+                    }
+
+                    .menu-container{
+                        @apply flex-none flex;
+                        @apply w-6;
+                        @apply h-6;
+
+                        .menu{
+                            @apply flex flex-col;
+                            @apply m-auto;
+                            @apply space-y-0.5;
+                            
+
+                            .point{
+                                @apply flex;
+                                @apply h-0.5;
+                                @apply w-0.5;
+                                @apply rounded-full;
+                                @apply bg-white;                                
+                            }
+                        }
+                    }
+
+                    .menu-container:hover{
+                        @apply bg-blue-900;
+                        @apply rounded-full;
+                    }
+                }
+
+                .item-control{
+                    .btn{
+                        @apply px-4 py-2;
+                        @apply border-transparent;
+                        @apply rounded-r-lg;
+                        @apply bg-green-500;
+                        @apply text-white;            
+                    }
+                }
+            }
+        }
+    }   
 }
