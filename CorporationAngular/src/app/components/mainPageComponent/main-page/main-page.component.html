@@ -1,4 +1,4 @@
-
+<!-- 
 <div class="flex">
 
     <div 
@@ -183,7 +183,8 @@
             </div>
             <div [ngClass]="{'router-container-fixed': isShortMainPage}">
                 <router-outlet></router-outlet>
-            </div>
+                <div class="footer-container"></div>
+            </div>            
         </div>
     </div>
 </div> 
@@ -260,4 +261,225 @@
         (click)=toLogout()>
         log out
     </a>
+</ng-template> -->
+
+<!-- <div 
+    class="main-page-container"
+    [ngClass]="{'main-page-container-fixed-size': pageSize !==pageSizes.LONG}"
+    >
+
+    
+    <div 
+        class="mobile-menu-container"
+        [ngClass]="{'mobile-menu-container-active':isOpenMobileMenu}"
+    >
+        <app-mobile-menu
+            *ngIf="isOpenMobileMenu"
+            (close)="toggleMobileMenu()"
+        ></app-mobile-menu>
+    </div>
+
+    
+
+    <div 
+        class="main-page"  
+        [ngClass]="{'main-page-active':isOpenMobileMenu}"              
+    >
+
+        
+
+        <div 
+            class="main-page-header" 
+            *ngIf="pageSize===pageSizes.LONG else mainPageHeaderFixed"
+            style="background-image: url('../../assets/images/mainPage.jpg')"                       
+        >        
+            
+            <div class="main-page-header-nav">
+                <div 
+                    class="btn-mobile-menu-container" 
+                >
+                    <button
+                        class="btn-mobile-menu"
+                        (click)="toggleMobileMenu()"                        
+                    >
+                        <span 
+                            class="animation-menu-btn"
+                            [ngClass]="{'animation-menu-btn-active':isOpenMobileMenu}"
+                        ></span>
+                    </button>
+                </div>   
+                
+                
+                <app-main-page-image class="header-image"></app-main-page-image>
+                
+                
+                <div class="header-nav">cc</div>
+            </div>
+
+            
+            <div class="main-page-header-info" *ngIf="pageSize===pageSizes.LONG">
+                bbb
+            </div>
+        </div>  
+        
+        
+        <div class="main-page-router">router</div>
+
+        
+        <div class="main-page-footer">footer</div>
+    </div>
+</div> -->
+
+<!-- SHORT or MIDDLE header-container -->
+<!-- <ng-template #mainPageHeaderFixed>    
+    <div 
+        [ngClass]="pageSize===pageSizes.MIDDLE ? 'header-nav-container-middle-size' : 'header-nav-container-short-size'"
+           
+    >
+
+           
+            <div 
+                class="btn-mobile-menu-container" 
+            >
+                <button
+                    class="btn-mobile-menu"
+                    (click)="toggleMobileMenu()"                        
+                >
+                    <span 
+                        class="animation-menu-btn"
+                        [ngClass]="{'animation-menu-btn-active':isOpenMobileMenu}"
+                    ></span>
+                </button>
+            </div>  
+            
+            
+            <app-main-page-image 
+                class="header-image"
+                *ngIf="pageSize===pageSizes.MIDDLE"
+            >
+            </app-main-page-image>
+            
+            
+            <div class="header-nav">cc</div>
+        
+    </div>    
+</ng-template> -->
+
+<div 
+    class="main-page-container"
+    [ngClass]="{'main-page-container-fixed-size' : pageSize!==pageSizes.LONG}"
+>
+    <div 
+        class="mobile-menu-container"
+        
+    >    
+        <app-mobile-menu #mobileMenu
+            
+        ></app-mobile-menu>
+    </div>
+
+    <!-- main page -->
+    <div 
+        class="main-page" 
+        [ngClass]="mobileMenu.isOpened ? 'main-page-active' : 'main-page-static'"
+    >
+
+        <!-- main-page-header-container -->
+        <div 
+            class="main-page-header-container"
+            *ngIf="pageSize===pageSizes.LONG else loadMainPageFixedSize"
+            style="background-image: url('../../assets/images/mainPage.jpg')"
+        >
+
+            <!-- header-nav-container -->
+            <div class="header-nav-container">
+
+                <!-- header nav -->
+                <div class="header-nav">
+
+                    <!-- button mobile menu -->
+
+                    <!-- <div class="btn-mobile-menu-container">
+                        <button
+                            class="btn-mobile-menu"
+                            (click)="toggleMobileMenu()"                        
+                        >
+                            <span 
+                                class="animation-menu-btn"
+                                [ngClass]="{'animation-menu-btn-active':isOpenMobileMenu}"
+                            ></span>
+                        </button>
+                    </div> -->
+
+                    <!-- nav menu container -->
+                    <div class="nav-container">
+                        <app-nav-menu></app-nav-menu>                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- header-logo-container -->
+            <div 
+                class="header-logo-container"
+            >
+                logo
+            </div>
+
+            <!-- header-slogan-container -->
+            <div class="header-slogan-container">
+                slogan
+            </div>
+
+            <!-- header-info-contaiener -->
+            <div class="header-info-container">info</div>
+        </div>
+
+        <!-- router-container -->
+        <div class="router-container" >
+            <div class="h-full"><router-outlet></router-outlet></div>
+        </div>
+
+        <!-- footer-container -->
+        <div 
+            [ngClass]="pageSize===pageSizes.LONG ? 'footer-container' : 'footer-container-fixed-size-page'">
+            <div *ngIf="pageSize===pageSizes.LONG" >footer</div>
+        </div>
+
+    </div>
+</div>
+
+<!-- <div class="test w-[calc(100%-10rem)]"></div> -->
+
+<ng-template #loadMainPageFixedSize>
+    <!-- header-nav-container -->
+
+    <div 
+        class="
+        header-nav-container 
+        header-nav-container-fixed-size"
+    >
+        <div class="header-nav header-nav-fixed-size">
+            <!-- <div class="btn-mobile-menu-container">
+                <button
+                    class="btn-mobile-menu"
+                    (click)="toggleMobileMenu()"                        
+                >
+                    <span 
+                        class="animation-menu-btn"
+                        [ngClass]="{'animation-menu-btn-active':isOpenMobileMenu}"
+                    ></span>
+                </button>
+            </div> -->
+            <div class="nav-container">
+                <app-nav-menu></app-nav-menu>                        
+            </div>
+        </div>
+    </div>
+
+    <!-- header-logo-container -->
+    <!-- <div 
+        class="header-logo-container"
+        *ngIf="pageSize===pageSizes.MIDDLE">
+        logo
+    </div> -->
 </ng-template>

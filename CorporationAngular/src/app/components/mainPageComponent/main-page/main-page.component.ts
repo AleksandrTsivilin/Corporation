@@ -1,8 +1,17 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { ModeMainPageService, PageSizes } from 'src/app/services/modeMainPage/mode-main-page.service';
+
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
+
+// enum PageSizes{
+//   SHORT,
+//   MIDDLE,
+//   LONG
+// }
 
 @Component({
   selector: 'app-main-page',
@@ -11,6 +20,10 @@ import { StorageService } from 'src/app/services/productPage/StoragesService/sto
 })
 export class MainPageComponent implements OnInit {
 
+  pageSizes=PageSizes;
+  //pageSize$=new BehaviorSubject<number>(PageSizes.LONG);
+  pageSize:number=PageSizes.LONG;
+
   isLogin:boolean=false;  
   duration:number=0;
   areaOf:number=0;
@@ -18,63 +31,27 @@ export class MainPageComponent implements OnInit {
   geography:number=0;
   isShortMainPage:boolean = false;
   
-  mobileMenuOpen:boolean =false;
+  @Output() isOpenMobileMenu:boolean =false;
   private counterDelay=20;
 
   constructor(
-    //private readonly route:ActivatedRoute,
     private readonly location:Location,
-    private readonly router:Router,
-    private readonly authService:AuthService,
+    private readonly modePageService:ModeMainPageService
    
     ) {}
 
   ngOnInit(): void {
-    console.log('on init main page')
-    this.authService.token$.subscribe(result=>{
-      this.isLogin = result ===null
-        ? false
-        : true; 
-                 
+    this.modePageService.pageSize$.subscribe(currentPageSize=>{
+      this.pageSize=currentPageSize;
     })
     
-    this.router.events.subscribe(x=>{
-      const path = this.location.path();
-      if (path!=="") this.isShortMainPage=true;
-      else this.isShortMainPage=false;
-      
-    })
+    if(this.location.path()!=="") this.modePageService.pageSize$.next(PageSizes.MIDDLE)
+    
     
     this.getGlobalInformation();
   }
   
-  toggleMobileMenu(){
-    this.mobileMenuOpen=!this.mobileMenuOpen;
-  }
-  openMenu(){
-    console.log("open menu")
-    //this.mobileMenuOpen=true;
-    
-  }
-  toMainPage(){
-    console.log("to mainPage")
-    this.router.navigate([''])
-    this.isShortMainPage=false;
-  }
-  toShortMainPage(){
-    this.isShortMainPage=true;
-  }
-
-  toLogin(){ 
-    this.isShortMainPage = false;
-    this.router.navigate(["loginForm"]);
-  }
-
-  toLogout(){
-    this.isLogin=false;
-    this.isShortMainPage=false;
-    this.router.navigate([""]);
-  }
+  
 
   
   

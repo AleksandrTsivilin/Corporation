@@ -1,127 +1,140 @@
 
 .role-selector-container{
-  height: 100%;
-}
-.tabs{
-    @apply flex;
+  @apply 
+    h-full w-full 
+    bg-blue-500
+    border-b-2  border-white;
 
-    .tab{
-        @apply  text-white font-bold py-2 rounded
+    .title-role-selector{
+      @apply 
+        py-2
+        bg-white        
+        text-center text-2xl font-bold text-blue-900;
     }
+}
+// .tabs{
+//     @apply flex;
 
-    .tab:hover{
-        @apply bg-blue-800;
-        @apply border-2 border-blue-800;
-    } 
+//     .tab{
+//         @apply  text-white font-bold py-2 rounded
+//     }
+
+//     .tab:hover{
+//         @apply bg-blue-800;
+//         @apply border-2 border-blue-800;
+//     } 
     
-    .btn-tab{
-      @apply pr-4 pl-2;
-      height: 12px;
-    }
+//     .btn-tab{
+//       @apply pr-4 pl-2;
+//       height: 12px;
+//     }
 
-}
+// }
 
-.template-container{
-  height: calc(100% - 80px);
-}
+// .template-container{
+//   height: calc(100% - 80px);
+// }
 
-.card-container{
-  height: calc(100% - 80px);
-  overflow-y: auto;
-}
+// .card-container{
+//   height: calc(100% - 80px);
+//   overflow-y: auto;
+// }
 
- .activTab{
-  @apply bg-blue-600;
-  @apply border-2 border-blue-900;
- }
+//  .activTab{
+//   @apply bg-blue-600;
+//   @apply border-2 border-blue-900;
+//  }
 
- .noActivTab{
-   @apply bg-blue-500;
-   @apply border-2 border-blue-500;
- }
+//  .noActivTab{
+//    @apply bg-blue-500;
+//    @apply border-2 border-blue-500;
+//  }
 
 
-  .card {
-    width: w-full;
-    height: h-48;
-    position: relative;
-    border: 1px solid #fff;
-  }
-  .front {
-    width: 100%;
-    @apply h-48;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: 1s;
-    backface-visibility: hidden;
-    background-color: #fff;
-   }
-   .back {
-    @apply bg-blue-500;
-    position: absolute;
-    width: 100%;
-    @apply h-48;
-    left: 0;
-    top: 0;
-    display: flex;
-    transition: 1s;
-    backface-visibility: hidden;
-   }
-  .front img {
-  }
-  .back {
-    transform: rotateY(180deg);
-  }
+//   .card {
+//     width: w-full;
+//     height: h-48;
+//     position: relative;
+//     border: 1px solid #fff;
+//   }
+//   .front {
+//     width: 100%;
+//     @apply h-48;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//     transition: 1s;
+//     backface-visibility: hidden;
+//     background-color: #fff;
+//    }
+//    .back {
+//     @apply bg-blue-500;
+//     position: absolute;
+//     width: 100%;
+//     @apply h-48;
+//     left: 0;
+//     top: 0;
+//     display: flex;
+//     transition: 1s;
+//     backface-visibility: hidden;
+//    }
+//   .front img {
+//   }
+//   .back {
+//     transform: rotateY(180deg);
+//   }
 
-.cardFronSide{
-    transform: rotateY(180deg);
-}
+// .cardFronSide{
+//     transform: rotateY(180deg);
+// }
 
-.cardBackSide{
-    transform: rotateY(360deg);
-}
+// .cardBackSide{
+//     transform: rotateY(360deg);
+// }
 
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
+// .tooltip:hover .tooltiptext {
+//     visibility: visible;
+//     opacity: 1;
+// }
 
-.tooltip {
-    position: relative;
-    display: inline-block;
-  }
+// .tooltip {
+//     position: relative;
+//     display: inline-block;
+//   }
   
-  .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    color: black;
-    text-align: center;
-    border-radius: 6px;
-    padding: 5px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -60px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
+//   .tooltip .tooltiptext {
+//     visibility: hidden;
+//     width: 120px;
+//     color: black;
+//     text-align: center;
+//     border-radius: 6px;
+//     padding: 5px 0;
+//     position: absolute;
+//     z-index: 1;
+//     bottom: 125%;
+//     left: 50%;
+//     margin-left: -60px;
+//     opacity: 0;
+//     transition: opacity 0.3s;
+//   }
   
-  .tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    margin-left: -5px;
-    border-width: 5px;
-    border-color: white transparent transparent transparent;
-  }
+//   .tooltip .tooltiptext::after {
+//     content: "";
+//     position: absolute;
+//     top: 100%;
+//     left: 50%;
+//     margin-left: -5px;
+//     border-width: 5px;
+//     border-color: white transparent transparent transparent;
+//   }
   
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
+//   .tooltip:hover .tooltiptext {
+//     visibility: visible;
+//     opacity: 1;
+//   }
+
+
+
 
   
   

@@ -1,0 +1,47 @@
+<div class="list-nav-container">
+    <ul class="list-nav">
+        <li>
+            <button 
+                class="btn-item"
+                (click)="changeModePage(pageSizes.LONG)"
+            >
+                <a routerLink="">main</a>
+            </button>
+        </li>
+        <li *ngIf="isLogin"><button class="btn-item">services</button></li>
+        <li><button class="btn-item">resources</button></li>
+        <li *ngIf="!isLogin else logout">
+            <button 
+                class="btn-item"
+                (click)="changeModePage(pageSizes.MIDDLE)"
+            >
+                <a routerLink="loginForm">log in</a>
+            </button>
+        </li>        
+        
+        <!-- full screen button -->
+        
+        <!-- <li>
+            <button class="item-btn" (click)="onFullScreen()">
+                full screen
+                <span class="item-btn-light-outside">
+                    <span 
+                        class="item-btn-light-inside"
+                        [ngClass]="isFullScreen ? 'item-btn-light-inside-on' : 'item-btn-light-inside-off'"
+                    ></span>
+                </span>
+            </button>
+        </li> -->
+    </ul>    
+</div>
+
+<ng-template #logout>
+    <li>
+        <button 
+            class="btn-item"
+            (click)="toLogout()"
+        >
+            <a routerLink="">log out</a>
+        </button>
+    </li>   
+</ng-template>

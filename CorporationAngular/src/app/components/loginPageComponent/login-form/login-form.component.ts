@@ -15,6 +15,8 @@ export class LoginFormComponent implements OnInit {
     username:"",
     password:""
   }
+
+  isRunning:boolean=false;
   constructor(
     private readonly authService:AuthService,
     private readonly router:Router,
@@ -22,13 +24,16 @@ export class LoginFormComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  onSubmit(){    
+  onSubmit(){  
+    this.isRunning=true;
     this.authService.login(this.loginForm)
       .subscribe(result=>{       
         this.toastr.success("authorization is success");
+        this.isRunning=false;
         this.router.navigate(['roleSelector']);
       },(result)=>{
         this.toastr.error("user is not found")
+        this.isRunning=false;
       })
   }
 

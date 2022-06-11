@@ -31,7 +31,7 @@ export class CreateAccountComponent implements OnInit {
     this.route.queryParamMap
       
       .subscribe((params ) => {
-        
+        console.log('create account')
         const id = params.get(" id");
         id !==null 
           ? this.newUser.registrationId = Number(id)

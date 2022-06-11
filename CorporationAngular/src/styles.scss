@@ -4,6 +4,10 @@
 @import 'tailwindcss/utilities';
 @import "../node_modules/toastr/build/toastr.css";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .toast-top-right {
     top: 120px;
     right: 20px;

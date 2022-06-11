@@ -37,6 +37,10 @@ import { FilterByCriteriaComponent } from './components/productManagerPage/produ
 import { TemplateManagerComponent } from './components/productManagerPage/productPage/template-manager/template-manager.component';
 import { ModalComponent } from './components/modals/modal/modal.component';
 import { WarningModalComponent } from './components/modals/warning-modal/warning-modal.component';
+import { MainPageImageComponent } from './components/mainPageComponent/main-page-image/main-page-image.component';
+import { MobileMenuComponent } from './components/mainPageComponent/mobile-menu/mobile-menu.component';
+import { NavMenuComponent } from './components/mainPageComponent/nav-menu/nav-menu.component';
+
 
 
 
@@ -82,7 +86,10 @@ import { WarningModalComponent } from './components/modals/warning-modal/warning
     FilterByCriteriaComponent,
     TemplateManagerComponent,
     ModalComponent,
-    WarningModalComponent
+    WarningModalComponent,
+    MainPageImageComponent,
+    MobileMenuComponent,
+    NavMenuComponent
     
     
     
@@ -98,7 +105,7 @@ import { WarningModalComponent } from './components/modals/warning-modal/warning
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       enableHtml:true,
-      timeOut:3000,
+      timeOut:500,
       positionClass:'toast-top-right',
       preventDuplicates:false
     })

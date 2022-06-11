@@ -1,0 +1,119 @@
+
+.mobile-menu-container-open{
+    @apply transform translate-x-48 duration-300;
+}
+
+.mobile-menu-container-close{
+    @apply transform translate-x-0 duration-300;
+}
+.mobile-menu-container{
+    @apply 
+        relative w-full h-full;
+    
+
+    .btn-mobile-container{
+        @apply 
+            absolute
+            top-1 -right-12
+            w-10 h-10 
+            rounded-full
+            bg-red-300
+            opacity-60
+            hover:opacity-100
+            md:hidden;
+
+            .btn-mobile-menu{
+                @apply w-full h-full;
+            }
+            .animation-menu-btn,
+            .animation-menu-btn::before,
+            .animation-menu-btn::after
+            {
+                @apply 
+                    absolute
+                    h-0.5 w-5
+                    top-1/2 left-1/2
+                    -ml-2.5 -mt-0.25
+                    bg-white;                          
+                
+            }
+
+            .animation-menu-btn::before,
+            .animation-menu-btn::after{
+                content: "";
+            }
+            .animation-menu-btn-close::before{
+                @apply transform -translate-y-1.25;
+            }
+
+
+            .animation-menu-btn-close::after{
+                @apply transform translate-y-1.25;
+            }
+
+            .animation-menu-btn-open::before{
+                
+                @apply  transform -rotate-35 w-2 origin-bottom-left duration-300;                            
+            }
+            .animation-menu-btn-open::after{                            
+                @apply transform rotate-35 w-2 origin-top-left duration-300;
+                
+            }
+    }
+
+
+    .mobile-menu{
+        @apply 
+            w-full h-full
+            bg-blue-700
+            m-0 p-0;
+    
+        .list-menu{
+            @apply                 
+                w-full
+                flex flex-col
+                pt-8
+                space-y-4;
+
+            .item-btn-container{
+                @apply w-full;
+
+                .item-btn{
+                    @apply 
+                        relative
+                        w-full 
+                        opacity-70
+                        text-white
+                        text-base
+                        hover:opacity-100;
+
+                        .item-btn-light-outside{
+                            @apply 
+                                absolute 
+                                w-6 h-3
+                                right-2
+                                top-1/2 -mt-1
+                                rounded-lg;
+                            background-color: white;
+
+                            .item-btn-light-inside{
+                                @apply 
+                                    absolute 
+                                    w-3 h-3 
+                                    rounded-full;
+                            }
+
+                            .item-btn-light-inside-on{
+                                @apply right-0 bg-green-500;
+                            }
+
+                            .item-btn-light-inside-off{
+                                @apply left-0 bg-red-500;
+                            }
+                        }
+                }
+            }
+            
+        }
+    }
+}

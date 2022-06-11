@@ -1,0 +1,53 @@
+
+.list-nav-container{
+    @apply flex h-full;
+}
+
+.list-nav{
+    @apply 
+        flex
+        my-auto
+        space-x-6;
+
+        .btn-item{
+            @apply 
+                opacity-70
+                text-white
+                hover:opacity-100;
+        }
+
+        .item-btn{
+            @apply 
+                relative
+                w-full 
+                opacity-70
+                text-white
+                text-base
+                hover:opacity-100;
+
+                .item-btn-light-outside{
+                    @apply 
+                        absolute 
+                        w-6 h-3
+                        left-20
+                        top-1/2 -mt-1
+                        rounded-lg;
+                    background-color: white;
+
+                    .item-btn-light-inside{
+                        @apply 
+                            absolute 
+                            w-3 h-3 
+                            rounded-full;
+                    }
+
+                    .item-btn-light-inside-on{
+                        @apply right-0 bg-green-500;
+                    }
+
+                    .item-btn-light-inside-off{
+                        @apply left-0 bg-red-500;
+                    }
+                }
+        }
+}

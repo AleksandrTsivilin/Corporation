@@ -13,7 +13,7 @@ export class RoleSelectorGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {  
+    state: RouterStateSnapshot): boolean {        
     if (this.authService.token$.value===null) {
       this.router.navigate(["loginForm"]);
       return false;

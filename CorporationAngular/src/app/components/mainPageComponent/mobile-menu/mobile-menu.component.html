@@ -1,0 +1,93 @@
+<div 
+    class="mobile-menu-container"
+    [ngClass]="isOpened ? 'mobile-menu-container-open' : 'mobile-menu-container-close'"
+
+>
+
+    <!-- btn-mobile-container -->
+    <div class="btn-mobile-container">
+        <button
+            class="btn-mobile-menu"
+            (click)="toggleMobileMenu()"                        
+        >
+            <span 
+                class="animation-menu-btn"
+                [ngClass]="isOpened ? 'animation-menu-btn-open' : 'animation-menu-btn-close'"
+            ></span>
+        </button>
+    </div>
+
+    <!-- mobile menu -->
+    <div class="mobile-menu">
+        <ul class="list-menu">
+            <li class="item-btn-container">
+                <button 
+                    class="item-btn"
+                    (click)="changeModePage(pageSizes.LONG)"
+                >
+                    <a routerLink="">main</a>
+                </button>
+            </li>
+            <li                 
+                class="item-btn-container"
+                *ngIf="isLogin"
+            >
+                <button 
+                    class="item-btn"
+                >
+                    services   
+                </button>
+            </li>            
+            <li class="item-btn-container">
+                <button class="item-btn">
+                    resources
+                </button>
+            </li>  
+            <li 
+                class="item-btn-container"
+                *ngIf="!isLogin else logout"
+            >
+                <button 
+                    class="item-btn"
+                    (click)="changeModePage(pageSizes.MIDDLE)"
+                >
+                    <a routerLink="loginForm">log in</a>
+                </button>
+            </li> 
+            
+            <!-- full screen -->
+
+            
+            <!-- <li 
+                class="item-btn-container"
+                *ngIf="currentPageSize!==pageSizes.LONG"
+            >
+                <button 
+                    class="item-btn" (click)="onFullScreen()"
+                >
+                    full screen
+                    <span class="item-btn-light-outside">
+                        <span 
+                            class="item-btn-light-inside"
+                            [ngClass]="currentPageSize===pageSizes.SHORT ? 'item-btn-light-inside-on' : 'item-btn-light-inside-off'"
+                        ></span>
+                    </span>
+                </button>
+            </li>             -->
+        </ul>
+    </div>
+</div>
+
+
+<ng-template #logout>
+    <li 
+        class="item-btn-container"
+    >
+        <button 
+            class="item-btn"
+            (click)="toLogout()"
+        >
+            <a routerLink="">Log out</a> 
+        </button>
+    </li>    
+</ng-template>
