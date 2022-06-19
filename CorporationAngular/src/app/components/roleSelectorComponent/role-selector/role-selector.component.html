@@ -300,7 +300,7 @@
 
 
 
-<ng-template #toMoveNextPage>
+<!-- <ng-template #toMoveNextPage>
     <div class="template-container">
         <div class="h-full" [ngSwitch]='pageState.path' >
             <app-personal-user-data
@@ -343,9 +343,241 @@
     </div>
     
     
-</ng-template>
+</ng-template> -->
 
+<!-- role selector page -->
+<div 
+    class="role-selector-container"
+    *ngIf="pageState.isActive else toMoveNextPage"
+>
+    <!-- title container -->
+    <div class="title-role-selector-container">
+        <div 
+            class="title-role-selector"
+            
+        >
+            Services
+        </div>
+    </div>
 
-<div class="role-selector-container">
-    <div class="title-role-selector">services</div>
+    <!-- service tabs -->
+    <div class="tabs-container">
+        tabs 
+    </div>
+
+    <!-- cards container -->
+    <div class="role-selector-cards-container" >
+        <div class="role-selector-cards">
+
+            <!-- card container personal data-->
+            <div class="card-container">
+                <div class="card">
+
+                    <!-- image card container-->
+                    <div class="image-card-container">
+
+                        <!-- back side container -->
+                        <div 
+                            class="back-side-image-container "                            
+                        >
+                            <div 
+                                class="back-side-image"
+                                [ngClass]="selectedCard===cards.PERSONAL_DATA ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                            >
+                                <div class="back-side-image-text">                                
+                                    Personal data - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.</div>
+                                </div>
+                        </div>
+                        <!-- button tip  description -->
+                        <button 
+                            class="btn-info-card"
+                            (click)="toggleCard(cards.PERSONAL_DATA)"                            
+                        >
+
+                            <!-- text description -->
+                            <span class="tooltip-text-btn-info">description</span>
+
+                            <!-- icon button description -->
+                            <div 
+                                class="icon-btn-info-card-container"
+                                [ngClass]="selectedCard===cards.PERSONAL_DATA ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                            >
+                                <span 
+                                    class="icon-btn-info-card"                                
+                                ></span>
+                            </div>
+                            
+                            <!-- [ngClass]="selectedCard===cards.PERSONAL_DATA ? 'icon-btn-info-card-open' : 'icon-btn-info-card-close'" -->
+                        </button>
+
+                        <!-- image card -->
+                        <img 
+                            class="image-card"
+                            src="assets/images/personal_data1.jpg"
+                        >
+                    </div>
+
+                    <!-- title and button link card -->
+                    <div class="action-card-container">
+                        <div class="title-card">Personal data user</div>
+                        <div class="btn-action-card">
+                            <button 
+                                class="btn-action"
+                                (click)="changeModePage('personal_data')"
+                            >
+                                Go
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- card container users-->
+            <div class="card-container">
+                <div class="card">
+
+                    <!-- image card container-->
+                    <div class="image-card-container">
+
+                        <!-- back side container -->
+                        <div 
+                            class="back-side-image-container "                            
+                        >
+                            <div 
+                                class="back-side-image"
+                                [ngClass]="selectedCard===cards.USERS ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                            >
+                                <div class="back-side-image-text">                                
+                                    Users - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- button tip  description -->
+                        <button 
+                            class="btn-info-card"
+                            (click)="toggleCard(cards.USERS)"                            
+                        >
+
+                            <!-- text description -->
+                            <span class="tooltip-text-btn-info">description</span>
+
+                            <!-- icon button description -->
+                            <div 
+                                class="icon-btn-info-card-container"
+                                [ngClass]="selectedCard===cards.USERS ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                            >
+                                <span 
+                                    class="icon-btn-info-card"                                
+                                ></span>
+                            </div>
+                            
+                            <!-- [ngClass]="selectedCard===cards.PERSONAL_DATA ? 'icon-btn-info-card-open' : 'icon-btn-info-card-close'" -->
+                        </button>
+
+                        <!-- image card -->
+                        <img 
+                            class="image-card"
+                            src="assets/images/users2.png"
+                        >
+                    </div>
+
+                    <!-- title and button link card -->
+                    <div class="action-card-container">
+                        <div class="title-card">Users</div>
+                        <div class="btn-action-card">
+                            <button 
+                                class="btn-action"
+                                (click)="changeModePage('users')"
+                            >
+                                Go
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>   
+            
+            <!-- card add user -->
+            <div class="card-container">
+                <div class="card">
+
+                    <!-- image card container-->
+                    <div class="image-card-container">
+
+                        <!-- back side container -->
+                        <div 
+                            class="back-side-image-container "                            
+                        >
+                            <div 
+                                class="back-side-image"
+                                [ngClass]="selectedCard===cards.ADD_USER ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                            >
+                                <div class="back-side-image-text">                                
+                                    Add user - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                                </div>
+                            </div>
+                        </div>
+                        <!-- button tip  description -->
+                        <button 
+                            class="btn-info-card"
+                            (click)="toggleCard(cards.ADD_USER)"                            
+                        >
+
+                            <!-- text description -->
+                            <span class="tooltip-text-btn-info">description</span>
+
+                            <!-- icon button description -->
+                            <div 
+                                class="icon-btn-info-card-container"
+                                [ngClass]="selectedCard===cards.ADD_USER ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                            >
+                                <span 
+                                    class="icon-btn-info-card"                                
+                                ></span>
+                            </div>
+                            
+                        </button>
+
+                        <!-- image card -->
+                        <img 
+                            class="image-card"
+                            src="assets/images/addUser1.jpg"
+                        >
+                    </div>
+
+                    <!-- title and button link card -->
+                    <div class="action-card-container">
+                        <div class="title-card">Add user</div>
+                        <div class="btn-action-card">
+                            <button 
+                                class="btn-action"
+                                (click)="changeModePage('addUser')"
+                            >
+                                Go
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>  
+        </div>
+    </div>
 </div>
+
+
+<!-- selected service -->
+<ng-template #toMoveNextPage>
+    <div class="template-role-selector-container">
+        <div class="h-8 bg-red-200">title</div>
+        <div class="h-8 bg-green-200">service tabs</div>
+        <div [ngSwitch]="pageState.path" class="items">
+            <!-- personal data page -->
+            <app-personal-user-data 
+                class="item-switch"
+                *ngSwitchCase="'personal_data'">
+
+            </app-personal-user-data>
+            <!-- users page -->
+            
+        </div>
+    </div>
+
+</ng-template>

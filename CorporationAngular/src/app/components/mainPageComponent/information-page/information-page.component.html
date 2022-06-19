@@ -1,43 +1,109 @@
 
-<div class="container-info">    
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
-    <p>some text</p>
+<!-- info-page-container -->
+<div class="info-page-container">
+
+    <!-- resource container -->
+    <div class="resources-container">
+
+        
+        <!-- title resource container  -->
+        <div class="title-resources-container">
+            <div class="title-contaiener">
+                <div class="title">Our resources</div>
+                <div class="speach-title">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Exercitationem at voluptatum possimus optio iste perferendis totam dicta, ipsam quisquam ab quod eaque sit suscipit quae libero, dolor dolorum porro. Distinctio?</div>
+            </div>
+        </div>        
+        <!-- list resource -->
+        <ul
+            class="list-resources"
+        >
+            <!-- list item  -->
+            <li
+                class="item-list-container"
+                *ngFor="let resource of resources"
+            >   
+                <!-- item description  -->
+                <div class="item-description">
+                    <div class="text-description ">
+                        <span class="start-text-description">{{resource.title}}</span>
+                        <p class="w-full line-clamp-8">
+                            {{resource.shortDescription}}
+                        </p>
+                                            
+                    </div>
+                    <button class="btn-item">learn more</button>
+                </div>
+
+                <!-- devide vertical line -->
+                <div class="devide-vertical-line"></div>
+                
+                <!-- image item -->
+                <div 
+                    class="item-image-container"
+                    
+                >
+                    <div 
+                        class="item-image"
+                        style="background-image: url({{resource.image}})"
+                    >
+
+                    </div>
+                    
+                </div>
+                
+            </li>
+        </ul>   
+    </div>
+
+    <!-- about us container -->
+    <!-- <div class="about-us-container">
+        <div class="title-container-about-us">
+            <div class="title-about-us">About us</div>                       
+        </div>
+        <div class="information-about-us-container">
+            <div class="image-information">image</div>
+            <span class="devide-line-information"></span>
+            <div class="information">Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor tempore suscipit cupiditate dolorem quo libero sint itaque. Minus ab eligendi accusamus ut vel neque possimus, aliquid fugit sint fugiat nesciunt.</div>
+        </div>
+        
+    </div> -->
+    
+    
+    <!-- about us container -->
+    <div class="about-us-container">
+        <div class="about-us">
+            <div class="about-us-information-container">
+                <div class="devide-vertical-line"></div>
+                <div class="about-us-information">
+                    <div class="title-about-us-container">about us</div>
+                    <div class="text-about-us-container"><p>{{aboutUsText}}</p></div>
+                    <div class="btn-about-us-container"><button class="btn-about-us">learn more</button></div>
+                </div>
+            </div>            
+        </div>
+    </div>
+    
+
+    <!-- contacts container -->
+    <div class="contacts-container">
+        <div class="contacts">
+            <div class="contacts-information-container">
+                <div class="devide-vertical-line"></div>
+                <div class="contacts-information">
+                    <div class="title-contacts-container">contacts</div>
+                    <div class="slogan-contacts-container">
+                        <div class="slogan-contacts">Get in touch</div>
+                    </div>
+                    <div class="text-contacts-container">
+                        Are you interested in finding out more about renewable energy technology could do for your business? Contact us today to talk to an expert.
+                    </div>
+                    <div class="btn-contacts-container">
+                        <button class="btn-contacts">contact us</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
 </div>

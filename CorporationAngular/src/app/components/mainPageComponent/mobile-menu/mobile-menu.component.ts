@@ -18,6 +18,8 @@ export class MobileMenuComponent implements OnInit {
   pageSizes=PageSizes;
   isLogin:boolean=false;
   isOpened:boolean=false;
+  activeNav:string="";
+
 
   constructor(
     private readonly modePageService:ModeMainPageService,
@@ -27,6 +29,10 @@ export class MobileMenuComponent implements OnInit {
   ngOnInit(): void {
     this.authService.token$.subscribe(token=>{
       this.isLogin = token!==null;
+    })
+
+    this.modePageService.currentRouter$.subscribe(link=>{
+      this.activeNav=link;
     })
     // this.modePageService.pageSize$.subscribe((mode)=>{
     //   //this.isFullScreen = mode===this.pageSizes.SHORT;

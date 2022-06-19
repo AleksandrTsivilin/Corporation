@@ -20,35 +20,43 @@
     <!-- mobile menu -->
     <div class="mobile-menu">
         <ul class="list-menu">
+            <!-- Home -->
             <li class="item-btn-container">
-                <button 
-                    class="item-btn"
+                <button                                      
+                    [ngClass]="activeNav==='/' ? 'item-btn-active' : 'item-btn'"
                     (click)="changeModePage(pageSizes.LONG)"
                 >
-                    <a routerLink="">main</a>
+                    <a routerLink="" >Home</a>
                 </button>
             </li>
+
+            <!-- services -->
             <li                 
                 class="item-btn-container"
                 *ngIf="isLogin"
             >
                 <button 
-                    class="item-btn"
+                [ngClass]="activeNav==='/roleSelector' ? 'item-btn-active' : 'item-btn'"
+                    (click)="changeModePage(pageSizes.MIDDLE)"
                 >
-                    services   
+                    <a routerLink="roleSelector">Services</a>   
                 </button>
-            </li>            
+            </li>    
+            
+            <!-- resources -->
             <li class="item-btn-container">
                 <button class="item-btn">
-                    resources
+                    Resources
                 </button>
             </li>  
+
+            <!-- log in -->
             <li 
                 class="item-btn-container"
                 *ngIf="!isLogin else logout"
             >
                 <button 
-                    class="item-btn"
+                [ngClass]="activeNav==='/loginForm' ? 'item-btn-active' : 'item-btn'"
                     (click)="changeModePage(pageSizes.MIDDLE)"
                 >
                     <a routerLink="loginForm">log in</a>

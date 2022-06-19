@@ -1,0 +1,19 @@
+.app-container{
+    @apply
+        w-full min-h-screen
+        overflow-x-hidden;
+        .mobile-menu-container{
+            @apply 
+                w-48 h-screen
+                fixed top-0 left-0
+                transform -translate-x-48
+                z-50;            
+        }
+
+        .router-container{
+            
+        }
+        .router-container-shift{
+            @apply transform translate-x-48 duration-300;
+        }
+}

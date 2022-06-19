@@ -35,17 +35,17 @@ export class MainPageComponent implements OnInit {
   private counterDelay=20;
 
   constructor(
-    private readonly location:Location,
+    //private readonly location:Location,
     private readonly modePageService:ModeMainPageService
    
-    ) {}
+    ) { console.log('constr main page')}
 
   ngOnInit(): void {
-    this.modePageService.pageSize$.subscribe(currentPageSize=>{
-      this.pageSize=currentPageSize;
+    this.modePageService.pageSize$.subscribe(newSize=>{
+      this.pageSize=newSize;
     })
     
-    if(this.location.path()!=="") this.modePageService.pageSize$.next(PageSizes.MIDDLE)
+    //if(this.location.path()!=="") this.modePageService.pageSize$.next(PageSizes.MIDDLE)
     
     
     this.getGlobalInformation();

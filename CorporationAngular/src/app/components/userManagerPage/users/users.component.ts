@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { UserService } from 'src/app/services/userManager/userServices/user.service';
 import { UserInfo } from 'src/app/interfaces/userInfo';
 import { HeaderTable } from 'src/app/interfaces/header-table';
@@ -19,7 +19,7 @@ import { debounceTime, filter } from 'rxjs/operators';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
   
 
@@ -67,7 +67,10 @@ export class UsersComponent implements OnInit {
   
   constructor(
     private readonly userService:UserService,
-    private readonly updateService:UserUpdateService) {   
+    private readonly updateService:UserUpdateService) {  
+      console.log('constr users') 
+  }
+  ngOnDestroy(): void {console.log('users on Destroy');
   }
   
   ngOnInit(): void {

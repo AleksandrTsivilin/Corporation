@@ -40,6 +40,9 @@ import { WarningModalComponent } from './components/modals/warning-modal/warning
 import { MainPageImageComponent } from './components/mainPageComponent/main-page-image/main-page-image.component';
 import { MobileMenuComponent } from './components/mainPageComponent/mobile-menu/mobile-menu.component';
 import { NavMenuComponent } from './components/mainPageComponent/nav-menu/nav-menu.component';
+import { HomePageComponent } from './components/homePage/home-page/home-page.component';
+import { LoginPageComponent } from './components/loginPage/login-page/login-page.component';
+
 
 
 
@@ -89,7 +92,9 @@ import { NavMenuComponent } from './components/mainPageComponent/nav-menu/nav-me
     WarningModalComponent,
     MainPageImageComponent,
     MobileMenuComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    HomePageComponent,
+    LoginPageComponent
     
     
     

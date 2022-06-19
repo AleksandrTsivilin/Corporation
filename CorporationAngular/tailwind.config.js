@@ -14,20 +14,33 @@ module.exports = {
     darkMode: 'class', // or 'media' or 'class'
     theme: {
       screen: {
-        'md':'768px'
-      },
+        'sm':'640px',
+        'md':'768px',
+        'lg':'1024px'
+      },     
       extend: {
+        colors:{
+          'regal-blue': '#243c5a',
+          'cyan-800' : '#155e75',
+          'cyan-600' : '#0891b2',
+          'cyan-500' : '#06b6d4'
+        },
         
         height:{
-          '160':'40rem',
-          '1/10':'10%'
+          '160':'640px',
+          '120':'480px',
+          '1/10':'10%',
+          '1/12':'8.33333333333%',
+          '3/4vh':'75vh'
         },
         width:{
-          '160':'40rem'
+          '160':'640px',
+          '0.75':'3px'
         },
         rotate:{
           '35': '35deg',
-          '-35': '-35deg'
+          '-35': '-35deg',
+          '135': '135'
         },
         translate:{
           '1.25':'5px',
@@ -35,16 +48,29 @@ module.exports = {
         },
         margin:{
           '-2.5': '-10px',
-          '-0.25': '-1px'
+          '-0.25': '-1px',
+          '-0.75': '-3px'
         },
         spacing:{
-          '-2/5':'-40%'
-        }
+          '-2/5':'-40%',
+          '-1/2':'-50%',
+          '1/12':'8.33333333333%',
+          '1/5':'20%',
+        }, 
+        lineClamp: {
+          '8': '8',
+          '10': '10',
+        }      
+        
       },
     },
     variants: {
       extend: {},
     },
-    plugins: [require('@tailwindcss/forms'),require('@tailwindcss/typography')],
+    plugins: [
+      require('@tailwindcss/forms'),
+      require('@tailwindcss/typography'),   
+      require('@tailwindcss/line-clamp') 
+    ]
 };
 

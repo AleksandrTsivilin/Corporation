@@ -365,9 +365,11 @@
     </div>    
 </ng-template> -->
 
+
+<!-- 370 [ngClass]="{'main-page-container-fixed-size' : pageSize!==pageSizes.LONG}" -->
 <div 
     class="main-page-container"
-    [ngClass]="{'main-page-container-fixed-size' : pageSize!==pageSizes.LONG}"
+    
 >
     <div 
         class="mobile-menu-container"
@@ -435,7 +437,10 @@
         </div>
 
         <!-- router-container -->
-        <div class="router-container" >
+        <div 
+            class="router-container" 
+            [ngClass]="{'router-container-fixed-size' : pageSize===pageSizes.MIDDLE}"
+        >
             <div class="h-full"><router-outlet></router-outlet></div>
         </div>
 

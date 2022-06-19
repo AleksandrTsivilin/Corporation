@@ -67,7 +67,7 @@
             w-full h-full
             bg-blue-700
             m-0 p-0;
-    
+// list nav    
         .list-menu{
             @apply                 
                 w-full
@@ -78,6 +78,7 @@
             .item-btn-container{
                 @apply w-full;
 
+// nav
                 .item-btn{
                     @apply 
                         relative
@@ -86,7 +87,10 @@
                         text-white
                         text-base
                         hover:opacity-100;
-
+                
+                
+                        
+// light for full screen
                         .item-btn-light-outside{
                             @apply 
                                 absolute 
@@ -112,8 +116,18 @@
                             }
                         }
                 }
+
+                .item-btn-active{
+                    @apply 
+                        relative
+                        w-full 
+                        text-white
+                        text-base; 
+                }
             }
             
         }
     }
 }
+
+

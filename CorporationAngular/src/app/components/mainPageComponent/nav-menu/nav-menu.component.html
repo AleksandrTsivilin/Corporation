@@ -1,47 +1,63 @@
-<div class="list-nav-container">
+<div class="nav-menu-container">
     <ul class="list-nav">
+
+        <!-- Home -->
         <li>
-            <button 
+            <button
                 class="btn-item"
+                [ngClass]="{'btn-item-active': activeNav==='/'}"
                 (click)="changeModePage(pageSizes.LONG)"
             >
-                <a routerLink="">main</a>
+                <a routerLink="">Home</a>
             </button>
         </li>
-        <li *ngIf="isLogin"><button class="btn-item">services</button></li>
-        <li><button class="btn-item">resources</button></li>
-        <li *ngIf="!isLogin else logout">
-            <button 
+
+        <!-- log in -->
+        <li *ngIf="isLogin">
+            <button
                 class="btn-item"
+                [ngClass]="{'btn-item-active' : activeNav==='/roleSelector'}"
                 (click)="changeModePage(pageSizes.MIDDLE)"
             >
-                <a routerLink="loginForm">log in</a>
+                <a routerLink="roleSelector">Services</a>
             </button>
-        </li>        
-        
+        </li>
+        <!-- resources -->
+        <li><button class="btn-item">Resources</button></li>
+        <!-- log out -->
+        <li *ngIf="!isLogin else logout">
+            <button
+                class="btn-item"
+                [ngClass]="{'btn-item-active' : activeNav==='/loginForm'}"
+                (click)="changeModePage(pageSizes.MIDDLE)"
+            >
+                <a routerLink="loginForm">Log In</a>
+            </button>
+        </li>
+
         <!-- full screen button -->
-        
+
         <!-- <li>
             <button class="item-btn" (click)="onFullScreen()">
                 full screen
                 <span class="item-btn-light-outside">
-                    <span 
+                    <span
                         class="item-btn-light-inside"
                         [ngClass]="isFullScreen ? 'item-btn-light-inside-on' : 'item-btn-light-inside-off'"
                     ></span>
                 </span>
             </button>
         </li> -->
-    </ul>    
+    </ul>
 </div>
 
 <ng-template #logout>
     <li>
-        <button 
+        <button
             class="btn-item"
             (click)="toLogout()"
         >
-            <a routerLink="">log out</a>
+            <a routerLink="">Log Out</a>
         </button>
-    </li>   
+    </li>
 </ng-template>

@@ -1,14 +1,19 @@
 
-.list-nav-container{
-    @apply flex h-full;
+.nav-menu-container{
+    @apply 
+        flex h-full
+        invisible
+        md:visible;
 }
 
+// list nav
 .list-nav{
     @apply 
         flex
         my-auto
         space-x-6;
 
+// button nav
         .btn-item{
             @apply 
                 opacity-70
@@ -16,38 +21,49 @@
                 hover:opacity-100;
         }
 
-        .item-btn{
-            @apply 
-                relative
-                w-full 
-                opacity-70
-                text-white
-                text-base
-                hover:opacity-100;
-
-                .item-btn-light-outside{
-                    @apply 
-                        absolute 
-                        w-6 h-3
-                        left-20
-                        top-1/2 -mt-1
-                        rounded-lg;
-                    background-color: white;
-
-                    .item-btn-light-inside{
-                        @apply 
-                            absolute 
-                            w-3 h-3 
-                            rounded-full;
-                    }
-
-                    .item-btn-light-inside-on{
-                        @apply right-0 bg-green-500;
-                    }
-
-                    .item-btn-light-inside-off{
-                        @apply left-0 bg-red-500;
-                    }
-                }
+        .btn-item-active{
+            @apply opacity-100;
         }
+
+        // .btn-item-active::after{
+        //     content: "";
+        // }
+        // .btn-item-active::after{
+        //     @apply w-full border-b-2 border-white;
+        // }
+
+        // .item-btn{
+        //     @apply 
+        //         relative
+        //         w-full 
+        //         opacity-70
+        //         text-white
+        //         text-base
+        //         hover:opacity-100;
+
+        //         .item-btn-light-outside{
+        //             @apply 
+        //                 absolute 
+        //                 w-6 h-3
+        //                 left-20
+        //                 top-1/2 -mt-1
+        //                 rounded-lg;
+        //             background-color: white;
+
+        //             .item-btn-light-inside{
+        //                 @apply 
+        //                     absolute 
+        //                     w-3 h-3 
+        //                     rounded-full;
+        //             }
+
+        //             .item-btn-light-inside-on{
+        //                 @apply right-0 bg-green-500;
+        //             }
+
+        //             .item-btn-light-inside-off{
+        //                 @apply left-0 bg-red-500;
+        //             }
+        //         }
+        // }
 }

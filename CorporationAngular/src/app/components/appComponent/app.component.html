@@ -1,1 +1,17 @@
-<app-main-page></app-main-page>
+<!-- <app-main-page></app-main-page> -->
+<div class="app-container">
+
+    <!-- mobile menu container-->
+    <div class="mobile-menu-container">
+        <app-mobile-menu #mobileMenu></app-mobile-menu>
+    </div>
+
+    <!-- router container -->
+    <div 
+        class="router-container"
+        [ngClass]="{'router-container-shift' : mobileMenu.isOpened}">
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>

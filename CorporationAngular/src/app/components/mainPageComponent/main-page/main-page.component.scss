@@ -316,12 +316,13 @@
     @apply flex  w-full min-h-screen overflow-hidden;    
 }
 
-.main-page-container-fixed-size{
-    @apply 
-        h-screen w-full ;
+// 319
+// .main-page-container-fixed-size{
+//     @apply 
+//         h-screen w-full ;
 
-        min-width: 400px;
-}
+//         min-width: 400px;
+// }
 
 .mobile-menu-container{
     @apply absolute flex-none w-48 h-full -left-48 z-50;
@@ -473,16 +474,24 @@
 
     .header-info-container{
         @apply 
-            w-full h-24
+            h-24 w-full
             hidden
             md:block;
+
+        
 
         background-color: red;
     }
 
     .router-container{
-        @apply flex-1 h-full;
+        @apply flex-1 w-full;
+        //height: calc(100vh - 96px);
+        
     }
+
+    // .router-container-fixed-size{
+    //     height: calc(100vh - 96px);
+    // }
 
     .footer-container{
         @apply             

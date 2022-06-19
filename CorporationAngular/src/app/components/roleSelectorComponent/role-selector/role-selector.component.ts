@@ -1,5 +1,5 @@
 import { ThisReceiver } from '@angular/compiler';
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 
 import { AvaiableUser } from 'src/app/interfaces/auth/avaiablesUserForm';
 import { TokenData } from 'src/app/interfaces/auth/tokenData';
@@ -10,12 +10,19 @@ import { Tab } from 'src/app/interfaces/roleselector/tab';
 
 import { AuthService } from 'src/app/services/auth.service';
 
+enum CardTypes{
+  NONE,
+  PERSONAL_DATA,
+  USERS,
+  ADD_USER
+}
+
 @Component({
   selector: 'app-role-selector',
   templateUrl: './role-selector.component.html',
   styleUrls: ['./role-selector.component.scss']
 })
-export class RoleSelectorComponent implements OnInit {
+export class RoleSelectorComponent implements OnInit, OnDestroy {
 
   tokenData:TokenData={
     userId:0,
@@ -39,7 +46,13 @@ export class RoleSelectorComponent implements OnInit {
   openedTabs:Tab[]=[];
   isFrontSideCard:boolean = true;
   
-  constructor(private readonly authService : AuthService) { }
+
+  cards=CardTypes;
+  selectedCard:number = CardTypes.NONE;
+  constructor(private readonly authService : AuthService) { console.log('constr role selector') }
+  ngOnDestroy(): void {
+    console.log('onDestroy');
+  }
 
   ngOnInit(): void {
     this.authService.tokenData$.subscribe(tokenData=>{
@@ -154,4 +167,13 @@ export class RoleSelectorComponent implements OnInit {
       }
     ]
   }
+
+    toggleCard(type:number){
+      type===this.selectedCard 
+        ? this.selectedCard=this.cards.NONE
+        : this.selectedCard=type;
+
+        console.log(this.selectedCard)
+
+    }
 }

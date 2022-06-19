@@ -16,6 +16,7 @@ export class NavMenuComponent implements OnInit {
   
   pageSizes=PageSizes;
   isLogin:boolean=false;
+  activeNav:string="";
 
   constructor(
     private readonly modePageService:ModeMainPageService,
@@ -30,6 +31,10 @@ export class NavMenuComponent implements OnInit {
         ? false
         : true; 
                  
+    })
+
+    this.modePageService.currentRouter$.subscribe(link=>{
+      this.activeNav=link;
     })
     // this.modePageService.pageSize$.subscribe((mode)=>{
     //   //this.isFullScreen=this.modePageService.isFullScreen;

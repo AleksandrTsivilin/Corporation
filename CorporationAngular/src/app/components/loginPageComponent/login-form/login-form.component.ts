@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { LoginForm } from 'src/app/interfaces/auth/loginForm';
@@ -8,7 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
   templateUrl: './login-form.component.html',
   styleUrls: ['./login-form.component.scss']
 })
-export class LoginFormComponent implements OnInit {
+export class LoginFormComponent implements OnInit, OnDestroy {
 
   
   loginForm:LoginForm={
@@ -20,7 +20,10 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private readonly authService:AuthService,
     private readonly router:Router,
-    private readonly toastr:ToastrService) { }
+    private readonly toastr:ToastrService) { console.log('constr login form ')}
+  ngOnDestroy(): void {
+    console.log('on destroy login form');
+  }
 
   ngOnInit(): void {
   }
