@@ -14,16 +14,15 @@
         space-x-6;
 
 // button nav
-        .btn-item{
+        .link{
             @apply 
-                opacity-70
-                text-white
-                hover:opacity-100;
+                text-blue-200
+                hover:text-white;
         }
 
-        .btn-item-active{
-            @apply opacity-100;
-        }
+        // .btn-item-active{
+        //     @apply opacity-100;
+        // }
 
         // .btn-item-active::after{
         //     content: "";
@@ -66,4 +65,8 @@
         //             }
         //         }
         // }
+}
+
+.activeLink{
+    @apply text-white;
 }

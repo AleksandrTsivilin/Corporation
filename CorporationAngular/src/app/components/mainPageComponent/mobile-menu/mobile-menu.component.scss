@@ -71,22 +71,21 @@
         .list-menu{
             @apply                 
                 w-full
-                flex flex-col
+                flex flex-col 
                 pt-8
                 space-y-4;
 
             .item-btn-container{
-                @apply w-full;
+                @apply w-full text-center;
 
 // nav
-                .item-btn{
+                .link{
                     @apply 
                         relative
                         w-full 
-                        opacity-70
-                        text-white
+                        text-blue-200
                         text-base
-                        hover:opacity-100;
+                        hover:text-white;
                 
                 
                         
@@ -116,6 +115,9 @@
                             }
                         }
                 }
+                .activeLink{
+                    @apply text-white;
+                }
 
                 .item-btn-active{
                     @apply 
@@ -129,5 +131,7 @@
         }
     }
 }
+
+
 
 

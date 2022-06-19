@@ -21,46 +21,105 @@
     <div class="mobile-menu">
         <ul class="list-menu">
             <!-- Home -->
-            <li class="item-btn-container">
-                <button                                      
+            <li class="item-btn-container" (click)="toggleMobileMenu()">
+                <a
+                    routerLink="" 
+                    routerLinkActive="activeLink"
+                    [routerLinkActiveOptions]="{exact:true}"
+                    class="link"
+                >Home</a>
+                <!-- <button                                      
                     [ngClass]="activeNav==='/' ? 'item-btn-active' : 'item-btn'"
                     (click)="changeModePage(pageSizes.LONG)"
                 >
                     <a routerLink="" >Home</a>
-                </button>
+                </button> -->
             </li>
 
             <!-- services -->
             <li                 
                 class="item-btn-container"
                 *ngIf="isLogin"
+                (click)="toggleMobileMenu()"
             >
-                <button 
+                <a
+                     routerLink="roleSelector"
+                     routerLinkActive="activeLink"
+                     class="link"
+                >Services</a>   
+                <!-- <button 
                 [ngClass]="activeNav==='/roleSelector' ? 'item-btn-active' : 'item-btn'"
                     (click)="changeModePage(pageSizes.MIDDLE)"
                 >
                     <a routerLink="roleSelector">Services</a>   
-                </button>
+                </button> -->
             </li>    
             
             <!-- resources -->
-            <li class="item-btn-container">
-                <button class="item-btn">
+            <li 
+                class="item-btn-container"
+                (click)="toggleMobileMenu()"
+            >
+                <a
+                    routerLink="resources"
+                    routerLinkActive="activeLink"
+                    class="link"
+                >
                     Resources
-                </button>
+                </a>
+                <!-- <button class="item-btn">
+                    Resources
+                </button> -->
             </li>  
-
+            <!-- about us -->
+            <li 
+                class="item-btn-container"
+                (click)="toggleMobileMenu()"
+            >
+                <a
+                    routerLink="aboutUs"
+                    routerLinkActive="activeLink"
+                    class="link"
+                >
+                    About us
+                </a>
+                <!-- <button class="item-btn">
+                    Resources
+                </button> -->
+            </li> 
+            <!-- contacts -->
+            <li 
+                class="item-btn-container"
+                (click)="toggleMobileMenu()"
+            >
+                <a
+                    routerLink="contacts"
+                    routerLinkActive="activeLink"
+                    class="link"
+                >
+                    Contacts
+                </a>
+                <!-- <button class="item-btn">
+                    Resources
+                </button> -->
+            </li> 
             <!-- log in -->
             <li 
                 class="item-btn-container"
                 *ngIf="!isLogin else logout"
+                (click)="toggleMobileMenu()"
             >
-                <button 
+                <a
+                    routerLink="login"
+                    routerLinkActive="activeLink"
+                    class="link"
+                >Log In</a>
+                <!-- <button 
                 [ngClass]="activeNav==='/loginForm' ? 'item-btn-active' : 'item-btn'"
                     (click)="changeModePage(pageSizes.MIDDLE)"
                 >
                     <a routerLink="loginForm">log in</a>
-                </button>
+                </button> -->
             </li> 
             
             <!-- full screen -->

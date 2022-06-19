@@ -42,6 +42,11 @@ import { MobileMenuComponent } from './components/mainPageComponent/mobile-menu/
 import { NavMenuComponent } from './components/mainPageComponent/nav-menu/nav-menu.component';
 import { HomePageComponent } from './components/homePage/home-page/home-page.component';
 import { LoginPageComponent } from './components/loginPage/login-page/login-page.component';
+import { ResourcesComponent } from './components/homePage/resourcesPage/resources/resources.component';
+import { AboutUsComponent } from './components/homePage/aboutUs/about-us/about-us.component';
+import { ContactsComponent } from './components/homePage/contactsPage/contacts/contacts.component';
+
+
 
 
 
@@ -94,7 +99,10 @@ import { LoginPageComponent } from './components/loginPage/login-page/login-page
     MobileMenuComponent,
     NavMenuComponent,
     HomePageComponent,
-    LoginPageComponent
+    LoginPageComponent,
+    ResourcesComponent,
+    AboutUsComponent,
+    ContactsComponent
     
     
     

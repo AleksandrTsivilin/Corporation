@@ -10,15 +10,15 @@ import { ModeMainPageService, PageSizes } from 'src/app/services/modeMainPage/mo
 })
 export class MobileMenuComponent implements OnInit {
 
-  @Output() close=new EventEmitter();
+  //@Output() close=new EventEmitter();
 
   //@Input() isOpened:boolean=false;
   //currentPageSize:number=PageSizes.LONG;
   //isFullScreen:boolean=false;
-  pageSizes=PageSizes;
+  //pageSizes=PageSizes;
   isLogin:boolean=false;
   isOpened:boolean=false;
-  activeNav:string="";
+  //activeNav:string="";
 
 
   constructor(
@@ -31,9 +31,11 @@ export class MobileMenuComponent implements OnInit {
       this.isLogin = token!==null;
     })
 
-    this.modePageService.currentRouter$.subscribe(link=>{
-      this.activeNav=link;
-    })
+
+
+    // this.modePageService.currentRouter$.subscribe(link=>{
+    //   this.activeNav=link;
+    // })
     // this.modePageService.pageSize$.subscribe((mode)=>{
     //   //this.isFullScreen = mode===this.pageSizes.SHORT;
     //   //this.currentPageSize=mode;
@@ -68,14 +70,20 @@ export class MobileMenuComponent implements OnInit {
     this.isOpened=!this.isOpened
   }
 
-  changeModePage(mode:number){
-    this.modePageService.pageSize$.next(mode);
-    //this.close.emit();
-    this.isOpened=false;
-  }
+  // selectedOption(){
+  //   console.log('selectedOption')
+  //   this.close.emit();
+  // }
+
+  // changeModePage(mode:number){
+  //   this.modePageService.pageSize$.next(mode);
+  //   //this.close.emit();
+  //   this.isOpened=false;
+  // }
   toLogout(){
     this.authService.token$.next(null);
-    this.changeModePage(this.pageSizes.LONG);
+    this.toggleMobileMenu();
+    //this.changeModePage(this.pageSizes.LONG);
   }
 
   
