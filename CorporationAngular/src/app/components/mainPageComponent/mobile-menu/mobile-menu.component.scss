@@ -13,11 +13,10 @@
 
     .btn-mobile-container{
         @apply 
-            absolute
+            absolute z-50
             top-1 -right-12
             w-10 h-10 
             rounded-full
-            bg-red-300
             opacity-60
             hover:opacity-100
             md:hidden;
@@ -76,7 +75,7 @@
                 space-y-4;
 
             .item-btn-container{
-                @apply w-full text-center;
+                @apply flex text-center;
 
 // nav
                 .link{

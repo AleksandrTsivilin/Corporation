@@ -48,6 +48,7 @@ export class MobileMenuComponent implements OnInit {
   @HostListener('click',['$event'])
   hostClick(event:Event){
     event.stopPropagation();
+    console.log('click mobile menu container')
   }
 
   @HostListener('window:click')
@@ -67,6 +68,7 @@ export class MobileMenuComponent implements OnInit {
   
 
   toggleMobileMenu(){
+    console.log('toggle')
     this.isOpened=!this.isOpened
   }
 

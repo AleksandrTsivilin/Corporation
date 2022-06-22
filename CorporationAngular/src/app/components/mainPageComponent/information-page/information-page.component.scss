@@ -261,7 +261,10 @@
 
                     .text-contacts-container{
                         @apply flex-1 text-2xl;
-                        //background-color: aqua;
+                        
+                        p{
+                            @apply line-clamp-5;
+                        }
                     }
 
                     .btn-contacts-container{

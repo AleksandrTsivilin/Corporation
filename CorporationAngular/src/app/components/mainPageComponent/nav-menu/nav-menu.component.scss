@@ -1,4 +1,27 @@
 
+                
+
+
+.nav-menu-page{
+    // @apply
+    //     fixed top-0 left-0  z-50
+    //     bg-opacity-0                             
+    //     w-full h-12 bg-blue-900
+    //     flex-none flex justify-end 
+    //     pr-5
+    //     border-b-2 border-transparent
+    //     md:h-16 md:bg-none md:border-white;
+
+    @apply 
+        
+        w-full h-12 
+        flex-none flex justify-end 
+        pr-5
+        border-b-2 border-transparent
+        md:h-16 md:bg-none md:border-white;
+
+        //background-image: url('../../assets/images/mainPage.jpg')";
+}           
 .nav-menu-container{
     @apply 
         flex h-full
@@ -16,7 +39,7 @@
 // button nav
         .link{
             @apply 
-                text-blue-200
+                text-blue-200 
                 hover:text-white;
         }
 
@@ -69,4 +92,10 @@
 
 .activeLink{
     @apply text-white;
+}
+
+.fixed-pos{
+    background-image: none;
+    @apply fixed top-0 left-0 z-40 bg-blue-800;
+    
 }

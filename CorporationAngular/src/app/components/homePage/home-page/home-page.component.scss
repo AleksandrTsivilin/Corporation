@@ -8,21 +8,10 @@
 // header container
 
     .header-home-page-container{
-        @apply h-12 flex flex-col 
-        md:h-3/4vh md:pt-16;
+        @apply h-0 flex flex-col 
+        md:h-3/5vh md:pt-2;
 
-// nav header container
-        .header-nav-container{
-            @apply 
-                fixed top-0 left-0                               
-                w-full h-12 bg-blue-900
-                flex-none flex justify-end 
-                pr-5
-                border-b-2 border-transparent
-                md:h-1/12 md:bg-none md:border-white;
-                        
-                
-        }  
+
 // logo container        
         .header-logo-container{
             @apply 
@@ -39,8 +28,6 @@
             @apply                 
                 invisible
                 md:visible flex-1;
-
-            background-color: beige;
         }
 
 // info container
@@ -48,8 +35,6 @@
             @apply                 
                 invisible
                 md:visible flex-none h-1/4;
-
-                background-color: aquamarine
         }
     }
 
@@ -61,33 +46,10 @@
     .information-page-container-with-short-header{
         @apply pt-24;
     }
-
-
-// footer container
-    .footer-container{
-        @apply            
-            h-12 w-full
-            bg-blue-900
-            border-t-2 border-white
-            text-white;
-    }
 }
 
 
-//---------------------------------------------------//
-// template section 1
 
-// nav header container short after scrolling
-.header-nav-container-short{
-    @apply 
-        fixed top-0 left-0 z-40                      
-        w-full h-12
-        flex justify-end 
-        pr-5 mb-32
-        border-b-2 border-transparent
-        bg-blue-900        
-        md:border-white;
-}
 
 
 

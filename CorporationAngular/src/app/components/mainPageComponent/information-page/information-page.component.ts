@@ -17,12 +17,15 @@ export class InformationPageComponent implements OnInit {
   resources:Resource[]=[];
 
   aboutUsText:string="";
+  contactText:string=""
   constructor() { }
 
   ngOnInit(): void {
     this.getRosources();
 
     this.getAboutUsText();
+
+    this.getContactText();
   }
   
 
@@ -63,6 +66,10 @@ export class InformationPageComponent implements OnInit {
 
   getAboutUsText() {
     this.aboutUsText="I am a junior developer. I have been studying tech technology at IT Academy for two years. During this time, I have got basic, but solid knowledge of OOP, SQL Database, C#, .Net, and Angular. It is not too much but I am sure that I am ready to try something bigger. I have a lot of energy and enthusiasm to acquire new information every single day.";
+  }
+
+  getContactText(){
+    this.contactText="Are you interested in finding out more about renewable energy technology could do for your business? Contact us today to talk to an expert."
   }
 
   

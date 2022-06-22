@@ -19,6 +19,7 @@ module.exports = {
         'lg':'1024px'
       },     
       extend: {
+        
         colors:{
           'regal-blue': '#243c5a',
           'cyan-800' : '#155e75',
@@ -31,7 +32,7 @@ module.exports = {
           '120':'480px',
           '1/10':'10%',
           '1/12':'8.33333333333%',
-          '3/4vh':'75vh'
+          '3/5vh':'60vh'
         },
         width:{
           '160':'640px',

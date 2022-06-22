@@ -1,108 +1,116 @@
-<div class="nav-menu-container">
-    <ul class="list-nav">
 
-        <!-- Home -->
-        <li class="link">
-            <a
-                routerLink=""
-                routerLinkActive="activeLink"
-                [routerLinkActiveOptions]="{exact:true}"
-            >Home</a>
-            <!-- <button 
-                class="btn-item"  
-                (click)="changeModePage(pageSizes.LONG)"                
-            >
+<div 
+    class="nav-menu-page "
+    [ngClass]="{'fixed-pos' : isFixed}"
+    style="background-image: url('../../assets/images/mainPage.jpg')"
+>    
+    <div class="nav-menu-container">
+        <ul class="list-nav">
+
+            <!-- Home -->
+            <li class="link">
+                <a
+                    routerLink=""
+                    routerLinkActive="activeLink"
+                    [routerLinkActiveOptions]="{exact:true}"
+                >Home</a>
+                <!-- <button 
+                    class="btn-item"  
+                    (click)="changeModePage(pageSizes.LONG)"                
+                >
+                    
+                </button> -->
+                <!-- <button
+                    class="btn-item"
+                    [ngClass]="{'btn-item-active': activeNav==='/'}"
+                    (click)="changeModePage(pageSizes.LONG)"
+                >
                 
-            </button> -->
-            <!-- <button
-                class="btn-item"
-                [ngClass]="{'btn-item-active': activeNav==='/'}"
-                (click)="changeModePage(pageSizes.LONG)"
-            >
-               
-            </button> -->
-        </li>
+                </button> -->
+            </li>
 
-        <!-- log in -->
-        <li *ngIf="isLogin" class="link">
-            <a
-                routerLink="roleSelector"
-                routerLinkActive="activeLink"
-            >Services</a>
-            <!-- <button
-                class="btn-item"
-                [ngClass]="{'btn-item-active' : activeNav==='/roleSelector'}"
-                (click)="changeModePage(pageSizes.MIDDLE)"
-            >
-                <a routerLink="roleSelector">Services</a>
-            </button> -->
-        </li>        
-        <!-- resources -->
-        <li class="link">
-            <a
-                routerLink="resources"
-                routerLinkActive="activeLink"
-            >
-                Resources
-            </a>
-            <!-- <button class="btn-item">
-                Resources
-            </button> -->
-        </li>
-        <!-- about us -->
-        <li class="link">
-            <a
-                routerLink="aboutUs"
-                routerLinkActive="activeLink"
-            >
-                About us
-            </a>
-            <!-- <button class="btn-item">
-                Resources
-            </button> -->
-        </li>
-        <!-- contacts -->
-        <li class="link">
-            <a
-                routerLink="contacts"
-                routerLinkActive="activeLink"
-            >
-                Contacts
-            </a>
-            <!-- <button class="btn-item">
-                Resources
-            </button> -->
-        </li>
-        <!-- log out -->
-        <li *ngIf="!isLogin else logout" class="link">
-            <a
-                routerLink="login"
-                routerLinkActive="activeLink"
-            >Log In</a>
-            <!-- <button
-                class="btn-item"
-                [ngClass]="{'btn-item-active' : activeNav==='/loginForm'}"
-                (click)="changeModePage(pageSizes.MIDDLE)"
-            >
-                <a routerLink="loginForm">Log In</a>
-            </button> -->
-        </li>
+            <!-- log in -->
+            <li *ngIf="isLogin" class="link">
+                <a
+                    routerLink="roleSelector"
+                    routerLinkActive="activeLink"
+                >Services</a>
+                <!-- <button
+                    class="btn-item"
+                    [ngClass]="{'btn-item-active' : activeNav==='/roleSelector'}"
+                    (click)="changeModePage(pageSizes.MIDDLE)"
+                >
+                    <a routerLink="roleSelector">Services</a>
+                </button> -->
+            </li>        
+            <!-- resources -->
+            <li class="link">
+                <a
+                    routerLink="resources"
+                    routerLinkActive="activeLink"
+                >
+                    Resources
+                </a>
+                <!-- <button class="btn-item">
+                    Resources
+                </button> -->
+            </li>
+            <!-- about us -->
+            <li class="link">
+                <a
+                    routerLink="aboutUs"
+                    routerLinkActive="activeLink"
+                >
+                    About us
+                </a>
+                <!-- <button class="btn-item">
+                    Resources
+                </button> -->
+            </li>
+            <!-- contacts -->
+            <li class="link">
+                <a
+                    routerLink="contacts"
+                    routerLinkActive="activeLink"
+                >
+                    Contacts
+                </a>
+                <!-- <button class="btn-item">
+                    Resources
+                </button> -->
+            </li>
+            <!-- log out -->
+            <li *ngIf="!isLogin else logout" class="link">
+                <a
+                    routerLink="login"
+                    routerLinkActive="activeLink"
+                >Log In</a>
+                <!-- <button
+                    class="btn-item"
+                    [ngClass]="{'btn-item-active' : activeNav==='/loginForm'}"
+                    (click)="changeModePage(pageSizes.MIDDLE)"
+                >
+                    <a routerLink="loginForm">Log In</a>
+                </button> -->
+            </li>
 
-        <!-- full screen button -->
+            <!-- full screen button -->
 
-        <!-- <li>
-            <button class="item-btn" (click)="onFullScreen()">
-                full screen
-                <span class="item-btn-light-outside">
-                    <span
-                        class="item-btn-light-inside"
-                        [ngClass]="isFullScreen ? 'item-btn-light-inside-on' : 'item-btn-light-inside-off'"
-                    ></span>
-                </span>
-            </button>
-        </li> -->
-    </ul>
+            <!-- <li>
+                <button class="item-btn" (click)="onFullScreen()">
+                    full screen
+                    <span class="item-btn-light-outside">
+                        <span
+                            class="item-btn-light-inside"
+                            [ngClass]="isFullScreen ? 'item-btn-light-inside-on' : 'item-btn-light-inside-off'"
+                        ></span>
+                    </span>
+                </button>
+            </li> -->
+        </ul>
+    </div>
 </div>
+
 
 <ng-template #logout>
     <li>

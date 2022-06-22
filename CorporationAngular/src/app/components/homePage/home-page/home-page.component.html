@@ -5,15 +5,9 @@
     <!-- header container -->
     <div
         class="header-home-page-container" 
-        *ngIf="!isShortHeader else toDoShortHeader"
+        *ngIf="!isShortHeader "
         style="background-image: url('../../assets/images/mainPage.jpg')"
-    >
-        <!-- nav header container -->
-        <div
-            class="header-nav-container"            
-        >
-            <app-nav-menu></app-nav-menu>
-        </div>
+    >      
 
         <!-- logo container -->
         <div class="header-logo-container">
@@ -38,20 +32,8 @@
         class="information-page-container"
         [ngClass]="{'information-page-container-with-short-header' : isShortHeader}">
         <app-information-page></app-information-page>
-    </div>
-
-    <!-- footer container-->
-    <div class="footer-container">
-       there will be footer
-    </div>
+    </div>    
 </div>
 
-<!-- template section 1 -->
-<ng-template #toDoShortHeader>
-    <div
-        class="header-nav-container-short"
-    >
-        <app-nav-menu></app-nav-menu>
-    </div>
-</ng-template>
+
 

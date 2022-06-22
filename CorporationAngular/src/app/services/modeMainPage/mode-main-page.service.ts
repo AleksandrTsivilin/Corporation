@@ -22,9 +22,9 @@ export class ModeMainPageService {
 
   
 
-  constructor(private readonly router:Router) {
-    this.setDefaultSetting(this.router);
-    
+  constructor() {
+    //this.setDefaultSetting(this.router);
+    console.log("constr mode page service")
   }
 
   private setDefaultSetting(router:any){
