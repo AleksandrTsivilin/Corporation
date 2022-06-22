@@ -3,6 +3,7 @@
         w-full min-h-screen flex flex-col
         overflow-x-hidden;
 
+// mobile menu container
         .mobile-menu-container{
             @apply 
                 w-48 h-screen
@@ -10,26 +11,25 @@
                 transform -translate-x-48
                 z-50;            
         }
+
+// nav menu container
         .nav-menu-container{
             @apply flex-none;
         }
-        .router-container{
-            @apply flex-1;
-            //@apply relative;
 
-            // .anchor{
-            //     position: absolute;
-            //     top: 500px;
-            //     left: 0;
-            //     width: 100%;
-            //     height: 25px;
-            //     background-color: rgb(224, 27, 27);
-            // }
+// router container
+        .router-container{
+            @apply flex-1 flex w-full h-full bg-black;
+        }
+
+        .router{
+            @apply w-full;
         }
         .router-container-shift{
             @apply transform translate-x-48 duration-300;
         }
 
+// footer container
         .footer-container{
             @apply  h-8 w-full flex-none ;
         }

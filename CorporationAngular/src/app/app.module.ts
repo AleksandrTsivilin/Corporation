@@ -10,7 +10,6 @@ import { AppComponent } from './components/appComponent/app.component';
 import { MainPageComponent } from './components/mainPageComponent/main-page/main-page.component';
 import { RoleSelectorComponent } from './components/roleSelectorComponent/role-selector/role-selector.component';
 import { InformationPageComponent } from './components/mainPageComponent/information-page/information-page.component';
-import { LoginFormComponent } from './components/loginPageComponent/login-form/login-form.component';
 import { UsersComponent } from './components/userManagerPage/users/users.component';
 import { UserItemComponent } from './components/userManagerPage/user-item/user-item.component';
 import { EditUserComponent } from './components/userManagerPage/edit-user/edit-user.component';
@@ -69,7 +68,6 @@ import { ContactsComponent } from './components/homePage/contactsPage/contacts/c
     MainPageComponent,
     RoleSelectorComponent,
     InformationPageComponent,
-    LoginFormComponent,
     UsersComponent,
     UserItemComponent,
     EditUserComponent,

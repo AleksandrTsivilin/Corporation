@@ -1,4 +1,105 @@
 
 
 
-<p >login page</p>
+<div 
+    class="login-form-container"
+    [ngClass]="{'login-form-container-running' : isRunning}"
+>    
+    <!-- login form -->
+    <div class="login-form">
+        <span 
+            class="sign-running"
+            *ngIf="isRunning"
+        ></span>
+        <!-- image form -->
+        <div class="login-form-image-container">
+            <img class="login-form-image"  src="assets/images/login_form_logo.png">
+        </div>
+
+        <!-- title form -->
+        <div class="title-form">
+            <span>Sign in to your account</span>
+        </div>
+
+        <!-- form-container -->
+        <div class="form-container">
+            <form
+                class="form"
+                (ngSubmit)="onSubmit(); logForm.resetForm();"               
+                #logForm="ngForm"           
+            >
+
+                <!-- input container -->
+                <div class="input-container">
+
+                    <!-- input username -->
+                    <div>
+                        <span
+                            class="warning-message"
+                            *ngIf="login.touched && login.invalid else addedSpace"
+                        >
+                            ⚠️username is incorrect
+                        </span>
+                        <input
+                            class="input-field"
+                            [(ngModel)]="loginForm.username"
+                            name="username"
+                            type="text"
+                            placeholder="Username"
+                            required
+                            #login="ngModel"
+                            [disabled]="isRunning"
+                        >
+                    </div>
+
+                    <!-- input password -->
+                    <div>
+                        <span
+                            class="warning-message"
+                            *ngIf="password.touched && password.invalid else addedSpace"
+                        >
+                            ⚠️password is incorrect
+                        </span>
+                        <input
+                            class="input-field"
+                            [(ngModel)]="loginForm.password"
+                            #password="ngModel"
+                            name="password"
+                            type="password"
+                            autocomplete="current-password"
+                            required
+                            placeholder="Password"
+                            [disabled]="isRunning"
+                        >
+                    </div>
+                </div>
+
+                <!-- submit button form -->
+                <div>
+                    <button
+                        class="btn-submit"
+                        [ngClass]="{'btn-submit-active': !logForm.invalid}"
+                        type="submit"
+                        [disabled]="logForm.invalid"
+                    >
+                            <span
+                                class="btn-submit-locker"
+                                *ngIf="logForm.invalid"
+                            >
+                                🔓
+                            </span>
+
+                        <span>Login</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+<ng-template #addedSpace>
+<br>
+</ng-template>
