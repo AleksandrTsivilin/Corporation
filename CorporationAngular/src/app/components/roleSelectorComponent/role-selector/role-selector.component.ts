@@ -32,11 +32,11 @@ export class RoleSelectorComponent implements OnInit, OnDestroy {
     factory:0,
     region:0
   }
-  avaiables : AvaiableUser={
-    role: {id:0,title:""},
-    access: {id:0,title:""},
-    permissions:[]
-  }
+  // avaiables : AvaiableUser={
+  //   role: {id:0,title:""},
+  //   access: {id:0,title:""},
+  //   permissions:[]
+  // }
   pageState:PageState={
     path:"",
     isActive:true

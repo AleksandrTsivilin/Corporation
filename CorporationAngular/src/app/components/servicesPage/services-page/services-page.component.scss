@@ -1,0 +1,25 @@
+.services-page-container{
+   
+
+   .service-manager-container-fixed{
+        @apply 
+            w-full fixed top-12 left-0 z-40
+            md:top-16;
+   }
+
+    .title-page-container{
+        @apply h-12  flex  bg-white;
+
+        .title-page{
+            @apply 
+                flex m-auto 
+                text-2xl font-bold text-blue-800;
+        }
+    }   
+
+    .tabs-container{
+        @apply text-white bg-black h-12;
+    } 
+
+    
+}

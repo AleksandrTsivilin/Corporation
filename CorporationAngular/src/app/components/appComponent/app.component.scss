@@ -19,7 +19,7 @@
 
 // router container
         .router-container{
-            @apply flex-1 flex w-full h-full bg-black;
+            @apply flex-1 flex w-full h-full;
         }
 
         .router{
@@ -31,7 +31,7 @@
 
 // footer container
         .footer-container{
-            @apply  h-8 w-full flex-none ;
+            @apply  h-8 w-full flex-none; 
         }
 }
 

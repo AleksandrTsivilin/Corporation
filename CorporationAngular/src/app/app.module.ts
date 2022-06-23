@@ -44,6 +44,8 @@ import { LoginPageComponent } from './components/loginPage/login-page/login-page
 import { ResourcesComponent } from './components/homePage/resourcesPage/resources/resources.component';
 import { AboutUsComponent } from './components/homePage/aboutUs/about-us/about-us.component';
 import { ContactsComponent } from './components/homePage/contactsPage/contacts/contacts.component';
+import { ServicesPageComponent } from './components/servicesPage/services-page/services-page.component';
+import { ServiceListComponent } from './components/servicesPage/service-list/service-list.component';
 
 
 
@@ -100,7 +102,9 @@ import { ContactsComponent } from './components/homePage/contactsPage/contacts/c
     LoginPageComponent,
     ResourcesComponent,
     AboutUsComponent,
-    ContactsComponent
+    ContactsComponent,
+    ServicesPageComponent,
+    ServiceListComponent
     
     
     

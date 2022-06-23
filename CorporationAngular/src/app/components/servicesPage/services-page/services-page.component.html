@@ -1,0 +1,27 @@
+
+<div class="services-page-container">
+
+    <!-- service manager container -->
+    <div [ngClass]="{'service-manager-container-fixed' : isScrolling}">
+        <div 
+            class="title-page-container"
+            [ngClass]="{'fixed-title': isScrolling}"
+        >
+            <div class="title-page">Services</div>
+        </div>
+        <div 
+            class="tabs-container"
+            [ngClass]="{'fixed-tab': isScrolling}"
+        >
+            tabs component
+        </div>
+    </div>
+
+    <!-- service cards container -->
+   
+
+    <!-- service router container -->
+    <div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

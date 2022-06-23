@@ -1,0 +1,377 @@
+<div 
+    class="service-cards-container"    
+>
+
+    <!-- card container personal data-->
+    <div class="card-container">                    
+        <div class="card">
+
+            <!-- image card container-->
+            <div class="image-card-container">
+
+                <!-- back side container -->
+                <div 
+                    class="back-side-image-container "                            
+                >
+                    <div 
+                        class="back-side-image"
+                        [ngClass]="selectedCard===cards.PERSONAL_DATA ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                    >
+                        <div class="back-side-image-text">                                
+                            Personal data - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.</div>
+                        </div>
+                </div>
+                <!-- button tip  description -->
+                <button 
+                    class="btn-info-card"
+                    (click)="toggleCard(cards.PERSONAL_DATA)"                            
+                >
+
+                    <!-- text description -->
+                    <span class="tooltip-text-btn-info">description</span>
+
+                    <!-- icon button description -->
+                    <div 
+                        class="icon-btn-info-card-container"
+                        [ngClass]="selectedCard===cards.PERSONAL_DATA ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                    >
+                        <span 
+                            class="icon-btn-info-card"                                
+                        ></span>
+                    </div>
+                    
+                    <!-- [ngClass]="selectedCard===cards.PERSONAL_DATA ? 'icon-btn-info-card-open' : 'icon-btn-info-card-close'" -->
+                </button>
+
+                <!-- image card -->
+                <img 
+                    class="image-card"
+                    src="assets/images/personal_data1.jpg"
+                >
+            </div>
+
+            <!-- title and button link card -->
+            <div class="action-card-container">
+                <div class="title-card">Personal data user</div>
+                <div class="btn-action-card">
+                    <button 
+                        class="btn-action" 
+                        (click)="selectService()"                               
+                    >
+                        <a routerLink="personal_data" class="link">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>                      
+    </div> 
+    
+    <!-- card container users -->
+    <div class="card-container" *ngIf="permissions.canReadUsers">
+        <div class="card">
+
+            <!-- image card container-->
+            <div class="image-card-container">
+
+                <!-- back side container -->
+                <div 
+                    class="back-side-image-container "                            
+                >
+                    <div 
+                        class="back-side-image"
+                        [ngClass]="selectedCard===cards.USERS ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                    >
+                        <div class="back-side-image-text">                                
+                            Users - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </div>
+                <!-- button tip  description -->
+                <button 
+                    class="btn-info-card"
+                    (click)="toggleCard(cards.USERS)"                            
+                >
+
+                    <!-- text description -->
+                    <span class="tooltip-text-btn-info">description</span>
+
+                    <!-- icon button description -->
+                    <div 
+                        class="icon-btn-info-card-container"
+                        [ngClass]="selectedCard===cards.USERS ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                    >
+                        <span 
+                            class="icon-btn-info-card"                                
+                        ></span>
+                    </div>
+                    
+                </button>
+
+                <!-- image card -->
+                <img 
+                    class="image-card"
+                    src="assets/images/users2.png"
+                >
+            </div>
+
+            <!-- title and button link card -->
+            <div class="action-card-container">
+                <div class="title-card">Users</div>
+                <div class="btn-action-card">
+                    <button 
+                        class="btn-action"
+                    >
+                        <a routerLink="users" class="link">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- card container add user -->
+    <div class="card-container" *ngIf="permissions.canCreateUser">
+        <div class="card">
+
+            <!-- image card container-->
+            <div class="image-card-container">
+
+                <!-- back side container -->
+                <div 
+                    class="back-side-image-container "                            
+                >
+                    <div 
+                        class="back-side-image"
+                        [ngClass]="selectedCard===cards.ADD_USER ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                    >
+                        <div class="back-side-image-text">                                
+                            Add user - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </div>
+                <!-- button tip  description -->
+                <button 
+                    class="btn-info-card"
+                    (click)="toggleCard(cards.ADD_USER)"                            
+                >
+
+                    <!-- text description -->
+                    <span class="tooltip-text-btn-info">description</span>
+
+                    <!-- icon button description -->
+                    <div 
+                        class="icon-btn-info-card-container"
+                        [ngClass]="selectedCard===cards.ADD_USER ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                    >
+                        <span 
+                            class="icon-btn-info-card"                                
+                        ></span>
+                    </div>                       
+                    
+                </button>
+
+                <!-- image card -->
+                <img 
+                    class="image-card"
+                    src="assets/images/addUser1.jpg"
+                >
+            </div>
+
+            <!-- title and button link card -->
+            <div class="action-card-container">
+                <div class="title-card">Add User</div>
+                <div class="btn-action-card">
+                    <button 
+                        class="btn-action"
+                    >
+                        <a routerLink="addUser" class="link">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- card container products -->
+    <div class="card-container" *ngIf="permissions.canReadProducts">
+        <div class="card">
+
+            <!-- image card container-->
+            <div class="image-card-container">
+
+                <!-- back side container -->
+                <div 
+                    class="back-side-image-container "                            
+                >
+                    <div 
+                        class="back-side-image"
+                        [ngClass]="selectedCard===cards.PRODUCTS ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                    >
+                        <div class="back-side-image-text">                                
+                            Products - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </div>
+                <!-- button tip  description -->
+                <button 
+                    class="btn-info-card"
+                    (click)="toggleCard(cards.PRODUCTS)"                            
+                >
+
+                    <!-- text description -->
+                    <span class="tooltip-text-btn-info">description</span>
+
+                    <!-- icon button description -->
+                    <div 
+                        class="icon-btn-info-card-container"
+                        [ngClass]="selectedCard===cards.PRODUCTS ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                    >
+                        <span 
+                            class="icon-btn-info-card"                                
+                        ></span>
+                    </div>                       
+                    
+                </button>
+
+                <!-- image card -->
+                <img 
+                    class="image-card"
+                    src="assets/images/products.jpg"
+                >
+            </div>
+
+            <!-- title and button link card -->
+            <div class="action-card-container">
+                <div class="title-card">Products</div>
+                <div class="btn-action-card">
+                    <button 
+                        class="btn-action"
+                    >
+                        <a routerLink="products" class="link">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- card container add product -->
+    <div class="card-container" *ngIf="permissions.canCreateProduct">
+        <div class="card">
+
+            <!-- image card container-->
+            <div class="image-card-container">
+
+                <!-- back side container -->
+                <div 
+                    class="back-side-image-container "                            
+                >
+                    <div 
+                        class="back-side-image"
+                        [ngClass]="selectedCard===cards.ADD_PRODUCT ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                    >
+                        <div class="back-side-image-text">                                
+                            Add product - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </div>
+                <!-- button tip  description -->
+                <button 
+                    class="btn-info-card"
+                    (click)="toggleCard(cards.ADD_PRODUCT)"                            
+                >
+
+                    <!-- text description -->
+                    <span class="tooltip-text-btn-info">description</span>
+
+                    <!-- icon button description -->
+                    <div 
+                        class="icon-btn-info-card-container"
+                        [ngClass]="selectedCard===cards.ADD_PRODUCT ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                    >
+                        <span 
+                            class="icon-btn-info-card"                                
+                        ></span>
+                    </div>                       
+                    
+                </button>
+
+                <!-- image card -->
+                <img 
+                    class="image-card"
+                    src="assets/images/add_product2.jpg"
+                >
+            </div>
+
+            <!-- title and button link card -->
+            <div class="action-card-container">
+                <div class="title-card">Add product</div>
+                <div class="btn-action-card">
+                    <button 
+                        class="btn-action"
+                    >
+                        <a routerLink="addProduct" class="link">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div> 
+
+    <!-- card container add movement -->
+    <div class="card-container" *ngIf="permissions.canCreateMovementProducts">
+        <div class="card">
+
+            <!-- image card container-->
+            <div class="image-card-container">
+
+                <!-- back side container -->
+                <div 
+                    class="back-side-image-container "                            
+                >
+                    <div 
+                        class="back-side-image"
+                        [ngClass]="selectedCard===cards.ADD_MOVEMENT_PRODUCTS ? 'back-side-image-visible' : 'back-side-image-invisible'"
+                    >
+                        <div class="back-side-image-text">                                
+                            Add movement products - description Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                        </div>
+                    </div>
+                </div>
+                <!-- button tip  description -->
+                <button 
+                    class="btn-info-card"
+                    (click)="toggleCard(cards.ADD_MOVEMENT_PRODUCTS)"                            
+                >
+
+                    <!-- text description -->
+                    <span class="tooltip-text-btn-info">description</span>
+
+                    <!-- icon button description -->
+                    <div 
+                        class="icon-btn-info-card-container"
+                        [ngClass]="selectedCard===cards.ADD_MOVEMENT_PRODUCTS ? 'btn-info-card-open' : 'icon-btn-info-card-close'"
+                    >
+                        <span 
+                            class="icon-btn-info-card"                                
+                        ></span>
+                    </div>                       
+                    
+                </button>
+
+                <!-- image card -->
+                <img 
+                    class="image-card"
+                    src="assets/images/add_movements1.jpg"
+                >
+            </div>
+
+            <!-- title and button link card -->
+            <div class="action-card-container">
+                <div class="title-card">Add movement products</div>
+                <div class="btn-action-card">
+                    <button 
+                        class="btn-action"
+                    >
+                        <a routerLink="addMovementProduct" class="link">Go</a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>       
+</div>

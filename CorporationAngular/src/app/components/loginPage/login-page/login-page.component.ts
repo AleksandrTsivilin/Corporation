@@ -33,7 +33,7 @@ export class LoginPageComponent implements OnInit {
       .subscribe(result=>{       
         this.toastr.success("authorization is success");
         this.isRunning=false;
-        this.router.navigate(['roleSelector']);
+        this.router.navigate(['services']);
       },(result)=>{
         this.toastr.error("user is not found")
         this.isRunning=false;
