@@ -1,20 +1,33 @@
+.filter-by-title-container{
+    @apply relative w-full h-full;
 
+    .input-filter{
+        @apply 
+            w-full h-full 
+            rounded-md 
+            text-gray-500 font-thin;
+    }
 
-.non-active-clear-btn{
-    visibility: hidden;
+    .btn-reset{
+        @apply 
+            absolute  right-1 top-1/2 -mt-3
+            w-6 h-6 
+            rounded-full
+            hover:bg-gray-200;
+    }
 }
 
+.non-active-clear-btn{
+    @apply invisible;
+}
 
+// animatin button reset 
 .animation-btn::before,
 .animation-btn::after{
-    position: absolute;
-    height: 2px;
-    width: 10px;
-    top:50%; 
-    right: 50%;
-    margin-right: -5px;
-    margin-top: -1px;
-    @apply bg-red-500;
+    @apply
+        absolute top-1/2 right-1/2 -mt-0.25 -mr-1.5
+        h-0.5 w-3
+        bg-red-500;    
 }
 
 .animation-btn::before,
@@ -23,13 +36,26 @@
 }
 
 .animation-btn::after{
-    transform: rotate(45deg);
-    transform-origin: center;
+    @apply transform rotate-45 origin-center;
 }
 
 .animation-btn::before{
-    transform: rotate(-45deg);
-    transform-origin: center;
+    @apply transform -rotate-45 origin-center;
+}
+
+// loading animation
+.animation-loading-container{
+    @apply
+        absolute right-1 top-1/2 -mt-1.5
+        w-6 h-6;
+
+    .animation-loading{
+        @apply 
+            flex w-3 h-3
+            my-auto
+            rounded-full
+            border-b-2 border-green-500 animate-spin;
+    }
 }
 
 
