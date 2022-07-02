@@ -1,63 +1,61 @@
 .modal-page-container{
-    @apply h-screen;
-    @apply w-full;
-    @apply flex;
-    @apply absolute;  
-    @apply inset-0;
-    @apply bg-gray-300 bg-opacity-25;   
+    @apply 
+        h-screen w-full
+        flex
+        absolute 
+        top-0 left-0
+        bg-gray-300 bg-opacity-25 z-50;   
     
     
 
     .modal-container{  
-        @apply h-40;
-        @apply w-96;
-        @apply flex flex-col;
-        @apply space-y-2;
-        @apply rounded-md;
-        @apply border-2 border-blue-900;
-        @apply bg-white;
+        @apply 
+        h-40 w-96
+        flex flex-col
+        space-y-2
+        rounded-md
+        border-2 border-blue-900
+        bg-white;
 
         .title{
-            @apply flex-none;
-            @apply text-center;
-            @apply text-white;
-            @apply font-bold;
-            @apply bg-blue-900;
-            @apply py-1;
+            @apply 
+                flex-none
+                text-center text-white font-bold
+                bg-blue-900
+                py-1;
         }
 
         .message-container{
-            @apply flex-1 flex justify-center;
-            @apply break-words;
-            @apply px-2;
+            @apply 
+                flex-1 flex justify-center
+                break-words
+                px-2;
 
             .message{
-                @apply flex;
-                @apply my-auto;
+                @apply flex my-auto;
                 text-indent: 1em;
             }
         }
 
         .btn-container{
-            @apply flex-none flex justify-around;
-            @apply space-x-2;
-            @apply px-2 pb-2;
+            @apply 
+                flex-none flex justify-around
+                space-x-2
+                px-2 pb-2;
 
             .btn{
-                @apply w-24;
-                @apply px-2;
-                @apply py-1;
-                @apply border border-transparent;
-                @apply text-sm font-medium text-white;
-                @apply rounded-md;
-                @apply bg-blue-500;
+                @apply 
+                    w-24
+                    px-2 py-1
+                    border border-transparent
+                    text-sm font-medium text-white
+                    rounded-md
+                    bg-blue-500
+                    hover:bg-white hover:border-blue-600 hover:text-blue-500;
             }
 
 
-            //focus:ring-2 focus:ring-offset-2 focus:ring-blue-900
-            .btn:hover{
-                @apply ring-2 ring-offset-2 ring-blue-500;
-            }
+            
         }
     }
 }
