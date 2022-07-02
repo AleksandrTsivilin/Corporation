@@ -13,20 +13,7 @@
                     routerLink=""
                     routerLinkActive="activeLink"
                     [routerLinkActiveOptions]="{exact:true}"
-                >Home</a>
-                <!-- <button 
-                    class="btn-item"  
-                    (click)="changeModePage(pageSizes.LONG)"                
-                >
-                    
-                </button> -->
-                <!-- <button
-                    class="btn-item"
-                    [ngClass]="{'btn-item-active': activeNav==='/'}"
-                    (click)="changeModePage(pageSizes.LONG)"
-                >
-                
-                </button> -->
+                >Home</a>                
             </li>
 
             <!-- log in -->
@@ -34,15 +21,9 @@
                 <a
                     routerLink="services"
                     routerLinkActive="activeLink"
-                >Services</a>
-                <!-- <button
-                    class="btn-item"
-                    [ngClass]="{'btn-item-active' : activeNav==='/roleSelector'}"
-                    (click)="changeModePage(pageSizes.MIDDLE)"
-                >
-                    <a routerLink="roleSelector">Services</a>
-                </button> -->
-            </li>        
+                >Services</a>                
+            </li> 
+
             <!-- resources -->
             <li class="link">
                 <a
@@ -50,11 +31,9 @@
                     routerLinkActive="activeLink"
                 >
                     Resources
-                </a>
-                <!-- <button class="btn-item">
-                    Resources
-                </button> -->
+                </a>                
             </li>
+
             <!-- about us -->
             <li class="link">
                 <a
@@ -62,11 +41,9 @@
                     routerLinkActive="activeLink"
                 >
                     About us
-                </a>
-                <!-- <button class="btn-item">
-                    Resources
-                </button> -->
+                </a>                
             </li>
+
             <!-- contacts -->
             <li class="link">
                 <a
@@ -74,39 +51,16 @@
                     routerLinkActive="activeLink"
                 >
                     Contacts
-                </a>
-                <!-- <button class="btn-item">
-                    Resources
-                </button> -->
+                </a>                
             </li>
+            
             <!-- log out -->
             <li *ngIf="!isLogin else logout" class="link">
                 <a
                     routerLink="login"
                     routerLinkActive="activeLink"
-                >Log In</a>
-                <!-- <button
-                    class="btn-item"
-                    [ngClass]="{'btn-item-active' : activeNav==='/loginForm'}"
-                    (click)="changeModePage(pageSizes.MIDDLE)"
-                >
-                    <a routerLink="loginForm">Log In</a>
-                </button> -->
+                >Log In</a>                
             </li>
-
-            <!-- full screen button -->
-
-            <!-- <li>
-                <button class="item-btn" (click)="onFullScreen()">
-                    full screen
-                    <span class="item-btn-light-outside">
-                        <span
-                            class="item-btn-light-inside"
-                            [ngClass]="isFullScreen ? 'item-btn-light-inside-on' : 'item-btn-light-inside-off'"
-                        ></span>
-                    </span>
-                </button>
-            </li> -->
         </ul>
     </div>
 </div>
