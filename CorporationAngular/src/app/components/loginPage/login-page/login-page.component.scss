@@ -18,7 +18,7 @@
             flex-col
             space-y-8           
             rounded-md border-2 border-white
-            py-2 px-4 
+            py-12 px-12 
             bg-blue-300
             overflow-hidden;
 
@@ -45,10 +45,7 @@
             }
         }
 
-        .title-form{
-            @apply text-3xl font-extrabold text-blue-800 text-center;
-        }
-
+        
         .form-container{
 
             .form{
@@ -68,29 +65,6 @@
                             text-gray-900 text-sm;                            
                     }
                 }
-
-                .btn-submit-active{
-                    @apply  
-                        hover:bg-blue-900
-                        focus:ring-2 ring-offset-2
-                }
-                .btn-submit{
-                    @apply 
-                        group relative w-full flex justify-center
-                        py-2 px-4
-                        font-bold text-white
-                        rounded-md
-                        bg-blue-500;
-
-
-                        .btn-submit-locker{
-                            @apply
-                                absolute right-0 inset-y-0 
-                                flex items-center
-                                pr-3;
-                        }
-
-                }
             }            
         }
     }
@@ -102,12 +76,6 @@
     50% {transform: translateX(300%)}
     75% {transform: translateX(450%);}
     100% {transform: translateX(600%);}
-}
-
-.warning-message{
-    @apply text-red-600;
-    @apply pl-2;
-    
 }
 
 .template-loading-container{

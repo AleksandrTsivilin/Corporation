@@ -12,11 +12,11 @@
         ></span>
         <!-- image form -->
         <div class="login-form-image-container">
-            <img class="login-form-image"  src="assets/images/login_form_logo.png">
+            <img class="login-form-image"  src="assets/images/logo_picture/angular_logo.png">
         </div>
 
         <!-- title form -->
-        <div class="title-form">
+        <div class="header-form">
             <span>Sign in to your account</span>
         </div>
 
@@ -34,7 +34,7 @@
                     <!-- input username -->
                     <div>
                         <span
-                            class="warning-message"
+                            class="warning-text"
                             *ngIf="login.touched && login.invalid else addedSpace"
                         >
                             ⚠️username is incorrect
@@ -54,7 +54,7 @@
                     <!-- input password -->
                     <div>
                         <span
-                            class="warning-message"
+                            class="warning-text"
                             *ngIf="password.touched && password.invalid else addedSpace"
                         >
                             ⚠️password is incorrect
@@ -82,13 +82,13 @@
                         [disabled]="logForm.invalid"
                     >
                             <span
-                                class="btn-submit-locker"
+                                class="lock"
                                 *ngIf="logForm.invalid"
                             >
                                 🔓
                             </span>
 
-                        <span>Login</span>
+                        <span>login</span>
                     </button>
                 </div>
             </form>
