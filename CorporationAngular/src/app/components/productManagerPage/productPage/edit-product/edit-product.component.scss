@@ -1,14 +1,135 @@
-.warning-message{
-    @apply text-red-600;
-    @apply pl-2;
-    
-}
+
 
 .edit-product-page{
-    height: 100vh;
+
+    @apply 
+        border-t-2 border-b-2 border-white         
+        bg-blue-600
+        sm:py-36;   
+
+// button close container
+    .btn-close-container{
+        @apply 
+            z-50
+            fixed top-service-title mt-1 right-2
+            flex justify-end 
+            pr-1;
+
+        .btn-close{
+            @apply 
+                relative 
+                rounded-full 
+                h-12 w-12 
+                border-2 border-transparent 
+                bg-blue-600
+                sm:bg-blue-300
+                hover:bg-white;
+
+                // btn animate
+                .btn-animate::before,
+                .btn-animate::after{
+                    @apply
+                        absolute top-1/2 right-1/2  -mt-0.25 -mr-2.5
+                        bg-white w-5 h-0.5
+                        sm:bg-gray-500;
+                }
+
+                .btn-animate::before,
+                .btn-animate::after{
+                    content: "";
+                }
+
+                .btn-animate::before{
+                    @apply transform rotate-45 origin-center;
+                }
+
+                .btn-animate::after{
+                    @apply transform -rotate-45 origin-center;
+                }                
+        }
+
+        .btn-close:hover{
+            .btn-animate::before,
+            .btn-animate::after{
+                @apply bg-red-600;
+            }
+        }
+    }
+
+    .edit-form-container{
+        @apply
+            m-auto w-full 
+            pr-12 space-y-12
+            border-2 border-white
+            rounded-md
+            bg-blue-300
+            sm:w-160 sm:pr-0;
+
+// image form container
+        .image-form-container{
+            @apply 
+                w-full;
+
+            .image-form{
+                @apply 
+                    flex w-full pt-12;
+
+                .image{
+                    @apply m-auto w-44;
+                }
+            }
+        }
+
+// edit product container
+        .edit-product-container{
+            @apply 
+                flex items-center justify-center 
+                pb-12 px-4 
+                sm:px-6 
+                lg:px-8;
+// form
+            .form{
+                @apply 
+                    max-w-md w-full  space-y-6;
+
+
+                .title-option{
+                    @apply 
+                        pl-2 mt-2 
+                        text-blue-900 font-bold ;
+                }
+
+                .select-container{
+                    @apply appearance-none rounded-md w-full text-sm;
+                
+                    .option-container{
+                        @apply  text-gray-900 text-sm;
+                        //@apply appearance-none text-xs font-ligth;
+                    }
+                }
+                
+                .input-form{
+                    @apply 
+                        appearance-none 
+                        rounded-md 
+                        relative block 
+                        w-full 
+                        px-3 py-2 my-2 
+                        border border-gray-900 
+                        placeholder-gray-500 
+                        text-gray-900 
+                        focus:border-indigo-500
+                        text-sm;
+                }
+            }            
+            
+           
+        }
+    }
 }
-.edit-product-container{
-    height: 40%;
-    overflow-y: scroll;    
-}
+
+
+
+
+
 

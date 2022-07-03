@@ -1,166 +1,182 @@
 
+
+
 <div class="edit-product-page">
     
-    <div class="flex justify-end pr-1">
+    <!-- close button -->
+    <div class="btn-close-container">
         <button 
-            class="border-2 border-red-600 bg-red-300 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-600"                    
+            class="btn-close"                    
             (click)="closeEditPage()"
         >
-            ❌
+            <span class="btn-animate"></span>
         </button>
     </div>
-    <div 
-        class="text-center mx-2 py-4 mb-2 font-bold text-2xl text-blue-600 border-b-2 border-blue-300"    
-    >
-        edit product 
-    </div>
 
-    <div class="pt-8">
-        <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-md w-full space-y-8">
-                <div>
-                    <img 
-                        class="mx-auto h-24 w-auto" src="assets/images/logo_tailwind.png"
-                    >                
-                </div>  
+
+    <div class="edit-form-container">    
+        <!-- image container -->
+        <div class="image-form-container">
+            <div class="image-form">
+                <img 
+                    class="image" 
+                    src="assets/images/logo_picture/tailwind_logo.png"
+                > 
             </div>
         </div>
-    </div>
-    <div class="edit-product-container">
-        <div class="flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-md w-full space-y-8">
-                <form
-                    class="mt-8 space-y-6" 
-                    (ngSubmit)="onSubmit(); productForm.resetForm();"
-                    #productForm="ngForm" 
-                >
-                    <div class="rounded-md shadow-sm -space-y-px">                        
-                        <div>
-                            <div class="pl-2 mt-2 text-blue-900 font-base">
-                                <span 
-                                    class="warning-message"
-                                    *ngIf="titleProduct.touched && titleProduct.invalid else addedLabelTitle"
-                                >
-                                    ⚠️title is incorrect
-                                </span>
-                            </div> 
-                            <div>
-                                <input 
-                                    class="appearance-none rounded-none relative block w-full px-3 py-2 my-2 border-1 border-gray-900 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
-                                    [(ngModel)]="newProductForm.title"
-                                    name="title" 
-                                    type="text"
-                                    required                             
-                                    #titleProduct="ngModel"
-                                >
-                            </div>
-                        </div>
-                        <div flex-col>
-                            <div class="pl-2 mt-2 text-blue-900 font-base">
-                                <label>manufacturer</label>
-                            </div>               
-                            <div>
-                                <select 
-                                    class="appearance-none rounded-md w-full mt-1"
-                                    [(ngModel)]=newProductForm.manufacturerId
-                                    name="manufacturers"
-                                >
-                                    <option
-                                        class="appearance-none text-xs font-ligth"
-                                        *ngFor="let manufacturer of manufacturers" 
-                                        [value]="manufacturer.id"
-                                        name="manufacturer"                   
-                                    >
-                                        {{manufacturer.title}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div flex-col>
-                            <div class="pl-2 mt-2 text-blue-900 font-base">
-                                <label>category</label>
-                            </div>               
-                            <div>
-                                <select 
-                                    class="appearance-none rounded-md w-full mt-1"
-                                    [(ngModel)]=newProductForm.categoryId
-                                    name="categories"
-                                >
-                                    <option
-                                        class="appearance-none font-base"
-                                        *ngFor="let category of categories" 
-                                        [value]="category.id"
-                                        name="category"                   
-                                    >
-                                        {{category.title}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div flex-col>
-                            <div class="pl-2 mt-2 text-blue-900 font-base">
-                                <label>unit</label>
-                            </div>               
-                            <div>
-                                <select 
-                                    class="appearance-none rounded-md w-full mt-1"
-                                    [(ngModel)]=newProductForm.unitId
-                                    name="units"
-                                >
-                                    <option
-                                        class="appearance-none font-base"
-                                        *ngFor="let unit of units" 
-                                        [value]="unit.id"
-                                        name="unit"                   
-                                    >
-                                        {{unit.title}}
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="flex-col">
-                                <div class="pl-2 mt-2 text-blue-900 font-base">
-                                    <span 
-                                        class="warning-message"
-                                        *ngIf="priceProduct.touched && priceProduct.invalid || priceProduct.touched && !changedPrice() else addedLabelPrice"
-                                    >
-                                        ⚠️price is incorrect
-                                    </span>
-                                </div>  
-                                <div>
-                                    <input 
-                                        class="appearance-none rounded-none relative block w-full px-3 py-2 my-2 border-1 border-gray-900 placeholder-gray-500 text-gray-900 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" 
-                                        [(ngModel)]="newProductForm.price"
-                                        name="price" 
-                                        type="text"
-                                        required                             
-                                        #priceProduct="ngModel"
-                                        (change) = "changedPrice()"
-                                    >
-                                </div>
-                            </div>                            
-                        </div>
-                        <div >
-                            <button 
-                                class="group relative w-full flex justify-center py-2 px-4 mt-2 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                                type="submit"
-                                [disabled]="productForm.invalid || !changedPrice()" 
+
+        <!-- title form -->
+        <div class="header-form">
+            <span>Product editing</span>
+        </div>
+
+        <!-- edit product form container -->
+        
+        <div class="edit-product-container">            
+            <form
+                class="form" 
+                (ngSubmit)="onSubmit(); productForm.resetForm();"
+                #productForm="ngForm" 
+            >
+                
+                    <!-- title -->
+                    <div>
+                        <div class="title-option">
+                            <span 
+                                class="warning-text"
+                                *ngIf="titleProduct.touched && titleProduct.invalid else addedLabelTitle"
                             >
-                                    <span 
-                                        class="absolute right-0 inset-y-0 flex items-center pr-3"
-                                        *ngIf="productForm.invalid || !changedPrice()"
-                                    >
-                                        🔓
-                                    </span>
-                                save changes
-                            </button>
+                                ⚠️title is incorrect
+                            </span>
+                        </div> 
+                        <div>
+                            <input 
+                                class="input-form" 
+                                [(ngModel)]="newProductForm.title"
+                                name="title" 
+                                type="text"
+                                required                             
+                                #titleProduct="ngModel"
+                            >
                         </div>
                     </div>
-                </form>
-            </div>
+
+                    <!-- manufacturer -->
+                    <div >
+                        <div class="title-option">
+                            <label>manufacturer</label>
+                        </div>               
+                        <div>
+                            <select 
+                                class="select-container"
+                                [(ngModel)]=newProductForm.manufacturerId
+                                name="manufacturers"
+                            >
+                                <option
+                                    class="option-container"
+                                    *ngFor="let manufacturer of manufacturers" 
+                                    [value]="manufacturer.id"
+                                    name="manufacturer"                   
+                                >
+                                    {{manufacturer.title}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- category -->
+                    <div >
+                        <div class="title-option">
+                            <label>category</label>
+                        </div>               
+                        <div>
+                            <select 
+                                class="select-container"
+                                [(ngModel)]=newProductForm.categoryId
+                                name="categories"
+                            >
+                                <option
+                                    class="option-container"
+                                    *ngFor="let category of categories" 
+                                    [value]="category.id"
+                                    name="category"                   
+                                >
+                                    {{category.title}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- unit -->
+                    <div >
+                        <div class="title-option">
+                            <label>unit</label>
+                        </div>               
+                        <div>
+                            <select 
+                                class="select-container"
+                                [(ngModel)]=newProductForm.unitId
+                                name="units"
+                            >
+                                <option
+                                    class="option-container"
+                                    *ngFor="let unit of units" 
+                                    [value]="unit.id"
+                                    name="unit"                   
+                                >
+                                    {{unit.title}}
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- price -->
+                    <div>
+                        
+                        <div class="title-option">
+                            <span 
+                                class="warning-text"
+                                *ngIf="priceProduct.touched && priceProduct.invalid || !isValidPrice else addedLabelPrice"
+                            >
+                                ⚠️price is incorrect
+                            </span>
+                        </div>  
+                        <div>
+                            <input 
+                                class="input-form" 
+                                [(ngModel)]="newProductForm.price"
+                                name="price" 
+                                type="text"
+                                required                             
+                                #priceProduct="ngModel"
+                                (ngModelChange) = "changedPrice()"
+                            >
+                        </div>
+                                                    
+                    </div>
+
+                    <!-- submit button -->
+                    <div >
+                        <button 
+                            class="btn-submit"
+                            type="submit"
+                            [ngClass]="{'no-hover':productForm.invalid || !isValidPrice}"
+                            [disabled]="productForm.invalid || !isValidPrice" 
+                        >
+                                <span 
+                                    class="lock"
+                                    *ngIf="productForm.invalid || !isValidPrice"
+                                >
+                                    🔓
+                                </span>
+                            save changes
+                        </button>
+                    </div>
+                
+            </form>            
         </div>
     </div>
+    
     
 </div>
 

@@ -57,6 +57,7 @@ export class EditProductComponent implements OnInit {
   categories:CategoryInfo[]=[];
   units:UnitInfo[]=[];
   
+  isValidPrice:boolean=true;
   constructor(
     private readonly service:ProductsService,
     private readonly manufacturerService:ManufacturerService,
@@ -73,8 +74,11 @@ export class EditProductComponent implements OnInit {
     this.getUnits();
   }
 
+  
+
   onSubmit(){
-    this.updateProduct.emit(this.newProductForm);
+    console.log("onSubmit")
+    //this.updateProduct.emit(this.newProductForm);
   }
 
   closeEditPage(){
@@ -83,7 +87,8 @@ export class EditProductComponent implements OnInit {
 
   changedPrice(){
     const convertToNumber = Number(this.newProductForm.price);
-    return convertToNumber>0;
+    this.isValidPrice = convertToNumber>0;
+    
   }
 
   
