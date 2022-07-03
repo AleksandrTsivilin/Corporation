@@ -1,8 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-//import { Category, FormAddProduct, Manufacturer, Unit } from 'src/app/interfaces/formAddProduct';
 import { PageState } from 'src/app/interfaces/pageState';
 import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
-import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
 import { ProductsService } from 'src/app/services/productPage/products.service';
@@ -10,7 +8,6 @@ import { UnitService } from 'src/app/services/productPage/UnitsService/unit.serv
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
 import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
-//import { SignalrProductService } from 'src/app/services/productPage/signalr-product.service';
 
 @Component({
   selector: 'app-edit-product',
@@ -18,19 +15,6 @@ import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
   styleUrls: ['./edit-product.component.scss']
 })
 export class EditProductComponent implements OnInit {
-
-
-  // @Input () editProduct:ProductInfo={
-  //   id:0,
-  //   title:"",
-  //   count:0,
-  //   price:0,
-  //   category:"",
-  //   manufacturer:"",
-  //   unit:"",
-  //   isBanned:false
-    
-  // }
 
   @Input() newProductForm:NewProductForm={
     storageId:0,
@@ -42,9 +26,6 @@ export class EditProductComponent implements OnInit {
     unitId:0
   }
 
-
-
-  
   @Output() updateProduct=new EventEmitter();
   @Output() close=new EventEmitter();
 
@@ -59,7 +40,6 @@ export class EditProductComponent implements OnInit {
   
   isValidPrice:boolean=true;
   constructor(
-    private readonly service:ProductsService,
     private readonly manufacturerService:ManufacturerService,
     private readonly categoryServie:CategoryService,
     private readonly unitService:UnitService
@@ -77,8 +57,7 @@ export class EditProductComponent implements OnInit {
   
 
   onSubmit(){
-    console.log("onSubmit")
-    //this.updateProduct.emit(this.newProductForm);
+    this.updateProduct.emit(this.newProductForm);
   }
 
   closeEditPage(){
