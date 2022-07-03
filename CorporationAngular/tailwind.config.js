@@ -1,5 +1,6 @@
 const { transition } = require('@angular/animations');
 const { transitionDuration } = require('tailwindcss/defaultTheme');
+const plugin = require('tailwindcss/plugin')
 
 module.exports = {
   
@@ -28,8 +29,11 @@ module.exports = {
         },
         
         height:{
+          'header':'64px', // height nav menu md screen
+          'short-header':'48px', // height nav menu 
           '160':'640px',
           '120':'480px',
+          '10.5':'42px',
           '1/10':'10%',
           '1/12':'8.33333333333%',
           '3/5vh':'60vh'
@@ -53,10 +57,16 @@ module.exports = {
           '-0.75': '-3px'
         },
         spacing:{
+          'header':'64px',
+          'short-header':'48px',
+          'service-title':'176px',
+          'service-title-short':'160px',
+          'menu-products':'224px',
           '-2/5':'-40%',
           '-1/2':'-50%',
           '1/12':'8.33333333333%',
           '1/5':'20%',
+          'full':'100%'
         }, 
         lineClamp: {
           '8': '8',
@@ -71,7 +81,50 @@ module.exports = {
     plugins: [
       require('@tailwindcss/forms'),
       require('@tailwindcss/typography'),   
-      require('@tailwindcss/line-clamp') 
+      require('@tailwindcss/line-clamp'),
+      plugin(function({ addUtilities, addComponents, e, prefix, config }) {
+        
+        addUtilities({
+          '.no-hover': {
+            'pointer-events': 'none',
+          }
+        }),
+        addComponents({
+          '.btn-submit': {
+            'position': 'relative',
+            'width': '100%',
+            'border': '2px solid transparent',
+            'padding': '5px 0',
+            'font-weight': 'bold',
+            'background': '#2563eb',
+            'color': 'white',
+            'border-radius': '5px',
+            '&:hover':{
+              'color': '#2563eb',
+              'background': 'white',
+              'border': '2px solid #2563eb'
+            }
+          },
+          '.warning-text': {
+            'color':' #dc2626',
+            'padding-left': '8px'
+          },
+          '.lock':{
+            'position': 'absolute',
+            'top':'auto',
+            'bottom': 'auto',
+            'right': '2px'
+          },
+          '.header-form':{
+            'font-size': '30px',
+            'line-height':' 36px',
+            'font-weight': '800',
+            'color':'#1e40af',
+            'text-align': 'center'
+          }
+        })
+      }),    
+     
     ]
 };
 
