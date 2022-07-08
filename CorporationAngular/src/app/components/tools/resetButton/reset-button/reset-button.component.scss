@@ -1,0 +1,33 @@
+.btn-reset-container{
+    @apply w-full h-full flex my-auto;
+
+}
+
+.btn-reset{
+    @apply relative  w-full h-full rounded-full
+    hover:bg-gray-300;
+}
+
+
+.animation-btn::before,
+.animation-btn::after{
+    @apply 
+        absolute top-1/2 right-1/2 -mt-0.25 -mr-1.5 
+        h-0.5 w-3
+        bg-red-500;   
+    
+}
+
+.animation-btn::before,
+.animation-btn::after{
+    content: "";
+}
+
+.animation-btn::after{
+    @apply transform rotate-45 origin-center;
+    
+}
+
+.animation-btn::before{
+    @apply transform -rotate-45 origin-center;
+}
