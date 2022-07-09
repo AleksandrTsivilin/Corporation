@@ -18,7 +18,10 @@ module.exports = {
         'sm':'640px',
         'md':'768px',
         'lg':'1024px'
-      },     
+      },  
+      minWidth: {
+        '6': '24px',
+      },   
       extend: {
         
         colors:{
@@ -34,6 +37,7 @@ module.exports = {
           '160':'640px',
           '120':'480px',
           '10.5':'42px',
+          '9.5':'38px',
           '1/10':'10%',
           '1/12':'8.33333333333%',
           '3/5vh':'60vh'
@@ -87,14 +91,16 @@ module.exports = {
         addUtilities({
           '.no-hover': {
             'pointer-events': 'none',
+            'opacity': '70%'
           }
         }),
         addComponents({
           '.btn-submit': {
             'position': 'relative',
             'width': '100%',
+            'height': '100%',
             'border': '2px solid transparent',
-            'padding': '5px 0',
+            'padding': '0px 10px',
             'font-weight': 'bold',
             'background': '#2563eb',
             'color': 'white',
@@ -105,23 +111,72 @@ module.exports = {
               'border': '2px solid #2563eb'
             }
           },
-          '.warning-text': {
-            'color':' #dc2626',
-            'padding-left': '8px'
-          },
-          '.lock':{
-            'position': 'absolute',
-            'top':'auto',
-            'bottom': 'auto',
-            'right': '2px'
-          },
+          // form components
           '.header-form':{
             'font-size': '30px',
             'line-height':' 36px',
             'font-weight': '800',
             'color':'#1e40af',
             'text-align': 'center'
-          }
+          },
+          '._form-label': {
+              'font-size': '14px',
+              'line-height': '16px',
+              'color': '#1e40af',
+              'font-weight': 'bold'            
+          },
+          '._form-input': {
+              'appearance': 'none',
+              'position': 'relative',
+              'width': '100%',
+              'border-radius': '6px',
+              'padding': '10px 12px',
+              'margin': '8px 0',
+              'border': '1px solid #111827',                    
+              'color':'#111827',
+              'font-size': '14px',
+              'line-height': '16px',
+              '&:focus':{
+                'border': '1px solid #6366f1'              
+              },
+              '&:placeholder':{
+                'color': '#6b7280'
+              }
+          },
+          '._form-select': {
+              'appearance': 'none',
+              'position': 'relative',
+              'width': '100%',
+              'border-radius': '6px', 
+              'padding': '10px 12px',
+              'margin': '8px 0',                               
+              'color':'#111827',
+              'font-size': '14px',
+              'line-height': '16px',
+              '&:focus':{
+                'border': '1px solid #6366f1'              
+            },
+            '&:placeholder':{
+              'color': '#6b7280'
+            }
+          },
+
+          // messages
+          '.warning-text': {
+            'font-size': '14px',
+            'line-height': '16px',
+            'color':' #dc2626',
+            'padding-left': '8px'
+          },
+
+          // icon container
+          '.lock':{
+            'position': 'absolute',
+            'top':'auto',
+            'bottom': 'auto',
+            'right': '2px'
+          },
+          
         })
       }),    
      

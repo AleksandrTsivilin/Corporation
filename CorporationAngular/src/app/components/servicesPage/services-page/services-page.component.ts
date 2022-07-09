@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { AvaiableUser } from 'src/app/interfaces/auth/avaiablesUserForm';
 import { TokenData } from 'src/app/interfaces/auth/tokenData';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
@@ -6,6 +7,7 @@ import { PageState } from 'src/app/interfaces/pageState';
 import { StateCard } from 'src/app/interfaces/roleselector/stateCards';
 import { Tab } from 'src/app/interfaces/roleselector/tab';
 import { AuthService } from 'src/app/services/auth.service';
+import { offsetHeader } from '../../mainPageComponent/nav-menu/nav-menu.component';
 
 
 
@@ -56,6 +58,7 @@ export class ServicesPageComponent implements OnInit {
   // isSelectedService:boolean=true;
   isScrolling:boolean=false;
   constructor(
+    private readonly router:Router,
     private readonly authService : AuthService
   ) { }
 
@@ -70,7 +73,7 @@ export class ServicesPageComponent implements OnInit {
 
   @HostListener("document:scroll")
   scrollfunction(){
-    this.isScrolling = window.pageYOffset >= 10;
+    this.isScrolling = window.pageYOffset >= offsetHeader;
   }  
 
   // toggleCard(type:number){

@@ -3,7 +3,7 @@
 .edit-product-page{
 
     @apply 
-        border-t-2 border-b-2 border-white         
+        border-b-2 border-white         
         bg-blue-600
         sm:py-36;   
 
@@ -90,40 +90,16 @@
 // form
             .form{
                 @apply 
-                    max-w-md w-full  space-y-6;
-
-
-                .title-option{
-                    @apply 
-                        pl-2 mt-2 
-                        text-blue-900 font-bold ;
-                }
-
-                .select-container{
-                    @apply appearance-none rounded-md w-full text-sm;
+                    max-w-md w-full  space-y-6;  
                 
-                    .option-container{
-                        @apply  text-gray-900 text-sm;
-                        //@apply appearance-none text-xs font-ligth;
-                    }
+                .form-label-container{
+                    @apply px-2;
                 }
-                
-                .input-form{
-                    @apply 
-                        appearance-none 
-                        rounded-md 
-                        relative block 
-                        w-full 
-                        px-3 py-2 my-2 
-                        border border-gray-900 
-                        placeholder-gray-500 
-                        text-gray-900 
-                        focus:border-indigo-500
-                        text-sm;
+
+                .btn-submit-container{
+                    @apply w-full h-9.5;
                 }
-            }            
-            
-           
+            }               
         }
     }
 }

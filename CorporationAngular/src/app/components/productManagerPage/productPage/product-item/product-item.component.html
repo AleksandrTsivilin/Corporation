@@ -43,8 +43,7 @@
     {{productInfo.price}}
 </td>
 <td 
-    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
-    *ngIf="avaiablesPermissions.canRead"
+    class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"    
     [ngClass]="{'warning':productInfo.isBanned}"   
 >    
     <button 
@@ -54,7 +53,7 @@
 </td>
 <td 
     class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
-    *ngIf="avaiablesPermissions.canUpdate"
+    *ngIf="userProductPermissions.canUpdate"
     [ngClass]="{'warning':productInfo.isBanned}"   
 >    
     <button 
@@ -64,7 +63,7 @@
 </td>
 <td 
     class="px-6 py-4 whitespace-no-wrap border-b border-gray-500"
-    *ngIf="avaiablesPermissions.canDelete"
+    *ngIf="userProductPermissions.canDelete"
     [ngClass]="{'warning':productInfo.isBanned}"
 >    
     <button 

@@ -9,10 +9,10 @@
     >
         
         
-            <div class="template-header">
+            <!-- <div class="template-header">
                 <h1 class="header-text">Select template</h1>
-            </div>
-            <div class="btn-section">
+            </div> -->
+            <div class="btn-section" [ngClass]="{'btn-section-fixed' : isScrolling}">
                 <button 
                     class="btn"
                     (click)="close()"
@@ -32,8 +32,7 @@
                                 <div class="point"></div>
                                 <div class="point"></div>
                                 <div class="point"></div>
-                            </div>
-                            
+                            </div>                            
                         </button>                  
                     </div>
                     <div class="item-control">

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, HostListener, Input, OnInit, Output } from '@angular/core';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
-import { HeaderTable } from 'src/app/interfaces/header-table';
+import { HeaderTable, TableHeader } from 'src/app/interfaces/header-table';
 import { PageState } from 'src/app/interfaces/pageState';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
@@ -13,6 +13,10 @@ import { ProductFilterForm } from 'src/app/interfaces/product/productFilterForm'
 import { LoadingOptionProductPage } from 'src/app/interfaces/product/loadingOptionProductPage';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { ModalInfo } from 'src/app/interfaces/modal';
+import { UserExtraPermissions } from 'src/app/interfaces/auth/userPermissionsByRole';
+import { AuthService } from 'src/app/services/auth.service';
+import { PermissionInfo } from 'src/app/interfaces/userManagerPage/permissionInfo';
+import { TabService } from 'src/app/services/tab.service';
 
 
 export const maxCount:number=300;
@@ -25,15 +29,22 @@ export const maxPrice:number=15000;
 })
 export class ProductsComponent implements OnInit {
 
-  @Input() @Output() avaiablesPermissions:AvaiablesPermissions={
-    canCreate:false,
-    canRead:false,
+  // @Input() @Output() avaiablesPermissions:AvaiablesPermissions={
+  //   canCreate:false,
+  //   canRead:false,
+  //   canUpdate:false,
+  //   canDelete:false,
+  //   canMove:false
+  // }
+
+  @Output() userProductPermissions:UserExtraPermissions={    
     canUpdate:false,
-    canDelete:false,
-    canMove:false
+    canDelete:false
   }
 
-  @Input() productFilterForm:ProductFilterForm = {
+  
+
+  productFilterForm:ProductFilterForm = {
     title:"",
     regionId:0,
     factoryId:0,
@@ -53,7 +64,7 @@ export class ProductsComponent implements OnInit {
     position:Positions.center
   }
 
-  headersTable:HeaderTable[]=[];
+  headersTable:TableHeader[]=[];
   productsInfo:ProductInfo[]=[];
 
   storages:StorageInfo[]=[];
@@ -67,6 +78,7 @@ export class ProductsComponent implements OnInit {
     categoryId:0,
     unitId:0
   }
+
   selectedProduct : ProductInfo={
     id:0,
     title:"",
@@ -86,9 +98,11 @@ export class ProductsComponent implements OnInit {
     isComplitedSearchByCriteria:true,
     isComplitedSearchByTitle:true
   }
+
   private editedProductId:number=0;
-  private _ascDirection = 1;
-  private _sortCriteria="";
+  ascDirection = 1;
+  sortCriteria="";
+  private _isOrdered:boolean=false;
   
 
   pageState:PageState={
@@ -97,16 +111,36 @@ export class ProductsComponent implements OnInit {
   }
   
   constructor( 
+    private readonly authService:AuthService,
     private readonly service:ProductsService,
     private readonly updateService:ProductUpdateService,
     private readonly updateMovementService:MovementsUpdateService,
-    private readonly storageService:StorageService
-    ) { }
+    private readonly storageService:StorageService,
+    private readonly tabService:TabService
+    ) { 
+      tabService.addedTab.next(
+        {
+          title:"products",
+          router:'/services/products'
+        })
+    }
 
   ngOnInit(): void {
-    this.headersTable=this.getHeadersTable(); 
+    this.getHeadersTable(); 
     this.getStorages(); 
+
     this.setProductsInfoLis();    
+
+    this.authService.tokenData$.subscribe(tokenData=>{
+      let permissions = tokenData?.avaiables
+        .filter(avaiable=>avaiable.role.title==='ProductManager')[0]?.permissions;
+      
+      if (!permissions) return;
+      
+      this.userProductPermissions.canUpdate=this.isHasUpdate(permissions);
+      this.userProductPermissions.canDelete=this.isHasDelete(permissions);
+      this.getHeadersTable();
+    })
   }
 
   toggleTemplate(){
@@ -114,7 +148,8 @@ export class ProductsComponent implements OnInit {
   }
   closeTemplateManager(template:ProductFilterForm | null){
     if (template!==null) {
-      this.productFilterForm=this.getProductFilterFormByCriteria(template);
+      this.setProductFilterFormByCriteria(template);
+      this.isApplyFilter=true;
     }
     this.getProducts();
     
@@ -136,7 +171,9 @@ export class ProductsComponent implements OnInit {
   }
 
   toggleDetailedSearch(){
+    console.log('toggle detail search')
     if (this.isOpenDetailedSearch) {
+      console.log('modal info will be under')
       this.modalInfo={
         title:"Are you sure close filter menu",
         message:"You should save data",
@@ -146,28 +183,38 @@ export class ProductsComponent implements OnInit {
       return
     }
     
-    if (!this.isApplyFilter) this.resetProductFilterForm();
+    //if (!this.isApplyFilter) this.resetProductFilterForm();
     this.isOpenDetailedSearch=!this.isOpenDetailedSearch;   
   }  
 
   closeWarningModal(answer:boolean){
     console.log("product page modal warning")
+    console.log()
     if (answer) {
+      //if (!this.isApplyFilter) this.productFilterForm = null;
       if (!this.isApplyFilter) this.resetProductFilterForm();
       this.isOpenDetailedSearch=!this.isOpenDetailedSearch;  
     }
     this.isShowModalWarning=false;
   }
 
-  applyFilterByCriteria(filterForm:ProductFilterForm){
+  applyFilterByCriteria(filterForm:ProductFilterForm | null){
     this.isOpenDetailedSearch=false;
-    this.productFilterForm=this.getProductFilterFormByCriteria(filterForm); 
-    this.isEmptyProductFilterForm(filterForm)
-      ? this.isApplyFilter=false
-      : this.isApplyFilter=true   
-    //this.isApplyFilter=true;
+    filterForm===null
+      ? this.resetProductFilterForm()
+      : this.setProductFilterFormByCriteria(filterForm);
+    
+    
+    this.isApplyFilter = filterForm !== null;
     this.loadingOptionProductPage.isComplitedSearchByCriteria=false;
-    this.getProductsByFilter();
+    this.getProducts();
+    
+    // this.productFilterForm=this.getProductFilterFormByCriteria(filterForm); 
+    // this.isEmptyProductFilterForm(filterForm)
+    //   ? this.isApplyFilter=false
+    //   : this.isApplyFilter=true 
+    // this.loadingOptionProductPage.isComplitedSearchByCriteria=false;
+    // this.getProductsByFilter();
   }
 
   // resetFilterByCriteria(){
@@ -226,19 +273,19 @@ export class ProductsComponent implements OnInit {
     this.setStatePage("",true);
   }
 
-  sortCol(header:HeaderTable){
-    if (!header.isActive) return;
-    let criteria = header.title;
-    criteria===this._sortCriteria
-      ? this._ascDirection *= -1
-      : this._ascDirection = 1;
-    
-    this._sortCriteria=criteria;
-    let orderedUsersInfo= this.productsInfo.sort((a:ProductInfo,b:ProductInfo)=>{
+  startOrderBy(header:TableHeader, direction:number){
+    if (!header.isOrdered) return;
+    this.sortCriteria = header.title;
+    this.ascDirection = direction;
+    this.orderCol(this.sortCriteria);
+  }
+
+  private orderCol(criteria:string){
+    this.productsInfo = this.productsInfo.sort((a:ProductInfo,b:ProductInfo)=>{
       let orderItemFirst=a[criteria];
       let orderItemSecond=b[criteria];
-      const less = -1 * this._ascDirection;
-      const more = 1 * this._ascDirection;
+      const less = -1 * this.ascDirection;
+      const more = 1 * this.ascDirection;
 
       if (typeof orderItemFirst === 'string') {
         return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
@@ -249,8 +296,34 @@ export class ProductsComponent implements OnInit {
       }
       
     })
-    this.productsInfo=orderedUsersInfo;
+    this._isOrdered = true;
   }
+
+  // sortCol(header:TableHeader, ascDirection:number){
+    
+  //   if (!header.isOrdered) return;
+  //   let criteria = header.title;
+  //   this._ascDirection=ascDirection;
+  //   this._sortCriteria=criteria;
+
+
+  //   let orderedUsersInfo= this.productsInfo.sort((a:ProductInfo,b:ProductInfo)=>{
+  //     let orderItemFirst=a[criteria];
+  //     let orderItemSecond=b[criteria];
+  //     const less = -1 * this._ascDirection;
+  //     const more = 1 * this._ascDirection;
+
+  //     if (typeof orderItemFirst === 'string') {
+  //       return orderItemFirst.toLowerCase() <= orderItemSecond.toLowerCase() ? less : more;
+  //     } else if (typeof orderItemFirst ==='number'){
+  //       return orderItemFirst <= orderItemSecond ? less:more
+  //     }  else {
+  //       return orderItemFirst.title <= orderItemSecond.title ? less : more;
+  //     }
+      
+  //   })
+  //   this.productsInfo=orderedUsersInfo;
+  // }
 
   private setStatePage(path: string, isActive: boolean) {
     this.pageState={
@@ -266,61 +339,80 @@ export class ProductsComponent implements OnInit {
   }
 
 
-  private getHeadersTable():HeaderTable[]{
+  private getHeadersTable(){
+    
     const headers= [{
       title:'#',
-      isActive:false
+      isOrdered:false
     },
     {
       title:"title",
-      isActive:true
+      isOrdered:true
     },{
       title:"manufacturer",
-      isActive:true
+      isOrdered:true
     },{
       title:"category",
-      isActive:true
+      isOrdered:true
     },{
       title:"count",
-      isActive:true
+      isOrdered:true
     },{
       title:"unit",
-      isActive:true
+      isOrdered:true
     },{
       title:"price",
-      isActive:true
+      isOrdered:true
     },{
-      title:"view",
-      isActive:false
+      title:"details",
+      isOrdered:false
     }];
 
-    if (this.avaiablesPermissions.canUpdate) {
-      headers.push({title:"edit",isActive:false});
-    }
+    // if (this.avaiablesPermissions.canUpdate) {
+    //   headers.push({title:"edit",isActive:false});
+    // }
 
-    if (this.avaiablesPermissions.canDelete) {
-      headers.push({title:"delete",isActive:false})
-    }
+    // if (this.avaiablesPermissions.canDelete) {
+    //   headers.push({title:"delete",isActive:false})
+    // }
+    
+    if (this.userProductPermissions.canUpdate) headers.push({title:"edit",isOrdered:false});
 
-    return headers;
+    if (this.userProductPermissions.canDelete) headers.push({title:"delete", isOrdered:false})
+
+    this.headersTable=headers;
+  }
+
+  private isHasUpdate(permissions:PermissionInfo[]){
+    return permissions?.map(permission=>permission.title).includes('Update');
+  }
+
+  private isHasDelete(permissions:PermissionInfo[]){
+    return permissions?.map(permission=>permission.title).includes('Delete');
   }
 
   private getProducts(){
     this.setStatePage("loadingPage",false)
-    if (this.isEmptyProductFilterForm(this.productFilterForm)){
-      this.getProductsByDefault();
-    }
-    else{
-      this.getProductsByFilter();
-      this.isApplyFilter=true;
-    }
+    this.isApplyFilter
+      ? this.getProductsByFilter()
+      : this.getProductsByDefault();
+    // if (this.isEmptyProductFilterForm(this.productFilterForm)){
+    //   this.getProductsByDefault(); 
+    //   console.log(this.pageState.path)     
+    // }
+    // else{
+    //   this.getProductsByFilter();
+    //   this.isApplyFilter=true;
+    // }
   }
+
   private getProductsByDefault(){
+      console.log('getProductsByDefault')
       this.service.getProductsByAccess()
       .subscribe((result)=>{  
         this.productsInfo=result;        
         this.setStatePage("",true);
-        
+        this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
         
     },(err)=>{
       this.setStatePage("responce500",false);
@@ -334,6 +426,7 @@ export class ProductsComponent implements OnInit {
         this.setStatePage("",true);
         this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
         this.loadingOptionProductPage.isComplitedSearchByTitle=true;
+        if (this._isOrdered) this.orderCol(this.sortCriteria);
       })
   }
 
@@ -357,9 +450,9 @@ export class ProductsComponent implements OnInit {
       })
   }
 
-  private getProductFilterFormByCriteria(filterForm:ProductFilterForm) : ProductFilterForm{
+  private setProductFilterFormByCriteria(filterForm:ProductFilterForm) {
     const title = filterForm.title;
-    return {
+    this.productFilterForm = {
       title : title,
       regionId : filterForm.regionId,
       factoryId : filterForm.factoryId,
@@ -387,25 +480,25 @@ export class ProductsComponent implements OnInit {
     
   }
 
-  private isEmptyProductFilterForm(form : ProductFilterForm):boolean{
-    return !this.isDefaultValue(form.regionId)
-        || !this.isDefaultValue(form.factoryId)
-        || !this.isDefaultValue(form.storageId)
-        || !this.isDefaultValue(form.manufacturerId)
-        || !this.isDefaultValue(form.categoryId)
-        || !this.isDefaultValue(form.unitId)
-        || !this.isDefaultValue(form.startCount)
-        || form.endCount !=maxCount
-        || !this.isDefaultValue(form.startPrice)
-        || form.endPrice !=maxPrice
-        ? false : true;
+  // private isEmptyProductFilterForm(form : ProductFilterForm):boolean{
+  //   return !this.isDefaultValue(form.regionId)
+  //       || !this.isDefaultValue(form.factoryId)
+  //       || !this.isDefaultValue(form.storageId)
+  //       || !this.isDefaultValue(form.manufacturerId)
+  //       || !this.isDefaultValue(form.categoryId)
+  //       || !this.isDefaultValue(form.unitId)
+  //       || !this.isDefaultValue(form.startCount)
+  //       || form.endCount !=maxCount
+  //       || !this.isDefaultValue(form.startPrice)
+  //       || form.endPrice !=maxPrice
+  //       ? false : true;
 
 
     
-  }
+  // }
 
-  private isDefaultValue(value:Number) : boolean{
-    return value==0;
-  }
+  // private isDefaultValue(value:Number) : boolean{
+  //   return value==0;
+  // }
 
 }

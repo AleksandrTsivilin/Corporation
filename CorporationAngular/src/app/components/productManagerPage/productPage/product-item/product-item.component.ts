@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { UserExtraPermissions } from 'src/app/interfaces/auth/userPermissionsByRole';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 
@@ -21,12 +22,17 @@ export class ProductItemComponent implements OnInit {
     isBanned:false
   };
 
-  @Input() avaiablesPermissions:AvaiablesPermissions={
-    canCreate:false,
-    canRead:false,
-    canUpdate:false,
-    canDelete:false,
-    canMove:false
+  // @Input() avaiablesPermissions:AvaiablesPermissions={
+  //   canCreate:false,
+  //   canRead:false,
+  //   canUpdate:false,
+  //   canDelete:false,
+  //   canMove:false
+  // }
+
+  @Input () userProductPermissions:UserExtraPermissions={      
+      canUpdate:false,
+      canDelete:false
   }
 
   @Output() edit=new EventEmitter();

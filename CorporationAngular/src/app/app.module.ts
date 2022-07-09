@@ -46,20 +46,8 @@ import { AboutUsComponent } from './components/homePage/aboutUs/about-us/about-u
 import { ContactsComponent } from './components/homePage/contactsPage/contacts/contacts.component';
 import { ServicesPageComponent } from './components/servicesPage/services-page/services-page.component';
 import { ServiceListComponent } from './components/servicesPage/service-list/service-list.component';
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+import { ServiceTabsComponent } from './components/servicesPage/service-tabs/service-tabs.component';
+import { ResetButtonComponent } from './components/tools/resetButton/reset-button/reset-button.component';
 
 
 
@@ -104,7 +92,9 @@ import { ServiceListComponent } from './components/servicesPage/service-list/ser
     AboutUsComponent,
     ContactsComponent,
     ServicesPageComponent,
-    ServiceListComponent
+    ServiceListComponent,
+    ServiceTabsComponent,
+    ResetButtonComponent
     
     
     

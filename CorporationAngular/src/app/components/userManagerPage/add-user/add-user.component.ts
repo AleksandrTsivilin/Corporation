@@ -11,6 +11,7 @@ import { RoleInfo } from 'src/app/interfaces/userManagerPage/roleInfo';
 
 import { AuthService } from 'src/app/services/auth.service';
 import { EmployeeService } from 'src/app/services/employeeManager/employee.service';
+import { TabService } from 'src/app/services/tab.service';
 import { AccessService } from 'src/app/services/userManager/accessServices/access.service';
 import { PermissionService } from 'src/app/services/userManager/permissionServices/permission.service';
 import { RoleService } from 'src/app/services/userManager/roleServices/role.service';
@@ -74,8 +75,14 @@ export class AddUserComponent implements OnInit {
     private readonly roleService:RoleService,
     private readonly permissionService:PermissionService,
     private readonly accessService:AccessService,
-    private readonly updateService:UserUpdateService
-    ) { }
+    private readonly updateService:UserUpdateService,
+    private readonly tabService:TabService
+    ) {
+      tabService.addedTab.next({
+        title:"add user",
+        router:"/services/addUser"
+      })
+     }
 
   ngOnInit(): void {
     this.getAllEmployeesNonUser();

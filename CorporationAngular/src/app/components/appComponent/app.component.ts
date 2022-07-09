@@ -19,7 +19,7 @@ export class AppComponent {
         if (event instanceof NavigationEnd) {
           const location= event.url;
           this.isHeaderShort=location!==this.homePageLocation;
-          console.log(location);   
+            
         }
       })
     }

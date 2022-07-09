@@ -14,42 +14,57 @@
     <app-warning-modal [modalInfo]="modalInfo"></app-warning-modal>
 
 </div> -->
-<app-warning-modal 
-    *ngIf="isShowModalWarning" 
-    [modalInfo]="modalInfo"
-    (answer)="closeModalWarning($event)"
-></app-warning-modal>
+<div>
+    <app-warning-modal     
+        *ngIf="isShowModalWarning" 
+        [modalInfo]="modalInfo"
+        (answer)="closeModalWarning($event)"
+    ></app-warning-modal>
+</div>
+
+
+<!-- <div class="absolute w-12 h-12 bg-white inset-0">44</div> -->
+
+<!-- <div class="absolute h-96 w-96 bg-red-400 top-0 left-0"></div> -->
+
+<!-- filter by criteria container -->
 <div 
-    class="w-full "
+    class="filter-by-criteria-container"
 >   
-    
+    <!-- form  -->
     <form 
-        class="w-full space-y-4"
+        class="form-container"
         #filterForm="ngForm"
     >
-        <div class="flex gap-x-4">
-            <div class="flex-1 w-1/3">
-                <div class=" pl-2 relative">
-                    <span class="pr-2 my-auto font-medium">regions</span>
-                    <button 
-                        class="absolute w-3 h-3 mt-2 p-1"
+        <!-- location filter -->
+        <div class="section-filter-row">
+            <!-- regions -->
+            <div class="option-filter-container">
+
+                <!-- option filter header -->
+                <div class="option-filter-header">
+                    <div class="form-label-container">
+                        <span class="_form-label">regions</span>
+                    </div>
+
+                    <!-- button reset container -->
+                    <app-reset-button
+                        class="btn-reset-container"
                         *ngIf="isSelectedSomething(rawFilterForm.regionId)"
-                        type="button"
-                        (click)="resetSelectedRegion()"
-                    >
-                        <span class="animation-btn"></span>
-                    </button>                                     
+                        (reset)="resetSelectedRegion()"
+                    ></app-reset-button>
                 </div>
+
+                <!-- option filter -->
                 <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingRegions else loadingOption">
                     <select 
-                        class="appearance-none rounded-md w-full mt-1"
+                        class="_form-select"
                         *ngIf="regions.length>1 else showRegionTitle"                    
                         [(ngModel)]=rawFilterForm.regionId
                         name="regions"
                         (change)="changeFilterRegion()"
                     >
                         <option
-                            class=" text-xs font-ligth text-gray-700"
                             *ngFor="let region of regions" 
                             [value]="region.id"
                             name="region"                   
@@ -60,21 +75,28 @@
                 </section>
                 
             </div>
-            <div class="flex-1 w-1/3">
-                <div class=" pl-2 relative">
-                    <span class="pr-2 my-auto font-medium">factories</span>
-                    <button 
-                        class="absolute w-3 h-3 mt-2 p-1"
+
+            <!-- factories -->
+            <div class="option-filter-container">
+
+                <!-- option filter header -->
+                <div class="option-filter-header">
+                    <div class="form-label-container">
+                        <span class="_form-label">factories</span>
+                    </div>
+
+                    <!-- reset button container -->
+                    <app-reset-button
+                        class="btn-reset-container"
                         *ngIf="isSelectedSomething(rawFilterForm.factoryId)"
-                        type="button"
-                        (click)="resetSelectedFactory()"
-                    >
-                        <span class="animation-btn"></span>
-                    </button>
+                        (reset)="resetSelectedFactory()"
+                    ></app-reset-button>
                 </div>
+
+                <!-- option filter -->
                 <section *ngIf="loadingOptionFilterByCriteria.isCompliteLoadingFactories else loadingOption">
                     <select                         
-                        class="appearance-none rounded-md w-full mt-1"
+                        class="_form-select"
                         *ngIf="factories.length>1 else showFactoryTitle"
                         [(ngModel)]=rawFilterForm.factoryId
                         name="factories"
@@ -82,8 +104,7 @@
                         
                     >
                         <option class="hidden" [value]="0"  disabled></option>
-                        <option
-                            class="appearance-none text-xs font-ligth text-grey-700"
+                        <option                           
                             *ngFor="let factory of factories" 
                             
                             [value]="factory.id"                  
@@ -93,32 +114,38 @@
                             {{factory.title}}
                         </option>
                     </select>
-                </section>
-                
+                </section>               
                 
             </div>
-            <div class="flex-1 w-1/3">
-                <div class=" pl-2 relative">
-                    <span class="pr-2 my-auto font-medium">storages</span>
-                    <button 
-                        class="absolute w-3 h-3 mt-2 p-1"
+
+            <!-- storages -->
+            <div class="option-filter-container">
+
+                <!-- option filter header -->
+                <div class=" option-filter-header">
+                    <div class="form-label-container">
+                        <span class="_form-label">storages</span>
+                    </div>
+
+                    <!-- reset button container -->
+                    <app-reset-button
+                        class="btn-reset-container"
                         *ngIf="isSelectedSomething(rawFilterForm.storageId)"
-                        type="button"
-                        (click)="resetSelectedStorage()"
-                    >
-                        <span class="animation-btn"></span>
-                    </button>
+                        (reset)="resetSelectedStorage()"
+                    ></app-reset-button>
                 </div>
+
+                <!-- option filter  -->
                 <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingStorages else loadingOption">
                     <select 
-                        class="appearance-none rounded-md w-full mt-1"
+                        class="_form-select"
                         *ngIf="storages.length>1 else showStorageTitle"
                         [(ngModel)]=rawFilterForm.storageId
                         name="storages"
+                        (change)="changedFilter()"
                     >
                         <option class="hidden" [value]="0"  disabled></option>
                         <option
-                            class="appearance-none text-xs font-ligth text-grey-700"
                             *ngFor="let storage of storages" 
                             [value]="storage.id"
                             name="storage"                   
@@ -130,28 +157,36 @@
                 
             </div>
         </div>
-        <div class="flex gap-x-4">
-            <div class="flex-1 w-1/3">
-                <div class=" pl-2 relative">
-                    <span class="pr-2 my-auto font-medium">manufacturers</span>
-                    <button 
-                        class="absolute w-3 h-3 mt-2 p-1"
+
+        <!-- manufacturer category unit -->
+        <div class="section-filter-row">
+
+            <!-- manufacturer -->
+            <div class="option-filter-container">
+
+                <!-- option filter header -->
+                <div class="option-filter-header">
+                    <div class="form-label-container">
+                        <span class="_form-label">manufacturers</span>
+                    </div>
+
+                    <!-- reset button container -->
+                    <app-reset-button
+                        class="btn-reset-container"
                         *ngIf="isSelectedSomething(rawFilterForm.manufacturerId)"
-                        type="button"
-                        (click)="resetSelectedManufacturer()"
-                    >
-                        <span class="animation-btn"></span>
-                    </button>
+                        (reset)="resetSelectedManufacturer()"
+                    ></app-reset-button>
                 </div>
+
+                <!-- option filter -->
                 <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingManufacturers else loadingOption">
                     <select 
-                        class="appearance-none rounded-md w-full mt-1"
+                        class="_form-select"
                         [(ngModel)]=rawFilterForm.manufacturerId
                         name="manufacturers"
-                        
+                        (change)="changedFilter()"
                     >
                         <option
-                            class="appearance-none text-xs font-ligth text-gray-700"
                             *ngFor="let manufacturer of manufacturers" 
                             [value]="manufacturer.id"
                             name="manufacturer"                   
@@ -161,27 +196,33 @@
                     </select>
                 </section>
             </div>
-            <div class="flex-1 w-1/3">
-                <div class=" pl-2 relative">
-                    <span class="pr-2 my-auto font-medium">categories</span>
-                    <button 
-                        class="absolute w-3 h-3 mt-2 p-1"
+
+            <!-- category -->
+            <div class="option-filter-container">
+
+                <!-- filter option header -->
+                <div class="option-filter-header">
+                    <div class="form-label-container">
+                        <span class="_form-label">categories</span>
+                    </div>
+
+                    <!-- reset button container -->
+                    <app-reset-button
+                        class="btn-reset-container"
                         *ngIf="isSelectedSomething(rawFilterForm.categoryId)"
-                        type="button"
-                        (click)="resetSelectedCategory()"
-                    >
-                        <span class="animation-btn"></span>
-                    </button>
+                        (reset)="resetSelectedCategory()"
+                    ></app-reset-button>
                 </div>
+
+                <!-- option filter -->
                 <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingCategories else loadingOption">   
                     <select 
-                        class="appearance-none rounded-md w-full mt-1"
+                        class="_form-select"
                         [(ngModel)]=rawFilterForm.categoryId
                         name="categories"
-                        
+                        (change)="changedFilter()"
                     >
                         <option
-                            class="appearance-none text-xs font-ligth text-gray-700"
                             *ngFor="let category of categories" 
                             [value]="category.id"
                             name="category"                   
@@ -191,27 +232,31 @@
                     </select>
                 </section>
             </div>
-            <div class="flex-1 w-1/3">
-                <div class=" pl-2 relative">
-                    <span class="pr-2 my-auto font-medium">units</span>
-                    <button 
-                        class="absolute w-3 h-3 mt-2 p-1"
+
+            <!-- unit -->
+            <div class="option-filter-container">
+                <div class="option-filter-header">
+                    <div class="form-label-container">
+                        <span class="_form-label">units</span>
+                    </div>
+
+                    <!-- reset button container -->
+                    <app-reset-button
+                        class="btn-reset-container"
                         *ngIf="isSelectedSomething(rawFilterForm.unitId)"
-                        type="button"
-                        (click)="resetSelectedUnit()"
-                    >
-                        <span class="animation-btn"></span>
-                    </button>
+                        (reset)="resetSelectedUnit()"
+                    ></app-reset-button>
                 </div>
+
+                <!-- option filter -->
                 <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingUnits else loadingOption">
                     <select 
-                        class="appearance-none rounded-md w-full mt-1"
+                        class="_form-select"
                         [(ngModel)]=rawFilterForm.unitId
                         name="unit"
-                        
+                        (change)="changedFilter()"
                     >
                         <option
-                            class="appearance-none text-xs font-ligth text-gray-700"
                             *ngFor="let unit of units" 
                             [value]="unit.id"
                             name="unit"                   
@@ -222,236 +267,283 @@
                 </section>
             </div>
         </div>
-        <div class="flex gap-x-4 juctify-center">
-            <div class="flex-1 w-1/3 juctify-center space-y-4 border-2 border-gray-400 rounded-md filter-price-active">
-                <div class=" px-2 relative">
-                    <span class="pr-2 my-auto font-medium">count</span>
-                    <button 
-                        class="absolute w-3 h-3 mt-2 p-1"
+
+        <!-- count and price -->
+        <div class="range-controllers-container">
+
+            <!-- count control container -->
+            <div class="range-controllers">
+               
+                <!-- header and radio count -->
+                <div class="option-filter-header">
+                    <!-- title container -->
+                    <div class="form-label-container">
+                        <span class="_form-label">count</span>
+                    </div>
+
+
+                    <!-- reset button container -->
+                    <app-reset-button
+                        class="btn-reset-container"
                         *ngIf="isSelectedRangeCount()"
-                        type="button"
-                        (click)="resetSelectedRangeCount()"
-                    >
-                        <span class="animation-btn"></span>
-                    </button>
-                    <div class="flex justify-between custom-control custom-radio">
-                        <div>
-                            <input
-                                class="custom-control-input"
-                                type="radio"
-                                name="A"
-                                [(ngModel)]="stepRangeCount"
-                                [value]="1"
-                            >
-                            <span class="pl-2">+1</span>
-                        </div>
-                        <div>
-                            <input
-                                class="custom-control-input"
-                                type="radio"
-                                name="B"
-                                [(ngModel)]="stepRangeCount"
-                                [value]="10"
-                            >
-                            <span class="pl-2">+10</span>
-                        </div>
-                        <div>
-                            <input
-                                class="custom-control-input"
-                                type="radio"
-                                name="C"
-                                [(ngModel)]="stepRangeCount"
-                                [value]="100"
-                            >
-                            <span class="pl-2">+100</span>
-                        </div>
-                        
+                        (reset)="resetSelectedRangeCount()"
+                    ></app-reset-button>
+                </div>
+
+                <!-- radio control count -->
+                <div class="px-8 flex justify-between custom-control custom-radio">
+                    <!-- input radio 1 -->
+                    <div>
+                        <input
+                            class="custom-control-input"
+                            type="radio"
+                            name="A"
+                            [(ngModel)]="stepRangeCount"
+                            [value]="1"
+                        >
+                        <span class="pl-2">+1</span>
                     </div>
+
+                    <!-- input radio count 10 -->
+                    <div>
+                        <input
+                            class="custom-control-input"
+                            type="radio"
+                            name="B"
+                            [(ngModel)]="stepRangeCount"
+                            [value]="10"
+                        >
+                        <span class="pl-2">+10</span>
+                    </div>
+
+                    <!-- input radio count 100 -->
+                    <div>
+                        <input
+                            class="custom-control-input"
+                            type="radio"
+                            name="C"
+                            [(ngModel)]="stepRangeCount"
+                            [value]="100"
+                        >
+                        <span class="pl-2">+100</span>
+                    </div>
+                    
                 </div>
-            <div class="flex-col px-2">
-                <div class="flex py-2">
-                <div class="flex-none w-1/4 my-auto">
-                    <span >start : </span>
+
+                <!-- input range count controller container -->
+                <div class="input-range-container">
+
+                    <!-- input range min count container -->
+                    <div class="input-range">
+                        <div class="input-range-title">
+                            <span >start : </span>
+                        </div>
+
+                        <!-- input range min count -->
+                        <div class="input">
+                            <input
+                                class="w-full"
+                                type="range"
+                                min="0"
+                                max="{{filterMaxCount-1}}"
+                                step="{{stepRangeCount}}"
+                                [(ngModel)]="rawFilterForm.startCount"
+                                name="startCount"
+                                (ngModelChange)="changeFilterStartCount($event)"
+                            >
+                        </div>
+
+                        <!-- value input range min count  -->
+                        <div class="input-value">
+                            <span>{{rawFilterForm.startCount}}</span>
+                        </div>
+                    
+                    </div>
+
+                    <!-- input range max count container -->
+                    <div class="input-range">
+                        <div class="input-range-title">
+                            <span >end : </span>
+                        </div>
+                        <!-- input range max count container -->
+                        <div class="input">
+                            <input
+                            class="w-full"
+                            type="range"
+                            min="0"
+                            max="{{filterMaxCount}}"
+                            step="{{stepRangeCount}}"
+                            [(ngModel)]="rawFilterForm.endCount"
+                            name="endCount"
+                            (ngModelChange)="changeFilterEndCount($event)"
+                            >
+                        </div>
+
+                        <!-- value input range max count container -->
+                        <div class="input-value">
+                            <span>{{rawFilterForm.endCount}}</span>
+                        </div>
+                    
+                    </div>
+                    
                 </div>
-                <div class="flex-none w-1/2 flex justify-items-center">
-                    <input
-                    class="w-full"
-                    type="range"
-                    min="0"
-                    max="{{filterMaxCount-1}}"
-                    step="{{stepRangeCount}}"
-                    [(ngModel)]="rawFilterForm.startCount"
-                    name="startCount"
-                    (ngModelChange)="changeFilterStartCount($event)"
-                    >
-                </div>
-                <div class="flex-none w-1/4 pl-2">
-                    <span>{{rawFilterForm.startCount}}</span>
-                </div>
-                
-                </div>
-                <div class="flex py-2">
-                <div class="flex-none w-1/4 my-auto">
-                    <span >end : </span>
-                </div>
-                <div class="flex-none w-1/2 flex justify-items-center">
-                    <input
-                    class="w-full"
-                    type="range"
-                    min="0"
-                    max="{{filterMaxCount}}"
-                    step="{{stepRangeCount}}"
-                    [(ngModel)]="rawFilterForm.endCount"
-                    name="endCount"
-                    (ngModelChange)="changeFilterEndCount($event)"
-                    >
-                </div>
-                <div class="flex-none w-1/4 pl-2">
-                    <span>{{rawFilterForm.endCount}}</span>
-                </div>
-                
-                </div>
-                
             </div>
-            </div>
-            <div class="flex-1 w-1/3 juctify-center space-y-4 border-2 border-gray-400 rounded-md filter-price-active">
-                <div class=" px-2 relative">
-                    <span class="pr-2 my-auto font-medium">price</span>
-                    <button 
-                        class="absolute w-3 h-3 mt-2 p-1"
+
+
+            <!-- price control container -->
+            <div class="range-controllers">
+
+                <!-- header  price -->
+                <div class=" option-filter-header">
+                    <div class="form-label-container">
+                        <span class="_form-label">price</span>
+                    </div>
+
+
+                    <!-- reset button container -->
+                    <app-reset-button
+                        class="btn-reset-container"
                         *ngIf="isSelectedRangePrice()"
-                        type="button"
-                        (click)="resetSelectedRangePrice()"
-                    >
-                        <span class="animation-btn"></span>
-                    </button>
-                    <div class="flex justify-between custom-control custom-radio">
-                        <div>
-                            <input
-                                class="custom-control-input"
-                                type="radio"
-                                name="D"
-                                [(ngModel)]="stepRangePrice"
-                                [value]="50"
-                            >
-                            <span class="pl-2">+50</span>
-                        </div>
-                        <div>
-                            <input
-                                class="custom-control-input"
-                                type="radio"
-                                name="E"
-                                [(ngModel)]="stepRangePrice"
-                                [value]="500"
-                            >
-                            <span class="pl-2">+500</span>
-                        </div>
-                        <div>
-                            <input
-                                class="custom-control-input"
-                                type="radio"
-                                name="F"
-                                [(ngModel)]="stepRangePrice"
-                                [value]="5000"
-                            >
-                            <span class="pl-2">+5000</span>
-                        </div>
-                        
+                        (reset)="resetSelectedRangePrice()"
+                    ></app-reset-button>
+                </div>
+
+                 <!-- radio controller price -->
+                 <div class="px-8 flex justify-between custom-control custom-radio">
+                    <!-- input radio 50 -->
+                    <div>
+                        <input
+                            class="custom-control-input"
+                            type="radio"
+                            name="D"
+                            [(ngModel)]="stepRangePrice"
+                            [value]="50"
+                        >
+                        <span class="pl-2">+50</span>
                     </div>
+
+                    <!-- input radio 500 -->
+                    <div>
+                        <input
+                            class="custom-control-input"
+                            type="radio"
+                            name="E"
+                            [(ngModel)]="stepRangePrice"
+                            [value]="500"
+                        >
+                        <span class="pl-2">+500</span>
+                    </div>
+
+                    <!-- input radion 5000 -->
+                    <div>
+                        <input
+                            class="custom-control-input"
+                            type="radio"
+                            name="F"
+                            [(ngModel)]="stepRangePrice"
+                            [value]="5000"
+                        >
+                        <span class="pl-2">+5000</span>
+                    </div>
+                    
                 </div>
-            <div class="flex-col px-2">
-                <div class="flex py-2">
-                <div class="flex-none w-1/4 my-auto">
-                    <span >start : </span>
-                </div>
-                <div class="flex-none w-1/2 flex justify-items-center">
-                    <input
-                    class="w-full"
-                    type="range"
-                    min="0"
-                    max="{{filterMaxPrice-1}}"
-                    step="{{stepRangePrice}}"
-                    [(ngModel)]="rawFilterForm.startPrice"
-                    name="startPrice"
-                    (ngModelChange)="changeFilterStartPrice($event)"
-                    >
-                </div>
-                <div class="flex-none w-1/4 pl-2">
-                    <span>{{rawFilterForm.startPrice}}</span>
-                </div>
-                
-                </div>
-                <div class="flex py-2">
-                <div class="flex-none w-1/4 my-auto">
-                    <span >end : </span>
-                </div>
-                <div class="flex-none w-1/2 flex justify-items-center">
-                    <input
-                    class="w-full"
-                    type="range"
-                    min="0"
-                    max="{{filterMaxPrice}}"
-                    step="{{stepRangePrice}}"
-                    [(ngModel)]="rawFilterForm.endPrice"
-                    name="endPrice"
-                    (ngModelChange)="changeFilterEndPrice($event)"
-                    >
-                </div>
-                <div class="flex-none w-1/4 pl-2">
-                    <span>{{rawFilterForm.endPrice}}</span>
-                </div>
-                
-                </div>
-                
+
+                <!-- input range price controller container -->
+                <div class="input-range-container">
+                    <!-- input range min price -->
+                    <div class="input-range">
+                        <div class="input-range-title">
+                            <span >start : </span>
+                        </div>
+
+                        <!-- input range price min -->
+                        <div class="input">
+                            <input
+                                class="w-full"
+                                type="range"
+                                min="0"
+                                max="{{filterMaxPrice-1}}"
+                                step="{{stepRangePrice}}"
+                                [(ngModel)]="rawFilterForm.startPrice"
+                                name="startPrice"
+                                (ngModelChange)="changeFilterStartPrice($event)"
+                            >
+                        </div>
+                        <div class="input-value">
+                            <span>{{rawFilterForm.startPrice}}</span>
+                        </div>
+                    
+                    </div>
+
+                    <!-- input range max price -->
+                    <div class="input-range">
+                        <div class="input-range-title">
+                            <span >end : </span>
+                        </div>
+                        <!-- input max price -->
+                        <div class="input">
+                            <input
+                            class="w-full"
+                            type="range"
+                            min="0"
+                            max="{{filterMaxPrice}}"
+                            step="{{stepRangePrice}}"
+                            [(ngModel)]="rawFilterForm.endPrice"
+                            name="endPrice"
+                            (ngModelChange)="changeFilterEndPrice($event)"
+                            >
+                        </div>
+                        <div class="input-value">
+                            <span>{{rawFilterForm.endPrice}}</span>
+                        </div>
+                    
+                    </div>                    
+                </div>       
             </div>
-            
-            
-            </div>
+
+            <!-- using for divide on 3 same part -->
             <div class="flex-1 w-1/3">            
             </div>
         </div>
+
+        <!-- action container -->
         <div class="flex justify-around">
-            <div>
-            <button 
-                [ngClass]="isEmptyForm() ? 'btn-non-active' : 'btn-active'"
-                (click)="onSubmitFilter()"
-                type="button"
-                [disabled]=isEmptyForm()
-            >
-                apply
-            </button>
+            <div class="btn-container">
+                <button
+                    class="btn-submit"
+                    [ngClass]="{'no-hover': !isChangedOption}"
+                    (click)="onSubmitFilter()"
+                    type="button"
+                >
+                    apply
+                </button>
             </div>
-            <div>
-            <button
-                class="btn-active"
-                (click)="clearFilterForm()"
-                type="button"
-            >
-                clear
-            </button>
+            <div class="btn-container">
+                <button
+                    class="btn-submit"
+                    [ngClass]="{'no-hover': isEmptyFilter}"
+                    (click)="clearFilterForm()"
+                    type="button"
+                >
+                    clear
+                </button>
             </div>
-            <div>
-            <button
-                [ngClass]="isEmptyForm() ? 'btn-non-active' : 'btn-active'"
-                (click)="onSubmitFilterWithSave()"
-                type="button"
-                [disabled]=isEmptyForm()
-            >
-                apply and save
-            </button>
+            <div class="btn-container">
+                <!-- [ngClass]="isEmptyForm() && !isChangedOption ? 'btn-non-active' : 'btn-active'" -->
+                <button
+                    class="btn-submit"
+                    [ngClass]="{'no-hover': isEmptyFilter || !isChangedOption}"
+                    (click)="onSubmitFilterWithSave()"
+                    type="button"
+                >
+                    apply and save                    
+                </button>
             </div>
         </div>
     </form>
 </div>
 
-<!-- <div class="absolute  w-full h-screen bg-green-500 ">
-    <app-warning-modal
-        
-        *ngIf="isShowModalWarning"
-        [modalInfo]="modalInfo"
 
-    ></app-warning-modal>  
-</div> -->
 
          
         
@@ -472,7 +564,7 @@
     <div 
         class="cell-option-non-active"
     >
-        <span class="flex w-3 h-3 my-auto  rounded-full border-b-2 border-green-500 animate-spin"></span>
+        <span class="loading-animate"></span>
     </div>
 </ng-template>
 

@@ -1,0 +1,141 @@
+.tabs-page {
+    @apply 
+        w-full h-full flex px-4 ;
+    
+    
+    .list {
+        @apply flex w-5/6  h-full;
+        
+
+        .item-list-container {
+            @apply 
+                flex-1 min-w-6  h-9
+                my-auto  border-2 border-blue-900 rounded-md
+                text-blue-200
+                hover:bg-white hover:text-blue-800;
+
+
+            .item-list{
+                @apply 
+                    w-full h-full flex;                 
+
+                
+
+                .btn-reset-container{
+                    @apply w-5 h-5 flex-none flex my-auto mx-1;
+
+                }
+                    
+            }
+        }
+
+        
+
+    
+    } 
+
+    .btn-item-container,
+    .btn-new-item-container{
+        @apply relative flex-1 w-full;  
+        
+        p {
+            @apply line-clamp-1;
+        }
+
+        
+    }    
+
+    .btn-new-item-container:hover{
+        @apply bg-white rounded-full;
+
+        .plus-item,
+        .plus-item::before{
+            @apply bg-blue-700;
+        }
+    }
+
+    .add-link-active{
+        .plus-item,
+        .plus-item::before{
+            @apply bg-white;
+        }
+    }
+
+    .link::before{
+        content: "";
+    }
+
+    .link::before{
+        @apply  absolute top-0 right-0 w-full h-full;        
+    }
+
+    .active-link{
+        @apply text-white;
+    }
+
+    .item-list-container:hover{
+        .active-link{
+            @apply text-blue-800;
+        }
+    }
+
+    
+    
+    .new-item-container{
+        @apply 
+            flex-none flex my-auto h-9 w-9 
+            rounded-full 
+            border-2 border-transparent;
+    }
+
+    
+}
+
+
+// reset button 
+.animation-btn::before,
+.animation-btn::after{
+    @apply 
+        absolute top-1/2 right-1/2 -mt-0.25 -mr-1.5 
+        h-0.5 w-3
+        bg-red-500;   
+    
+}
+
+.animation-btn::before,
+.animation-btn::after{
+    content: "";
+}
+
+.animation-btn::after{
+    @apply transform rotate-45 origin-center;
+    
+}
+
+.animation-btn::before{
+    @apply transform -rotate-45 origin-center;
+}
+
+
+// plus button animate
+.plus-item,
+.plus-item::before{
+    @apply 
+        absolute top-1/2 left-1/2 -mt-0.25 -ml-1.5
+        w-3 h-0.5 
+        bg-blue-200;
+}
+
+.plus-item::before{
+    content: "";
+}
+
+.plus-item::before{
+    @apply transform rotate-90 origin-center;
+}
+
+
+
+
+
+

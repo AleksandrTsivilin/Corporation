@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { offsetHeader } from 'src/app/components/mainPageComponent/nav-menu/nav-menu.component';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { ModalInfo } from 'src/app/interfaces/modal';
@@ -41,11 +42,17 @@ export class TemplateManagerComponent implements OnInit {
   @Output() closePage = new EventEmitter<ProductFilterForm | null>()
   
   
-
+  isScrolling:boolean=false;
   constructor() { }
 
   ngOnInit(): void {
     this.getTemplates();
+  }
+
+  @HostListener("document:scroll")
+  scrollfunction(){
+    console.log(this.isScrolling)
+    this.isScrolling = window.pageYOffset >= offsetHeader;
   }
 
   answerModal(answer:boolean){
@@ -80,20 +87,20 @@ export class TemplateManagerComponent implements OnInit {
       {id:1,title:"template 1"},
       {id:2,title:"template 2"},
       {id:3,title:"template 3"},
-      {id:2,title:"template 2"},
-      {id:3,title:"template 3"},
-      {id:2,title:"template 2"},
-      {id:3,title:"template 3"},
-      {id:2,title:"template 2"},
-      {id:3,title:"template 3"},
-      {id:2,title:"template 2"},
-      {id:3,title:"template 3"},
-      {id:2,title:"template 2"},
-      {id:3,title:"template 3"},
-      {id:2,title:"template 2"},
-      {id:3,title:"template 3"},
-      {id:2,title:"template 2"},
-      {id:3,title:"template 3"},
+      {id:2,title:"template 4"},
+      {id:3,title:"template 5"},
+      {id:2,title:"template 6"},
+      {id:3,title:"template 7"},
+      {id:2,title:"template 8"},
+      {id:3,title:"template 9"},
+      {id:2,title:"template 10"},
+      {id:3,title:"template 11"},
+      {id:2,title:"template 12"},
+      {id:3,title:"template 13"},
+      {id:2,title:"template 14"},
+      {id:3,title:"template 15"},
+      {id:2,title:"template 16"},
+      {id:3,title:"template 17"},
       {id:4,title:"template 40"}]
     
     this.templates.length>0 

@@ -11,6 +11,7 @@ import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
+import { TabService } from 'src/app/services/tab.service';
 
 
 @Component({
@@ -50,9 +51,15 @@ export class ProductMovementsComponent implements OnInit {
       private readonly updateService:MovementsUpdateService,
       private readonly updateServiceProduct:ProductUpdateService,
       private readonly storageService:StorageService,
-      private readonly productService:ProductsService
+      private readonly productService:ProductsService,
+      private readonly tabService:TabService
      
-      ) { }
+      ) {
+          tabService.addedTab.next({
+            title:"add movements products",
+            router: "/services/addMovementProduct"
+          })
+       }
 
   ngOnInit(): void {
 
@@ -167,6 +174,7 @@ export class ProductMovementsComponent implements OnInit {
     }];
     return headers;
   }
+
   private convert(rawHeader:string):string{
     console.log(rawHeader)
     if (!rawHeader.includes(" ")) return rawHeader;
@@ -178,6 +186,7 @@ export class ProductMovementsComponent implements OnInit {
     console.log(newHeader)
     return newHeader;
   }
+
   private setStatePage(path: string, isActive: boolean) {
     this.pageState={
       path:path,
@@ -205,20 +214,22 @@ export class ProductMovementsComponent implements OnInit {
         this.setStatePage("responce500",false);
       })
   }
+
   private setMovedProductAction(products : ProductInfo[]){
     this.movedProductActions=[];
     products.forEach(product=>{
-    if (!product.isBanned) this.movedProductActions.push({
-        id:product.id,
-        title:product.title,
-        avaiableCount:product.count,
-        countMoved:0,
-        isSelected:false,
-        price:product.price,
-        unit:product.unit.title
-    })
+      if (!product.isBanned) this.movedProductActions.push({
+          id:product.id,
+          title:product.title,
+          avaiableCount:product.count,
+          countMoved:0,
+          isSelected:false,
+          price:product.price,
+          unit:product.unit.title
+      })
     })
   }
+
   private getCurrentStorage(){
     this.storageService.getStorageByUser("ProductMovementManager")
     .subscribe((result)=>{

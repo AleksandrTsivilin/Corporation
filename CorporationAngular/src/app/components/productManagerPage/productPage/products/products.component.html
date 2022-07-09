@@ -1,11 +1,16 @@
+<!-- 
+
+<div *ngIf="pageState.isActive else toMoveNextPage" class="">
 
 
-<div *ngIf="pageState.isActive else toMoveNextPage" class="h-full">
-
-
+  
   <div class="product-container my-2 py-2  sm:-mx-6 sm:px-6 lg:-mx-8 pr-10 lg:px-8">
     
-    <div class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12">
+    
+    <div 
+       class="align-middle rounded-tl-lg rounded-tr-lg inline-block w-full py-4 overflow-hidden bg-white shadow-lg px-12"
+      [ngClass]="{'filter-menu-container-fixed' : isScrolling}"
+    >
         <div class="flex justify-between">
             <div class="flex">
               <button
@@ -51,11 +56,11 @@
             </div>
         </div>
     </div>
+
+    
     <div 
       class="detailed-search-container align-middle w-full py-4 px-12 "
-    >
-    <!-- class="detailed-search"
-    [ngClass]="{'detailed-search-active':isOpenDetailedSearch}" -->
+    >    
       <div         
         *ngIf="isOpenDetailedSearch"
       >
@@ -67,15 +72,19 @@
       </div>
       
     </div>
+
+    
     <app-warning-modal 
       *ngIf="isShowModalWarning"
       [modalInfo]="modalInfo"
       (answer)="closeWarningModal($event)"
     ></app-warning-modal>
-    <div class="h-full pb-16">
+
+    
+    <div class=" pb-16">
       
       <div 
-        class="table-container min-w-full shadow overflow-y-scroll bg-white shadow-dashboard px-8  rounded-bl-lg rounded-br-lg"
+        class="table-container min-w-full shadow  bg-white shadow-dashboard px-8  rounded-bl-lg rounded-br-lg"
         [ngClass]="{'table-container-active':isOpenDetailedSearch}"
       >
         
@@ -122,10 +131,10 @@
     </div>
   </div>
 
-</div> 
+</div>  -->
 
 
-
+<!-- 
 <ng-template #toMoveNextPage>
   <div class="h-full">
 
@@ -138,6 +147,8 @@
         (closePage)="closeTemplateManager($event)"
       >        
       </app-template-manager>
+
+
       <app-edit-product
         class="h-full"
         *ngSwitchCase="'editProduct'"
@@ -173,14 +184,350 @@
 </ng-template>
 
 
-<ng-template #showProccessLoading>
-  <span class="absolute right-1 top-1 inset-y-0" >
+
+
+
+ -->
+
+<!-- products page -->
+<div 
+    class="products-page"
+    *ngIf="pageState.isActive else toMoveNextPage">
+
+    <!-- menu products container -->
     <div 
-      class="flex w-3 h-3 my-auto  rounded-full border-b-2 border-green-500 animate-spin "
-    >  
+        class="menu-products-container"
+    >
+        <div class="menu-products relative">
+
+            <!-- button template container -->
+            <div class="template-btn-container">
+              <button class="template-btn">templates</button>
+            </div>
+
+            <!-- filter by title container -->
+            <div class="filter-by-title-container">
+              <div class="w-7/12 h-9 mr-auto">
+                <app-filter-by-title
+                    [search]="productFilterForm.title"
+                    [isComplitedSearch]="loadingOptionProductPage.isComplitedSearchByTitle"
+                    (filterCurrentProducts)="filterCurrentProductsByTitle($event)"
+                    (filterRefreshProducts)="filterRefreshProductsByTitle($event)"
+                  ></app-filter-by-title>
+              </div>
+            </div>
+            
+            <!-- button of  criteria container -->
+            <div class="criteria-btn-container">
+
+                <!-- button criteria  -->
+                <button 
+                    class="criteria-btn"
+                    (click)="toggleDetailedSearch()"    
+                    type="button"                  
+                >
+                    <span *ngIf="!isOpenDetailedSearch else setTextBtnCriteria">detail search</span>
+
+                    <!-- indicator filter is applying -->
+                    <span 
+                      class="absolute right-1 top-1 inset-y-0"
+                      *ngIf="loadingOptionProductPage.isComplitedSearchByCriteria else showProccessLoading"
+                    >
+                      <div 
+                        class="flex w-3 h-3 my-auto bg-white rounded-full "
+                        [ngClass]="isApplyFilter ? 'active-btn-detailed-search-outer' : 'non-active-btn-detailed-search-outer'"
+                      >
+                        <div 
+                          class="flex w-2 h-2 m-auto rounded-full"
+                          [ngClass]="isApplyFilter ? 'active-btn-detailed-search-inner' : 'non-active-btn-detailed-search-inner'"
+                        ></div>
+                      </div>
+                    </span>
+
+                    <!-- indicator open/close filter -->
+                    <!-- <span class="light-open-close-container"> -->
+                      <!-- <span class="light-open-close">.</span> -->
+                    <!-- </span> -->
+                </button>
+            </div>
+
+            <!-- filter by criteria container -->
+            <!-- <div class="absolute top-full right-0  w-full h-full">
+                <div 
+                    class="detailed-search-container align-middle w-full py-4 px-12 "
+                >    
+                      <div         
+                        *ngIf="isOpenDetailedSearch"
+                      >
+                        <app-filter-by-criteria
+                          [startFilterForm]="productFilterForm"
+                          (submitForm)="applyFilterByCriteria($event)"
+                        ></app-filter-by-criteria>
+                                
+                      </div>
+                  
+                </div>
+            </div> -->
+        </div>
+    </div>  
+
+    <!-- warning modal window -->
+    <app-warning-modal
+      *ngIf="isShowModalWarning"
+      [modalInfo]="modalInfo"
+      (answer)="closeWarningModal($event)"
+    ></app-warning-modal>
+
+    
+      
+    
+    
+    
+
+    <div class="products-criteria-container ">
+
+      <!-- product-criteria section -->
+      <div 
+          class="product-criteria-section"
+          [ngClass]="{'product-criteria-section-move' : !isOpenDetailedSearch}"
+      >        
+        <!-- filter criteria container -->
+        <div class="section">
+          <app-filter-by-criteria
+            *ngIf="isOpenDetailedSearch"
+            [startFilterForm]="productFilterForm"
+            (submitForm)="applyFilterByCriteria($event)"
+          ></app-filter-by-criteria>
+        </div>
+
+        <!-- table container -->
+        <div class="section">          
+          <div 
+            class="table-container"
+            [ngClass]="{'table-container-active' : isOpenDetailedSearch}"
+          >
+              <table class="table-section"  >
+                <thead >
+                    <tr>                  
+                        <th           
+                          class="table-header"
+                          *ngFor="let header of headersTable"
+                          
+                          [ngClass]="{'active-header':header.isOrdered}"
+                          
+                        >
+                          <span 
+                            class="uppercase text-gray-300" 
+                            [ngClass]="{'orderedTitle' : header.title===sortCriteria}"
+                          >
+                            {{header.title}}
+                          </span>
+                          <!-- <div [ngClass]="{'tooltip':header.isActive}">
+                            <span>
+                              {{header.title}}
+                            </span>
+                            <span 
+                              class="tooltiptext"
+                              *ngIf="header.isActive"
+                            >
+                              sort by
+                            </span>                            
+                          </div> -->
+                          <div 
+                              class="sort-controller"
+                              *ngIf="header.isOrdered"
+                          >
+                              <button 
+                                class="btn-asc"
+                                (click)=startOrderBy(header,1)
+                              >
+                                <span 
+                                  class="sort-asc"  
+                                  [ngClass]="{'sort-asc-active': header.title === sortCriteria && ascDirection===1}"                                
+                                ></span>
+                              </button> 
+                              <button 
+                                class="btn-desc"
+                                (click)=startOrderBy(header,-1)
+                              >
+                                <span class="sort-desc "></span>
+                              </button>
+                          </div>
+                        
+                        </th>    
+                    </tr>
+                </thead>
+                <tbody class="table-body">
+                  <tr app-product-item  
+                    class="product-item"     
+                    *ngFor="let productInfo of productsInfo let i=index"
+                    [ngClass]="{'product-item-warning':productInfo.isBanned}"
+                    [numProduct]="i+1"
+                    [productInfo]="productInfo" 
+                    [userProductPermissions]="userProductPermissions"
+                    (edit)="startEdit(productInfo)"
+                    (remove)="remove(productInfo)"
+                    (openProductInfo) = "openProductInfo(productInfo)"        
+                  >  
+                  </tr>                 
+                </tbody>
+              </table>
+
+
+          </div>  
+          
+        </div>
+      </div>
+
     </div>
-  </span>
+    <!-- table container -->
+    <!-- <div class="test-table overflow-hidden">
+      <div 
+        class="w-full h-full table-container relative   overflow-y-scroll"
+        [ngClass]="{'table-container-active' : isOpenDetailedSearch}"
+      >
+          <table class="min-w-full"  >
+            <thead >
+                <tr>                  
+                    <th           
+                      class="z-50 sticky top-0 h-16 px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-white bg-blue-900 tracking-wider"
+                      *ngFor="let header of headersTable"
+                      (click)=sortCol(header)
+                      [ngClass]="{'active-header':header.isActive}"
+                      
+                    >
+                    
+                      <div [ngClass]="{'tooltip':header.isActive}">
+                        <span>
+                          {{header.title}}
+                        </span>
+                        <span 
+                          class="tooltiptext"
+                          *ngIf="header.isActive"
+                        >sort by</span>
+                      </div>
+                    
+                    </th>    
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+              <tr app-product-item  
+                class="product-item"     
+                *ngFor="let productInfo of productsInfo let i=index"
+                [ngClass]="{'product-item-warning':productInfo.isBanned}"
+                [numProduct]="i+1"
+                [productInfo]="productInfo" 
+                [avaiablesPermissions]="avaiablesPermissions"
+                (edit)="startEdit(productInfo)"
+                (remove)="remove(productInfo)"
+                (openProductInfo) = "openProductInfo(productInfo)"        
+              >  
+              </tr>                 
+            </tbody>
+          </table>
+
+
+      </div>  
+    </div> -->
+</div>
+
+<!-- template area -->
+<ng-template #toMoveNextPage>
+    <div [ngSwitch]='pageState.path'>
+        
+        <!-- template page -->
+        <app-template-manager
+          *ngSwitchCase="'templatePage'"
+          (closePage)="closeTemplateManager($event)"
+        > </app-template-manager>
+
+        <!-- loading page -->
+        <app-loading-page
+          *ngSwitchCase="'loadingPage'"
+          [title]="'products'"
+        > </app-loading-page>
+
+        <!-- edit product page -->
+        <div class="">
+          <app-edit-product                     
+            *ngSwitchCase="'editProduct'"
+            [newProductForm]="newProductForm"
+            (updateProduct)="update($event)"
+            (close)="closeEditPage()"
+          >     
+      </app-edit-product> 
+        </div>
+
+        
+    </div>
+
+</ng-template>
+
+<ng-template #showProccessLoading>
+    <span class="absolute right-1 top-1 inset-y-0" >
+        <div 
+          class="flex w-3 h-3 my-auto  rounded-full border-b-2 border-green-500 animate-spin "
+        >  
+        </div>
+    </span>
+</ng-template>
+
+<ng-template #setTextBtnCriteria>
+  <span>close</span>
 </ng-template>
 
 
-
+<!-- <div 
+      class="table-container bg-red-600 pt-5"     
+       
+    >
+      <div>
+      
+        <div 
+          class="table-container min-w-full shadow  bg-white shadow-dashboard px-8  rounded-bl-lg rounded-br-lg"
+          [ngClass]="{'table-container-active':isOpenDetailedSearch}"
+        >
+          
+            <table class="min-w-full"  >
+              <thead >
+                  <tr [ngClass]="{'table-container-fixed' : isScrolling}">
+                    
+                      <th           
+                        class="z-50 sticky top-0 h-16 px-6 py-3 border-b-2 border-gray-300 text-left leading-4 text-white bg-blue-900 tracking-wider"
+                        *ngFor="let header of headersTable"
+                        (click)=sortCol(header)
+                        [ngClass]="{'active-header':header.isActive}"
+                        
+                      >
+                      
+                        <div [ngClass]="{'tooltip':header.isActive}">
+                          <span>
+                            {{header.title}}
+                          </span>
+                          <span 
+                            class="tooltiptext"
+                            *ngIf="header.isActive"
+                          >sort by</span>
+                        </div>
+                      
+                      </th>    
+                  </tr>
+              </thead>
+              <tbody class="bg-white">
+                <tr app-product-item  
+                  class="product-item"     
+                  *ngFor="let productInfo of productsInfo let i=index"
+                  [ngClass]="{'product-item-warning':productInfo.isBanned}"
+                  [numProduct]="i+1"
+                  [productInfo]="productInfo" 
+                  [avaiablesPermissions]="avaiablesPermissions"
+                  (edit)="startEdit(productInfo)"
+                  (remove)="remove(productInfo)"
+                  (openProductInfo) = "openProductInfo(productInfo)"        
+                >  
+                </tr>                 
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div> -->

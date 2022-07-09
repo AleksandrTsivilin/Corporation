@@ -40,7 +40,7 @@
                             ⚠️username is incorrect
                         </span>
                         <input
-                            class="input-field"
+                            class="_form-input"
                             [(ngModel)]="loginForm.username"
                             name="username"
                             type="text"
@@ -60,7 +60,7 @@
                             ⚠️password is incorrect
                         </span>
                         <input
-                            class="input-field"
+                            class="_form-input"
                             [(ngModel)]="loginForm.password"
                             #password="ngModel"
                             name="password"
@@ -74,10 +74,10 @@
                 </div>
 
                 <!-- submit button form -->
-                <div>
+                <div class="btn-submit-container">
                     <button
                         class="btn-submit"
-                        [ngClass]="{'btn-submit-active': !logForm.invalid}"
+                        [ngClass]="{'no-hover': logForm.invalid}"
                         type="submit"
                         [disabled]="logForm.invalid"
                     >

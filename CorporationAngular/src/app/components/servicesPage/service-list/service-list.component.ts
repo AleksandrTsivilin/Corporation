@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AvaiableUser } from 'src/app/interfaces/auth/avaiablesUserForm';
 import { TokenData } from 'src/app/interfaces/auth/tokenData';
+import { AvaiableServiceByRole } from 'src/app/interfaces/auth/avaiableServiceByRole';
 import { AuthService } from 'src/app/services/auth.service';
 
 enum CardTypes{
@@ -13,13 +14,13 @@ enum CardTypes{
   ADD_MOVEMENT_PRODUCTS 
 }
 
-interface UserPermissionsByRole{
-  canReadUsers:boolean,
-  canCreateUser:boolean,
-  canReadProducts:boolean,
-  canCreateProduct:boolean,
-  canCreateMovementProducts:boolean
-}
+// interface UserPermissionsByRole{
+//   canReadUsers:boolean,
+//   canCreateUser:boolean,
+//   canReadProducts:boolean,
+//   canCreateProduct:boolean,
+//   canCreateMovementProducts:boolean
+// }
 
 
 @Component({
@@ -38,7 +39,7 @@ export class ServiceListComponent implements OnInit {
   //   region:0
   // }
 
-  permissions:UserPermissionsByRole={
+  permissions:AvaiableServiceByRole={
     canCreateUser:false,
     canReadUsers:false,
     canCreateProduct:false,
@@ -48,7 +49,7 @@ export class ServiceListComponent implements OnInit {
   cards=CardTypes;
   selectedCard:number = CardTypes.NONE;
 
-  isSelectedService:boolean=true;
+  //isSelectedService:boolean=true;
   isScrolling:boolean=false;
   constructor(private readonly authService:AuthService) { }
 
@@ -68,7 +69,7 @@ export class ServiceListComponent implements OnInit {
   }
 
   selectService(){
-    this.isSelectedService=true;
+    //this.isSelectedService=true;
   }
 
   private createPermissions(avaiables:AvaiableUser[]) {
@@ -80,6 +81,7 @@ export class ServiceListComponent implements OnInit {
     })     
    
   }
+
   private setUserPermissions(avaiable: AvaiableUser) {
     if (avaiable.role.title!=='UserManager') return;
 

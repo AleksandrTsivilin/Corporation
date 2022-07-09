@@ -3,3 +3,9 @@ export interface HeaderTable{
     isActive:boolean,
     
 }
+
+
+export interface TableHeader{
+    title:string,
+    isOrdered:boolean
+}

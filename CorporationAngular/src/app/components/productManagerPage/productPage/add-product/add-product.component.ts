@@ -10,6 +10,7 @@ import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
+import { TabService } from 'src/app/services/tab.service';
 
 @Component({
   selector: 'app-add-product',
@@ -47,8 +48,15 @@ export class AddProductComponent implements OnInit {
     private readonly manufacturerService:ManufacturerService,
     private readonly categoryService:CategoryService,
     private readonly unitService:UnitService,
-    private readonly storageService:StorageService
-    ) { }
+    private readonly storageService:StorageService,
+    private readonly tabService:TabService
+    ) {
+
+      tabService.addedTab.next({
+        title:"add product",
+        router:"/services/addProduct"
+      })
+     }
 
   ngOnInit(): void {
     this.getCurrentStorage();

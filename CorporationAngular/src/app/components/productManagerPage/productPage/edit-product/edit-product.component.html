@@ -41,7 +41,7 @@
                 
                     <!-- title -->
                     <div>
-                        <div class="title-option">
+                        <div>
                             <span 
                                 class="warning-text"
                                 *ngIf="titleProduct.touched && titleProduct.invalid else addedLabelTitle"
@@ -51,11 +51,11 @@
                         </div> 
                         <div>
                             <input 
-                                class="input-form" 
+                                class="_form-input"
                                 [(ngModel)]="newProductForm.title"
                                 name="title" 
                                 type="text"
-                                required                             
+                                required                           
                                 #titleProduct="ngModel"
                             >
                         </div>
@@ -63,12 +63,12 @@
 
                     <!-- manufacturer -->
                     <div >
-                        <div class="title-option">
-                            <label>manufacturer</label>
+                        <div class="form-label-container">
+                            <label class="_form-label">manufacturer</label>
                         </div>               
                         <div>
                             <select 
-                                class="select-container"
+                                class="_form-select"
                                 [(ngModel)]=newProductForm.manufacturerId
                                 name="manufacturers"
                             >
@@ -86,12 +86,12 @@
 
                     <!-- category -->
                     <div >
-                        <div class="title-option">
-                            <label>category</label>
+                        <div class="form-label-container">
+                            <label class="_form-label">category</label>
                         </div>               
                         <div>
                             <select 
-                                class="select-container"
+                                class="_form-select"
                                 [(ngModel)]=newProductForm.categoryId
                                 name="categories"
                             >
@@ -109,12 +109,12 @@
 
                     <!-- unit -->
                     <div >
-                        <div class="title-option">
-                            <label>unit</label>
+                        <div class="form-label-container">
+                            <label class="_form-label">unit</label>
                         </div>               
                         <div>
                             <select 
-                                class="select-container"
+                                class="_form-select"
                                 [(ngModel)]=newProductForm.unitId
                                 name="units"
                             >
@@ -133,7 +133,7 @@
                     <!-- price -->
                     <div>
                         
-                        <div class="title-option">
+                        <div>
                             <span 
                                 class="warning-text"
                                 *ngIf="priceProduct.touched && priceProduct.invalid || !isValidPrice else addedLabelPrice"
@@ -143,7 +143,7 @@
                         </div>  
                         <div>
                             <input 
-                                class="input-form" 
+                                class="_form-input" 
                                 [(ngModel)]="newProductForm.price"
                                 name="price" 
                                 type="text"
@@ -156,7 +156,7 @@
                     </div>
 
                     <!-- submit button -->
-                    <div >
+                    <div class="btn-submit-container">
                         <button 
                             class="btn-submit"
                             type="submit"
@@ -181,11 +181,13 @@
 </div>
 
 <ng-template #addedLabelPrice>
-    <span>price</span>
+    <div>
+        <span class="_form-label pl-2">price</span>
+    </div>    
 </ng-template>
 
 <ng-template #addedLabelTitle>
-    <span>title</span>
+    <span class="_form-label pl-2">title</span>
 </ng-template>
 
 

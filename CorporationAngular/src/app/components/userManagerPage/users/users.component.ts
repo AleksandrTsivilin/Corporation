@@ -8,6 +8,7 @@ import { UserUpdateService } from 'src/app/services/userManager/userServices/use
 import { ConstantPool } from '@angular/compiler';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime, filter } from 'rxjs/operators';
+import { TabService } from 'src/app/services/tab.service';
 
 
 
@@ -19,7 +20,7 @@ import { debounceTime, filter } from 'rxjs/operators';
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit, OnDestroy {
+export class UsersComponent implements OnInit {
 
   
 
@@ -67,11 +68,14 @@ export class UsersComponent implements OnInit, OnDestroy {
   
   constructor(
     private readonly userService:UserService,
-    private readonly updateService:UserUpdateService) {  
-      console.log('constr users') 
+    private readonly updateService:UserUpdateService,
+    private readonly tabService:TabService) {  
+       tabService.addedTab.next({
+        title:"users",
+        router:"/services/users"
+       })
   }
-  ngOnDestroy(): void {console.log('users on Destroy');
-  }
+  
   
   ngOnInit(): void {
     this.getUsers();

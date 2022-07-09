@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { TabService } from 'src/app/services/tab.service';
 
 @Component({
   selector: 'app-personal-user-data',
@@ -7,7 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonalUserDataComponent implements OnInit {
 
-  constructor() { console.log('constr personal user data') }
+  constructor(private readonly tabService:TabService) { 
+
+      tabService.addedTab.next({
+        title:'personal data',
+        router:"/services/personal_data"
+      })
+   }
 
   ngOnInit(): void {
   }

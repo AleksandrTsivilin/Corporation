@@ -32,7 +32,7 @@ const routes: Routes = [
       {path:"personal_data",component:PersonalUserDataComponent},
       {path:"users",component:UsersComponent},
       {path:"addUser",component:AddUserComponent},
-      {path:"products",component:ProductsComponent},
+      {path:"products",component:ProductsComponent},   
       {path:"addProduct",component:AddProductComponent},
       {path:"addMovementProduct",component:ProductMovementsComponent}
     ]
