@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { fromEventPattern } from 'rxjs';
 import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
-import { ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
+import { FilterProductForm, ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
@@ -52,23 +52,22 @@ export class ProductsService {
   //   params.append("userId",userId);
   //   return this.client.get<StorageInfo>(urlGetStorageByUser,{params})
   // }
-  getByFilter(filter:ProductFilterForm){
+  getByFilter(filter:FilterProductForm){
     const urlGetByFilter="https://localhost:5001/api/Product/ByFilter";
     var formData= new FormData();
-    formData.append("Title",filter.title)
-    formData.append("regionId",filter.regionId?.toString());
-    formData.append("factoryId",filter.factoryId?.toString());
-    formData.append("storageId",filter.storageId?.toString());
-    formData.append("manufacturerId",filter.manufacturerId?.toString());
-    formData.append("categoryId",filter.categoryId?.toString());
-    formData.append("unitId",filter.unitId?.toString());
-    formData.append("startPrice",filter.startPrice.toString());
-    formData.append("endPrice",filter.endPrice.toString());
-    formData.append("startCount",filter.startCount.toString());
-    formData.append("endCount",filter.endCount.toString());
+    formData.append("Title",filter.searchString)
+    formData.append("regionId",filter.criteria.regionId?.toString());
+    formData.append("factoryId",filter.criteria.factoryId?.toString());
+    formData.append("storageId",filter.criteria.storageId?.toString());
+    formData.append("manufacturerId",filter.criteria.manufacturerId?.toString());
+    formData.append("categoryId",filter.criteria.categoryId?.toString());
+    formData.append("unitId",filter.criteria.unitId?.toString());
+    formData.append("startPrice",filter.criteria.startPrice.toString());
+    formData.append("endPrice",filter.criteria.endPrice.toString());
+    formData.append("startCount",filter.criteria.startCount.toString());
+    formData.append("endCount",filter.criteria.endCount.toString());
     console.log(filter)
     return this.client.post<ProductInfo[]>(urlGetByFilter,formData)
-    //params= new HttpParams().set("filter",filter)
   }
 
   getByFilterByTitle(title:string){

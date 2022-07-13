@@ -1,24 +1,25 @@
 .dialog-page{
     
-    @apply  
+    @apply 
+        z-50
         absolute top-0 right-0 h-screen w-full 
         flex
-        bg-gray-100 opacity-50;    
+        bg-gray-100 opacity-80;    
     
 
 
 
     .dialog-container{
-        @apply flex m-auto h-96 w-96;
+        @apply relative flex m-auto h-96 w-96;
        
 
         .dialog{
-            @apply flex m-auto text-green-600 space-x-4;
+            @apply flex m-auto text-lg font-bold text-green-600 space-x-4;
 
             .spinner{
                 @apply 
                     w-16 h-16 
-                    border-b-2 border-green-500 
+                    border-b-2 border-green-600 
                     rounded-full animate-spin duration-1000;
             }
 

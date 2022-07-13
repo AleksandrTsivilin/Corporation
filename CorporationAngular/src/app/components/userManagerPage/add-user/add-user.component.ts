@@ -78,7 +78,7 @@ export class AddUserComponent implements OnInit {
     private readonly updateService:UserUpdateService,
     private readonly tabService:TabService
     ) {
-      tabService.addedTab.next({
+      tabService.addedTab({
         title:"add user",
         router:"/services/addUser"
       })

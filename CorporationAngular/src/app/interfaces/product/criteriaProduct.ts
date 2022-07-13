@@ -1,7 +1,4 @@
-import { CriteriaProduct } from "./criteriaProduct"
-
-export interface ProductFilterForm{
-    title:string,
+export interface CriteriaProduct{
     regionId:number,
     factoryId:number,
     storageId:number,
@@ -12,10 +9,4 @@ export interface ProductFilterForm{
     endPrice:number,
     startCount:number,
     endCount:number
-}
-
-
-export interface FilterProductForm{
-    searchString:string,
-    criteria:CriteriaProduct
 }

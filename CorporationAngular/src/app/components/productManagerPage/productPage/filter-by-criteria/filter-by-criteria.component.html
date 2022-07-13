@@ -1,19 +1,7 @@
 
-<!-- <div
-    class="absolute  h-screen  w-full  bg-green-300 -bottom-28 right-12 z-40"
-    *ngIf="isShowModalWarning"    
->
-    <app-warning-modal [modalInfo]="modalInfo"></app-warning-modal>
 
-</div> -->
 
-<!-- <div
-    class="flex absolute h-screen w-full inset-y-auto  bg-green-500  z-40"
-    *ngIf="isShowModalWarning"    
->
-    <app-warning-modal [modalInfo]="modalInfo"></app-warning-modal>
-
-</div> -->
+<!-- modal -->
 <div>
     <app-warning-modal     
         *ngIf="isShowModalWarning" 
@@ -23,19 +11,25 @@
 </div>
 
 
-<!-- <div class="absolute w-12 h-12 bg-white inset-0">44</div> -->
-
-<!-- <div class="absolute h-96 w-96 bg-red-400 top-0 left-0"></div> -->
-
 <!-- filter by criteria container -->
 <div 
     class="filter-by-criteria-container"
->   
+>  
+    <!-- form title container -->
+    <div class="form-title-container">
+        <div 
+            class="form-title"
+        > 
+            filter name : <span *ngIf="!isChangedOption else newTitleFilter">{{startFilter.title}}</span>
+        </div>
+    </div>
     <!-- form  -->
     <form 
         class="form-container"
         #filterForm="ngForm"
     >
+        
+        
         <!-- location filter -->
         <div class="section-filter-row">
             <!-- regions -->
@@ -50,7 +44,7 @@
                     <!-- button reset container -->
                     <app-reset-button
                         class="btn-reset-container"
-                        *ngIf="isSelectedSomething(rawFilterForm.regionId)"
+                        *ngIf="isSelectedSomething(rawFilter.regionId) && loadingOptionFilterByCriteria.isComplitedLoadingRegions"
                         (reset)="resetSelectedRegion()"
                     ></app-reset-button>
                 </div>
@@ -60,7 +54,7 @@
                     <select 
                         class="_form-select"
                         *ngIf="regions.length>1 else showRegionTitle"                    
-                        [(ngModel)]=rawFilterForm.regionId
+                        [(ngModel)]=rawFilter.regionId
                         name="regions"
                         (change)="changeFilterRegion()"
                     >
@@ -88,7 +82,7 @@
                     <!-- reset button container -->
                     <app-reset-button
                         class="btn-reset-container"
-                        *ngIf="isSelectedSomething(rawFilterForm.factoryId)"
+                        *ngIf="isSelectedSomething(rawFilter.factoryId) && loadingOptionFilterByCriteria.isCompliteLoadingFactories"
                         (reset)="resetSelectedFactory()"
                     ></app-reset-button>
                 </div>
@@ -98,7 +92,7 @@
                     <select                         
                         class="_form-select"
                         *ngIf="factories.length>1 else showFactoryTitle"
-                        [(ngModel)]=rawFilterForm.factoryId
+                        [(ngModel)]=rawFilter.factoryId
                         name="factories"
                         (change)="changeFilterFactory()"              
                         
@@ -130,7 +124,7 @@
                     <!-- reset button container -->
                     <app-reset-button
                         class="btn-reset-container"
-                        *ngIf="isSelectedSomething(rawFilterForm.storageId)"
+                        *ngIf="isSelectedSomething(rawFilter.storageId) && loadingOptionFilterByCriteria.isComplitedLoadingStorages"
                         (reset)="resetSelectedStorage()"
                     ></app-reset-button>
                 </div>
@@ -140,7 +134,7 @@
                     <select 
                         class="_form-select"
                         *ngIf="storages.length>1 else showStorageTitle"
-                        [(ngModel)]=rawFilterForm.storageId
+                        [(ngModel)]=rawFilter.storageId
                         name="storages"
                         (change)="changedFilter()"
                     >
@@ -173,7 +167,7 @@
                     <!-- reset button container -->
                     <app-reset-button
                         class="btn-reset-container"
-                        *ngIf="isSelectedSomething(rawFilterForm.manufacturerId)"
+                        *ngIf="isSelectedSomething(rawFilter.manufacturerId) && loadingOptionFilterByCriteria.isComplitedLoadingManufacturers"
                         (reset)="resetSelectedManufacturer()"
                     ></app-reset-button>
                 </div>
@@ -182,7 +176,7 @@
                 <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingManufacturers else loadingOption">
                     <select 
                         class="_form-select"
-                        [(ngModel)]=rawFilterForm.manufacturerId
+                        [(ngModel)]=rawFilter.manufacturerId
                         name="manufacturers"
                         (change)="changedFilter()"
                     >
@@ -209,7 +203,7 @@
                     <!-- reset button container -->
                     <app-reset-button
                         class="btn-reset-container"
-                        *ngIf="isSelectedSomething(rawFilterForm.categoryId)"
+                        *ngIf="isSelectedSomething(rawFilter.categoryId) && loadingOptionFilterByCriteria.isComplitedLoadingCategories"
                         (reset)="resetSelectedCategory()"
                     ></app-reset-button>
                 </div>
@@ -218,7 +212,7 @@
                 <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingCategories else loadingOption">   
                     <select 
                         class="_form-select"
-                        [(ngModel)]=rawFilterForm.categoryId
+                        [(ngModel)]=rawFilter.categoryId
                         name="categories"
                         (change)="changedFilter()"
                     >
@@ -243,7 +237,7 @@
                     <!-- reset button container -->
                     <app-reset-button
                         class="btn-reset-container"
-                        *ngIf="isSelectedSomething(rawFilterForm.unitId)"
+                        *ngIf="isSelectedSomething(rawFilter.unitId) && loadingOptionFilterByCriteria.isComplitedLoadingUnits"
                         (reset)="resetSelectedUnit()"
                     ></app-reset-button>
                 </div>
@@ -252,7 +246,7 @@
                 <section *ngIf="loadingOptionFilterByCriteria.isComplitedLoadingUnits else loadingOption">
                     <select 
                         class="_form-select"
-                        [(ngModel)]=rawFilterForm.unitId
+                        [(ngModel)]=rawFilter.unitId
                         name="unit"
                         (change)="changedFilter()"
                     >
@@ -347,7 +341,7 @@
                                 min="0"
                                 max="{{filterMaxCount-1}}"
                                 step="{{stepRangeCount}}"
-                                [(ngModel)]="rawFilterForm.startCount"
+                                [(ngModel)]="rawFilter.startCount"
                                 name="startCount"
                                 (ngModelChange)="changeFilterStartCount($event)"
                             >
@@ -355,7 +349,7 @@
 
                         <!-- value input range min count  -->
                         <div class="input-value">
-                            <span>{{rawFilterForm.startCount}}</span>
+                            <span>{{rawFilter.startCount}}</span>
                         </div>
                     
                     </div>
@@ -373,7 +367,7 @@
                             min="0"
                             max="{{filterMaxCount}}"
                             step="{{stepRangeCount}}"
-                            [(ngModel)]="rawFilterForm.endCount"
+                            [(ngModel)]="rawFilter.endCount"
                             name="endCount"
                             (ngModelChange)="changeFilterEndCount($event)"
                             >
@@ -381,7 +375,7 @@
 
                         <!-- value input range max count container -->
                         <div class="input-value">
-                            <span>{{rawFilterForm.endCount}}</span>
+                            <span>{{rawFilter.endCount}}</span>
                         </div>
                     
                     </div>
@@ -464,13 +458,13 @@
                                 min="0"
                                 max="{{filterMaxPrice-1}}"
                                 step="{{stepRangePrice}}"
-                                [(ngModel)]="rawFilterForm.startPrice"
+                                [(ngModel)]="rawFilter.startPrice"
                                 name="startPrice"
                                 (ngModelChange)="changeFilterStartPrice($event)"
                             >
                         </div>
                         <div class="input-value">
-                            <span>{{rawFilterForm.startPrice}}</span>
+                            <span>{{rawFilter.startPrice}}</span>
                         </div>
                     
                     </div>
@@ -488,13 +482,13 @@
                             min="0"
                             max="{{filterMaxPrice}}"
                             step="{{stepRangePrice}}"
-                            [(ngModel)]="rawFilterForm.endPrice"
+                            [(ngModel)]="rawFilter.endPrice"
                             name="endPrice"
                             (ngModelChange)="changeFilterEndPrice($event)"
                             >
                         </div>
                         <div class="input-value">
-                            <span>{{rawFilterForm.endPrice}}</span>
+                            <span>{{rawFilter.endPrice}}</span>
                         </div>
                     
                     </div>                    
@@ -508,6 +502,8 @@
 
         <!-- action container -->
         <div class="flex justify-around">
+
+            <!-- apply -->
             <div class="btn-container">
                 <button
                     class="btn-submit"
@@ -518,6 +514,8 @@
                     apply
                 </button>
             </div>
+
+            <!-- clear -->
             <div class="btn-container">
                 <button
                     class="btn-submit"
@@ -528,15 +526,17 @@
                     clear
                 </button>
             </div>
+
+            <!-- apply and save -->
             <div class="btn-container">
-                <!-- [ngClass]="isEmptyForm() && !isChangedOption ? 'btn-non-active' : 'btn-active'" -->
                 <button
                     class="btn-submit"
-                    [ngClass]="{'no-hover': isEmptyFilter || !isChangedOption}"
+                    [ngClass]="{'no-hover': isEmptyFilter || ( !isChangedOption && startFilter.id!==0)}"
                     (click)="onSubmitFilterWithSave()"
                     type="button"
                 >
-                    apply and save                    
+                    
+                    apply and save 
                 </button>
             </div>
         </div>
@@ -548,24 +548,66 @@
          
         
 <ng-template #showRegionTitle>
-    <div *ngFor="let region of regions" class="cell-option">{{region.title}}</div>
+    <!-- <div *ngFor="let region of regions" class="cell-option">{{region.title}}</div> -->
+    <select                         
+        class="_form-select"
+    >        
+        <option                           
+            *ngFor="let region of regions" 
+        >
+            {{region.title}}
+        </option>
+    </select>
     
 </ng-template>
 
 <ng-template #showFactoryTitle>
-    <div *ngFor="let factory of factories" class="cell-option">{{factory.title}}</div>
+    <select                         
+        class="_form-select"
+    >        
+        <option                           
+            *ngFor="let factory of factories" 
+        >
+            {{factory.title}}
+        </option>
+    </select>
+    <!-- <div class="bg-black">
+        <div *ngFor="let factory of factories" class="cell-option">{{factory.title}}</div>
+    </div>    -->
 </ng-template>
 
 <ng-template #showStorageTitle>
-    <div *ngFor="let storage of storages" class="cell-option">{{storage.title}}</div>
+    <select                         
+        class="_form-select"
+    >        
+        <option                           
+            *ngFor="let storage of storages" 
+        >
+            {{storage.title}}
+        </option>
+    </select>
 </ng-template>
 
 <ng-template #loadingOption>
-    <div 
-        class="cell-option-non-active"
+    <!-- <div 
+        class="cell-option"
     >
+        <span class="loading-animate"></span>5
+    </div> -->
+    <div class="relative">
+        <select                         
+            class="_form-select"
+        >          
+        </select>
+        <!-- <div class="loading-animate-container">
+            <span class="loading-animate"></span>
+        </div> -->
         <span class="loading-animate"></span>
     </div>
+</ng-template>
+
+<ng-template #newTitleFilter>
+    <span>new template</span>
 </ng-template>
 
 

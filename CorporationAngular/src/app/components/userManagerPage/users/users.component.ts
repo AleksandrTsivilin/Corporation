@@ -70,7 +70,7 @@ export class UsersComponent implements OnInit {
     private readonly userService:UserService,
     private readonly updateService:UserUpdateService,
     private readonly tabService:TabService) {  
-       tabService.addedTab.next({
+       tabService.addedTab({
         title:"users",
         router:"/services/users"
        })

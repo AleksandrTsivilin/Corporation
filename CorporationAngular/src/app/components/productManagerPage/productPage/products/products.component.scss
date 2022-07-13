@@ -1,92 +1,8 @@
 
-// .product-container{
-  
-// }
 
 
 
-// .table-container{
-  
-//   //@apply transform translate-y-0 duration-500;
-// }
 
-// .table-container-active{
-//   //@apply transform translate-y-full duration-500;
-//   // transform: translateY(100%);
-//   // transition-duration: ;
-// }
-
-
-
-// .tooltip:hover .tooltiptext {
-//     visibility: visible;
-//     opacity: 1;
-// }
-
-// .tooltip {
-//     position: relative;
-//     display: inline-block;
-// }
-  
-// .tooltip .tooltiptext {
-//     visibility: hidden;
-//     width: 120px;
-//     color: #fff;
-//     text-align: center;
-//     border-radius: 6px;
-//     padding: 5px 0;
-//     position: absolute;
-//     z-index: 1;
-//     bottom: 125%;
-//     left: 50%;
-//     margin-left: -60px;
-//     opacity: 0;
-//     transition: opacity 0.3s;
-// }
-  
-// .tooltip .tooltiptext::after {
-//   content: "";
-//   position: absolute;
-//   top: 100%;
-//   left: 50%;
-//   margin-left: -5px;
-//   border-width: 5px;
-//   border-color: white transparent transparent transparent;
-// }
-  
-// .tooltip:hover .tooltiptext {
-//   visibility: visible;
-//   opacity: 1;
-// }
-
-  
-
-
-  
-  // .filter-price-active:hover{
-  //   @apply border-2 border-blue-500;
-  // }
-
-
-  // .filter-menu-container-fixed{
-  //   @apply z-50 fixed top-service-title-short right-0 md:top-service-title;
-  // }
-
-// .products-page{
-//   //@apply bg-gray-600 ;
-//   height: calc(100vh - 64px - 64px - 48px - 32px);
-//     // .menu-products-container-fixed{
-//     //    @apply fixed w-full top-service-title-short bg-gray-600  md:top-service-title;
-//     // }
-// // menu products container
-//     .menu-products-container{
-//         @apply  flex w-full h-16 px-4;
-//          //background-color: aqua;
-
-        
-       
-//     }
-// }
 
 
 .products-page{
@@ -216,7 +132,6 @@
                             }
                         
                             .sort-asc{
-                              //  #d6d3d1
                               border-bottom: 5px solid #d6d3d1;  
                             }
 

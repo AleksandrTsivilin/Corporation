@@ -10,6 +10,7 @@ import { NewUserWithAvaiables } from '../interfaces/userManagerPage/newUserWithA
 import { AvaiableUser } from '../interfaces/auth/avaiablesUserForm';
 import { PermissionInfo } from '../interfaces/userManagerPage/permissionInfo';
 import { UserSignalrService } from './userManager/userServices/user-signalr.service';
+import { LocalStorageService } from './local-storage.service';
 
 
 @Injectable({
@@ -30,8 +31,7 @@ export class AuthService {
   token$=new BehaviorSubject<string | null>(null);
   
   constructor(
-    private readonly client:HttpClient) { 
-    }
+    private readonly client:HttpClient) { }
 
   login(loginForm:LoginForm):Observable<TokenData>{
     const urlLogin = "https://localhost:5001/api/AuthToken";

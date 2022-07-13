@@ -55,7 +55,7 @@ export class ProductMovementsComponent implements OnInit {
       private readonly tabService:TabService
      
       ) {
-          tabService.addedTab.next({
+          tabService.addedTab({
             title:"add movements products",
             router: "/services/addMovementProduct"
           })

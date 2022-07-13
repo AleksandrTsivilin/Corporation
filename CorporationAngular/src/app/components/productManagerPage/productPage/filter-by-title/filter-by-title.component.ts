@@ -1,14 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 
 @Component({
   selector: 'app-filter-by-title',
   templateUrl: './filter-by-title.component.html',
   styleUrls: ['./filter-by-title.component.scss']
 })
-export class FilterByTitleComponent implements OnInit {
+export class FilterByTitleComponent implements OnInit, OnDestroy {
 
   
   @Input() search:string="";
@@ -21,8 +20,12 @@ export class FilterByTitleComponent implements OnInit {
   private prevSearch:string=""
   
   constructor() { }
+  ngOnDestroy(): void {
+    console.log('onDestroy');
+  }
 
   ngOnInit(): void {
+    console.log('onInit filter by title')
     this.prevSearch=this.search;
     this.search$.next(this.search)
     this.setSearchLis();

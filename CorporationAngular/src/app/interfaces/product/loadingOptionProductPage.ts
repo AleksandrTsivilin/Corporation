@@ -1,6 +1,7 @@
 export interface LoadingOptionProductPage{
     isComplitedSearchByCriteria:boolean,
-    isComplitedSearchByTitle:boolean
+    isComplitedSearchByTitle:boolean,
+    isLoadingProducts:boolean
 }
 
 export interface LoadingOptionFilterByCriteria{

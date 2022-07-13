@@ -152,13 +152,7 @@ module.exports = {
               'margin': '8px 0',                               
               'color':'#111827',
               'font-size': '14px',
-              'line-height': '16px',
-              '&:focus':{
-                'border': '1px solid #6366f1'              
-            },
-            '&:placeholder':{
-              'color': '#6b7280'
-            }
+              'line-height': '16px'
           },
 
           // messages

@@ -52,7 +52,7 @@ export class AddProductComponent implements OnInit {
     private readonly tabService:TabService
     ) {
 
-      tabService.addedTab.next({
+      tabService.addedTab({
         title:"add product",
         router:"/services/addProduct"
       })

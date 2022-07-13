@@ -11,8 +11,8 @@ export class WarningModalComponent implements OnInit {
 
 
   @Input() modalInfo:ModalInfo={
-    title:"nnnnnnnnnnn",
-    message:"kkkkkkkkkkkkkkkkkkk",
+    title:"",
+    message:"",
     position:Positions.center
   }
 

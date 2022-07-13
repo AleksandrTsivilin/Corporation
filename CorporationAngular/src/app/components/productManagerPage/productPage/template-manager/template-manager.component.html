@@ -1,11 +1,15 @@
 
+
+
+
+
+<!-- template manager page -->
 <div 
     class="template-manager-container"
-    
+    *ngIf="!isShowModal else toShowModal"
 >
     <div
-        class="template-manager"  
-        *ngIf="pageState.isActive else toMoveNextPage"    
+        class="template-manager"     
     >
         
         
@@ -21,7 +25,7 @@
             <div class="list-templates ">
                 <div 
                     class="item-list"
-                    *ngFor="let template of templates"
+                    *ngFor="let template of templates let i=index"
                 >
                     <div class="item-title">
                         <div class="title">
@@ -38,7 +42,7 @@
                     <div class="item-control">
                         <button 
                             class="btn"
-                            (click)="apply(template.id)"
+                            (click)="apply(i)"
                         >apply</button>
                     </div>                
                 </div>
@@ -46,23 +50,17 @@
         
 
     </div>   
- </div>
+</div>
 
+<!-- modal  -->
+<ng-template #toShowModal>
+    <app-warning-modal 
 
- <ng-template #toMoveNextPage>
-    <div 
-        class="h-full w-full"
-        [ngSwitch]="pageState.path"
+        *ngIf="isShowModal"
+        [modalInfo]="modalInfo"
+        (answer)="answerModal($event)"
     >
-        <app-modal
-            *ngSwitchCase="'modal'"
-            [modalInfo]="modalInfo"
-            (answer)="answerModal($event)"
-        ></app-modal>
-        <!-- <app-products
-            *ngSwitchCase="'products'"
-            [avaiablesPermissions]="avaiablesPermissions"
-            [productFilterForm]="selectedTemplate"
-        ></app-products> -->
-    </div>
+
+    </app-warning-modal>
 </ng-template>
+
