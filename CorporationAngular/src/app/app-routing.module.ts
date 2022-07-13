@@ -15,7 +15,7 @@ import { ServiceListComponent } from './components/servicesPage/service-list/ser
 import { ServicesPageComponent } from './components/servicesPage/services-page/services-page.component';
 import { AddUserComponent } from './components/userManagerPage/add-user/add-user.component';
 import { UsersComponent } from './components/userManagerPage/users/users.component';
-import { RoleSelectorGuard } from './guards/role-selector.guard';
+import { ServicesGuard } from './guards/services.guard';
 
 const routes: Routes = [
   {path:"",component:HomePageComponent,pathMatch:"full"},
@@ -26,7 +26,7 @@ const routes: Routes = [
   {
     path:"services",
     component:ServicesPageComponent,
-    canActivate : [RoleSelectorGuard],
+    canActivate : [ServicesGuard],
     children:[
       {path:"",component:ServiceListComponent},
       {path:"personal_data",component:PersonalUserDataComponent},
