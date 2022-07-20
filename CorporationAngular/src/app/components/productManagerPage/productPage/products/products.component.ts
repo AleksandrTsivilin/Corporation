@@ -133,12 +133,7 @@ export class ProductsComponent implements OnInit {
   private _isOrdered:boolean=false;
   
 
-  pageState:PageState={
-    path:"templatePage",
-    isActive:false
-  }
-
-  _pageState:ProductsPageState={
+  pageState:ProductsPageState = {
     innerRouter:"templatePage"
   }
   
@@ -152,33 +147,28 @@ export class ProductsComponent implements OnInit {
     private readonly localStorageSevice:LocalStorageService
     ) { 
 
-      tabService.addedTab(
-        {
-          title:"products",
-          router:'/services/products'
-        })
+      this.createTab();
 
-      const state =  this.localStorageSevice.getSettingsProductsPage();
-      if (state !==null) {
-        this.pageState.path = state.innerRouter;       
-      }
+      this.loadPageState();
     }
 
   ngOnInit(): void {
 
-    
-    this.getHeadersTable(); 
+    console.log("on init products")
+    this.getHeadersTable();    
+      
+    //this.getProducts();
+
     this.getStorages(); 
 
     this.setProductsInfoLis();  
     
     this.subscribeTokenData();
-
-    
+  
   }
 
   toggleTemplate(){
-    this.pageState.path = 'template'
+    this.pageState.innerRouter = "template";
   }
 
   applyCriteria(filter:TemplateFilter | null){
@@ -197,8 +187,7 @@ export class ProductsComponent implements OnInit {
   }
 
   loadProducts(filter:TemplateFilter | null){
-    console.log(filter)
-    this.pageState.path="";
+    this.savePageState("innerRouter","")
     this.isApplyFilter = filter !== null;
     if (filter !==null){      
       this.filterProductForm.criteria = filter.criteria;
@@ -277,9 +266,8 @@ export class ProductsComponent implements OnInit {
       categoryId:editProduct.category.id,
       unitId:editProduct.unit.id
     }
-    
-    this.setStatePage("editProduct",false);
-    
+
+    this.savePageState("innerRouter", "editProduct");
     
   }
 
@@ -294,17 +282,17 @@ export class ProductsComponent implements OnInit {
   }
 
   closeEditPage(){
-    this.setStatePage("",true)
+    this.savePageState("innerRouter", "");
     this.editedProductId=0;
   }
 
   openProductInfo(product:ProductInfo){
-    this.setStatePage("productInfo",false);
+    this.savePageState("innerRouter", "productInfo");
     this.selectedProduct = product;
   }
 
   closeProductInfo(){
-    this.setStatePage("",true);
+    this.pageState.innerRouter=""
   }
 
   startOrderBy(header:TableHeader, direction:number){
@@ -334,14 +322,14 @@ export class ProductsComponent implements OnInit {
   }
 
   
-  private setStatePage(path: string, isActive: boolean) {
-    this.pageState={
-      path:path,
-      isActive:isActive
-    }
+  // private setStatePage(path: string, isActive: boolean) {
+  //   this.pageState={
+  //     path:path,
+  //     isActive:isActive
+  //   }
 
-    this.localStorageSevice.setSettingsProductsPage({innerRouter:path})
-  }
+  //   this.localStorageSevice.setSettingsProductsPage({innerRouter:path})
+  // }
 
   private updateProducts(changes:number[]){
     if (changes.length===0) return;
@@ -420,20 +408,23 @@ export class ProductsComponent implements OnInit {
   private getProductsByDefault(){
       this.service.getProductsByAccess()
       .subscribe((result)=>{       
-        this.productsInfo=result;              
-        this.setStatePage("",true);
+        this.productsInfo=result; 
+        this.savePageState("innerRouter","")
+        //this.pageState.innerRouter=""             
+        
         this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
         this.loadingOptionProductPage.isLoadingProducts = false;
     },(err)=>{
-      this.setStatePage("responce500",false);
+      //this.pageState.innerRouter="responce500";
+      this.savePageState("innerRouter","responce500")
     })
   }
 
   private getProductsByFilter(){
     this.service.getByFilter(this.filterProductForm)
       .subscribe(products=>{
-        this.productsInfo=products
-        this.setStatePage("",true);
+        this.productsInfo=products;
+        this.pageState.innerRouter="";
         this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
         this.loadingOptionProductPage.isComplitedSearchByTitle=true;
         this.loadingOptionProductPage.isLoadingProducts = false;
@@ -474,5 +465,25 @@ export class ProductsComponent implements OnInit {
     this.filterProductForm.criteria.endPrice=maxPrice;
 
      
+  }
+
+  private loadPageState(){
+    const state = this.localStorageSevice.get<ProductsPageState>('pt');
+    if (state!==null) {
+      this.pageState.innerRouter = state.innerRouter;
+    }  
+  }
+
+  private createTab(){
+    this.tabService.addedTab(
+      {
+        title:"products",
+        router:'/services/products'
+      })
+  }
+
+  private savePageState(key : string, value: string){
+    this.pageState[key] = value;
+    this.localStorageSevice.set("pt",this.pageState);
   }
 }

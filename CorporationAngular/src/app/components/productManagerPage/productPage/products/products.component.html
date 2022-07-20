@@ -64,7 +64,7 @@
 <!-- products page -->
 <div 
     class="products-page"
-    *ngIf="pageState.path==='' else toMoveNextPage">
+    *ngIf="pageState.innerRouter ==='' else toMoveNextPage">
 
     <!-- menu products container -->
     <div 
@@ -307,7 +307,7 @@
 
 <!-- template area -->
 <ng-template #toMoveNextPage>
-    <div [ngSwitch]='pageState.path'>
+    <div [ngSwitch]='pageState.innerRouter'>
         
         <!-- template page -->
         <app-template-manager
