@@ -3,8 +3,6 @@ import { Component, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
-import { ModeMainPageService, PageSizes } from 'src/app/services/modeMainPage/mode-main-page.service';
-
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 
 // enum PageSizes{
@@ -20,9 +18,9 @@ import { StorageService } from 'src/app/services/productPage/StoragesService/sto
 })
 export class MainPageComponent implements OnInit {
 
-  pageSizes=PageSizes;
+  //pageSizes=PageSizes;
   //pageSize$=new BehaviorSubject<number>(PageSizes.LONG);
-  pageSize:number=PageSizes.LONG;
+  //pageSize:number=PageSizes.LONG;
 
   isLogin:boolean=false;  
   duration:number=0;
@@ -36,14 +34,14 @@ export class MainPageComponent implements OnInit {
 
   constructor(
     //private readonly location:Location,
-    private readonly modePageService:ModeMainPageService
+    //private readonly modePageService:ModeMainPageService
    
     ) { console.log('constr main page')}
 
   ngOnInit(): void {
-    this.modePageService.pageSize$.subscribe(newSize=>{
-      this.pageSize=newSize;
-    })
+    // this.modePageService.pageSize$.subscribe(newSize=>{
+    //   this.pageSize=newSize;
+    // })
     
     //if(this.location.path()!=="") this.modePageService.pageSize$.next(PageSizes.MIDDLE)
     

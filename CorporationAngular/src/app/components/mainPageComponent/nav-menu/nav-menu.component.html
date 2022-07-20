@@ -1,4 +1,5 @@
 
+<!-- nav menu container -->
 <div 
     class="nav-menu-page "
     [ngClass]="{'fixed-pos' : isFixed}"
@@ -16,7 +17,7 @@
                 >Home</a>                
             </li>
 
-            <!-- log in -->
+            <!-- services -->
             <li *ngIf="isLogin" class="link">
                 <a
                     routerLink="services"
@@ -54,7 +55,7 @@
                 </a>                
             </li>
             
-            <!-- log out -->
+            <!-- log in -->
             <li *ngIf="!isLogin else logout" class="link">
                 <a
                     routerLink="login"
@@ -65,7 +66,7 @@
     </div>
 </div>
 
-
+<!-- log out  -->
 <ng-template #logout>
     <li>
         <button

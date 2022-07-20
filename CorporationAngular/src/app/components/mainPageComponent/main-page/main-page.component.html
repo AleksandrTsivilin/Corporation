@@ -389,7 +389,6 @@
         <!-- main-page-header-container -->
         <div 
             class="main-page-header-container"
-            *ngIf="pageSize===pageSizes.LONG else loadMainPageFixedSize"
             style="background-image: url('../../assets/images/mainPage.jpg')"
         >
 
@@ -439,15 +438,13 @@
         <!-- router-container -->
         <div 
             class="router-container" 
-            [ngClass]="{'router-container-fixed-size' : pageSize===pageSizes.MIDDLE}"
         >
             <div class="h-full"><router-outlet></router-outlet></div>
         </div>
 
         <!-- footer-container -->
-        <div 
-            [ngClass]="pageSize===pageSizes.LONG ? 'footer-container' : 'footer-container-fixed-size-page'">
-            <div *ngIf="pageSize===pageSizes.LONG" >footer</div>
+        <div>
+            <div>footer</div>
         </div>
 
     </div>
