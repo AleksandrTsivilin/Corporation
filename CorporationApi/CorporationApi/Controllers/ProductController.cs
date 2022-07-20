@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CorporationApi.Filters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Models.ProductModels;
 using Repositories.Specifications;
@@ -16,6 +17,7 @@ namespace CorporationApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequireRole("ProductManager", "ProductMovementManager")]
     public class ProductController : ControllerBase
     {
         private readonly IProductService _service;
@@ -60,9 +62,6 @@ namespace CorporationApi.Controllers
         [HttpGet("filterByTitle")]
         public async Task<IActionResult> GetProductsByFilterByTitle(string title)
         {
-            //Console.WriteLine(filter.RegionId);
-            //var claims = HttpContext.User.Identity as ClaimsIdentity;
-            //var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
             var identityInfo = GetIdentityInfo("ProductManager");
             var products = await _service.GetByFilterByTitle(title, identityInfo);
             return Ok(products);

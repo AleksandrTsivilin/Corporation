@@ -54,7 +54,16 @@ namespace CorporationApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddCors(option => option.AddPolicy("devCors",
-                opts => opts.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()));
+                opts =>
+                {
+                    opts
+                    //.AllowAnyOrigin()
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    //.AllowAnyOriginWithCredentials()
+                    .SetIsOriginAllowed(origin => true) // allow any origin
+                    .AllowCredentials();
+                }));
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -71,19 +80,19 @@ namespace CorporationApi
 
             //services.AddScoped<IProductServiceTemplate, ProductServiceTemplate>();
 
-            
-            
-            
+
+
+            services.AddHttpContextAccessor();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitService, UnitService>();
-            
+
             //services.AddScoped<IRepository<Storage>, Repository<Storage>>();
             services.AddScoped<IRepository<CategoryProduct>, Repository<CategoryProduct>>();
             services.AddScoped<IRepository<ManufacturerProduct>, Repository<ManufacturerProduct>>();
             services.AddScoped<IRepository<UnitProduct>,Repository<UnitProduct>>();
-            
+
             services.AddScoped<DBContext>();
             services.AddSingleton<RNGCryptoServiceProvider>();
 
@@ -102,6 +111,17 @@ namespace CorporationApi
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
+                    options.Events = new JwtBearerEvents
+                    {
+                        OnMessageReceived = context =>
+                        {
+                            var token = context.Request.Cookies["tn"];
+
+                            context.Token = token;
+                            return System.Threading.Tasks.Task.CompletedTask;
+                        }
+                    };
+
                     options.TokenValidationParameters =
                         new TokenValidationParameters
                         {
@@ -115,8 +135,6 @@ namespace CorporationApi
                         };
                 });
         }
-
-        
 
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

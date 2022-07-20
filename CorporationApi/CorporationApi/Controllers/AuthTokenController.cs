@@ -17,13 +17,15 @@ namespace CorporationApi.Controllers
     {
         private readonly IUserService _userService;
         private readonly IAuthService _authService;
+        private readonly IHttpContextAccessor _accessor;
 
 
         public AuthTokenController
-            (IUserService userService, IAuthService authService)
+            (IUserService userService, IAuthService authService, IHttpContextAccessor accessor)
         {
             _userService = userService;
             _authService = authService;
+            _accessor = accessor;
 
         }
 
@@ -33,12 +35,28 @@ namespace CorporationApi.Controllers
             var user = await _userService
                 .TryGetUser(model);
 
-            if (user is null) 
+            if (user is null)
                 return Unauthorized();
 
             var encodedJwt = _authService.CreateJWT(user);
 
+            createCookieToken(encodedJwt);
+
             return Ok(new { token = encodedJwt });
+        }
+
+        private void createCookieToken(string encodedJwt)
+        {
+            _accessor.HttpContext.Response.Cookies
+                .Append(
+                    "tn",
+                    encodedJwt,
+                    new CookieOptions
+                    {
+                        HttpOnly = true,
+                        Secure = true,
+                        SameSite = SameSiteMode.None
+                    });
         }
 
         [HttpPost("registration")]

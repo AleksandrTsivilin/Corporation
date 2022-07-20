@@ -18,6 +18,8 @@ namespace Services.IdentityUserServices
         public IdentityUserModel GetIdentity(ClaimsIdentity claims, string role)
         {
             string access = GetAccessUser(claims, role);
+
+
             var userLocation = GetLocationUser(claims);
             int? userId = GetUserId(claims);
             return userId is null
