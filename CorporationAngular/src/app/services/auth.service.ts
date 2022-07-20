@@ -6,10 +6,8 @@ import { TokenData } from '../interfaces/auth/tokenData';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginForm } from '../interfaces/auth/loginForm';
 import { NewUser } from '../interfaces/auth/newUser';
-import { NewUserWithAvaiables } from '../interfaces/userManagerPage/newUserWithAvaiables';
 import { AvaiableUser } from '../interfaces/auth/avaiablesUserForm';
 import { PermissionInfo } from '../interfaces/userManagerPage/permissionInfo';
-import { UserSignalrService } from './userManager/userServices/user-signalr.service';
 import { LocalStorageService } from './local-storage.service';
 
 
@@ -17,6 +15,7 @@ import { LocalStorageService } from './local-storage.service';
   providedIn: 'root'
 })
 export class AuthService {
+  private key:string = "td";
 
   tokenData : TokenData={
     userId:0,
@@ -31,7 +30,10 @@ export class AuthService {
   token$=new BehaviorSubject<string | null>(null);
   
   constructor(
-    private readonly client:HttpClient) { }
+    private readonly client:HttpClient,
+    private readonly localStorage:LocalStorageService) {
+      this.getDataPage();
+    }
 
   login(loginForm:LoginForm):Observable<TokenData>{
     const urlLogin = "https://localhost:5001/api/AuthToken";
@@ -44,11 +46,20 @@ export class AuthService {
             this.token$.next(t.token);
             const tokenData= this.readToken(t);
             this.tokenData$.next(tokenData);
+
+            this.localStorage.clear();
+            this.localStorage.set(this.key, tokenData);
             return tokenData;
         })
         
       )
       
+  }
+
+  logout(){
+    this.token$.next(null);
+    this.tokenData$.next(null);
+    this.localStorage.clear();
   }
 
   addUser(newUser:NewUser){
@@ -86,6 +97,7 @@ export class AuthService {
       const jsonAvaiables = JSON.parse(avaiablesJson);
       
       const avaiables = this.createAvaiables(jsonAvaiables);
+
       return {
         userId:userId,
         username:username,
@@ -117,6 +129,11 @@ export class AuthService {
       })
     }
     return avaiables;
+  }
+
+  private getDataPage(){
+    const data =  this.localStorage.get<TokenData>(this.key);
+    if (data !==null) this.tokenData$.next(data)
   }
   
 }

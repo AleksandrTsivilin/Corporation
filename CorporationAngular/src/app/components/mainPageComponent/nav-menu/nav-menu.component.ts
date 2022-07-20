@@ -20,8 +20,8 @@ export class NavMenuComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.authService.token$.subscribe(result=>{
-      this.isLogin = result === null
+    this.authService.tokenData$.subscribe(tokenData=>{
+      this.isLogin = tokenData === null
         ? false
         : true; 
                  
@@ -35,6 +35,6 @@ export class NavMenuComponent implements OnInit {
 
 
   toLogout(){
-    this.authService.token$.next(null);
+    this.authService.logout();
   }
 }

@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { PageState } from '../interfaces/pageState';
 import { ProductsPageState } from '../interfaces/product/productsPageState';
-import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,21 +7,27 @@ import { AuthService } from './auth.service';
 export class LocalStorageService  {
   
 
-  pageState:PageState={
-    path:"aaa",
-    isActive:true
-  }
-
-  constructor(private readonly authService:AuthService) {
-    authService.token$.subscribe(token=>{
-      if (token === null) localStorage.clear();
-    })
-  }
+  constructor() {  }
 
   remove(title: string) {
     localStorage.removeItem(title);
   }
 
+  set(key:string, value:object){
+
+    const valueStr = JSON.stringify(value);
+    localStorage.setItem(key,valueStr);
+  }
+
+  get<T> (key:string) : T | null {
+    const objStr = localStorage.getItem(key);
+    
+    return objStr === null 
+      ? null
+      : JSON.parse(objStr);
+  }
+
+  // Attention it is deprecate methods. Use set and get
   setSettingsProductsPage(pageState:ProductsPageState){
 
     
@@ -31,6 +35,8 @@ export class LocalStorageService  {
     localStorage.setItem('products', stateStr);
   }
 
+
+  // Attention it is deprecate methods. Use set and get
   getSettingsProductsPage():ProductsPageState | null{
     const stateStr = localStorage.getItem('products');
     
@@ -45,7 +51,6 @@ export class LocalStorageService  {
   
 
   clear(){
-    console.log("localStorage clear")
     localStorage.clear();
   }
 }
