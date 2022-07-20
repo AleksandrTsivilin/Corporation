@@ -21,6 +21,7 @@
     "@aspnet/signalr": "^1.0.27",
     "@tailwindcss/forms": "^0.3.4",
     "@tailwindcss/line-clamp": "^0.4.0",
+    "ngx-cookie-service": "^14.0.1",
     "ngx-toastr": "^14.2.1",
     "rxjs": "~6.6.0",
     "toastr": "^2.1.4",
