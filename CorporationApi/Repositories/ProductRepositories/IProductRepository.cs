@@ -18,5 +18,6 @@ namespace Repositories.ProductRepositories
         Task<List<Product>> GetByUser(int departmentId);
         Task<List<Product>> GetByFilter(FilterProductModel filter, ProductSpecificationByAccess specification);
         Task<List<Product>> GetByFilterByTitle(string title, ProductSpecificationByAccess specification);
+        Task<Product> GetById(int id, ProductSpecificationByAccess specification);
     }
 }

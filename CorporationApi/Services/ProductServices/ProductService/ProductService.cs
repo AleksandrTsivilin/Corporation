@@ -30,7 +30,7 @@ namespace Services.ProductServices.ProductService
         {
             var specification = new ProductSpecificationByAccess(identity);
             var products = await _repository.GetByAccess(specification);
-            return CreateProductModel(products);
+            return CreateProductModels(products);
             //return products.Select(product => new ProductModel
             //{
             //    Id = product.Id,
@@ -82,7 +82,7 @@ namespace Services.ProductServices.ProductService
         {
             var specification = new ProductSpecificationByAccess(identity);
             var products = await _repository.GetByFilter(filter,specification);
-            return CreateProductModel(products);
+            return CreateProductModels(products);
 
             //return products.Select(product => new ProductModel
             //{
@@ -109,6 +109,16 @@ namespace Services.ProductServices.ProductService
             //    IsBanned = product.IsBanned
             //}).ToList();
         }
+
+        public async Task<ProductModel> GetById(int id, IdentityUserModel identity)
+        {
+            var specification = new ProductSpecificationByAccess(identity);
+            var product = await _repository.GetById(id, specification);
+            return product is null
+                ? null
+                : CreateProductModel(product);
+        }
+
         private List<ProductModel> GetProductModels(List<Product> products)
         {
             return products.Select(product => new ProductModel
@@ -142,7 +152,7 @@ namespace Services.ProductServices.ProductService
         {
             var specification = new ProductSpecificationByAccess(identity);
             var products = await _repository.GetByFilterByTitle(title, specification);
-            return CreateProductModel(products);
+            return CreateProductModels(products);
 
             //return products.Select(product => new ProductModel
             //{
@@ -169,8 +179,8 @@ namespace Services.ProductServices.ProductService
             //    IsBanned = product.IsBanned
             //}).ToList();
         }
-        
-        private List<ProductModel> CreateProductModel (List<Product> products)
+
+        private List<ProductModel> CreateProductModels(List<Product> products)
         {
             return products.Select(product => new ProductModel
             {
@@ -197,6 +207,36 @@ namespace Services.ProductServices.ProductService
                 IsBanned = product.IsBanned
             }).ToList();
         }
+
+
+        private ProductModel CreateProductModel(Product product)
+        {
+            return  new ProductModel
+            {
+                Id = product.Id,
+                Title = product.Title,
+                Price = product.Price,
+                Count = product.ProductStorages
+                            .Sum(ps => ps.CountProduct),
+                Manufacturer = new ManufacturerModel
+                {
+                    Id = product.Manufacture.Id,
+                    Title = product.Manufacture.Title
+                },
+                Category = new CategoryModel
+                {
+                    Id = product.Category.Id,
+                    Title = product.Category.Title
+                }, //product.Category.Title,
+                Unit = new UnitModel
+                {
+                    Id = product.Unit.Id,
+                    Title = product.Unit.Title
+                }, //product.Unit.Title,
+                IsBanned = product.IsBanned
+            };
+        }
+
     }
 
 

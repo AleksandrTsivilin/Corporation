@@ -127,7 +127,7 @@ namespace Repositories.ProductRepositories
                 var storages = GetUpdatedStorages(editProduct.ProductStorages);
                 return storages;
             }
-            catch(Exception ex)
+            catch(Exception ex )
             {
                 transaction.Rollback();
                 return null;
@@ -210,6 +210,35 @@ namespace Repositories.ProductRepositories
             return productStorage.Select(ps => ps.Product).Distinct<Product>().ToList(); ;
 
         }
+
+        public async Task<Product> GetById(int id, ProductSpecificationByAccess specification)
+        {
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var productStorage = await _context.Product_Storage
+               .Include(ps => ps.Product)
+                   .ThenInclude(product => product.Manufacture)
+               .Include(ps => ps.Product)
+                   .ThenInclude(product => product.Category)
+               .Include(ps => ps.Product)
+                   .ThenInclude(product => product.Unit)
+               .Include(ps => ps.Storage)
+                   .ThenInclude(storage => storage.Department)
+                       .ThenInclude(department => department.Factory)
+                           .ThenInclude(factory => factory.Region)
+               .Where(specification.Expression)
+               .FirstOrDefaultAsync(ps => ps.Product.Id == id);
+                return productStorage?.Product;
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                return null;
+            }
+
+        }
+
         private List<int> GetUpdatedStorages(ICollection<ProductStorage> productStorages)
         {
             var storages = new List<int>();
