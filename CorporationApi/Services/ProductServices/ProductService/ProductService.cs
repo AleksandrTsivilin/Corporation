@@ -22,7 +22,6 @@ namespace Services.ProductServices.ProductService
 
         public ProductService(IProductRepository repository)
         {
-            //_context = context;
             _repository = repository;
         }
 
@@ -77,66 +76,16 @@ namespace Services.ProductServices.ProductService
             var specification = new ProductSpecificationByAccess(identity);
             var products = await _repository.GetByFilterByTitle(title, specification);
             return GetListModels(products);
-
-            //return products.Select(product => new ProductModel
-            //{
-            //    Id = product.Id,
-            //    Title = product.Title,
-            //    Price = product.Price,
-            //    Count = product.ProductStorages
-            //                .Sum(ps => ps.CountProduct),
-            //    Manufacturer = new ManufacturerModel
-            //    {
-            //        Id = product.Manufacture.Id,
-            //        Title = product.Manufacture.Title
-            //    },
-            //    Category = new CategoryModel
-            //    {
-            //        Id = product.Category.Id,
-            //        Title = product.Category.Title
-            //    }, //product.Category.Title,
-            //    Unit = new UnitModel
-            //    {
-            //        Id = product.Unit.Id,
-            //        Title = product.Unit.Title
-            //    }, //product.Unit.Title,
-            //    IsBanned = product.IsBanned
-            //}).ToList();
         }
 
         private List<ProductModel> GetListModels(List<Product> products)
         {
-            //return products.Select(product => new ProductModel
-            //{
-            //    Id = product.Id,
-            //    Title = product.Title,
-            //    Price = product.Price,
-            //    Count = product.ProductStorages
-            //                .Sum(ps => ps.CountProduct),
-            //    Manufacturer = new ManufacturerModel
-            //    {
-            //        Id = product.Manufacture.Id,
-            //        Title = product.Manufacture.Title
-            //    },
-            //    Category = new CategoryModel
-            //    {
-            //        Id = product.Category.Id,
-            //        Title = product.Category.Title
-            //    }, //product.Category.Title,
-            //    Unit = new UnitModel
-            //    {
-            //        Id = product.Unit.Id,
-            //        Title = product.Unit.Title
-            //    }, //product.Unit.Title,
-            //    IsBanned = product.IsBanned
-            //}).ToList();
-
             return products.Select(product => GetModel(product)).ToList();
         }
 
         private ProductModel GetModel(Product product)
         {
-            return  new ProductModel
+            return new ProductModel
             {
                 Id = product.Id,
                 Title = product.Title,
@@ -153,12 +102,12 @@ namespace Services.ProductServices.ProductService
                 {
                     Id = product.Category.Id,
                     Title = product.Category.Title
-                }, //product.Category.Title,
+                },
                 Unit = new UnitModel
                 {
                     Id = product.Unit.Id,
                     Title = product.Unit.Title
-                }, //product.Unit.Title,
+                },
                 IsBanned = product.IsBanned
             };
         }
