@@ -142,7 +142,8 @@ namespace Services.ProductServices.ProductService
                 Title = product.Title,
                 Price = product.Price,
                 Count = product.ProductStorages
-                            .Sum(ps => ps.CountProduct),
+                    .Sum(ps => ps.CountProduct),
+
                 Manufacturer = new ManufacturerModel
                 {
                     Id = product.Manufacture.Id,
