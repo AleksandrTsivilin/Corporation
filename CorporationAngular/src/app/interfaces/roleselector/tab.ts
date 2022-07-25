@@ -8,5 +8,6 @@ export interface Tab{
 
 export interface TabRouter {
     title:string,
-    router:string
+    router:string,
+    additional:string
 }

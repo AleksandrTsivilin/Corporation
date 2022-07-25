@@ -13,9 +13,10 @@
                     <a 
                         class="link"
                         routerLink="{{tab.router}}" 
+                        [state] = "{ router: tab.router}"
                         routerLinkActive="active-link"
                     >
-                        <p>{{tab.title}}</p>
+                        <p>{{tab.title}} {{tab.additional}}</p>
                     </a>
                 </button>
 
@@ -23,7 +24,7 @@
                 <div class="btn-reset-container">
                     <app-reset-button
                         class="w-full h-full"
-                        (reset)="remove(i)"
+                        (reset)="remove(tab.title)"
                     ></app-reset-button>
                     <!-- <button 
                         class="btn-reset"

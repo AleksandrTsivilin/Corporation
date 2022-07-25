@@ -13,25 +13,32 @@ export class TabService {
 
   tabs$ = new BehaviorSubject<TabRouter []> ([]);
   
-  constructor(private readonly authService:AuthService,
+  constructor(
+    private readonly authService:AuthService,
     private readonly router:Router,
-    private readonly localStorage:LocalStorageService) {
+    private readonly localStorage:LocalStorageService
+    ) {
 
       this.tokenSubscribe();    
   }  
 
   addedTab(newTab:TabRouter){
 
-    if (this.isHasTab(newTab)) return;
+    if (this.isHasTab(newTab)) {
+      this.update(newTab);
+      return;
+    }
 
     const tabs = this.tabs$.value;
     tabs.push(newTab);
     this.tabs$.next(tabs);
   }
 
-  remove(index:number){
+  remove(title:string){
 
     const tabs = this.tabs$.value;
+
+    const index = tabs.findIndex(tab=>tab.title === title);
 
     const removedTab = tabs[index]
 
@@ -81,5 +88,11 @@ export class TabService {
 
   private clearByItem(item:TabRouter){
     this.localStorage.remove(item.title);
+  }
+
+  private update(newTab:TabRouter){
+    const tabs = this.tabs$.value;
+    const index = tabs.findIndex(tab=> tab.title === newTab.title);
+    tabs[index] = newTab;
   }
 }

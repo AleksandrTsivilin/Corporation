@@ -94,7 +94,177 @@ export class TemplateManagerComponent implements OnInit {
         endCount:maxCount,
         startPrice:0,
         endPrice:maxPrice
-      }},]
+      }},
+      {id:1, title:"Kiev region", criteria:{
+        regionId:1,
+        factoryId:0,
+        storageId:0,
+        manufacturerId:0,
+        categoryId:0,
+        unitId:0,
+        startCount:0,
+        endCount:maxCount,
+        startPrice:0,
+        endPrice:maxPrice
+    }},
+    {id:2, title:"Odessa region", criteria:{
+      regionId:2,
+      factoryId:0,
+      storageId:0,
+      manufacturerId:0,
+      categoryId:0,
+      unitId:0,
+      startCount:0,
+      endCount:maxCount,
+      startPrice:0,
+      endPrice:maxPrice
+    }},
+    {id:1, title:"Kiev region", criteria:{
+      regionId:1,
+      factoryId:0,
+      storageId:0,
+      manufacturerId:0,
+      categoryId:0,
+      unitId:0,
+      startCount:0,
+      endCount:maxCount,
+      startPrice:0,
+      endPrice:maxPrice
+  }},
+  {id:2, title:"Odessa region", criteria:{
+    regionId:2,
+    factoryId:0,
+    storageId:0,
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0,
+    startCount:0,
+    endCount:maxCount,
+    startPrice:0,
+    endPrice:maxPrice
+  }},
+  {id:1, title:"Kiev region", criteria:{
+    regionId:1,
+    factoryId:0,
+    storageId:0,
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0,
+    startCount:0,
+    endCount:maxCount,
+    startPrice:0,
+    endPrice:maxPrice
+}},
+{id:2, title:"Odessa region", criteria:{
+  regionId:2,
+  factoryId:0,
+  storageId:0,
+  manufacturerId:0,
+  categoryId:0,
+  unitId:0,
+  startCount:0,
+  endCount:maxCount,
+  startPrice:0,
+  endPrice:maxPrice
+}},
+      {id:1, title:"Kiev region", criteria:{
+        regionId:1,
+        factoryId:0,
+        storageId:0,
+        manufacturerId:0,
+        categoryId:0,
+        unitId:0,
+        startCount:0,
+        endCount:maxCount,
+        startPrice:0,
+        endPrice:maxPrice
+    }},
+    {id:2, title:"Odessa region", criteria:{
+      regionId:2,
+      factoryId:0,
+      storageId:0,
+      manufacturerId:0,
+      categoryId:0,
+      unitId:0,
+      startCount:0,
+      endCount:maxCount,
+      startPrice:0,
+      endPrice:maxPrice
+    }},
+    {id:1, title:"Kiev region", criteria:{
+      regionId:1,
+      factoryId:0,
+      storageId:0,
+      manufacturerId:0,
+      categoryId:0,
+      unitId:0,
+      startCount:0,
+      endCount:maxCount,
+      startPrice:0,
+      endPrice:maxPrice
+  }},
+  {id:2, title:"Odessa region", criteria:{
+    regionId:2,
+    factoryId:0,
+    storageId:0,
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0,
+    startCount:0,
+    endCount:maxCount,
+    startPrice:0,
+    endPrice:maxPrice
+  }},
+  {id:1, title:"Kiev region", criteria:{
+    regionId:1,
+    factoryId:0,
+    storageId:0,
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0,
+    startCount:0,
+    endCount:maxCount,
+    startPrice:0,
+    endPrice:maxPrice
+}},
+{id:2, title:"Odessa region", criteria:{
+  regionId:2,
+  factoryId:0,
+  storageId:0,
+  manufacturerId:0,
+  categoryId:0,
+  unitId:0,
+  startCount:0,
+  endCount:maxCount,
+  startPrice:0,
+  endPrice:maxPrice
+}},
+{id:1, title:"Kiev region", criteria:{
+  regionId:1,
+  factoryId:0,
+  storageId:0,
+  manufacturerId:0,
+  categoryId:0,
+  unitId:0,
+  startCount:0,
+  endCount:maxCount,
+  startPrice:0,
+  endPrice:maxPrice
+}},
+{id:2, title:"Odessa region", criteria:{
+regionId:2,
+factoryId:0,
+storageId:0,
+manufacturerId:0,
+categoryId:0,
+unitId:0,
+startCount:0,
+endCount:maxCount,
+startPrice:0,
+endPrice:maxPrice
+}},
+
+    ]
     
     this.isShowModal = this.templates.length>0
   }

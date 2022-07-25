@@ -9,7 +9,11 @@ import { CreateAccountComponent } from './components/loginPageComponent/create-a
 import { PersonalUserDataComponent } from './components/personalDataPage/personal-user-data/personal-user-data.component';
 import { ProductMovementsComponent } from './components/productManagerPage/moveProductPage/product-movements/product-movements.component';
 import { AddProductComponent } from './components/productManagerPage/productPage/add-product/add-product.component';
+import { EditProductComponent } from './components/productManagerPage/productPage/edit-product/edit-product.component';
+import { ProductItemInfoComponent } from './components/productManagerPage/productPage/product-item-info/product-item-info.component';
+import { ProductPageComponent } from './components/productManagerPage/productPage/product-page/product-page.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
+import { TemplateManagerComponent } from './components/productManagerPage/productPage/template-manager/template-manager.component';
 import { RoleSelectorComponent } from './components/roleSelectorComponent/role-selector/role-selector.component';
 import { ServiceListComponent } from './components/servicesPage/service-list/service-list.component';
 import { ServicesPageComponent } from './components/servicesPage/services-page/services-page.component';
@@ -32,7 +36,16 @@ const routes: Routes = [
       {path:"personal_data",component:PersonalUserDataComponent},
       {path:"users",component:UsersComponent},
       {path:"addUser",component:AddUserComponent},
-      {path:"products",component:ProductsComponent},   
+      {
+        path:"products",
+        component:ProductPageComponent,
+        children:[
+          {path:"",component:ProductsComponent},
+          {path:"templates",component:TemplateManagerComponent},          
+          {path:"edit",component:EditProductComponent},
+          {path:"details",component:ProductItemInfoComponent}
+        ]
+      },   
       {path:"addProduct",component:AddProductComponent},
       {path:"addMovementProduct",component:ProductMovementsComponent}
     ]

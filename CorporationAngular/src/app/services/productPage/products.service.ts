@@ -25,25 +25,25 @@ export class ProductsService {
     return this.client.get<ProductInfo[]>(urlGetProducts);
   }
 
-  getManufacturers(){
-    const urlGetManufacturers="https://localhost:5001/api/Product/manufacturer";
-    return this.client.get<ManufacturerInfo[]>(urlGetManufacturers);
-  }
+  // getManufacturers(){
+  //   const urlGetManufacturers="https://localhost:5001/api/Product/manufacturer";
+  //   return this.client.get<ManufacturerInfo[]>(urlGetManufacturers);
+  // }
 
-  getCategories(){
-    const urlGetCategories="https://localhost:5001/api/Product/category";
-    return this.client.get<CategoryInfo[]>(urlGetCategories);
-  }
+  // getCategories(){
+  //   const urlGetCategories="https://localhost:5001/api/Product/category";
+  //   return this.client.get<CategoryInfo[]>(urlGetCategories);
+  // }
 
-  getUnits(){
-    const urlGetUnits="https://localhost:5001/api/Product/unit";
-    return this.client.get<UnitInfo []>(urlGetUnits);
-  }
+  // getUnits(){
+  //   const urlGetUnits="https://localhost:5001/api/Product/unit";
+  //   return this.client.get<UnitInfo []>(urlGetUnits);
+  // }
 
-  getStorages(){
-    const urlGetStorage="https://localhost:5001/api/Product/storage";
-    return this.client.get<StorageInfo []>(urlGetStorage);
-  }
+  // getStorages(){
+  //   const urlGetStorage="https://localhost:5001/api/Product/storage";
+  //   return this.client.get<StorageInfo []>(urlGetStorage);
+  // }
 
   // getStorageByUser(userId:number){
   //   console.log("getStorageByUser")
@@ -66,16 +66,19 @@ export class ProductsService {
     formData.append("endPrice",filter.criteria.endPrice.toString());
     formData.append("startCount",filter.criteria.startCount.toString());
     formData.append("endCount",filter.criteria.endCount.toString());
-    console.log(filter)
     return this.client.post<ProductInfo[]>(urlGetByFilter,formData)
   }
 
   getByFilterByTitle(title:string){
-    console.log(title)
     const urlGetFilterByTitle = "https://localhost:5001/api/Product/filterByTitle"
     let params = new HttpParams().set("title",title);
-    console.log(params.get("title"))
     return this.client.get<ProductInfo[]>(urlGetFilterByTitle,{params});
+  }
+
+  getById(id:number){
+    const urlGetById="https://localhost:5001/api/Product/ById";
+    let params = new HttpParams().set("id", id)
+    return this.client.get<ProductInfo>(urlGetById,{params});
   }
   
 }

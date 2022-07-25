@@ -1,4 +1,5 @@
 export interface ProductsPageState{
     [x: string]: any;
-    innerRouter:string
+    innerRouter:string,
+    edit_id:number
 }

@@ -16,11 +16,23 @@
             <!-- <div class="template-header">
                 <h1 class="header-text">Select template</h1>
             </div> -->
-            <div class="btn-section" [ngClass]="{'btn-section-fixed' : isScrolling}">
+            <!-- <div class="btn-section" [ngClass]="{'btn-section-fixed' : isScrolling}">
                 <button 
                     class="btn"
-                    (click)="close()"
-                >❌</button>
+                >
+                    <a routerLink="/services/products">❌</a>
+                </button>
+            </div> -->
+            <div class="btn-close-container">
+                <button 
+                    class="btn-close" 
+                >
+                    <span class="btn-animate"></span>
+                    <a
+                        routerLink="/services/products" 
+                        class="link"
+                    ></a>
+                </button>
             </div>
             <div class="list-templates ">
                 <div 
@@ -42,8 +54,15 @@
                     <div class="item-control">
                         <button 
                             class="btn"
-                            (click)="apply(i)"
-                        >apply</button>
+                            (click)="apply(i)"                           
+                        >
+                            apply
+                            <a
+                                routerLink="/services/products" 
+                                [state]="{template:template}" 
+                                class="link"
+                            ></a>  
+                        </button>                                              
                     </div>                
                 </div>
             </div>

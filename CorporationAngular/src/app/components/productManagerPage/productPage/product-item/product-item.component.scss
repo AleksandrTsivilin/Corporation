@@ -2,3 +2,12 @@
     @apply bg-red-200;
 }
 
+.btn-edit{
+    @apply relative;
+}
+
+.link{
+    @apply
+        absolute top-0 right-0
+        w-full h-full;
+}

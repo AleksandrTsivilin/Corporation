@@ -25,7 +25,7 @@ export class ServiceTabsComponent implements OnInit{
     })
   }
 
-  remove(index:number){
-    this.tabService.remove(index);
+  remove(title:string){
+    this.tabService.remove(title);
   }
 }

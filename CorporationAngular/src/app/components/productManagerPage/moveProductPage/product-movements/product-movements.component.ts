@@ -57,7 +57,8 @@ export class ProductMovementsComponent implements OnInit {
       ) {
           tabService.addedTab({
             title:"add movements products",
-            router: "/services/addMovementProduct"
+            router: "/services/addMovementProduct",
+            additional:""
           })
        }
 

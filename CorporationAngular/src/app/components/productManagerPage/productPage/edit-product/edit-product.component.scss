@@ -10,7 +10,7 @@
 // button close container
     .btn-close-container{
         @apply 
-            z-50
+            z-40
             fixed top-service-title mt-1 right-2
             flex justify-end 
             pr-1;
@@ -102,6 +102,13 @@
             }               
         }
     }
+}
+
+.link{
+    @apply
+        z-50
+        absolute top-0 right-0
+        w-full h-full;
 }
 
 

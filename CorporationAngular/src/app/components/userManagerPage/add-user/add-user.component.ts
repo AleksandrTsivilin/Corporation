@@ -80,7 +80,8 @@ export class AddUserComponent implements OnInit {
     ) {
       tabService.addedTab({
         title:"add user",
-        router:"/services/addUser"
+        router:"/services/addUser",
+        additional: ""
       })
      }
 

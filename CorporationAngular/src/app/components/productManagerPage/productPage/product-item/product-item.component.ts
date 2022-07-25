@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UserExtraPermissions } from 'src/app/interfaces/auth/userPermissionsByRole';
-import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 
 @Component({
@@ -39,7 +38,7 @@ export class ProductItemComponent implements OnInit {
   @Output() remove=new EventEmitter();
   @Output() openProductInfo = new EventEmitter();
   
-  constructor() { }
+  constructor( ) { }
 
   ngOnInit(): void {
   }

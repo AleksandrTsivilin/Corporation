@@ -48,6 +48,7 @@ import { ServicesPageComponent } from './components/servicesPage/services-page/s
 import { ServiceListComponent } from './components/servicesPage/service-list/service-list.component';
 import { ServiceTabsComponent } from './components/servicesPage/service-tabs/service-tabs.component';
 import { ResetButtonComponent } from './components/tools/resetButton/reset-button/reset-button.component';
+import { ProductPageComponent } from './components/productManagerPage/productPage/product-page/product-page.component';
 
 
 
@@ -94,7 +95,8 @@ import { ResetButtonComponent } from './components/tools/resetButton/reset-butto
     ServicesPageComponent,
     ServiceListComponent,
     ServiceTabsComponent,
-    ResetButtonComponent
+    ResetButtonComponent,
+    ProductPageComponent
     
     
     

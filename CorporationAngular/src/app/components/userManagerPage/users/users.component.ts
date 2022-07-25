@@ -72,7 +72,8 @@ export class UsersComponent implements OnInit {
     private readonly tabService:TabService) {  
        tabService.addedTab({
         title:"users",
-        router:"/services/users"
+        router:"/services/users",
+        additional:""
        })
   }
   

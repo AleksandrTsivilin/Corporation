@@ -55,6 +55,9 @@
  -->
 
 
+
+
+
 <!-- loading page -->
 <app-loading-page
   *ngIf="loadingOptionProductPage.isLoadingProducts"
@@ -239,7 +242,6 @@
                     [numProduct]="i+1"
                     [productInfo]="productInfo" 
                     [userProductPermissions]="userProductPermissions"
-                    (edit)="startEdit(productInfo)"
                     (remove)="remove(productInfo)"
                     (openProductInfo) = "openProductInfo(productInfo)"        
                   >  
@@ -323,7 +325,7 @@
         > </app-loading-page>
 
         <!-- edit product page -->
-        <div class="">
+        <!-- <div class="">
           <app-edit-product                     
             *ngSwitchCase="'editProduct'"
             [newProductForm]="newProductForm"
@@ -331,7 +333,7 @@
             (close)="closeEditPage()"
           >     
           </app-edit-product> 
-        </div>
+        </div> -->
 
         
     </div>

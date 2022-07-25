@@ -1,6 +1,5 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { TableHeader } from 'src/app/interfaces/header-table';
-import { PageState } from 'src/app/interfaces/pageState';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
@@ -16,9 +15,10 @@ import { UserExtraPermissions } from 'src/app/interfaces/auth/userPermissionsByR
 import { AuthService } from 'src/app/services/auth.service';
 import { PermissionInfo } from 'src/app/interfaces/userManagerPage/permissionInfo';
 import { TabService } from 'src/app/services/tab.service';
-import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ProductsPageState } from 'src/app/interfaces/product/productsPageState';
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
+import { ProductLocalStorageService } from 'src/app/services/productPage/product-local-storage.service';
+
 
 
 export const maxCount:number=300;
@@ -127,14 +127,15 @@ export class ProductsComponent implements OnInit {
     isLoadingProducts:false
   }
 
-  private editedProductId:number=0;
+  //private editedProductId:number=0;
   ascDirection = 1;
   sortCriteria="";
   private _isOrdered:boolean=false;
   
 
   pageState:ProductsPageState = {
-    innerRouter:"templatePage"
+    innerRouter:"",
+    edit_id:0
   }
   
   constructor( 
@@ -144,21 +145,24 @@ export class ProductsComponent implements OnInit {
     private readonly updateMovementService:MovementsUpdateService,
     private readonly storageService:StorageService,
     private readonly tabService:TabService,
-    private readonly localStorageSevice:LocalStorageService
+    private readonly localStorage: ProductLocalStorageService
     ) { 
 
       this.createTab();
 
       this.loadPageState();
+
+      console.log("const products")
     }
 
   ngOnInit(): void {
 
-    console.log("on init products")
+    const currentTemplate = history.state.template;
+
+    this.loadProducts(currentTemplate);
+
     this.getHeadersTable();    
       
-    //this.getProducts();
-
     this.getStorages(); 
 
     this.setProductsInfoLis();  
@@ -188,12 +192,14 @@ export class ProductsComponent implements OnInit {
 
   loadProducts(filter:TemplateFilter | null){
     this.savePageState("innerRouter","")
-    this.isApplyFilter = filter !== null;
-    if (filter !==null){      
+
+    if (filter){   
+      this.isApplyFilter = true;   
       this.filterProductForm.criteria = filter.criteria;
       this.templateFilter = filter;
     }
     else {
+      this.isApplyFilter = false;
       this.resetCriteria();
       this.templateFilter.id=0;
       this.templateFilter.title = "new template"
@@ -254,37 +260,37 @@ export class ProductsComponent implements OnInit {
     this.isShowModalWarning=false;
   }
 
-  startEdit(editProduct:ProductInfo){
+  // startEdit(editProduct:ProductInfo){
 
-    this.editedProductId=editProduct.id;
-    this.newProductForm={
-      storageId:0,
-      title:editProduct.title,
-      price:editProduct.price,
-      count:editProduct.count,
-      manufacturerId:editProduct.manufacturer.id,
-      categoryId:editProduct.category.id,
-      unitId:editProduct.unit.id
-    }
+  //   this.editedProductId=editProduct.id;
+  //   this.newProductForm={
+  //     storageId:0,
+  //     title:editProduct.title,
+  //     price:editProduct.price,
+  //     count:editProduct.count,
+  //     manufacturerId:editProduct.manufacturer.id,
+  //     categoryId:editProduct.category.id,
+  //     unitId:editProduct.unit.id
+  //   }
 
-    this.savePageState("innerRouter", "editProduct");
+  //   this.savePageState("innerRouter", "/edit");
     
-  }
+  // }
 
   remove(removeProduct:ProductInfo){
     this.updateService.remove(removeProduct.id);
   }
 
-  update(updateProduct:NewProductForm){
-    this.updateService.updateProduct(updateProduct,this.editedProductId); 
-    this.closeEditPage(); 
+  // update(updateProduct:NewProductForm){
+  //   this.updateService.updateProduct(updateProduct,this.editedProductId); 
+  //   this.closeEditPage(); 
 
-  }
+  // }
 
-  closeEditPage(){
-    this.savePageState("innerRouter", "");
-    this.editedProductId=0;
-  }
+  // closeEditPage(){
+  //   this.savePageState("innerRouter", "");
+  //   this.editedProductId=0;
+  // }
 
   openProductInfo(product:ProductInfo){
     this.savePageState("innerRouter", "productInfo");
@@ -468,22 +474,24 @@ export class ProductsComponent implements OnInit {
   }
 
   private loadPageState(){
-    const state = this.localStorageSevice.get<ProductsPageState>('pt');
-    if (state!==null) {
-      this.pageState.innerRouter = state.innerRouter;
-    }  
+
+    //this.localStorage.get("innerRouter");
+    // const state = this.localStorageSevice.get<ProductsPageState>('pt');
+    // if (state!==null) {
+    //   this.pageState.innerRouter = state.innerRouter;
+    // }  
   }
 
   private createTab(){
     this.tabService.addedTab(
       {
         title:"products",
-        router:'/services/products'
+        router:'/services/products',
+        additional:""
       })
   }
 
   private savePageState(key : string, value: string){
-    this.pageState[key] = value;
-    this.localStorageSevice.set("pt",this.pageState);
+    this.localStorage.set("innerRouter","")
   }
 }

@@ -66,7 +66,7 @@
     }
 
     .link::before{
-        @apply  absolute top-0 right-0 w-full h-full;        
+        @apply z-50 absolute top-0 right-0 w-full h-full;        
     }
 
     .active-link{

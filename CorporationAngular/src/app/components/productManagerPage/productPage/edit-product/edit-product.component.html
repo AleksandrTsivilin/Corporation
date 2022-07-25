@@ -1,20 +1,36 @@
 
 
+<!-- warning modal -->
+<app-warning-modal
+    *ngIf="isOpenModal"
+    [modalInfo]="modal"
+    (answer)="closeModal($event)"
+>   
+</app-warning-modal>
 
-<div class="edit-product-page">
-    
+<!-- edit page -->
+<div 
+    class="edit-product-page" 
+>
+    <app-loading-page
+        *ngIf="isLoading"
+        [title]="'product info'"
+    ></app-loading-page>
     <!-- close button -->
     <div class="btn-close-container">
         <button 
-            class="btn-close"                    
-            (click)="closeEditPage()"
+            class="btn-close" 
+            (click)="close()"
         >
             <span class="btn-animate"></span>
         </button>
     </div>
 
-
-    <div class="edit-form-container">    
+    <!-- edit form -->
+    <div 
+        class="edit-form-container"
+        *ngIf="!isErrorPage else errorPage"
+    >    
         <!-- image container -->
         <div class="image-form-container">
             <div class="image-form">
@@ -57,6 +73,7 @@
                                 type="text"
                                 required                           
                                 #titleProduct="ngModel"
+                                (ngModelChange)="hasChanges()"
                             >
                         </div>
                     </div>
@@ -70,13 +87,13 @@
                             <select 
                                 class="_form-select"
                                 [(ngModel)]=newProductForm.manufacturerId
-                                name="manufacturers"
+                                name="manufacturers"  
+                                (ngModelChange) = "hasChanges()"                              
                             >
                                 <option
-                                    class="option-container"
                                     *ngFor="let manufacturer of manufacturers" 
                                     [value]="manufacturer.id"
-                                    name="manufacturer"                   
+                                    name="manufacturer"              
                                 >
                                     {{manufacturer.title}}
                                 </option>
@@ -94,9 +111,9 @@
                                 class="_form-select"
                                 [(ngModel)]=newProductForm.categoryId
                                 name="categories"
+                                (ngModelChange) = "hasChanges()"   
                             >
                                 <option
-                                    class="option-container"
                                     *ngFor="let category of categories" 
                                     [value]="category.id"
                                     name="category"                   
@@ -117,6 +134,7 @@
                                 class="_form-select"
                                 [(ngModel)]=newProductForm.unitId
                                 name="units"
+                                (ngModelChange) = "hasChanges()"   
                             >
                                 <option
                                     class="option-container"
@@ -160,7 +178,7 @@
                         <button 
                             class="btn-submit"
                             type="submit"
-                            [ngClass]="{'no-hover':productForm.invalid || !isValidPrice}"
+                            [ngClass]="{'no-hover':productForm.invalid || !isValidPrice || !isChangedForm}"
                             [disabled]="productForm.invalid || !isValidPrice" 
                         >
                                 <span 
@@ -195,6 +213,10 @@
 
 <ng-template #addedSpace>
     <br>
+</ng-template>
+
+<ng-template #errorPage>
+    <app-responce500></app-responce500>
 </ng-template>
 
 
