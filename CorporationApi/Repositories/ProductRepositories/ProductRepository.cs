@@ -64,7 +64,9 @@ namespace Repositories.ProductRepositories
         public async Task<List<Product>> GetByAccess(
             ProductSpecificationByAccess specification)
         {
-            var productStorage = await _context.Product_Storage
+            try
+            {
+                var productStorage = await _context.Product_Storage
                 .Include(ps => ps.Product)
                     .ThenInclude(product => product.Manufacture)
                 .Include(ps => ps.Product)
@@ -80,7 +82,12 @@ namespace Repositories.ProductRepositories
                 .ToListAsync();
 
 
-            return productStorage.Select(ps=>ps.Product).Distinct<Product>().ToList();
+                return productStorage.Select(ps => ps.Product).Distinct<Product>().ToList();
+            }
+            catch (Exception ex)
+            {
+                return new List<Product>();
+            }
         }
 
         public async Task<List<int>> Remove(int id)
@@ -136,18 +143,25 @@ namespace Repositories.ProductRepositories
 
         public async Task<List<Product>> GetByUser(int departmentId)
         {
-            var productStorage = await _context.Product_Storage
-                .Include(ps => ps.Product)
-                    .ThenInclude(product => product.Manufacture)
-                .Include(ps => ps.Product)
-                    .ThenInclude(product => product.Category)
-                .Include(ps => ps.Product)
-                    .ThenInclude(product => product.Unit)
-                .Include(ps => ps.Storage)
-                .Where(ps => ps.Storage.DepartmentId == departmentId)
-                .ToListAsync();
+            try
+            {
+                var productStorage = await _context.Product_Storage
+                    .Include(ps => ps.Product)
+                        .ThenInclude(product => product.Manufacture)
+                    .Include(ps => ps.Product)
+                        .ThenInclude(product => product.Category)
+                    .Include(ps => ps.Product)
+                        .ThenInclude(product => product.Unit)
+                    .Include(ps => ps.Storage)
+                    .Where(ps => ps.Storage.DepartmentId == departmentId)
+                    .ToListAsync();
 
-            return productStorage.Select(ps => ps.Product).ToList();
+                return productStorage.Select(ps => ps.Product).ToList();
+            }
+            catch(Exception ex)
+            {
+                return new List<Product>();
+            }
         }
 
         public async Task<List<Product>> GetByFilter(
@@ -192,28 +206,34 @@ namespace Repositories.ProductRepositories
         }
         public async Task<List<Product>> GetByFilterByTitle(string title, ProductSpecificationByAccess specification)
         {
-            var productStorage = await _context.Product_Storage
-                .Include(ps => ps.Product)
-                    .ThenInclude(product => product.Manufacture)
-                .Include(ps => ps.Product)
-                    .ThenInclude(product => product.Category)
-                .Include(ps => ps.Product)
-                    .ThenInclude(product => product.Unit)
-                .Include(ps => ps.Storage)
-                    .ThenInclude(storage => storage.Department)
-                        .ThenInclude(department => department.Factory)
-                            .ThenInclude(factory => factory.Region)
-                .Where(specification.Expression)
-                .Where(ps => ps.Product.Title.StartsWith(title) || title == null)
+            try
+            {
+                var productStorage = await _context.Product_Storage
+                    .Include(ps => ps.Product)
+                        .ThenInclude(product => product.Manufacture)
+                    .Include(ps => ps.Product)
+                        .ThenInclude(product => product.Category)
+                    .Include(ps => ps.Product)
+                        .ThenInclude(product => product.Unit)
+                    .Include(ps => ps.Storage)
+                        .ThenInclude(storage => storage.Department)
+                            .ThenInclude(department => department.Factory)
+                                .ThenInclude(factory => factory.Region)
+                    .Where(specification.Expression)
+                    .Where(ps => ps.Product.Title.StartsWith(title) || title == null)
 
-                .ToListAsync();
-            return productStorage.Select(ps => ps.Product).Distinct<Product>().ToList(); ;
+                    .ToListAsync();
+                return productStorage.Select(ps => ps.Product).Distinct<Product>().ToList();
+            }
+            catch(Exception ex)
+            {
+                return new List<Product>();
+            }
 
         }
 
         public async Task<Product> GetById(int id, ProductSpecificationByAccess specification)
         {
-            using var transaction = _context.Database.BeginTransaction();
             try
             {
                 var productStorage = await _context.Product_Storage
@@ -233,7 +253,6 @@ namespace Repositories.ProductRepositories
             }
             catch (Exception ex)
             {
-                transaction.Rollback();
                 return null;
             }
 
