@@ -1,12 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-export enum StatusCodes {
-  "_404",
-  "_500"
-}
 
 interface Responce{
-  code : StatusCodes,
+  code : number,
   image : string
 }
 
@@ -19,10 +15,13 @@ export class ResponceManagerComponent implements OnInit {
 
   @Input() code:number = 0; 
   
-
+  private readonly defaultResponce:Responce ={
+    code:500, image:"assets/images/responces/responce500.png"
+  }
   private readonly responces : Responce [] = [
-    {code:StatusCodes._500, image:"assets/images/responce 500.png"},
-    {code:StatusCodes._404, image:"../assets/images/responces/responce404.jpg"}
+    {code:400, image:"../assets/images/responces/responce400.jpg"},
+    {code:403, image:"../assets/images/responces/responce403.jpg"},
+    {code:404, image:"../assets/images/responces/responce404.jpg"}
   ];
 
   currentResponce = this.responces[0];
@@ -31,12 +30,16 @@ export class ResponceManagerComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentResponce = this.get();
-    console.log(this.currentResponce);
   }
 
   get() : Responce{
-    return this.responces
-    .filter(responce=>responce.code === this.code)[0];
+    const responce = this.responces
+      .filter(responce=>responce.code === this.code)[0];
+
+    return responce
+      ? responce
+      : this.defaultResponce;
+    
   }
 
 
