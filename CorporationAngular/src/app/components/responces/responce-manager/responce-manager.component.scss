@@ -1,0 +1,21 @@
+.responce-page{
+    @apply 
+        z-50
+        fixed top-0 right-0
+        h-screen w-full
+        flex m-auto
+        bg-gray-100;
+        
+
+    .image-container{
+        @apply 
+            flex m-auto
+            w-96 h-96;
+
+        .image{
+            @apply
+                flex
+                w-full h-full;
+        }
+    }
+}
