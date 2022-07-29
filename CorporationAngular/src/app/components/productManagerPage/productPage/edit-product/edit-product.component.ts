@@ -16,7 +16,7 @@ import { ActivatedRoute } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { Subscription } from 'rxjs';
 import { LoadingOptionProductEditPage } from 'src/app/interfaces/product/loadingOptionProductPage';
-import { Routers } from 'src/app/enums/Router/routers'
+import { Routers } from 'src/app/enums/routers/routers'
 import { ErrorLoadPage } from 'src/app/interfaces/errors/errors';
 import { EditProductPageState } from 'src/app/interfaces/product/productsPageState';
 import { ProductKeys } from 'src/app/enums/productPage/productKeys';

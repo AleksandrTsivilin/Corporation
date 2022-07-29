@@ -17,7 +17,7 @@ import { PermissionInfo } from 'src/app/interfaces/userManagerPage/permissionInf
 import { TabService } from 'src/app/services/tab.service';
 import { ProductsPageState } from 'src/app/interfaces/product/productsPageState';
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
-import { Routers } from '../product-page/product-page.component';
+import { Routers } from 'src/app/enums/routers/routers';
 
 
 
@@ -192,7 +192,6 @@ export class ProductsComponent implements OnInit {
   }
 
   loadProducts(filter:TemplateFilter | null){
-    //this.savePageState("innerRouter","")
 
     if (filter){   
       this.isApplyFilter = true;   

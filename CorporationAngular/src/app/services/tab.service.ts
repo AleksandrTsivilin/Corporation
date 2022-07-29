@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
+import { ServicePageKeys } from '../enums/servicePage/servicePageKeys';
 import { TabRouter } from '../interfaces/roleselector/tab';
 import { AuthService } from './auth.service';
 import { LocalStorageService } from './local-storage.service';
@@ -21,6 +22,7 @@ export class TabService {
     ) {
 
       this.tokenDataSubscribe();    
+      this.loadData();
   }  
 
   addedTab(newTab:TabRouter){
@@ -34,6 +36,7 @@ export class TabService {
     const tabs = this.tabs$.value;
     tabs.push(newTab);
     this.tabs$.next(tabs);
+    this.saveData();
   }
 
   remove(title:string){
@@ -67,6 +70,8 @@ export class TabService {
       const nextRouter = tabs[index].router;
       this.router.navigate([nextRouter]);
     }
+
+    this.saveData();
     
   }
 
@@ -89,5 +94,15 @@ export class TabService {
     const tabs = this.tabs$.value;
     const index = tabs.findIndex(tab=> tab.title === newTab.title);
     tabs[index] = newTab;
+    this.saveData();
+  }
+
+  private saveData(){
+    this.localStorage.set(ServicePageKeys.TABS,this.tabs$.value)
+  }
+
+  private loadData(){
+    const tabs = this.localStorage.get<TabRouter[]>(ServicePageKeys.TABS);
+    if (tabs) this.tabs$.next(tabs);
   }
 }

@@ -10,7 +10,7 @@ export class LocalStorageService  {
 
   constructor() {  }
 
-  remove(key: ProductKeys) {
+  remove(key: any) {
     localStorage.removeItem(key);
   }
 
