@@ -1,0 +1,7 @@
+.loading-animate{
+    @apply 
+        absolute top-1/2 right-1/2 -mt-1.5 -mr-1.5 
+        w-3 h-3 bg-white
+        rounded-full border-b-2 border-green-500
+        animate-spin;
+}

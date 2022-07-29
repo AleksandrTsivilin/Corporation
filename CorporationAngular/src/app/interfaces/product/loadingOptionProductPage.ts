@@ -12,3 +12,10 @@ export interface LoadingOptionFilterByCriteria{
     isComplitedLoadingCategories:boolean,
     isComplitedLoadingUnits:boolean
 }
+
+export interface LoadingOptionProductEditPage{
+    isComplitedLoadingPage:boolean
+    isComplitedLoadingManufacturers: boolean,
+    isComplitedLoadingCategories:boolean,
+    isComplitedLoadingUnits:boolean
+}
