@@ -1,14 +1,16 @@
 import { Injectable } from '@angular/core';
+import { ProductKeys } from '../enums/productPage/productKeys';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LocalStorageService  {
   
+  
 
   constructor() {  }
 
-  remove(key: string) {
+  remove(key: ProductKeys) {
     localStorage.removeItem(key);
   }
 

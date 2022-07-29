@@ -12,10 +12,12 @@
 <div 
     class="edit-product-page" 
 >
+    <!-- loading page component -->
     <app-loading-page
-        *ngIf="isLoading"
+        *ngIf="loadingOptions.isComplitedLoadingPage"
         [title]="'product info'"
     ></app-loading-page>
+
     <!-- close button -->
     <div class="btn-close-container">
         <button 
@@ -29,7 +31,7 @@
     <!-- edit form -->
     <div 
         class="edit-form-container"
-        *ngIf="!isErrorPage else errorPage"
+        *ngIf="!errorPage.isErrorPage"
     >    
         <!-- image container -->
         <div class="image-form-container">
@@ -86,6 +88,7 @@
                         <div>
                             <select 
                                 class="_form-select"
+                                *ngIf="loadingOptions.isComplitedLoadingManufacturers else optionLoading"
                                 [(ngModel)]=newProductForm.manufacturerId
                                 name="manufacturers"  
                                 (ngModelChange) = "hasChanges()"                              
@@ -109,6 +112,7 @@
                         <div>
                             <select 
                                 class="_form-select"
+                                *ngIf="loadingOptions.isComplitedLoadingCategories else optionLoading"
                                 [(ngModel)]=newProductForm.categoryId
                                 name="categories"
                                 (ngModelChange) = "hasChanges()"   
@@ -132,6 +136,7 @@
                         <div>
                             <select 
                                 class="_form-select"
+                                *ngIf="loadingOptions.isComplitedLoadingUnits else optionLoading"
                                 [(ngModel)]=newProductForm.unitId
                                 name="units"
                                 (ngModelChange) = "hasChanges()"   
@@ -215,8 +220,18 @@
     <br>
 </ng-template>
 
-<ng-template #errorPage>
+<!-- <ng-template #errorPage>
     <app-responce500></app-responce500>
+</ng-template> -->
+
+<app-responce-manager
+    *ngIf="errorPage.isErrorPage"
+    [code]="errorPage.statusCode"
+></app-responce-manager>
+
+<ng-template #optionLoading>
+    <app-select-loading></app-select-loading>
 </ng-template>
+
 
 

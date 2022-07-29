@@ -11,63 +11,52 @@
     <div
         class="template-manager"     
     >
-        
-        
-            <!-- <div class="template-header">
-                <h1 class="header-text">Select template</h1>
-            </div> -->
-            <!-- <div class="btn-section" [ngClass]="{'btn-section-fixed' : isScrolling}">
-                <button 
-                    class="btn"
-                >
-                    <a routerLink="/services/products">❌</a>
-                </button>
-            </div> -->
-            <div class="btn-close-container">
-                <button 
-                    class="btn-close" 
-                >
-                    <span class="btn-animate"></span>
-                    <a
-                        routerLink="/services/products" 
-                        class="link"
-                    ></a>
-                </button>
-            </div>
-            <div class="list-templates ">
-                <div 
-                    class="item-list"
-                    *ngFor="let template of templates let i=index"
-                >
-                    <div class="item-title">
-                        <div class="title">
-                            {{template.title}}
-                        </div>  
-                        <button class="menu-container">
-                            <div class="menu">
-                                <div class="point"></div>
-                                <div class="point"></div>
-                                <div class="point"></div>
-                            </div>                            
-                        </button>                  
-                    </div>
-                    <div class="item-control">
-                        <button 
-                            class="btn"
-                            (click)="apply(i)"                           
-                        >
-                            apply
-                            <a
-                                routerLink="/services/products" 
-                                [state]="{template:template}" 
-                                class="link"
-                            ></a>  
-                        </button>                                              
-                    </div>                
-                </div>
-            </div>
-        
+        <!-- close button  -->
+        <div class="btn-close-container">
+            <button 
+                class="btn-close" 
+            >
+                <span class="btn-animate"></span>
+                <a
+                    routerLink="{{routers.TABLE}}" 
+                    class="link"
+                ></a>
+            </button>
+        </div>
 
+        <!-- list templates -->
+        <div class="list-templates ">
+            <div 
+                class="item-list"
+                *ngFor="let template of templates let i=index"
+            >
+                <div class="item-title">
+                    <div class="title">
+                        {{template.title}}
+                    </div>  
+                    <button class="menu-container">
+                        <div class="menu">
+                            <div class="point"></div>
+                            <div class="point"></div>
+                            <div class="point"></div>
+                        </div>                            
+                    </button>                  
+                </div>
+                <div class="item-control">
+                    <button 
+                        class="btn"
+                        (click)="apply(i)"                           
+                    >
+                        apply
+                        <a
+                            routerLink="{{routers.TABLE}}" 
+                            [state]="{template:template}" 
+                            class="link"
+                        ></a>  
+                    </button>                                              
+                </div>                
+            </div>
+        </div>
     </div>   
 </div>
 

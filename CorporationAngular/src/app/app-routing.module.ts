@@ -21,6 +21,7 @@ import { AddUserComponent } from './components/userManagerPage/add-user/add-user
 import { UsersComponent } from './components/userManagerPage/users/users.component';
 import { ServicesGuard } from './guards/services.guard';
 
+
 const routes: Routes = [
   {path:"",component:HomePageComponent,pathMatch:"full"},
   {path:"login",component:LoginPageComponent},
@@ -37,10 +38,10 @@ const routes: Routes = [
       {path:"users",component:UsersComponent},
       {path:"addUser",component:AddUserComponent},
       {
-        path:"products",
+        path:"products", 
         component:ProductPageComponent,
         children:[
-          {path:"",component:ProductsComponent},
+          {path:"table",component:ProductsComponent},
           {path:"templates",component:TemplateManagerComponent},          
           {path:"edit",component:EditProductComponent},
           {path:"details",component:ProductItemInfoComponent}

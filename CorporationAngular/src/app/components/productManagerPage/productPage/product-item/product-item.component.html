@@ -61,7 +61,7 @@
         *ngIf="!productInfo.isBanned" 
     >
         ✏️
-        <a routerLink="edit" class="link" [state] = "{product:productInfo}"></a>
+        <a routerLink="/services/products/edit" class="link" [state] = "{product:productInfo, load:'routerLink'}"></a>
     </button>   
 </td>
 <td 

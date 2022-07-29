@@ -17,7 +17,7 @@ import { PermissionInfo } from 'src/app/interfaces/userManagerPage/permissionInf
 import { TabService } from 'src/app/services/tab.service';
 import { ProductsPageState } from 'src/app/interfaces/product/productsPageState';
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
-import { ProductLocalStorageService } from 'src/app/services/productPage/product-local-storage.service';
+import { Routers } from '../product-page/product-page.component';
 
 
 
@@ -134,8 +134,8 @@ export class ProductsComponent implements OnInit {
   
 
   pageState:ProductsPageState = {
-    innerRouter:"",
-    edit_id:0
+    edit_id:0,
+    table_open:false
   }
   
   constructor( 
@@ -144,8 +144,7 @@ export class ProductsComponent implements OnInit {
     private readonly updateService:ProductUpdateService,
     private readonly updateMovementService:MovementsUpdateService,
     private readonly storageService:StorageService,
-    private readonly tabService:TabService,
-    private readonly localStorage: ProductLocalStorageService
+    private readonly tabService:TabService
     ) { 
 
       this.createTab();
@@ -156,6 +155,8 @@ export class ProductsComponent implements OnInit {
     }
 
   ngOnInit(): void {
+
+    console.log("on init")
 
     const currentTemplate = history.state.template;
 
@@ -191,7 +192,7 @@ export class ProductsComponent implements OnInit {
   }
 
   loadProducts(filter:TemplateFilter | null){
-    this.savePageState("innerRouter","")
+    //this.savePageState("innerRouter","")
 
     if (filter){   
       this.isApplyFilter = true;   
@@ -293,7 +294,7 @@ export class ProductsComponent implements OnInit {
   // }
 
   openProductInfo(product:ProductInfo){
-    this.savePageState("innerRouter", "productInfo");
+    //this.savePageState("innerRouter", "productInfo");
     this.selectedProduct = product;
   }
 
@@ -415,14 +416,14 @@ export class ProductsComponent implements OnInit {
       this.service.getProductsByAccess()
       .subscribe((result)=>{       
         this.productsInfo=result; 
-        this.savePageState("innerRouter","")
+        //this.savePageState("innerRouter","")
         //this.pageState.innerRouter=""             
         
         this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
         this.loadingOptionProductPage.isLoadingProducts = false;
     },(err)=>{
       //this.pageState.innerRouter="responce500";
-      this.savePageState("innerRouter","responce500")
+      //this.savePageState("innerRouter","responce500")
     })
   }
 
@@ -486,12 +487,12 @@ export class ProductsComponent implements OnInit {
     this.tabService.addedTab(
       {
         title:"products",
-        router:'/services/products',
+        router:Routers.TABLE,
         additional:""
       })
   }
 
-  private savePageState(key : string, value: string){
-    this.localStorage.set("innerRouter","")
-  }
+  // private savePageState(key : string, value: any){
+  //   this.localStorage.set(key,value)
+  // }
 }

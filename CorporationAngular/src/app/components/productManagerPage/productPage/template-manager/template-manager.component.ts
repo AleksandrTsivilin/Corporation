@@ -1,11 +1,9 @@
 import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
 import { offsetHeader } from 'src/app/components/mainPageComponent/nav-menu/nav-menu.component';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
-import { AvaiablesPermissions } from 'src/app/interfaces/avaiablesPermissions';
 import { ModalInfo } from 'src/app/interfaces/modal';
-import { PageState } from 'src/app/interfaces/pageState';
-import { ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
+import { Routers } from '../product-page/product-page.component';
 import { maxCount, maxPrice } from '../products/products.component';
 
 
@@ -21,7 +19,7 @@ import { maxCount, maxPrice } from '../products/products.component';
 
 export class TemplateManagerComponent implements OnInit {
 
-  
+  routers = Routers;
 
   @Output() modalInfo:ModalInfo={
     title:"Would you like to apply any templates?",

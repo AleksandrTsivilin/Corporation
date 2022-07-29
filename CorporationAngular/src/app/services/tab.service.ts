@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { TabRouter } from '../interfaces/roleselector/tab';
 import { AuthService } from './auth.service';
 import { LocalStorageService } from './local-storage.service';
@@ -12,6 +12,7 @@ import { LocalStorageService } from './local-storage.service';
 export class TabService {
 
   tabs$ = new BehaviorSubject<TabRouter []> ([]);
+  removedTab$ = new Subject <TabRouter > ();
   
   constructor(
     private readonly authService:AuthService,
@@ -19,11 +20,12 @@ export class TabService {
     private readonly localStorage:LocalStorageService
     ) {
 
-      this.tokenSubscribe();    
+      this.tokenDataSubscribe();    
   }  
 
   addedTab(newTab:TabRouter){
-
+    console.log("addedTab")
+    console.log(newTab)
     if (this.isHasTab(newTab)) {
       this.update(newTab);
       return;
@@ -40,11 +42,10 @@ export class TabService {
 
     const index = tabs.findIndex(tab=>tab.title === title);
 
-    const removedTab = tabs[index]
+    this.removedTab$.next(tabs[index]);
 
-    this.clearByItem(removedTab);
+    tabs.splice(index,1);
 
-    tabs.splice(index,1);    
     const length = tabs.length;
 
     if (length===0) {
@@ -69,12 +70,10 @@ export class TabService {
     
   }
 
-  private tokenSubscribe(){
-    this.authService.token$.subscribe(token=>{
-      if (token===null) {
-        this.tabs$.value
-          .map(item=>this.clearByItem(item));
-        
+  private tokenDataSubscribe(){
+    this.authService.tokenData$.subscribe(tokenData=>{
+      if (tokenData===null) {
+        this.localStorage.clear();
         this.tabs$.next([]);
       }
     })
@@ -84,10 +83,6 @@ export class TabService {
     return this.tabs$.value
       .map(tab=>tab.title)
       .includes(tab.title);
-  }
-
-  private clearByItem(item:TabRouter){
-    this.localStorage.remove(item.title);
   }
 
   private update(newTab:TabRouter){

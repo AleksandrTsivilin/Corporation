@@ -49,6 +49,8 @@ import { ServiceListComponent } from './components/servicesPage/service-list/ser
 import { ServiceTabsComponent } from './components/servicesPage/service-tabs/service-tabs.component';
 import { ResetButtonComponent } from './components/tools/resetButton/reset-button/reset-button.component';
 import { ProductPageComponent } from './components/productManagerPage/productPage/product-page/product-page.component';
+import { ResponceManagerComponent } from './components/responces/responce-manager/responce-manager.component';
+import { SelectLoadingComponent } from './components/tools/select-loading/select-loading.component';
 
 
 
@@ -96,7 +98,9 @@ import { ProductPageComponent } from './components/productManagerPage/productPag
     ServiceListComponent,
     ServiceTabsComponent,
     ResetButtonComponent,
-    ProductPageComponent
+    ProductPageComponent,
+    ResponceManagerComponent,
+    SelectLoadingComponent
     
     
     
