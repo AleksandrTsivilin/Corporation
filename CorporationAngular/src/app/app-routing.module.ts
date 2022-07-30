@@ -10,6 +10,7 @@ import { PersonalUserDataComponent } from './components/personalDataPage/persona
 import { ProductMovementsComponent } from './components/productManagerPage/moveProductPage/product-movements/product-movements.component';
 import { AddProductComponent } from './components/productManagerPage/productPage/add-product/add-product.component';
 import { EditProductComponent } from './components/productManagerPage/productPage/edit-product/edit-product.component';
+import { ProductInstructionComponent } from './components/productManagerPage/productPage/product-instruction/product-instruction.component';
 import { ProductItemInfoComponent } from './components/productManagerPage/productPage/product-item-info/product-item-info.component';
 import { ProductPageComponent } from './components/productManagerPage/productPage/product-page/product-page.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
@@ -41,6 +42,7 @@ const routes: Routes = [
         path:"products", 
         component:ProductPageComponent,
         children:[
+          {path:"",component:ProductInstructionComponent},
           {path:"table",component:ProductsComponent},
           {path:"templates",component:TemplateManagerComponent},          
           {path:"edit",component:EditProductComponent},

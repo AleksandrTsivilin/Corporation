@@ -15,9 +15,11 @@ import { UserExtraPermissions } from 'src/app/interfaces/auth/userPermissionsByR
 import { AuthService } from 'src/app/services/auth.service';
 import { PermissionInfo } from 'src/app/interfaces/userManagerPage/permissionInfo';
 import { TabService } from 'src/app/services/tab.service';
-import { ProductsPageState } from 'src/app/interfaces/product/productsPageState';
+import { ProductsPageState, TableProductsPageState } from 'src/app/interfaces/product/productsPageState';
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
 import { Routers } from 'src/app/enums/routers/routers';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { ProductKeys } from 'src/app/enums/productPage/productKeys';
 
 
 
@@ -144,7 +146,8 @@ export class ProductsComponent implements OnInit {
     private readonly updateService:ProductUpdateService,
     private readonly updateMovementService:MovementsUpdateService,
     private readonly storageService:StorageService,
-    private readonly tabService:TabService
+    private readonly tabService:TabService,
+    private readonly localStorage: LocalStorageService
     ) { 
 
       this.createTab();
@@ -474,12 +477,23 @@ export class ProductsComponent implements OnInit {
   }
 
   private loadPageState(){
+    const template  = history.state.template;
+    console.log(template)
+    if (!template){
+      const pageState = this.localStorage.get<TableProductsPageState>(ProductKeys.TABLE);
+      if (!pageState) return;
 
-    //this.localStorage.get("innerRouter");
-    // const state = this.localStorageSevice.get<ProductsPageState>('pt');
-    // if (state!==null) {
-    //   this.pageState.innerRouter = state.innerRouter;
-    // }  
+    }
+  }
+
+  private savePageState(){
+    this.localStorage.set(ProductKeys.TABLE,{
+
+    })
+  }
+
+  private clearDataPage(){
+    this.localStorage.remove(ProductKeys.TABLE);
   }
 
   private createTab(){

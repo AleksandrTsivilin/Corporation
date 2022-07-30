@@ -1,0 +1,13 @@
+.product-instraction-container{
+    @apply w-full p-4;
+
+    .btn-container{
+        @apply w-24 h-8 my-2;        
+    }
+}
+
+.link{
+    @apply 
+        absolute top-0 right-0
+        w-full h-full;
+}

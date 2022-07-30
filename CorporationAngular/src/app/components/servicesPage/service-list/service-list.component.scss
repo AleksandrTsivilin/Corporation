@@ -38,6 +38,19 @@
                         @apply
                             w-full h-full
                             text-white;
+
+                            p {
+                                @apply line-clamp-5;
+                            }                            
+
+                            .link{
+                                @apply
+                                    text-blue-400
+                                    transition duration-500
+                                    hover:underline
+                                    hover:text-blue-600;
+                            }
+                            
                         }
                     }
                     

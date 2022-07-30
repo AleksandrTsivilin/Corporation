@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
-
-// export enum Routers {
-//   TABLE = "/services/products/table",
-//   TEMPLATES = "/services/products/templates",
-//   EDIT = "EDIT"
-// }
 
 @Component({
   selector: 'app-product-page',
@@ -14,11 +10,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ProductPageComponent implements OnInit {
 
-  constructor() { console.log("constr product page")
+  constructor() { 
+
+      console.log(history.state)
+    
   }
  
-  ngOnInit(): void {
-  }
-
-  
+  ngOnInit(): void {}  
 }

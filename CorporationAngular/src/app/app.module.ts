@@ -51,6 +51,7 @@ import { ResetButtonComponent } from './components/tools/resetButton/reset-butto
 import { ProductPageComponent } from './components/productManagerPage/productPage/product-page/product-page.component';
 import { ResponceManagerComponent } from './components/responces/responce-manager/responce-manager.component';
 import { SelectLoadingComponent } from './components/tools/select-loading/select-loading.component';
+import { ProductInstructionComponent } from './components/productManagerPage/productPage/product-instruction/product-instruction.component';
 
 
 
@@ -100,7 +101,8 @@ import { SelectLoadingComponent } from './components/tools/select-loading/select
     ResetButtonComponent,
     ProductPageComponent,
     ResponceManagerComponent,
-    SelectLoadingComponent
+    SelectLoadingComponent,
+    ProductInstructionComponent
     
     
     
