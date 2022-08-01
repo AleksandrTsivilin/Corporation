@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CorporationApi.Filters;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Specifications;
 using Services.IdentityUserServices;
@@ -13,6 +14,7 @@ namespace CorporationApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [RequireRole("ProductManager", "ProductMovementManager")]
     public class StorageController : ControllerBase
     {
         private readonly IStorageService _service;
