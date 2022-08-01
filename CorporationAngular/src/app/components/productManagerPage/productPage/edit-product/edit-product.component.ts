@@ -32,7 +32,7 @@ import { ProductKeys } from 'src/app/enums/productPage/productKeys';
 export class EditProductComponent implements OnInit, OnDestroy{
 
   private titleTab = "editting";
-  private removedTabSubscription = new Subscription();
+  //private removedTabSubscription = new Subscription();
   private querySubscription = new  Subscription();
   
   errorPage:ErrorLoadPage = {
@@ -90,11 +90,9 @@ export class EditProductComponent implements OnInit, OnDestroy{
   ngOnInit(): void {  
       
     this.routeQueryParamsSub();
-    this.removedTabSub();     
   }  
   
   ngOnDestroy(): void {
-    this.removedTabSubscription.unsubscribe();
     this.querySubscription.unsubscribe();
   }
 
@@ -157,9 +155,10 @@ export class EditProductComponent implements OnInit, OnDestroy{
     if (this.isHasTab) return;
 
     this.tabService.addedTab({
-      title:this.titleTab,
+      title: this.titleTab,
       router: Routers.EDIT,
-      additional: product.title
+      additional: product.title,
+      key: ProductKeys.EDIT
     }) 
 
   }
@@ -182,12 +181,6 @@ export class EditProductComponent implements OnInit, OnDestroy{
           : this.getProduct();   
       }
     )
-  }
-
-  private removedTabSub(){
-    this.removedTabSubscription = this.tabService.removedTab$.subscribe(tab=>{
-      if (tab.title === this.titleTab) this.clearData();
-    })
   }
 
   private getProduct(){
@@ -246,7 +239,6 @@ export class EditProductComponent implements OnInit, OnDestroy{
     }
   }
 
-
   private getDataFromLocalStorage(){
     const pageState = this.localStorage
       .get<EditProductPageState>(ProductKeys.EDIT);
@@ -266,7 +258,7 @@ export class EditProductComponent implements OnInit, OnDestroy{
     })
   }
 
-  private clearData(){
-    this.localStorage.remove(ProductKeys.EDIT);
-  }
+  // private clearData(){
+  //   this.localStorage.remove(ProductKeys.EDIT);
+  // }
 }

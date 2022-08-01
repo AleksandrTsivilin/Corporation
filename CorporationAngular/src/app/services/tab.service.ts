@@ -45,7 +45,7 @@ export class TabService {
 
     const index = tabs.findIndex(tab=>tab.title === title);
 
-    this.removedTab$.next(tabs[index]);
+    this.clearItem(tabs[index].key);
 
     tabs.splice(index,1);
 
@@ -104,5 +104,9 @@ export class TabService {
   private loadData(){
     const tabs = this.localStorage.get<TabRouter[]>(ServicePageKeys.TABS);
     if (tabs) this.tabs$.next(tabs);
+  }
+
+  private clearItem(key:any){
+    this.localStorage.remove(key);
   }
 }

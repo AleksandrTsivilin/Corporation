@@ -53,9 +53,10 @@ export class AddProductComponent implements OnInit {
     ) {
 
       tabService.addedTab({
-        title:"add product",
-        router:"/services/addProduct",
-        additional:""
+        title: "add product",
+        router: "/services/addProduct",
+        additional: "",
+        key: undefined
       })
      }
 

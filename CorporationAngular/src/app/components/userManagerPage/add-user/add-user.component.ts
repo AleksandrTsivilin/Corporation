@@ -78,11 +78,12 @@ export class AddUserComponent implements OnInit {
     private readonly updateService:UserUpdateService,
     private readonly tabService:TabService
     ) {
-      tabService.addedTab({
-        title:"add user",
-        router:"/services/addUser",
-        additional: ""
-      })
+      // tabService.addedTab({
+      //   title: "add user",
+      //   router: "/services/addUser",
+      //   additional: "",
+      //   key: undefined
+      // })
      }
 
   ngOnInit(): void {

@@ -11,9 +11,10 @@ export class PersonalUserDataComponent implements OnInit {
   constructor(private readonly tabService:TabService) { 
 
       tabService.addedTab({
-        title:'personal data',
-        router:"/services/personal_data",
-        additional:""
+        title: 'personal data',
+        router: "/services/personal_data",
+        additional: "",
+        key: undefined
       })
    }
 
