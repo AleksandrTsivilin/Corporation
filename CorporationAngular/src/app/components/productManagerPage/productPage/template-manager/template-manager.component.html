@@ -6,8 +6,9 @@
 <!-- template manager page -->
 <div 
     class="template-manager-container"
-    *ngIf="!isShowModal else toShowModal"
+    *ngIf= "!isShowModal else toShowModal"
 >
+
     <div
         class="template-manager"     
     >
@@ -18,7 +19,7 @@
             >
                 <span class="btn-animate"></span>
                 <a
-                    routerLink="{{routers.TABLE}}" 
+                    routerLink="{{routers.TABLE}}"
                     class="link"
                 ></a>
             </button>

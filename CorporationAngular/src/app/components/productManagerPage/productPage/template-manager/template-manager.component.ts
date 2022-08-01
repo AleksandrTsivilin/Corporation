@@ -5,6 +5,7 @@ import { ModalInfo } from 'src/app/interfaces/modal';
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
 import { maxCount, maxPrice } from '../products/products.component';
 import { Routers} from 'src/app/enums/routers/routers' 
+import { Router } from '@angular/router';
 
 
 
@@ -23,27 +24,26 @@ export class TemplateManagerComponent implements OnInit {
 
   @Output() modalInfo:ModalInfo={
     title:"Would you like to apply any templates?",
-    message:"Using templates allows you to get the most focused result!",
+    message:"Using templates let you to get the most focused result!",
     position:Positions.center
   }
 
-  isShowModal:boolean = true;
+  isShowModal:boolean;
 
   templates:TemplateFilter[]=[];
 
-  // pageState:PageState={
-  //   path:"",
-  //   isActive:false
-  // }
 
   @Input () templateId:number=0;
-  @Output() closePage = new EventEmitter<TemplateFilter | null>()
+  //@Output() closePage = new EventEmitter<TemplateFilter | null>()
   
   
   isScrolling:boolean=false;
-  constructor() { }
+  constructor(private readonly router: Router) {
+    this.isShowModal = !history.state.skipModal;
+  }
 
   ngOnInit(): void {
+
     this.getTemplates();
   }
 
@@ -54,17 +54,19 @@ export class TemplateManagerComponent implements OnInit {
   }
 
   answerModal(answer:boolean){
+   
     answer 
       ? this.isShowModal=false
-      : this.closePage.emit(null)
+      : this.router
+          .navigate(['/services/products/table']);
   }
 
   close(){
-    this.closePage.emit(null);
+    //this.closePage.emit(null);
   }
 
   apply(index:number){
-    this.closePage.emit(this.templates[index])
+    //this.closePage.emit(this.templates[index])
   }
 
   private getTemplates() {    
@@ -263,8 +265,6 @@ endPrice:maxPrice
 }},
 
     ]
-    
-    this.isShowModal = this.templates.length>0
   }
 
 }

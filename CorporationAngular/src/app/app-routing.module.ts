@@ -15,6 +15,7 @@ import { ProductItemInfoComponent } from './components/productManagerPage/produc
 import { ProductPageComponent } from './components/productManagerPage/productPage/product-page/product-page.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
 import { TemplateManagerComponent } from './components/productManagerPage/productPage/template-manager/template-manager.component';
+import { ResponceManagerComponent } from './components/responces/responce-manager/responce-manager.component';
 import { RoleSelectorComponent } from './components/roleSelectorComponent/role-selector/role-selector.component';
 import { ServiceListComponent } from './components/servicesPage/service-list/service-list.component';
 import { ServicesPageComponent } from './components/servicesPage/services-page/services-page.component';
@@ -53,6 +54,7 @@ const routes: Routes = [
       {path:"addMovementProduct",component:ProductMovementsComponent}
     ]
   },
+  {path:"responces",component:ResponceManagerComponent},
   {path:"createAccount",component:CreateAccountComponent},
   {path:'roleSelector',component:RoleSelectorComponent},
   {path:"**" ,redirectTo: '/'}

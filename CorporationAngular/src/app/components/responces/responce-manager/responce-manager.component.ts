@@ -26,16 +26,21 @@ export class ResponceManagerComponent implements OnInit {
 
   currentResponce = this.responces[0];
 
-  constructor() { }
+  constructor() { 
+    this.code = history.state.code;
+  }
 
   ngOnInit(): void {
+    console.log('responce on init')
+    
     this.currentResponce = this.get();
   }
 
   get() : Responce{
+    console.log(this.code)
     const responce = this.responces
       .filter(responce=>responce.code === this.code)[0];
-
+    console.log(responce)
     return responce
       ? responce
       : this.defaultResponce;

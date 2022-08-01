@@ -1,3 +1,5 @@
+import { TemplateFilter } from "./templateFilter";
+
 // it will be unnecessary interface
 export interface ProductsPageState{
     [x: string]: any;
@@ -7,5 +9,13 @@ export interface ProductsPageState{
 
 export interface EditProductPageState{
     edit_id : number
+}
+
+export interface TableProductsPageState{
+    template : TemplateFilter,
+    searchString : string,
+    isOrdered : boolean,
+    sortCriteria : string,
+    ascDirection : number
 }
 

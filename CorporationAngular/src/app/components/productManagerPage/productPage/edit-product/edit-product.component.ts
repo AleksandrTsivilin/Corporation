@@ -12,7 +12,7 @@ import { ProductsService } from 'src/app/services/productPage/products.service';
 import { ModalInfo } from 'src/app/interfaces/modal';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { Subscription } from 'rxjs';
 import { LoadingOptionProductEditPage } from 'src/app/interfaces/product/loadingOptionProductPage';
@@ -83,7 +83,8 @@ export class EditProductComponent implements OnInit, OnDestroy{
     private readonly tabService:TabService,
     private readonly productService: ProductsService,
     private readonly updateService: ProductUpdateService,
-    private readonly route: ActivatedRoute
+    private readonly route: ActivatedRoute,
+    private readonly router: Router
     ) {}
   
 
@@ -132,9 +133,8 @@ export class EditProductComponent implements OnInit, OnDestroy{
         this.loadingOptions.isComplitedLoadingPage = false;
         product 
           ? this.startSetting(product)
-          : this.setErrorPage(404);
+          : this.router.navigate(["/responces"],{state:{code:404}})
     },(err)=>{
-      this.setErrorPage(err.status);
       this.loadingOptions.isComplitedLoadingPage = false;
     })
   }
@@ -257,8 +257,4 @@ export class EditProductComponent implements OnInit, OnDestroy{
       edit_id : this.productId
     })
   }
-
-  // private clearData(){
-  //   this.localStorage.remove(ProductKeys.EDIT);
-  // }
 }

@@ -5,9 +5,8 @@ import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
-import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { MovementsUpdateService } from 'src/app/services/productPage/updateServices/movements-update.service';
-import { FilterProductForm, ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
+import { FilterProductForm } from 'src/app/interfaces/product/productFilterForm';
 import { LoadingOptionProductPage } from 'src/app/interfaces/product/loadingOptionProductPage';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { ModalInfo } from 'src/app/interfaces/modal';
@@ -33,24 +32,26 @@ export const maxPrice:number=15000;
 })
 export class ProductsComponent implements OnInit {
 
+
+  routers = Routers;
   @Output() userProductPermissions:UserExtraPermissions={    
     canUpdate:false,
     canDelete:false
   }  
 
-  productFilterForm:ProductFilterForm = {
-    title:"",
-    regionId:0,
-    factoryId:0,
-    storageId:0,
-    manufacturerId:0,
-    categoryId:0,
-    unitId:0,
-    startPrice:0,
-    endPrice:maxPrice,
-    startCount:0,
-    endCount:maxCount
-  }
+  // productFilterForm:ProductFilterForm = {
+  //   title:"",
+  //   regionId:0,
+  //   factoryId:0,
+  //   storageId:0,
+  //   manufacturerId:0,
+  //   categoryId:0,
+  //   unitId:0,
+  //   startPrice:0,
+  //   endPrice:maxPrice,
+  //   startCount:0,
+  //   endCount:maxCount
+  // }
 
   filterProductForm:FilterProductForm = {
     searchString: "",
@@ -85,6 +86,8 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  //templateFilter: TemplateFilter | null = null;
+
   @Output() modalInfo:ModalInfo={
     title:"",
     message:"",
@@ -98,15 +101,15 @@ export class ProductsComponent implements OnInit {
 
   storages:StorageInfo[]=[];
  
-  newProductForm:NewProductForm={
-    storageId:0,
-    title:"",
-    price:0,
-    count:0,
-    manufacturerId:0,
-    categoryId:0,
-    unitId:0
-  }
+  // newProductForm:NewProductForm={
+  //   storageId:0,
+  //   title:"",
+  //   price:0,
+  //   count:0,
+  //   manufacturerId:0,
+  //   categoryId:0,
+  //   unitId:0
+  // }
 
   selectedProduct : ProductInfo={
     id:0,
@@ -122,11 +125,12 @@ export class ProductsComponent implements OnInit {
   isOpenDetailedSearch:boolean =false;
   isApplyFilter:boolean=false;
   isShowModalWarning=false;
+  //private isHasTab : boolean = false;
   
   loadingOptionProductPage:LoadingOptionProductPage={
     isComplitedSearchByCriteria:true,
     isComplitedSearchByTitle:true,
-    isLoadingProducts:false
+    isLoadingProducts:true
   }
 
   //private editedProductId:number=0;
@@ -150,34 +154,48 @@ export class ProductsComponent implements OnInit {
     private readonly localStorage: LocalStorageService
     ) { 
 
-      this.createTab();
+    //   this.createTab();
 
-      this.loadPageState();
+    //   this.loadPageState();
 
-      console.log("const products")
-    }
+    //   console.log("const products")
+   }
 
   ngOnInit(): void {
 
-    console.log("on init")
+    //console.log("on init")
 
     const currentTemplate = history.state.template;
 
-    this.loadProducts(currentTemplate);
+    // if (currentTemplate){
+    //   this.createTab();
+    //   this.startSetting(currentTemplate);
+    // }
+    // else{
+    //   this.loadPageState();
+    // }
+    currentTemplate 
+      ? this.startSetting(currentTemplate)
+      : this.loadPageState();
+    //const currentTemplate = this.getCurrentTemplate();
 
-    this.getHeadersTable();    
+    //this.startSetting(currentTemplate);
+
+    // this.loadProducts(currentTemplate);
+
+    // this.getHeadersTable();    
       
-    this.getStorages(); 
+    // this.getStorages(); 
 
-    this.setProductsInfoLis();  
+    // this.setProductsInfoLis();  
     
-    this.subscribeTokenData();
+    // this.subscribeTokenData();
   
   }
 
-  toggleTemplate(){
-    this.pageState.innerRouter = "template";
-  }
+  // toggleTemplate(){
+  //   //this.pageState.innerRouter = "template";
+  // }
 
   applyCriteria(filter:TemplateFilter | null){
     this.isOpenDetailedSearch=false;
@@ -207,7 +225,7 @@ export class ProductsComponent implements OnInit {
       this.templateFilter.id=0;
       this.templateFilter.title = "new template"
     }
-    
+    this.savePageState();
     this.getProducts();
   }
 
@@ -225,22 +243,25 @@ export class ProductsComponent implements OnInit {
   }
 
   filterCurrentProductsByTitle(researchString:string){
-    console.log("filter by title")
-    this.productFilterForm.title=researchString;
+    //this.productFilterForm.title=researchString;
+    this.filterProductForm.searchString = researchString;
     this.loadingOptionProductPage.isComplitedSearchByTitle=false;
     this.productsInfo = this.productsInfo
       .filter(product=>product.title.startsWith(researchString))
     this.loadingOptionProductPage.isComplitedSearchByTitle=true;
+    this.savePageState();
   }
 
   filterRefreshProductsByTitle(researchString:string){
-    this.productFilterForm.title=researchString;
+    //this.productFilterForm.title=researchString;
+    this.filterProductForm.searchString = researchString;
     this.loadingOptionProductPage.isComplitedSearchByTitle=false;
     this.getProductsByFilter();
+    this.savePageState();
   }
 
   toggleDetailedSearch(){
-    console.log(this.templateFilter.criteria)
+    //console.log(this.templateFilter.criteria)
     if (this.isOpenDetailedSearch) {
       this.modalInfo={
         title:"Are you sure close filter menu",
@@ -328,6 +349,7 @@ export class ProductsComponent implements OnInit {
       
     })
     this._isOrdered = true;
+    this.savePageState();
   }
 
   
@@ -401,9 +423,20 @@ export class ProductsComponent implements OnInit {
   private getProducts(){
     //this.setStatePage("loadingPage",false)    
     this.loadingOptionProductPage.isLoadingProducts=true;
-    this.isApplyFilter
-      ? this.getProductsByFilter()
-      : this.getProductsByDefault();
+    if (this.isApplyFilter) this.getProductsByFilter();
+    else {
+      const searchString = this.filterProductForm.searchString;
+      this.isEmptyString(searchString) 
+        ? this.getProductsByDefault()
+        : this.getProductsByTitle(searchString); 
+    }
+    // this.isApplyFilter
+    //   ? this.getProductsByFilter()
+    //   : this.getProductsByDefault();
+    
+    
+
+
     // if (this.isEmptyProductFilterForm(this.productFilterForm)){
     //   this.getProductsByDefault(); 
     //   console.log(this.pageState.path)     
@@ -415,15 +448,20 @@ export class ProductsComponent implements OnInit {
   }
 
   private getProductsByDefault(){
+
+      
       this.service.getProductsByAccess()
       .subscribe((result)=>{       
         this.productsInfo=result; 
+        if (this._isOrdered) this.orderCol(this.sortCriteria);
+        this.loadingComplited();
         //this.savePageState("innerRouter","")
         //this.pageState.innerRouter=""             
         
-        this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
-        this.loadingOptionProductPage.isLoadingProducts = false;
+        // this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
+        // this.loadingOptionProductPage.isLoadingProducts = false;
     },(err)=>{
+
       //this.pageState.innerRouter="responce500";
       //this.savePageState("innerRouter","responce500")
     })
@@ -433,12 +471,24 @@ export class ProductsComponent implements OnInit {
     this.service.getByFilter(this.filterProductForm)
       .subscribe(products=>{
         this.productsInfo=products;
-        this.pageState.innerRouter="";
-        this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
-        this.loadingOptionProductPage.isComplitedSearchByTitle=true;
-        this.loadingOptionProductPage.isLoadingProducts = false;
         if (this._isOrdered) this.orderCol(this.sortCriteria);
+        this.pageState.innerRouter="";
+        this.loadingComplited();
+        // this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
+        // this.loadingOptionProductPage.isComplitedSearchByTitle=true;
+        // this.loadingOptionProductPage.isLoadingProducts = false;        
       })
+  }
+
+  private getProductsByTitle(searchString : string){
+    
+    this.service.getByFilterByTitle(searchString).subscribe(products=>{
+      this.productsInfo = products;
+      if (this._isOrdered) this.orderCol(this.sortCriteria);
+      this.loadingComplited();
+      // this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
+      // this.loadingOptionProductPage.isLoadingProducts = false;
+    })
   }
 
   private getStorages(){
@@ -476,36 +526,82 @@ export class ProductsComponent implements OnInit {
      
   }
 
+  
   private loadPageState(){
-    const template  = history.state.template;
-    console.log(template)
-    if (!template){
-      const pageState = this.localStorage.get<TableProductsPageState>(ProductKeys.TABLE);
-      if (!pageState) return;
+    
+    const pageState = this.localStorage.get<TableProductsPageState>(ProductKeys.TABLE);
+    const template = pageState?.template;
+    const ordered = pageState?.isOrdered;
+    
+    template
+      ? this.startSetting(template)
+      : this.startSetting(null);
 
+    this.filterProductForm.searchString = pageState?.searchString 
+      ? pageState?.searchString 
+      : "";
+    
+    if (ordered) {
+      this._isOrdered = ordered;
+      this.sortCriteria = pageState?.sortCriteria ? pageState?.sortCriteria : "*";
+      this.ascDirection = pageState?.ascDirection ? pageState?.ascDirection : 1;
     }
   }
 
-  private savePageState(){
-    this.localStorage.set(ProductKeys.TABLE,{
+  private startSetting(currentTemplate : TemplateFilter | null){
 
-    })
+    this.loadProducts(currentTemplate);
+
+    this.createTab();
+
+    this.getHeadersTable();    
+      
+    this.getStorages(); 
+
+    this.setProductsInfoLis();  
+    
+    this.subscribeTokenData();
   }
 
-  private clearDataPage(){
-    this.localStorage.remove(ProductKeys.TABLE);
+  private savePageState(){
+
+    this.localStorage.set(ProductKeys.TABLE,{
+       template : this.isApplyFilter ? this.templateFilter : null,
+       searchString : this.filterProductForm.searchString,
+       isOrdered :  this._isOrdered,
+       sortCriteria : this.sortCriteria,
+       ascDirection : this.ascDirection
+    })
   }
 
   private createTab(){
     this.tabService.addedTab(
       {
-        title:"products",
-        router:Routers.TABLE,
-        additional:""
+        title: "products",
+        router: Routers.TABLE,
+        additional: this.isApplyFilter
+          ? this.templateFilter.title
+          : "",
+        key: ProductKeys.TABLE
       })
   }
 
-  // private savePageState(key : string, value: any){
-  //   this.localStorage.set(key,value)
+  private isEmptyString(value : string ) : boolean{
+    return value === "";
+  }
+
+  private loadingComplited(){
+    this.loadingOptionProductPage = {
+      isComplitedSearchByCriteria:true,
+      isComplitedSearchByTitle:true,
+      isLoadingProducts:false
+    }
+  }
+
+  // private setErrorPage(statusCode:number){
+  //   this.errorPage={
+  //     isErrorPage: true,
+  //     statusCode: statusCode
+  //   }
   // }
 }

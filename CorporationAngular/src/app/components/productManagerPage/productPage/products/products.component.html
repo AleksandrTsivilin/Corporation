@@ -76,15 +76,31 @@
         <div class="menu-products relative">
 
             <!-- button template container -->
-            <div class="template-btn-container">
-              <button class="template-btn">templates</button>
+            <!-- <div class="template-btn-container">
+              <button class="template-btn">
+                <a 
+                  routerLink={{routers.TEMPLATES}}
+                  [state]="{skipModal:true}"
+                >templates</a>
+              </button>
+              
+            </div> -->
+            <div class="btn-container">
+              <button class="btn-submit">
+                templates
+                <a 
+                  class="link"
+                  routerLink={{routers.TEMPLATES}}
+                  [state]="{skipModal:true}"
+                ></a>
+              </button>
             </div>
 
             <!-- filter by title container -->
             <div class="filter-by-title-container">
               <div class="w-7/12 h-9 mr-auto">
                 <app-filter-by-title
-                    [search]="productFilterForm.title"
+                    [search]="filterProductForm.searchString"
                     [isComplitedSearch]="loadingOptionProductPage.isComplitedSearchByTitle"
                     (filterCurrentProducts)="filterCurrentProductsByTitle($event)"
                     (filterRefreshProducts)="filterRefreshProductsByTitle($event)"
@@ -92,12 +108,13 @@
               </div>
             </div>
             
+
             <!-- button of  criteria container -->
-            <div class="criteria-btn-container">
+            <div class="btn-container">
 
                 <!-- button criteria  -->
                 <button 
-                    class="criteria-btn"
+                    class="btn-submit"
                     (click)="toggleDetailedSearch()"    
                     type="button"                  
                 >
@@ -227,7 +244,10 @@
                                 class="btn-desc"
                                 (click)=startOrderBy(header,-1)
                               >
-                                <span class="sort-desc "></span>
+                                <span 
+                                  class="sort-desc "
+                                  [ngClass]="{'sort-desc-active': header.title === sortCriteria && ascDirection===-1}" 
+                                ></span>
                               </button>
                           </div>
                         
@@ -312,11 +332,11 @@
     <div [ngSwitch]='pageState.innerRouter'>
         
         <!-- template page -->
-        <app-template-manager
+        <!-- <app-template-manager
           *ngSwitchCase="'templatePage'"
           [templateId]="selectedTemplateId"
           (closePage)="loadProducts($event)"
-        > </app-template-manager>
+        > </app-template-manager> -->
 
         <!-- loading page -->
         <app-loading-page

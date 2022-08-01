@@ -52,6 +52,7 @@ import { ProductPageComponent } from './components/productManagerPage/productPag
 import { ResponceManagerComponent } from './components/responces/responce-manager/responce-manager.component';
 import { SelectLoadingComponent } from './components/tools/select-loading/select-loading.component';
 import { ProductInstructionComponent } from './components/productManagerPage/productPage/product-instruction/product-instruction.component';
+import { ErrorCatchInterceptor } from './interceptors/error-catch.interceptor';
 
 
 
@@ -127,6 +128,11 @@ import { ProductInstructionComponent } from './components/productManagerPage/pro
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorCatchInterceptor,
       multi: true
     }
   ],

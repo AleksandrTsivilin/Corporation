@@ -22,14 +22,16 @@
           @apply flex my-auto w-full space-x-4;
 
 // template button container
-          .template-btn-container{
-            @apply flex-none ;
+          // .template-btn-container{
+          //   @apply flex-none ;
 
             
-            .template-btn{
-                @apply w-full h-full rounded-md border-2 border-blue-800;
-            }
-          }
+          //   .template-btn{
+          //       @apply w-full h-full rounded-md border-2 border-blue-800;
+          //   }
+          // }
+
+          
 
 // filter by title container
           .filter-by-title-container{
@@ -136,12 +138,17 @@
                             }
 
                             .sort-asc-active{
-                              border-bottom: 5px solid white;
+                              border-bottom: 5px solid rgb(11, 240, 22);
                             }
                         
                             .sort-desc{
                               border-top: 5px solid #d6d3d1;
                             }
+
+                            .sort-desc-active{
+                              border-top: 5px solid rgb(11, 240, 22);
+                            }
+
                             .btn-asc{
                               @apply flex-1 w-full h-1/2 rounded-md pb-1;
                             }
@@ -186,6 +193,31 @@
 }
 
 
+.btn-container{
+  @apply flex-none w-44 h-9;
+}
+
+// animate sign of button detail search 
+.active-btn-detailed-search-outer{
+  @apply border border-green-600;
+}
+.non-active-btn-detailed-search-outer{
+  @apply border border-red-600;
+}
+
+.active-btn-detailed-search-inner{
+  @apply bg-green-600;
+}
+
+.non-active-btn-detailed-search-inner{
+  @apply bg-red-600;
+}
+
+.link{
+  @apply
+    absolute top-0 right-0
+    w-full h-full;
+}
 
 
 

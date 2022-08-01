@@ -1,3 +1,4 @@
 export enum ProductKeys{
-    EDIT = 'e_p'
+    EDIT = 'e_p',
+    TABLE = 'tbl'
 }
