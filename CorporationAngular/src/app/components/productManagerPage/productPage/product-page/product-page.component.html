@@ -1,2 +1,7 @@
 
+<app-warning-modal
+    *ngIf="isShowModal"
+    [modalInfo]="modal"
+    (answer)="answerModal($event)"
+></app-warning-modal>
 <router-outlet></router-outlet>

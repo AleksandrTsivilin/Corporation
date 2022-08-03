@@ -85,13 +85,15 @@
               </button>
               
             </div> -->
+
+            <!-- template button container -->
             <div class="btn-container">
               <button class="btn-submit">
                 templates
                 <a 
                   class="link"
                   routerLink={{routers.TEMPLATES}}
-                  [state]="{skipModal:true}"
+                  [state]="{id : templateFilter.id}"
                 ></a>
               </button>
             </div>

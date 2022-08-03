@@ -28,10 +28,13 @@
         <!-- list templates -->
         <div class="list-templates ">
             <div 
-                class="item-list"
+                class="item-list"                
                 *ngFor="let template of templates let i=index"
             >
-                <div class="item-title">
+                <div 
+                    class="item-title"  
+                    [ngClass]="template.id === selected ? 'selected' : 'non-selected'"                  
+                >
                     <div class="title">
                         {{template.title}}
                     </div>  
@@ -45,8 +48,7 @@
                 </div>
                 <div class="item-control">
                     <button 
-                        class="btn"
-                        (click)="apply(i)"                           
+                        class="btn"                                             
                     >
                         apply
                         <a

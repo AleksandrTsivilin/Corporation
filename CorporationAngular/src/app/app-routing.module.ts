@@ -43,7 +43,7 @@ const routes: Routes = [
         path:"products", 
         component:ProductPageComponent,
         children:[
-          {path:"",component:ProductInstructionComponent},
+          {path:"instruction",component:ProductInstructionComponent},
           {path:"table",component:ProductsComponent},
           {path:"templates",component:TemplateManagerComponent},          
           {path:"edit",component:EditProductComponent},

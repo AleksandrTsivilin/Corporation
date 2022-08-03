@@ -28,7 +28,6 @@ export class ErrorCatchInterceptor implements HttpInterceptor {
     return next.handle(request)
       .pipe(
         map(res => {
-            console.log("Passed through the interceptor in response");
             return res
         }),
         catchError((error: HttpErrorResponse) => {
@@ -38,8 +37,6 @@ export class ErrorCatchInterceptor implements HttpInterceptor {
               
             }
             else{
-              console.log("server")
-              // errorMsg = `Error Code: ${error.status}`
               const statusCode = error.status;
               this.router.navigate(['/responces'],{state:{code:statusCode}});
             }

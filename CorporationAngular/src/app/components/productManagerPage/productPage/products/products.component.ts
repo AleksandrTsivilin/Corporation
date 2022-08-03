@@ -94,7 +94,7 @@ export class ProductsComponent implements OnInit {
     position:Positions.center
   }
 
-  @Output() selectedTemplateId:number = 0;
+  //@Output() selectedTemplateId:number = 0;
 
   headersTable:TableHeader[]=[];
   productsInfo:ProductInfo[]=[];
@@ -209,7 +209,8 @@ export class ProductsComponent implements OnInit {
     
     //this.isApplyFilter = filter !== null;    
     this.loadingOptionProductPage.isComplitedSearchByCriteria=false;
-    this.loadProducts(filter)
+    this.loadProducts(filter);
+    this.createTab();
   }
 
   loadProducts(filter:TemplateFilter | null){
@@ -575,6 +576,8 @@ export class ProductsComponent implements OnInit {
   }
 
   private createTab(){
+    console.log("create product tab")
+   
     this.tabService.addedTab(
       {
         title: "products",

@@ -1,6 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Component,OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Positions } from 'src/app/components/modals/modal/modal.component';
+import { Routers } from 'src/app/enums/routers/routers';
+import { ModalInfo } from 'src/app/interfaces/modal';
+import { TabService } from 'src/app/services/tab.service';
 
 
 @Component({
@@ -8,17 +11,42 @@ import { Subscription } from 'rxjs';
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.scss']
 })
-export class ProductPageComponent implements OnInit, OnDestroy {
+export class ProductPageComponent implements OnInit {
 
-  //constructor() {console.log("product page constr"); debugger}
-  
- 
+  routers = Routers;
+  isShowModal = false;
+  isNewTab = false;
+  modal : ModalInfo = {
+    title: "Would you like to open new product tab",
+    message: 'If you open new tab, data will be lost',
+    position: Positions.center
+  }
+  constructor(
+    private readonly router : Router,
+    private readonly tabService: TabService
+    ) {
+      const start = history.state.start;
+      if (start){
+        this.isNewTab = true;
+        this.isShowModal = true;
+      }
+    }
+
+
   ngOnInit(): void {
-    //console.log("product page on init") ;  debugger
-  }  
+   }
 
+  answerModal(answer : boolean){
+    answer
+      ? this.startSetting()
+      : this.router.navigate(['/services']);
+  }
 
-  ngOnDestroy(): void {
-    //console.log("product page on destroy") ; debugger
+  private startSetting(){
+    this.isShowModal = false;
+    if (this.isNewTab) {
+        this.tabService.remove("products")
+        this.router.navigate([this.routers.INSTRUCTION]);
+    }
   }
 }

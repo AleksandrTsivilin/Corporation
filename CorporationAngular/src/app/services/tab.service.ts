@@ -45,6 +45,8 @@ export class TabService {
 
     const index = tabs.findIndex(tab=>tab.title === title);
 
+    if (index < 0) return;
+
     this.clearItem(tabs[index].key);
 
     tabs.splice(index,1);

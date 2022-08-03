@@ -1,11 +1,26 @@
-<div class="product-instraction-container">   
+
+
+
+<div 
+    class="product-instraction-container"
+    *ngIf="!isShowModal; else showModal"
+>   
     <p>product-instruction works!</p>
     <div class="btn-container">
         <button class="btn-submit">
             <a
                 class="link"
                 routerLink="{{routers.TEMPLATES}}"
-            >Ok</a>
+                [state] = "{modal:true}"
+            >ok</a>
         </button>
     </div>
 </div>
+
+<ng-template #showModal>
+    <app-warning-modal
+        *ngIf="isShowModal"
+        [modalInfo]="modal"
+        (answer)="answerModal($event)"
+    ></app-warning-modal>
+</ng-template>
