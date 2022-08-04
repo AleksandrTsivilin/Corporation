@@ -32,6 +32,8 @@ namespace DataBase
         public DbSet<Access> Accesses { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<AvaiablesUserPermission> AvaiablesUser_Permissions { get; set; }
+        public DbSet<ProductTemplate> ProductTemplates { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = @"Data Source=DESKTOP-ABUB89D\SQLEXPRESS;Initial Catalog=Coorporation;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";

@@ -17,6 +17,7 @@ using Repositories.FactoryRepositories;
 using Repositories.MovementRepositories;
 using Repositories.ProductRepositories;
 using Repositories.ProductRepositories.FactoryRepositories;
+using Repositories.ProductRepositories.ProductTemplatesRepositories;
 using Repositories.ProductRepositories.StorageRepositories;
 using Repositories.RegionRepositories;
 using Repositories.UserRepositories;
@@ -29,6 +30,7 @@ using Services.ProductServices.FactoryServices;
 using Services.ProductServices.ManufacturerService;
 using Services.ProductServices.ManufacturersService;
 using Services.ProductServices.ProductService;
+using Services.ProductServices.ProductTemplatesServices;
 using Services.ProductServices.StoragesService;
 using Services.ProductServices.UnitsService;
 using Services.RegionServices;
@@ -77,18 +79,12 @@ namespace CorporationApi
             });
 
 
-
-            //services.AddScoped<IProductServiceTemplate, ProductServiceTemplate>();
-
-
-
             services.AddHttpContextAccessor();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IManufacturerService, ManufacturerService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUnitService, UnitService>();
 
-            //services.AddScoped<IRepository<Storage>, Repository<Storage>>();
             services.AddScoped<IRepository<CategoryProduct>, Repository<CategoryProduct>>();
             services.AddScoped<IRepository<ManufacturerProduct>, Repository<ManufacturerProduct>>();
             services.AddScoped<IRepository<UnitProduct>,Repository<UnitProduct>>();
@@ -107,6 +103,7 @@ namespace CorporationApi
             AddFactory(services);
             AddRegion(services);
             AddMovementProduct(services);
+            AddProductTemplates(services);
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
@@ -223,6 +220,12 @@ namespace CorporationApi
         private void AddUserIdentity(IServiceCollection services)
         {
             services.AddScoped<IIdentityUserService, IdentityUserService>();
+        }
+
+        private void AddProductTemplates(IServiceCollection services)
+        {
+            services.AddScoped<IProductTemplatesService, ProductTemplatesService>();
+            services.AddScoped<IProductTemplatesRepository, ProductTemplatesRepository>();
         }
     }
 }

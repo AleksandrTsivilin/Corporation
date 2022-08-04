@@ -1,4 +1,5 @@
 ﻿using DataBase.Entities.EmployeeEntities;
+using DataBase.Entities.ProductEntities;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -23,5 +24,6 @@ namespace DataBase.Entities.UserEntities
         [Newtonsoft.Json.JsonIgnore]
         public ICollection<AvaiableUser> Avaiables { get; set; }
         public bool IsBanned { get; set; }
+        public ICollection<ProductTemplate> ProductTemplates { get; set; }
     }
 }
