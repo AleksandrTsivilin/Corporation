@@ -1,4 +1,5 @@
-﻿using Repositories.ProductRepositories.ProductTemplatesRepositories;
+﻿using DataBase.Entities.ProductEntities;
+using Repositories.ProductRepositories.ProductTemplatesRepositories;
 using Repositories.Specifications;
 using Services.Models.ProductModels;
 using System;
@@ -22,12 +23,26 @@ namespace Services.ProductServices.ProductTemplatesServices
         {
             var userId = identity.UserId;
             var templates = await _repository.GetByUser(userId);
-            return GetProductTemplatesModel();
+            return GetProductTemplatesModel(templates);
         }
 
-        private List<ProductTemplatesModel> GetProductTemplatesModel()
+        private List<ProductTemplatesModel> GetProductTemplatesModel(List<ProductTemplate> templates)
         {
-            return new List<ProductTemplatesModel>();
+            return templates.Select(template => new ProductTemplatesModel
+            {
+                Id = template.Id,
+                Title = template.Title,
+                RegionId = template.RegionId,
+                FactoryId = template.FactoryId,
+                StorageId = template.StorageId,
+                ManufacturerId =template.ManufacturerId,
+                CategoryId = template.CategoryId,
+                UnitId = template.UnitId,
+                StartCount = template.StartCount,
+                EndCount = template.EndCount,
+                StartPrice = template.StartPrice,
+                EndPrice = template.EndPrice
+            }).ToList();
         }
     }
 }
