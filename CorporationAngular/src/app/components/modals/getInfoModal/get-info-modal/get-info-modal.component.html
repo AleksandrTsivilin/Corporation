@@ -1,0 +1,58 @@
+<div 
+    class="modal-page-container"
+>
+    <div 
+        class="modal-container"
+        [ngClass]="ModalPositions[modalInfo.position]"        
+    >
+        <!-- title modal -->
+
+        <div class="title">
+            <span>{{modalInfo.title}}</span>
+        </div>
+
+        <!-- input container -->
+        <div class="input-container">
+
+            <!-- warning message -->
+            <span
+                class="warning-text"
+                *ngIf="inputTitle.touched && inputTitle.invalid else addedSpace"
+            >
+                ⚠️ Enter title
+            </span>
+
+            <!-- input field -->
+            <input 
+                class="_form-input"
+                [(ngModel)] = "title"
+                name="inputData" 
+                type="text"
+                required
+                #inputTitle = "ngModel"
+            >
+        </div>
+        
+        <!-- action container -->
+
+        <div class="action-container">
+            <div class="btn-container">
+                <button class="btn-submit" (click)="negativeAnswer()">cansel</button>
+            </div>
+            <div class="btn-container">
+                <button 
+                    class="btn-submit" 
+                    [ngClass]="{'no-hover' : inputTitle.invalid}"
+                    (click)="positiveAnswer()"
+                >apply
+                </button>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- add space to input field -->
+<ng-template #addedSpace>
+    <br>
+</ng-template>

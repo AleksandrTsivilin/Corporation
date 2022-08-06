@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
-import { ModalInfo } from 'src/app/interfaces/modal';
+import { GetDataModal, ModalInfo, ResponceGetDataModal } from 'src/app/interfaces/modal';
 import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
 import { CriteriaProduct } from 'src/app/interfaces/product/criteriaProduct';
 import { LoadingOptionFilterByCriteria} from 'src/app/interfaces/product/loadingOptionProductPage';
@@ -14,6 +14,7 @@ import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { FactoryService } from 'src/app/services/factoryManager/factory.service';
 import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
+import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 import { RegionService } from 'src/app/services/regionManager/region.service';
@@ -54,6 +55,11 @@ export class FilterByCriteriaComponent implements OnInit {
     position:Positions.topCenter
   }
 
+  @Output () getInfoModal : GetDataModal = {
+    title: 'Input title for new template',
+    position: 0
+  }
+
 
   @Output() submitForm =new EventEmitter<TemplateFilter | null>();
 
@@ -79,6 +85,8 @@ export class FilterByCriteriaComponent implements OnInit {
     startCount:0,
     endCount:maxCount
   }
+
+  title:string = "";
   
 
   regions: RegionInfo[]=[];
@@ -94,6 +102,7 @@ export class FilterByCriteriaComponent implements OnInit {
   filterMaxPrice=maxPrice;
 
   isShowModalWarning:boolean=false;
+  isShowModalGetInfo:boolean =false;
 
   isChangedOption:boolean=false;
   isEmptyFilter:boolean =true;
@@ -104,10 +113,13 @@ export class FilterByCriteriaComponent implements OnInit {
     private readonly storageService:StorageService,
     private readonly manufacturerService:ManufacturerService,
     private readonly categoryService:CategoryService,
-    private readonly unitService:UnitService) { }
+    private readonly unitService:UnitService,
+    private readonly templateService: ProductTemplateService
+    ) { }
 
   ngOnInit(): void {
     
+    this.title = this.startFilter.title;
     this.rawFilter = this.getRawFilter(this.startFilter.criteria);
 
     this.getRegions();
@@ -122,6 +134,7 @@ export class FilterByCriteriaComponent implements OnInit {
 
   changedFilter(){
     this.isChangedOption=true;
+    this.title = "new template";
     this.isEmptyFilter = this.isEmptyForm();
   }
 
@@ -196,7 +209,8 @@ export class FilterByCriteriaComponent implements OnInit {
     ? this.submitForm.emit(null)
     : this.submitForm.emit({
       id:this.isChangedOption ? 0: this.startFilter.id,
-      title:this.isChangedOption ? 'new template': this.startFilter.title,
+      title:this.title,
+      //title:this.isChangedOption ? 'new template': this.startFilter.title,
       criteria:this.rawFilter});
   }
 
@@ -226,8 +240,28 @@ export class FilterByCriteriaComponent implements OnInit {
   }
 
   onSubmitFilterWithSave(){
-    console.log("onSubmitFilterWithSave")
-    this.isShowModalWarning
+    this.isShowModalGetInfo = true;
+  }
+
+  closeGetInfoModal(responce : ResponceGetDataModal){
+
+    this.title = responce.data;
+    this.templateService.add({
+      title: responce.data,
+      regionId: this.rawFilter.regionId,
+      factoryId: this.rawFilter.factoryId,
+      storageId: this.rawFilter.storageId,
+      manufacturerId: this.rawFilter.manufacturerId,
+      categoryId: this.rawFilter.categoryId,
+      unitId: this.rawFilter.unitId,
+      startCount: this.rawFilter.startCount,
+      endCount: this.rawFilter.endCount,
+      startPrice: this.rawFilter.startPrice,
+      endPrice: this.rawFilter.endPrice
+    })
+    this.isShowModalGetInfo = false;
+    this.onSubmitFilter();
+    
   }
 
   isSelectedSomething(option:Number):boolean{

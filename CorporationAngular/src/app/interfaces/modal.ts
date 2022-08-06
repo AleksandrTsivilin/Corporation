@@ -4,3 +4,13 @@ export interface ModalInfo{
     position:number
 }
 
+export interface GetDataModal{
+    title:string,
+    position:number
+}
+
+export interface ResponceGetDataModal{
+    answer:boolean,
+    data:any
+}
+

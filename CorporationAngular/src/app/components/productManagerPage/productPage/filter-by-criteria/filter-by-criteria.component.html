@@ -1,7 +1,7 @@
 
 
 
-<!-- modal -->
+<!--warning modal -->
 <div>
     <app-warning-modal     
         *ngIf="isShowModalWarning" 
@@ -10,6 +10,14 @@
     ></app-warning-modal>
 </div>
 
+<!-- getInfo modal -->
+<div>
+    <app-get-info-modal
+        *ngIf="isShowModalGetInfo"
+        [modalInfo]="getInfoModal"
+        (answer)="closeGetInfoModal($event)"
+    ></app-get-info-modal>
+</div>
 
 <!-- filter by criteria container -->
 <div 
@@ -20,7 +28,7 @@
         <div 
             class="form-title"
         > 
-            filter name : <span *ngIf="!isChangedOption else newTitleFilter">{{startFilter.title}}</span>
+            filter name : {{title}}
         </div>
     </div>
     <!-- form  -->
@@ -494,10 +502,6 @@
                     </div>                    
                 </div>       
             </div>
-
-            <!-- using for divide on 3 same part -->
-            <div class="flex-1 w-1/3">            
-            </div>
         </div>
 
         <!-- action container -->
@@ -548,7 +552,6 @@
          
         
 <ng-template #showRegionTitle>
-    <!-- <div *ngFor="let region of regions" class="cell-option">{{region.title}}</div> -->
     <select                         
         class="_form-select"
     >        
@@ -571,9 +574,6 @@
             {{factory.title}}
         </option>
     </select>
-    <!-- <div class="bg-black">
-        <div *ngFor="let factory of factories" class="cell-option">{{factory.title}}</div>
-    </div>    -->
 </ng-template>
 
 <ng-template #showStorageTitle>
@@ -606,9 +606,6 @@
     </div>
 </ng-template>
 
-<ng-template #newTitleFilter>
-    <span>new template</span>
-</ng-template>
 
 
 

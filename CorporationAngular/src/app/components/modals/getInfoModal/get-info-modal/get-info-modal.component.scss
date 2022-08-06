@@ -1,0 +1,41 @@
+.modal-page-container{
+    @apply 
+        h-screen w-full
+        flex
+        fixed 
+        top-0 left-0
+        bg-gray-300 bg-opacity-25 z-50;   
+    
+    
+
+    .modal-container{  
+        @apply 
+        h-44 w-96
+        flex flex-col
+        space-y-2
+        rounded-md
+        border-2 border-blue-900
+        bg-white;
+
+        .title{
+            @apply 
+                flex-none
+                text-center text-white font-bold
+                bg-blue-900
+                py-1;
+        }
+
+        .input-container{
+            @apply flex-1 mx-auto w-3/4;
+        }
+        
+        .action-container{
+            @apply w-full flex-none flex justify-around py-2;
+
+            .btn-container{
+                @apply flex w-24 h-8;
+            }
+        }
+    }
+}
+
