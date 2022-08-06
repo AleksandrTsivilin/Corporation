@@ -32,55 +32,85 @@
             @apply fixed right-0 top-service-title-short md:top-service-title;
         }
 
-// button close container
-    .btn-close-container{
+
+
+
+    
+// buttons add and close containers
+    .btn-action-container{
         @apply 
             z-50
             fixed top-service-title mt-1 right-2
             flex justify-end 
             pr-1;
 
-        .btn-close{
+
+        .btn-action{
+
             @apply 
-                relative 
-                rounded-full 
-                h-12 w-12 
-                border-2 border-transparent 
-                bg-blue-600
-                sm:bg-white
-                hover:bg-white;
+                space-x-1;
 
-                // btn animate
-                .btn-animate::before,
-                .btn-animate::after{
-                    @apply
-                        absolute top-1/2 right-1/2  -mt-0.25 -mr-2.5
-                        bg-white w-5 h-0.5
-                        sm:bg-gray-500;
+            .btn-add,
+            .btn-close{
+                @apply 
+                    relative 
+                    rounded-full 
+                    h-12 w-12 
+                    border-2 border-transparent 
+                    bg-blue-600
+                    sm:bg-white
+                    hover:bg-white;
+ 
+
+
+                    // btn add animate btn close animate
+                    .btn-close-animate::before,
+                    .btn-close-animate::after,
+                    .btn-add-animate::before,
+                    .btn-add-animate::after{
+                        @apply
+                            absolute top-1/2 right-1/2  -mt-0.25 -mr-2.5
+                            bg-white w-5 h-0.5
+                            sm:bg-gray-500;
+                    }
+    
+                    .btn-close-animate::before,
+                    .btn-close-animate::after,
+                    .btn-add-animate::before,
+                    .btn-add-animate::after{
+                        content: "";
+                    }
+    
+                    .btn-add-animate::after{
+                        @apply transform rotate-90 origin-center;
+                    }
+
+                    .btn-close-animate::before{
+                        @apply transform rotate-45 origin-center;
+                    }
+    
+                    .btn-close-animate::after{
+                        @apply transform -rotate-45 origin-center;
+                    } 
+                    
+                    
+            }
+    
+            .btn-add:hover{
+                .btn-add-animate::before,
+                .btn-add-animate::after{
+                    @apply bg-green-400;
                 }
-
-                .btn-animate::before,
-                .btn-animate::after{
-                    content: "";
+            }
+            .btn-close:hover{
+                .btn-close-animate::before,
+                .btn-close-animate::after{
+                    @apply bg-red-600;
                 }
-
-                .btn-animate::before{
-                    @apply transform rotate-45 origin-center;
-                }
-
-                .btn-animate::after{
-                    @apply transform -rotate-45 origin-center;
-                } 
-                
-                
-        }
-
-        .btn-close:hover{
-            .btn-animate::before,
-            .btn-animate::after{
-                @apply bg-red-600;
             }
         }
+
+        
     }
 
 // list templates
@@ -93,7 +123,7 @@
 
             .item-list{
                 @apply 
-                    flex space-x-2 w-full 
+                    flex  space-x-2 w-full 
                     sm:w-2/3 
                     md:w-1/2 
                     lg:w-2/3 lg:max-w-screen-sm;
@@ -164,4 +194,11 @@
 
 .non-selected{
     @apply bg-blue-500;
+}
+
+
+.info-container{
+    @apply 
+        flex mx-auto mt-16
+        font-semibold text-2xl text-blue-500;
 }

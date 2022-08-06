@@ -53,6 +53,8 @@ import { ResponceManagerComponent } from './components/responces/responce-manage
 import { SelectLoadingComponent } from './components/tools/select-loading/select-loading.component';
 import { ProductInstructionComponent } from './components/productManagerPage/productPage/product-instruction/product-instruction.component';
 import { ErrorCatchInterceptor } from './interceptors/error-catch.interceptor';
+import { NewTemplateComponent } from './components/productManagerPage/productPage/new-template/new-template.component';
+import { CloseBtnComponent } from './components/tools/closePageBtn/close-btn/close-btn.component';
 
 
 
@@ -103,7 +105,9 @@ import { ErrorCatchInterceptor } from './interceptors/error-catch.interceptor';
     ProductPageComponent,
     ResponceManagerComponent,
     SelectLoadingComponent,
-    ProductInstructionComponent
+    ProductInstructionComponent,
+    NewTemplateComponent,
+    CloseBtnComponent
     
     
     

@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ProductKeys } from 'src/app/enums/productPage/productKeys';
 import { TableProductsPageState } from 'src/app/interfaces/product/productsPageState';
+import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
 
 
 
@@ -24,8 +25,6 @@ export class TemplateManagerComponent implements OnInit {
 
   routers = Routers;
 
-  //private routerSub = new Subscription();
-
   @Output() modalInfo:ModalInfo={
     title:"Would you like to apply any templates?",
     message:"Using templates let you to get the most focused result!",
@@ -33,13 +32,17 @@ export class TemplateManagerComponent implements OnInit {
   }
 
   isShowModal:boolean;
+  isAdd:boolean =false;
   isScrolling:boolean=false;
 
   templates:TemplateFilter[]=[];
   selected:number = 0;
 
+  
+
   constructor(
     private readonly router: Router,
+    private readonly templateService : ProductTemplateService,
     private readonly localStorage: LocalStorageService
     ) {
     this.isShowModal = history.state.modal;
@@ -50,26 +53,13 @@ export class TemplateManagerComponent implements OnInit {
       ? this.selected = id
       : this.loadData();
 
-    //this.saveData();
   }
 
   ngOnInit(): void {
 
     this.getTemplates();
 
-    // this.routerSub = this.router.events.subscribe(event=>{
-    //   if (event instanceof NavigationStart) {
-    //     console.log('Navigation Start')
-    //     this.saveData();
-    //   }
-    // })
-
-    //this.createTab();
   }
-
-  // ngOnDestroy(): void {
-  //   this.routerSub.unsubscribe();
-  // }
 
   @HostListener("document:scroll")
   scrollfunction(){
@@ -84,23 +74,18 @@ export class TemplateManagerComponent implements OnInit {
           .navigate([this.routers.TABLE]);
   }
 
-  // apply(template : TemplateFilter){
-  //   this.selected = template.id;
-  //   //this.saveData();
-  //   this.router.navigate([this.routers.TABLE],{
-  //     state:{template:template}
-  //   })
-  // }
-  
-  // apply(template : TemplateFilter){
-  //   //console.log(id);
-    
-  //   this.selected = template.id;
-  //   this.saveData();
-  //   this.router.navigate([this.routers.TABLE],{state:{template:template}})
-  // }
+  add(){
+    console.log("add template")
+    this.isAdd=true;
+  }
 
   private getTemplates() {    
+    // this.templateService.getByUser().subscribe(templates=>{
+    //   console.log(templates)
+    // })
+
+
+    // test data
     this.templates = [
       {id:1, title:"Kiev region", criteria:{
           regionId:1,
@@ -126,17 +111,152 @@ export class TemplateManagerComponent implements OnInit {
         startPrice:0,
         endPrice:maxPrice
       }}, 
+      {id:1, title:"Kiev region", criteria:{
+        regionId:1,
+        factoryId:0,
+        storageId:0,
+        manufacturerId:0,
+        categoryId:0,
+        unitId:0,
+        startCount:0,
+        endCount:maxCount,
+        startPrice:0,
+        endPrice:maxPrice
+    }},
+    {id:2, title:"Odessa region", criteria:{
+      regionId:2,
+      factoryId:0,
+      storageId:0,
+      manufacturerId:0,
+      categoryId:0,
+      unitId:0,
+      startCount:0,
+      endCount:maxCount,
+      startPrice:0,
+      endPrice:maxPrice
+    }}, 
+    {id:1, title:"Kiev region", criteria:{
+      regionId:1,
+      factoryId:0,
+      storageId:0,
+      manufacturerId:0,
+      categoryId:0,
+      unitId:0,
+      startCount:0,
+      endCount:maxCount,
+      startPrice:0,
+      endPrice:maxPrice
+  }},
+  {id:2, title:"Odessa region", criteria:{
+    regionId:2,
+    factoryId:0,
+    storageId:0,
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0,
+    startCount:0,
+    endCount:maxCount,
+    startPrice:0,
+    endPrice:maxPrice
+  }}, 
+  {id:1, title:"Kiev region", criteria:{
+    regionId:1,
+    factoryId:0,
+    storageId:0,
+    manufacturerId:0,
+    categoryId:0,
+    unitId:0,
+    startCount:0,
+    endCount:maxCount,
+    startPrice:0,
+    endPrice:maxPrice
+}},
+{id:2, title:"Odessa region", criteria:{
+  regionId:2,
+  factoryId:0,
+  storageId:0,
+  manufacturerId:0,
+  categoryId:0,
+  unitId:0,
+  startCount:0,
+  endCount:maxCount,
+  startPrice:0,
+  endPrice:maxPrice
+}}, 
+{id:1, title:"Kiev region", criteria:{
+  regionId:1,
+  factoryId:0,
+  storageId:0,
+  manufacturerId:0,
+  categoryId:0,
+  unitId:0,
+  startCount:0,
+  endCount:maxCount,
+  startPrice:0,
+  endPrice:maxPrice
+}},
+{id:2, title:"Odessa region", criteria:{
+regionId:2,
+factoryId:0,
+storageId:0,
+manufacturerId:0,
+categoryId:0,
+unitId:0,
+startCount:0,
+endCount:maxCount,
+startPrice:0,
+endPrice:maxPrice
+}}, 
+{id:1, title:"Kiev region", criteria:{
+  regionId:1,
+  factoryId:0,
+  storageId:0,
+  manufacturerId:0,
+  categoryId:0,
+  unitId:0,
+  startCount:0,
+  endCount:maxCount,
+  startPrice:0,
+  endPrice:maxPrice
+}},
+{id:2, title:"Odessa region", criteria:{
+regionId:2,
+factoryId:0,
+storageId:0,
+manufacturerId:0,
+categoryId:0,
+unitId:0,
+startCount:0,
+endCount:maxCount,
+startPrice:0,
+endPrice:maxPrice
+}}, 
+{id:1, title:"Kiev region", criteria:{
+  regionId:1,
+  factoryId:0,
+  storageId:0,
+  manufacturerId:0,
+  categoryId:0,
+  unitId:0,
+  startCount:0,
+  endCount:maxCount,
+  startPrice:0,
+  endPrice:maxPrice
+}},
+{id:2, title:"Odessa region", criteria:{
+regionId:2,
+factoryId:0,
+storageId:0,
+manufacturerId:0,
+categoryId:0,
+unitId:0,
+startCount:0,
+endCount:maxCount,
+startPrice:0,
+endPrice:maxPrice
+}}, 
     ]
   }
-
-  // private saveData(){
-  //   console.log("save data templates")
-  //   this.localStorage.set(ProductKeys.TEMPLATES,{
-  //     id:this.selected
-  //   })
-
-  //   console.log('end save data')
-  // }
 
   private loadData(){
     const state = this.localStorage.get<TableProductsPageState>(ProductKeys.TABLE);

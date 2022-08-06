@@ -1,0 +1,46 @@
+.btn{
+    @apply 
+        relative 
+        rounded-full 
+        h-12 w-12 
+        border-2 border-transparent 
+        bg-blue-600
+        sm:bg-blue-300
+        hover:bg-white;
+
+
+
+
+        //  animate btn 
+        .btn-animate::before,
+        .btn-animate::after{
+            @apply
+                absolute top-1/2 right-1/2  -mt-0.25 -mr-2.5
+                bg-white w-5 h-0.5
+                sm:bg-gray-500;
+        }
+
+        .btn-animate::before,
+        .btn-animate::after{
+            content: "";
+        }
+
+
+        .btn-animate::before{
+            @apply transform rotate-45 origin-center;
+        }
+
+        .btn-animate::after{
+            @apply transform -rotate-45 origin-center;
+        } 
+        
+        
+}
+
+
+.btn:hover{
+    .btn-animate::before,
+    .btn-animate::after{
+        @apply bg-red-600;
+    }
+}

@@ -112,12 +112,21 @@ module.exports = {
             }
           },
           // form components
+          // '._page-form-container':{
+          //   'border-bottom': '2px solid white',
+          //   'background-color': '#2563eb'
+          // },
           '.header-form':{
             'font-size': '30px',
             'line-height':' 36px',
             'font-weight': '800',
             'color':'#1e40af',
             'text-align': 'center'
+          },
+          '._image-logo-form':{
+            'width': '176px',
+            'height': '48px',
+            'margin':'auto'
           },
           '._form-label': {
               'font-size': '14px',

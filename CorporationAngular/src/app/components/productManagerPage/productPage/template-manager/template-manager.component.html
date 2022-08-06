@@ -1,6 +1,8 @@
 
 
-
+<div class="relative">
+    
+</div>
 
 
 <!-- template manager page -->
@@ -12,21 +14,41 @@
     <div
         class="template-manager"     
     >
+
+        
+        
         <!-- close button  -->
-        <div class="btn-close-container">
-            <button 
-                class="btn-close" 
-            >
-                <span class="btn-animate"></span>
-                <a
-                    routerLink="{{routers.TABLE}}"
-                    class="link"
-                ></a>
-            </button>
+        <div class="btn-action-container">
+
+            <!-- add template button -->
+            <div class="btn-action">
+                <button 
+                    class="btn-add"
+                    (click)="add()"
+                >
+                    <span class="btn-add-animate"></span>
+                    <a routerLink="/services/products/newTemplate" class="link"></a>
+                </button>
+
+                <button 
+                    class="btn-close" 
+                >
+                    <span class="btn-close-animate"></span>
+                    <a
+                        routerLink="{{routers.TABLE}}"
+                        class="link"
+                    ></a>
+                </button>
+            </div>
+
+            
         </div>
 
         <!-- list templates -->
-        <div class="list-templates ">
+        <div 
+            class="list-templates"
+            *ngIf="templates.length>0 else emptyTemplates"
+        >            
             <div 
                 class="item-list"                
                 *ngFor="let template of templates let i=index"
@@ -58,7 +80,7 @@
                         ></a>  
                     </button>                                              
                 </div>                
-            </div>
+            </div>            
         </div>
     </div>   
 </div>
@@ -73,5 +95,11 @@
     >
 
     </app-warning-modal>
+</ng-template>
+
+<ng-template #emptyTemplates>
+   <div class="info-container">    
+        Sorry, You don't have any templates yet!!!
+   </div>
 </ng-template>
 

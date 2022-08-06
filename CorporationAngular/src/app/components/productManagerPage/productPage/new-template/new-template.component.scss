@@ -1,0 +1,81 @@
+// .form-container{
+//     @apply
+//         m-auto w-full 
+//         pr-12 space-y-12
+//         border-2 border-white
+//         rounded-md
+//         bg-blue-300
+//         sm:w-160 sm:pr-0;
+    
+//     // .image-form-container{
+//     //     @apply w-full pt-12;
+//     // }
+
+//     .form{
+//         @apply px-12;
+
+//         background-color: aquamarine;
+
+//         .title-container{
+//             @apply w-full;
+//         }
+
+//         .select-controllers-container{
+            
+//             .select-container{
+//                 @apply  
+                                   
+//                     sm:flex sm:space-x-2;
+
+//                 .select-item{
+//                     @apply flex-1;
+
+//                     .form-label-container{
+//                         @apply px-2;
+//                     }
+//                 }
+//             }
+
+//             // .hide-btn-container{
+//             //     @apply flex-none;
+//             // }
+//         }
+
+//         .radio-controllers-container{
+//             @apply
+//                 sm:flex sm:space-x-2;
+
+//             .radio-item{
+//                 @apply 
+//                     flex-1 
+//                     border-2 border-gray-400
+//                     rounded-md;
+//             }
+//         }
+
+//         .btn-submit-container{
+//             @apply w-full h-9.5;
+//         }
+//     }
+// }
+
+.btn-close-container{
+    @apply 
+        z-50
+        fixed top-service-title mt-1 right-2
+        flex justify-end 
+        pr-1;
+
+    
+}
+
+.image-form-container{
+    @apply pt-12;
+}
+
+
+
+
+
+    
+    

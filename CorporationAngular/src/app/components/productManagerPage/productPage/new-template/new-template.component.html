@@ -1,0 +1,63 @@
+<div class="py-44">
+    
+    <div class="image-form-container">
+        <img 
+            class="_image-logo-form" 
+            src="assets/images/logo_picture/tailwind_logo.png"
+        > 
+    </div>
+
+
+    <div class="btn-close-container">
+        <app-close-btn
+            (responce)="close()"
+        ></app-close-btn>
+    </div>
+
+    <div class="header-form">
+        <span>New product template</span>
+    </div>
+
+    <app-filter-by-criteria
+        [startFilter]="newTemplate"
+        (submitForm)="applyCriteria($event)"
+    ></app-filter-by-criteria>
+</div>
+<!-- <ng-template #toLoadingOption>
+    <div class="relative">
+        <select                         
+            class="_form-select"
+        >          
+        </select>
+        <span class="loading-animate"></span>
+    </div>
+</ng-template>
+
+<ng-template #showRegionTitle>
+    <select                         
+        class="_form-select"
+    >        
+        <option                           
+            *ngFor="let region of regions" 
+        >
+            {{region.title}}
+        </option>
+    </select>
+    
+</ng-template>
+
+<ng-template #showFactoryTitle>
+    <select                         
+        class="_form-select"
+    >        
+        <option                           
+            *ngFor="let factory of factories" 
+        >
+            {{factory.title}}
+        </option>
+    </select>
+</ng-template>
+
+<ng-template #addedSpace>
+    <br>
+</ng-template> -->

@@ -227,6 +227,7 @@ export class FilterByCriteriaComponent implements OnInit {
 
   onSubmitFilterWithSave(){
     console.log("onSubmitFilterWithSave")
+    this.isShowModalWarning
   }
 
   isSelectedSomething(option:Number):boolean{
