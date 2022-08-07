@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
 import { Routers } from 'src/app/enums/routers/routers';
 import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
@@ -7,6 +8,7 @@ import { LoadingOptionFilterByCriteria } from 'src/app/interfaces/product/loadin
 import { NewTemplateFilter } from 'src/app/interfaces/product/newTemplateFilter';
 import { FilterProductForm } from 'src/app/interfaces/product/productFilterForm';
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
+import { TabService } from 'src/app/services/tab.service';
 import { maxCount, maxPrice } from '../products/products.component';
 
 @Component({
@@ -36,11 +38,12 @@ export class NewTemplateComponent implements OnInit {
   }
 
   constructor(
-    private readonly router:Router
+    private readonly router:Router,
+    private readonly tabService : TabService
   ) { }
 
   ngOnInit(): void {
-
+    this.createTab();
   }
 
   applyCriteria(filter:TemplateFilter | null){
@@ -53,6 +56,15 @@ export class NewTemplateComponent implements OnInit {
   }
 
   close(){
-    this.router.navigate([this.routers.TEMPLATES]);
+    this.tabService.remove(ProductTitlePage.NEW_TEMPLATES);
+  }
+
+  private createTab(){
+    this.tabService.addedTab({
+      title : ProductTitlePage.NEW_TEMPLATES,
+      router: this.routers.NEW_TEMPLATE,
+      additional:"",
+      key:""
+    })
   }
 }

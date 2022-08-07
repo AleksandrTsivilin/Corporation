@@ -9,7 +9,9 @@
             <div class="item-list" >
 
                 <!-- title tab button -->
-                <button class="btn-item-container">
+                <button 
+                    class="btn-item-container"
+                >
                     <a 
                         class="link"
                         routerLink="{{tab.router}}" 
@@ -36,7 +38,7 @@
         *ngIf="tabs.length>0"
     >
         <button 
-            class="btn-item-container btn-new-item-container"                           
+            class="btn-item-container btn-new-item-container"  
             routerLinkActive="add-link-active"
             [routerLinkActiveOptions]="{exact:true}"
         >

@@ -10,6 +10,8 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ProductKeys } from 'src/app/enums/productPage/productKeys';
 import { TableProductsPageState } from 'src/app/interfaces/product/productsPageState';
 import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
+import { TabService } from 'src/app/services/tab.service';
+import { ProductTitlePage as ProductTitlePages } from 'src/app/enums/productPage/productTitlePage';
 
 
 
@@ -32,7 +34,6 @@ export class TemplateManagerComponent implements OnInit {
   }
 
   isShowModal:boolean;
-  isAdd:boolean =false;
   isScrolling:boolean=false;
 
   templates:TemplateFilter[]=[];
@@ -42,8 +43,8 @@ export class TemplateManagerComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly templateService : ProductTemplateService,
-    private readonly localStorage: LocalStorageService
+    private readonly localStorage: LocalStorageService,
+    private readonly tabServce : TabService
     ) {
     this.isShowModal = history.state.modal;
     
@@ -57,8 +58,11 @@ export class TemplateManagerComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.getTemplates();
-
+    if (!this.isShowModal ) {
+      this.createTab();
+      this.getTemplates();
+    }
+    
   }
 
   @HostListener("document:scroll")
@@ -69,15 +73,15 @@ export class TemplateManagerComponent implements OnInit {
   answerModal(answer:boolean){
    
     answer 
-      ? this.isShowModal=false
+      ? this.startSetting()
       : this.router
           .navigate([this.routers.TABLE]);
   }
 
-  add(){
-    console.log("add template")
-    this.isAdd=true;
+  close(){
+    this.tabServce.remove(ProductTitlePages.TEMPLATES)
   }
+
 
   private getTemplates() {    
     // this.templateService.getByUser().subscribe(templates=>{
@@ -111,150 +115,150 @@ export class TemplateManagerComponent implements OnInit {
         startPrice:0,
         endPrice:maxPrice
       }}, 
-      {id:1, title:"Kiev region", criteria:{
-        regionId:1,
-        factoryId:0,
-        storageId:0,
-        manufacturerId:0,
-        categoryId:0,
-        unitId:0,
-        startCount:0,
-        endCount:maxCount,
-        startPrice:0,
-        endPrice:maxPrice
-    }},
-    {id:2, title:"Odessa region", criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:1, title:"Kiev region", criteria:{
-      regionId:1,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-  }},
-  {id:2, title:"Odessa region", criteria:{
-    regionId:2,
-    factoryId:0,
-    storageId:0,
-    manufacturerId:0,
-    categoryId:0,
-    unitId:0,
-    startCount:0,
-    endCount:maxCount,
-    startPrice:0,
-    endPrice:maxPrice
-  }}, 
-  {id:1, title:"Kiev region", criteria:{
-    regionId:1,
-    factoryId:0,
-    storageId:0,
-    manufacturerId:0,
-    categoryId:0,
-    unitId:0,
-    startCount:0,
-    endCount:maxCount,
-    startPrice:0,
-    endPrice:maxPrice
-}},
-{id:2, title:"Odessa region", criteria:{
-  regionId:2,
-  factoryId:0,
-  storageId:0,
-  manufacturerId:0,
-  categoryId:0,
-  unitId:0,
-  startCount:0,
-  endCount:maxCount,
-  startPrice:0,
-  endPrice:maxPrice
-}}, 
-{id:1, title:"Kiev region", criteria:{
-  regionId:1,
-  factoryId:0,
-  storageId:0,
-  manufacturerId:0,
-  categoryId:0,
-  unitId:0,
-  startCount:0,
-  endCount:maxCount,
-  startPrice:0,
-  endPrice:maxPrice
-}},
-{id:2, title:"Odessa region", criteria:{
-regionId:2,
-factoryId:0,
-storageId:0,
-manufacturerId:0,
-categoryId:0,
-unitId:0,
-startCount:0,
-endCount:maxCount,
-startPrice:0,
-endPrice:maxPrice
-}}, 
-{id:1, title:"Kiev region", criteria:{
-  regionId:1,
-  factoryId:0,
-  storageId:0,
-  manufacturerId:0,
-  categoryId:0,
-  unitId:0,
-  startCount:0,
-  endCount:maxCount,
-  startPrice:0,
-  endPrice:maxPrice
-}},
-{id:2, title:"Odessa region", criteria:{
-regionId:2,
-factoryId:0,
-storageId:0,
-manufacturerId:0,
-categoryId:0,
-unitId:0,
-startCount:0,
-endCount:maxCount,
-startPrice:0,
-endPrice:maxPrice
-}}, 
-{id:1, title:"Kiev region", criteria:{
-  regionId:1,
-  factoryId:0,
-  storageId:0,
-  manufacturerId:0,
-  categoryId:0,
-  unitId:0,
-  startCount:0,
-  endCount:maxCount,
-  startPrice:0,
-  endPrice:maxPrice
-}},
-{id:2, title:"Odessa region", criteria:{
-regionId:2,
-factoryId:0,
-storageId:0,
-manufacturerId:0,
-categoryId:0,
-unitId:0,
-startCount:0,
-endCount:maxCount,
-startPrice:0,
-endPrice:maxPrice
-}}, 
+//       {id:1, title:"Kiev region", criteria:{
+//         regionId:1,
+//         factoryId:0,
+//         storageId:0,
+//         manufacturerId:0,
+//         categoryId:0,
+//         unitId:0,
+//         startCount:0,
+//         endCount:maxCount,
+//         startPrice:0,
+//         endPrice:maxPrice
+//     }},
+//     {id:2, title:"Odessa region", criteria:{
+//       regionId:2,
+//       factoryId:0,
+//       storageId:0,
+//       manufacturerId:0,
+//       categoryId:0,
+//       unitId:0,
+//       startCount:0,
+//       endCount:maxCount,
+//       startPrice:0,
+//       endPrice:maxPrice
+//     }}, 
+//     {id:1, title:"Kiev region", criteria:{
+//       regionId:1,
+//       factoryId:0,
+//       storageId:0,
+//       manufacturerId:0,
+//       categoryId:0,
+//       unitId:0,
+//       startCount:0,
+//       endCount:maxCount,
+//       startPrice:0,
+//       endPrice:maxPrice
+//   }},
+//   {id:2, title:"Odessa region", criteria:{
+//     regionId:2,
+//     factoryId:0,
+//     storageId:0,
+//     manufacturerId:0,
+//     categoryId:0,
+//     unitId:0,
+//     startCount:0,
+//     endCount:maxCount,
+//     startPrice:0,
+//     endPrice:maxPrice
+//   }}, 
+//   {id:1, title:"Kiev region", criteria:{
+//     regionId:1,
+//     factoryId:0,
+//     storageId:0,
+//     manufacturerId:0,
+//     categoryId:0,
+//     unitId:0,
+//     startCount:0,
+//     endCount:maxCount,
+//     startPrice:0,
+//     endPrice:maxPrice
+// }},
+// {id:2, title:"Odessa region", criteria:{
+//   regionId:2,
+//   factoryId:0,
+//   storageId:0,
+//   manufacturerId:0,
+//   categoryId:0,
+//   unitId:0,
+//   startCount:0,
+//   endCount:maxCount,
+//   startPrice:0,
+//   endPrice:maxPrice
+// }}, 
+// {id:1, title:"Kiev region", criteria:{
+//   regionId:1,
+//   factoryId:0,
+//   storageId:0,
+//   manufacturerId:0,
+//   categoryId:0,
+//   unitId:0,
+//   startCount:0,
+//   endCount:maxCount,
+//   startPrice:0,
+//   endPrice:maxPrice
+// }},
+// {id:2, title:"Odessa region", criteria:{
+// regionId:2,
+// factoryId:0,
+// storageId:0,
+// manufacturerId:0,
+// categoryId:0,
+// unitId:0,
+// startCount:0,
+// endCount:maxCount,
+// startPrice:0,
+// endPrice:maxPrice
+// }}, 
+// {id:1, title:"Kiev region", criteria:{
+//   regionId:1,
+//   factoryId:0,
+//   storageId:0,
+//   manufacturerId:0,
+//   categoryId:0,
+//   unitId:0,
+//   startCount:0,
+//   endCount:maxCount,
+//   startPrice:0,
+//   endPrice:maxPrice
+// }},
+// {id:2, title:"Odessa region", criteria:{
+// regionId:2,
+// factoryId:0,
+// storageId:0,
+// manufacturerId:0,
+// categoryId:0,
+// unitId:0,
+// startCount:0,
+// endCount:maxCount,
+// startPrice:0,
+// endPrice:maxPrice
+// }}, 
+// {id:1, title:"Kiev region", criteria:{
+//   regionId:1,
+//   factoryId:0,
+//   storageId:0,
+//   manufacturerId:0,
+//   categoryId:0,
+//   unitId:0,
+//   startCount:0,
+//   endCount:maxCount,
+//   startPrice:0,
+//   endPrice:maxPrice
+// }},
+// {id:2, title:"Odessa region", criteria:{
+// regionId:2,
+// factoryId:0,
+// storageId:0,
+// manufacturerId:0,
+// categoryId:0,
+// unitId:0,
+// startCount:0,
+// endCount:maxCount,
+// startPrice:0,
+// endPrice:maxPrice
+// }}, 
     ]
   }
 
@@ -265,5 +269,19 @@ endPrice:maxPrice
     id
       ? this.selected = id
       : this.selected = 0;
+  }
+
+  private startSetting(){
+    this.isShowModal = false;
+    this.getTemplates();
+    this.createTab();
+  }
+  private createTab(){
+    this.tabServce.addedTab({
+      title:ProductTitlePages.TEMPLATES,
+      router: this.routers.TEMPLATES,
+      additional:"",
+      key:""
+    })
   }
 }

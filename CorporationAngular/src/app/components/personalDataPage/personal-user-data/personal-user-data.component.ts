@@ -8,17 +8,20 @@ import { TabService } from 'src/app/services/tab.service';
 })
 export class PersonalUserDataComponent implements OnInit {
 
-  constructor(private readonly tabService:TabService) { 
-
-      tabService.addedTab({
-        title: 'personal data',
-        router: "/services/personal_data",
-        additional: "",
-        key: undefined
-      })
+  constructor(private readonly tabService:TabService) {   
    }
 
   ngOnInit(): void {
+    this.createTab();
+  }
+
+  private createTab(){
+    this.tabService.addedTab({
+      title: 'personal data',
+      router: "/services/personal_data",
+      additional: "",
+      key: ""
+    })
   }
 
 }

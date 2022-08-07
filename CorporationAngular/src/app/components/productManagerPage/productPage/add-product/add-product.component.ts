@@ -50,17 +50,11 @@ export class AddProductComponent implements OnInit {
     private readonly unitService:UnitService,
     private readonly storageService:StorageService,
     private readonly tabService:TabService
-    ) {
-
-      tabService.addedTab({
-        title: "add product",
-        router: "/services/addProduct",
-        additional: "",
-        key: undefined
-      })
-     }
+    ) {}
 
   ngOnInit(): void {
+
+    this.createTab();
     this.getCurrentStorage();
    
     this.getManufacturers();
@@ -125,6 +119,15 @@ export class AddProductComponent implements OnInit {
       },()=>{
         console.log("failed get manufacturers")
       })
+  }
+
+  private createTab(){
+    this.tabService.addedTab({
+      title: "add product",
+      router: "/services/addProduct",
+      additional: "",
+      key: undefined
+    })
   }
 
 }

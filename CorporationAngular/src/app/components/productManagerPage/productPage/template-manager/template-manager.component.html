@@ -24,20 +24,18 @@
             <div class="btn-action">
                 <button 
                     class="btn-add"
-                    (click)="add()"
                 >
                     <span class="btn-add-animate"></span>
-                    <a routerLink="/services/products/newTemplate" class="link"></a>
+                    <a 
+                        routerLink="{{routers.NEW_TEMPLATE}}" 
+                        class="link"></a>
                 </button>
 
                 <button 
                     class="btn-close" 
+                    (click)="close()"
                 >
                     <span class="btn-close-animate"></span>
-                    <a
-                        routerLink="{{routers.TABLE}}"
-                        class="link"
-                    ></a>
                 </button>
             </div>
 

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ServicePageKeys } from '../enums/servicePage/servicePageKeys';
+import { ProductTemplatePageState } from '../interfaces/product/productsPageState';
 import { TabRouter } from '../interfaces/roleselector/tab';
 import { AuthService } from './auth.service';
 import { LocalStorageService } from './local-storage.service';
@@ -12,8 +13,16 @@ import { LocalStorageService } from './local-storage.service';
 
 export class TabService {
 
+  
+  // prevRouter:string = "";
+  // nextRouter:string = "";
+
+  currRouter:string ="";
+  prevRouter:string ="";
+
   tabs$ = new BehaviorSubject<TabRouter []> ([]);
   removedTab$ = new Subject <TabRouter > ();
+  isNewTab:boolean = false;
   
   constructor(
     private readonly authService:AuthService,
@@ -26,15 +35,21 @@ export class TabService {
   }  
 
   addedTab(newTab:TabRouter){
-    console.log("addedTab")
-    console.log(newTab)
+
     if (this.isHasTab(newTab)) {
       this.update(newTab);
       return;
     }
-
+    
+    
     const tabs = this.tabs$.value;
-    tabs.push(newTab);
+
+    const index = tabs.findIndex(tab=>tab.router === this.prevRouter);
+
+    this.isFoundIndex(index)
+      ? tabs.splice(index+1,0,newTab)
+      : tabs.push(newTab);
+  
     this.tabs$.next(tabs);
     this.saveData();
   }
@@ -50,6 +65,8 @@ export class TabService {
     this.clearItem(tabs[index].key);
 
     tabs.splice(index,1);
+
+    this.tabs$.next(tabs);
 
     const length = tabs.length;
 
@@ -96,19 +113,38 @@ export class TabService {
     const tabs = this.tabs$.value;
     const index = tabs.findIndex(tab=> tab.title === newTab.title);
     tabs[index] = newTab;
+    
     this.saveData();
   }
 
   private saveData(){
-    this.localStorage.set(ServicePageKeys.TABS,this.tabs$.value)
+    this.localStorage.set(ServicePageKeys.TABS,{
+      "tabs" : this.tabs$.value,
+      "prev" : this.prevRouter,
+      "curr" : this.currRouter
+    })
   }
 
   private loadData(){
-    const tabs = this.localStorage.get<TabRouter[]>(ServicePageKeys.TABS);
-    if (tabs) this.tabs$.next(tabs);
+    const state = this.localStorage
+      .get<ProductTemplatePageState>(ServicePageKeys.TABS);
+
+    
+    const tabs = state?.tabs;
+    const prevRouter = state?.prev;
+    const currRouter = state?.curr;
+    
+    tabs ? this.tabs$.next(tabs) : [];
+    prevRouter ? this.prevRouter = prevRouter : "";
+    currRouter ? this.currRouter = currRouter : "";
+    
   }
 
   private clearItem(key:any){
     this.localStorage.remove(key);
+  }
+
+  private isFoundIndex(index:number):boolean{
+    return index>=0;
   }
 }
