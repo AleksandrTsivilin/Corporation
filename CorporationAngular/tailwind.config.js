@@ -75,7 +75,20 @@ module.exports = {
         lineClamp: {
           '8': '8',
           '10': '10',
-        }      
+        },
+        keyframes:{
+          fadeIn:{
+            from:{
+              'opacity':0
+            },
+            to:{
+              'opacity':1
+            }
+          }
+        },
+        animation : {
+          fade : 'fadeIn .7s easy-in-out'
+        }    
         
       },
     },
