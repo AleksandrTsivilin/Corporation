@@ -24,5 +24,12 @@ namespace CorporationApi.Controllers
             var categories =await Task.Run(() => _service.GetCategories());
             return Ok(categories);
         }
+
+        [HttpGet("ById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var category = await _service.GetById(id);
+            return Ok(category);
+        }
     }
 }

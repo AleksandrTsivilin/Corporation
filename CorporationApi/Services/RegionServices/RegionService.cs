@@ -1,4 +1,5 @@
-﻿using Repositories.RegionRepositories;
+﻿using DataBase.Entities;
+using Repositories.RegionRepositories;
 using Repositories.Specifications;
 using Services.Models.UserModels.RegionModels;
 using System;
@@ -16,6 +17,7 @@ namespace Services.RegionServices
         {
             _repository = repository;
         }
+
         public async Task<List<RegionModel>> GetRegionByAccess(IdentityUserModel identity)
         {
             var specification = new RegionSpecificationByAccess(identity);
@@ -25,6 +27,21 @@ namespace Services.RegionServices
                 Id = region.Id,
                 Title = region.Title
             }).ToList();
+        }
+
+        public async Task<RegionModel> GetById(int id)
+        {
+            var region = await _repository.GetById(id);
+            return region is null ? null : GetRegionModel(region);
+        }
+
+        private RegionModel GetRegionModel(Region region)
+        {
+            return new RegionModel
+            {
+                Id = region.Id,
+                Title = region.Title
+            };
         }
     }
 }

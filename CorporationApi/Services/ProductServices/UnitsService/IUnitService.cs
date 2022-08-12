@@ -10,5 +10,6 @@ namespace Services.ProductServices.UnitsService
     public interface IUnitService
     {
         Task<List<UnitModel>> GetUnits();
+        Task<UnitModel> GetById(int id);
     }
 }

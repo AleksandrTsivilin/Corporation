@@ -69,6 +69,13 @@ namespace CorporationApi.Controllers
             return Ok(storages);
         }
 
+        [HttpGet("ById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var storage = await _service.GetById(id);
+            return Ok(storage);
+        }
+
         private IdentityUserModel GetIdentityInfo(string key)
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;

@@ -16,5 +16,6 @@ namespace Services.ProductServices.StoragesService
         Task<int> GetCount();
         Task<List<StorageModel>> GetByFactoryId(int id);
         Task<List<StorageModel>> GetByRegionId(int id);
+        Task<StorageModel> GetById(int id);
     }
 }

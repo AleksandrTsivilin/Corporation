@@ -25,5 +25,12 @@ namespace CorporationApi.Controllers
             var units = await Task.Run(() => _service.GetUnits());
             return Ok(units);
         }
+
+        [HttpGet("ById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var unit = await _service.GetById(id);
+            return Ok(unit);
+        }
     }
 }

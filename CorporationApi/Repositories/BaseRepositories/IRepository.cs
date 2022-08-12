@@ -10,5 +10,6 @@ namespace Repositories
     {
         Task<IEnumerable<T>> Get();
         Task<int> GetCount();
+        Task<T> GetById(int id);
     }
 }

@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities
 {
-    public class Region
+    public class Region : BaseEntity
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public ICollection<Factory> Factories { get; set; }
     }

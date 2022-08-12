@@ -1,4 +1,5 @@
 ﻿using DataBase;
+using DataBase.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace Repositories.BaseRepositories
 {
-    public class Repository<T> : IRepository<T> where T : class
-    {
+    public class Repository<T> : IRepository<T> /*where T : class*/ where T : BaseEntity
+    { 
         protected readonly DBContext _context;
 
         public Repository(DBContext context)
@@ -25,6 +26,11 @@ namespace Repositories.BaseRepositories
         {
             return await _context.Set<T>()
                 .CountAsync();
+        }
+
+        public async Task<T> GetById(int id)
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(entity => entity.Id == id);
         }
     }
 }

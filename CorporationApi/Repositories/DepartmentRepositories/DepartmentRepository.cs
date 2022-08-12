@@ -10,14 +10,9 @@ using System.Threading.Tasks;
 
 namespace Repositories.DepartmentRepositories
 {
-    public class DepartmentRepository
+    public class DepartmentRepository 
         : Repository<Department>, IDepartmentRepository
     {
-        public DepartmentRepository(DBContext context) : base (context) { }
-        public async Task<Department> GetById(int id)
-        {
-            return await _context.Departments
-                .FirstOrDefaultAsync(d => d.Id == id);
-        }
+        public DepartmentRepository(DBContext context) : base(context) { }
     }
 }

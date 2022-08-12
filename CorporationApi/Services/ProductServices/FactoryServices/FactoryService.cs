@@ -1,4 +1,5 @@
-﻿using Repositories.ProductRepositories.FactoryRepositories;
+﻿using DataBase.Entities;
+using Repositories.ProductRepositories.FactoryRepositories;
 using Repositories.Specifications;
 using Services.Models.UserModels.FactoryModels;
 using System;
@@ -37,6 +38,21 @@ namespace Services.ProductServices.FactoryServices
                     Id = factory.Id,
                     Title = factory.Title
                 }).ToList();
+        }
+
+        public async Task<FactoryModel> GetById(int id)
+        {
+            var factory = await _repository.GetById(id);
+            return factory is null ? null : GetFactoryModel(factory);
+        }
+
+        private FactoryModel GetFactoryModel(Factory factory)
+        {
+            return new FactoryModel
+            {
+                Id = factory.Id,
+                Title = factory.Title
+            };
         }
     }
 }

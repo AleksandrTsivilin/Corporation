@@ -10,5 +10,6 @@ namespace Services.ProductServices.CategoriesService
     public interface ICategoryService
     {
         Task<List<CategoryModel>> GetCategories();
+        Task<CategoryModel> GetById(int id);
     }
 }

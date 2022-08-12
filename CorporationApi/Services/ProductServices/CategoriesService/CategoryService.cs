@@ -19,6 +19,14 @@ namespace Services.ProductServices.CategoriesService
         {
             _repository = repository;
         }
+
+        public async Task<CategoryModel> GetById(int id)
+        {
+            var category = await _repository.GetById(id);
+
+            return category is null ? null : GetCategoryModel(category);
+        }
+
         public async Task<List<CategoryModel>> GetCategories()
         {
             var categories = await _repository.Get();
@@ -29,5 +37,15 @@ namespace Services.ProductServices.CategoriesService
                     Title = c.Title
                 }).ToList();
         }
+
+        private CategoryModel GetCategoryModel(CategoryProduct category)
+        {
+            return new CategoryModel
+            {
+                Id = category.Id,
+                Title = category.Title
+            };
+        }
+
     }
 }

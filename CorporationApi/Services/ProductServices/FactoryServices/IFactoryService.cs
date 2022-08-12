@@ -12,5 +12,6 @@ namespace Services.ProductServices.FactoryServices
     {
         Task<List<FactoryModel>> GetFactoryByAccess(IdentityUserModel identity);
         Task<List<FactoryModel>> GetFactoryByRegion(int id);
+        Task<FactoryModel> GetById(int id);
     }
 }

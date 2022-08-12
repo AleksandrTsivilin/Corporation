@@ -25,5 +25,12 @@ namespace CorporationApi.Controllers
             var manufacturers = await Task.Run(() => _service.GetManufacturers());
             return Ok(manufacturers);
         }
+
+        [HttpGet("ById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var manufacturer = await _service.GetById(id);
+            return Ok(manufacturer);
+        }
     }
 }

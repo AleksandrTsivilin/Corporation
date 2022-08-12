@@ -19,6 +19,14 @@ namespace Services.ProductServices.UnitsService
         {
             _repository = repository;
         }
+
+        public async Task<UnitModel> GetById(int id)
+        {
+            var unit = await _repository.GetById(id);
+
+            return unit is null ? null : GetUnitModel(unit);
+        }
+
         public async Task<List<UnitModel>> GetUnits()
         {
             var units = await _repository.Get();
@@ -28,5 +36,15 @@ namespace Services.ProductServices.UnitsService
                 Title = u.Title
             }).ToList();
         }
+
+        private UnitModel GetUnitModel(UnitProduct unit)
+        {
+            return new UnitModel
+            {
+                Id = unit.Id,
+                Title = unit.Title
+            };
+        }
+
     }
 }

@@ -16,11 +16,9 @@ namespace Services.ProductServices.StoragesService
 {
     public class StorageService : IStorageService
     {
-        private readonly DBContext _context;
         private readonly IStorageRepository _repository;
         public StorageService(DBContext context, IStorageRepository repository)
         {
-            _context = context;
             _repository = repository;
         }
 
@@ -81,6 +79,22 @@ namespace Services.ProductServices.StoragesService
             {
                 Title = s.Title
             }).ToList();
+        }
+
+        public async Task<StorageModel> GetById(int id)
+        {
+            var storage = await _repository.GetById(id);
+
+            return storage is null ? null : GetStorageModel(storage);
+        }
+
+        private StorageModel GetStorageModel(Storage storage)
+        {
+            return new StorageModel
+            {
+                Id = storage.Id,
+                Title = storage.Title
+            };
         }
     }
 }

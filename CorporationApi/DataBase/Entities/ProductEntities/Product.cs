@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DataBase.Entities.ProductEntities
 {
-    public class Product
+    public class Product : BaseEntity
     {
-        public int Id { get; set; }
         public string Title { get; set; }
         public CategoryProduct Category { get; set; }
         public int CategoryId { get; set; }

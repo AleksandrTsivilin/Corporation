@@ -32,6 +32,13 @@ namespace CorporationApi.Controllers
             return Ok(regions);
         }
 
+        [HttpGet("ById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            var region = await _service.GetById(id);
+            return Ok(region);
+        }
+
         private IdentityUserModel GetIdentityInfo()
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;

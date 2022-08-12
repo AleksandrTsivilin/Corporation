@@ -11,5 +11,6 @@ namespace Services.RegionServices
     public interface IRegionService
     {
         Task<List<RegionModel>> GetRegionByAccess(IdentityUserModel identity);
+        Task <RegionModel> GetById(int id);
     }
 }

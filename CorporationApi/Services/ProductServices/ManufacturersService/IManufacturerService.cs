@@ -10,5 +10,6 @@ namespace Services.ProductServices.ManufacturerService
     public interface IManufacturerService
     {
         Task<List<ManufacturerModel>> GetManufacturers();
+        Task<ManufacturerModel> GetById(int id);
     }
 }
