@@ -1,6 +1,7 @@
 ﻿using CorporationApi.Filters;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Repositories.Models.ProductModels;
 using Repositories.Specifications;
 using Services.IdentityUserServices;
 using Services.ProductServices.ProductTemplatesServices;
@@ -28,12 +29,22 @@ namespace CorporationApi.Controllers.ProductControllers
             _identityService = identityService;
             _service = service;
         }
+
         [HttpGet("byUser")]
         public async Task<IActionResult> GetProductsByAccess()
         {
             var identityInfo = GetIdentityInfo("ProductManager");
             var templates = await _service.GetByUser(identityInfo);
             return Ok(templates);
+        }
+
+        [HttpPost("add")]
+        public async Task<IActionResult> Add(FilterProductModel filter)
+        {
+            var result = await _service.Add(filter);
+            //var identityInfo = GetIdentityInfo("ProductManager");
+            //var templates = await _service.GetByUser(identityInfo);
+            return Ok(result);
         }
 
         private IdentityUserModel GetIdentityInfo(string key)

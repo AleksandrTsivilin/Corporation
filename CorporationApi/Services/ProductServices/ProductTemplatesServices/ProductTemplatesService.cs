@@ -1,4 +1,5 @@
 ﻿using DataBase.Entities.ProductEntities;
+using Repositories.Models.ProductModels;
 using Repositories.ProductRepositories.ProductTemplatesRepositories;
 using Repositories.Specifications;
 using Services.Models.ProductModels;
@@ -19,11 +20,19 @@ namespace Services.ProductServices.ProductTemplatesServices
         {
             _repository = repository;
         }
+
         public async Task<List<ProductTemplatesModel>> GetByUser(IdentityUserModel identity)
         {
             var userId = identity.UserId;
             var templates = await _repository.GetByUser(userId);
             return GetProductTemplatesModel(templates);
+        }
+
+        public async Task<bool> Add(FilterProductModel filter, IdentityUserModel identity)
+        {
+            var userId = identity.UserId;
+            var result = await _repository.Add(filter, userId);
+            return result;
         }
 
         private List<ProductTemplatesModel> GetProductTemplatesModel(List<ProductTemplate> templates)

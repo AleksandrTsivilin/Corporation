@@ -1,4 +1,5 @@
-﻿using Repositories.Specifications;
+﻿using Repositories.Models.ProductModels;
+using Repositories.Specifications;
 using Services.Models.ProductModels;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,6 @@ namespace Services.ProductServices.ProductTemplatesServices
     public interface IProductTemplatesService
     {
         Task<List<ProductTemplatesModel>> GetByUser(IdentityUserModel identityInfo);
+        Task Add(FilterProductModel filter);
     }
 }
