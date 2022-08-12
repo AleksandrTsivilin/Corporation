@@ -1,7 +1,7 @@
 import { Component, HostBinding, HostListener, Input, OnInit } from '@angular/core';
 import { Routers} from 'src/app/enums/routers/routers'
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
-import { maxCount, maxPrice } from '../products/products.component';
+import { maxCount, maxPrice } from '../../products/products.component';
 
 @Component({
   selector: 'app-template-item-detail',

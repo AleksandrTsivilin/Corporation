@@ -33,7 +33,7 @@ import { ProductItemInfoComponent } from './components/productManagerPage/produc
 import { WarningDialogMovementsComponent } from './components/productManagerPage/moveProductPage/warning-dialog-movements/warning-dialog-movements.component';
 import { FilterByTitleComponent } from './components/productManagerPage/productPage/filter-by-title/filter-by-title.component';
 import { FilterByCriteriaComponent } from './components/productManagerPage/productPage/filter-by-criteria/filter-by-criteria.component';
-import { TemplateManagerComponent } from './components/productManagerPage/productPage/template-manager/template-manager.component';
+import { TemplateManagerComponent } from './components/productManagerPage/productPage/templatePages/template-manager/template-manager.component';
 import { ModalComponent } from './components/modals/modal/modal.component';
 import { WarningModalComponent } from './components/modals/warning-modal/warning-modal.component';
 import { MainPageImageComponent } from './components/mainPageComponent/main-page-image/main-page-image.component';
@@ -53,10 +53,11 @@ import { ResponceManagerComponent } from './components/responces/responce-manage
 import { SelectLoadingComponent } from './components/tools/select-loading/select-loading.component';
 import { ProductInstructionComponent } from './components/productManagerPage/productPage/product-instruction/product-instruction.component';
 import { ErrorCatchInterceptor } from './interceptors/error-catch.interceptor';
-import { NewTemplateComponent } from './components/productManagerPage/productPage/new-template/new-template.component';
+import { NewTemplateComponent } from './components/productManagerPage/productPage/templatePages/new-template/new-template.component';
 import { CloseBtnComponent } from './components/tools/closePageBtn/close-btn/close-btn.component';
 import { GetInfoModalComponent } from './components/modals/getInfoModal/get-info-modal/get-info-modal.component';
-import { TemplateItemDetailComponent } from './components/productManagerPage/productPage/template-item-detail/template-item-detail.component';
+import { TemplateItemDetailComponent } from './components/productManagerPage/productPage/templatePages/template-item-detail/template-item-detail.component';
+import { EditTemplateComponent } from './components/productManagerPage/productPage/templatePages/edit-template/edit-template.component';
 
 
 
@@ -111,7 +112,8 @@ import { TemplateItemDetailComponent } from './components/productManagerPage/pro
     NewTemplateComponent,
     CloseBtnComponent,
     GetInfoModalComponent,
-    TemplateItemDetailComponent
+    TemplateItemDetailComponent,
+    EditTemplateComponent
     
     
     

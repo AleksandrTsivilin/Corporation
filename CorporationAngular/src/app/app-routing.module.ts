@@ -10,12 +10,13 @@ import { PersonalUserDataComponent } from './components/personalDataPage/persona
 import { ProductMovementsComponent } from './components/productManagerPage/moveProductPage/product-movements/product-movements.component';
 import { AddProductComponent } from './components/productManagerPage/productPage/add-product/add-product.component';
 import { EditProductComponent } from './components/productManagerPage/productPage/edit-product/edit-product.component';
-import { NewTemplateComponent } from './components/productManagerPage/productPage/new-template/new-template.component';
+import { NewTemplateComponent } from './components/productManagerPage/productPage/templatePages/new-template/new-template.component';
 import { ProductInstructionComponent } from './components/productManagerPage/productPage/product-instruction/product-instruction.component';
 import { ProductItemInfoComponent } from './components/productManagerPage/productPage/product-item-info/product-item-info.component';
 import { ProductPageComponent } from './components/productManagerPage/productPage/product-page/product-page.component';
 import { ProductsComponent } from './components/productManagerPage/productPage/products/products.component';
-import { TemplateManagerComponent } from './components/productManagerPage/productPage/template-manager/template-manager.component';
+import { TemplateManagerComponent } from './components/productManagerPage/productPage/templatePages/template-manager/template-manager.component';
+import { EditTemplateComponent } from './components/productManagerPage/productPage/templatePages/edit-template/edit-template.component';
 import { ResponceManagerComponent } from './components/responces/responce-manager/responce-manager.component';
 import { RoleSelectorComponent } from './components/roleSelectorComponent/role-selector/role-selector.component';
 import { ServiceListComponent } from './components/servicesPage/service-list/service-list.component';
@@ -49,7 +50,8 @@ const routes: Routes = [
           {path:"templates",component:TemplateManagerComponent},          
           {path:"edit",component:EditProductComponent},
           {path:"details",component:ProductItemInfoComponent},
-          {path:"newTemplate", component: NewTemplateComponent}
+          {path:"newTemplate", component: NewTemplateComponent},
+          {path:"editTemplate", component: EditTemplateComponent}
         ]
       },   
       {path:"addProduct",component:AddProductComponent},

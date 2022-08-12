@@ -3,7 +3,7 @@ import { offsetHeader } from 'src/app/components/mainPageComponent/nav-menu/nav-
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { ModalInfo } from 'src/app/interfaces/modal';
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
-import { maxCount, maxPrice } from '../products/products.component';
+import { maxCount, maxPrice } from '../../products/products.component';
 import { Routers} from 'src/app/enums/routers/routers' 
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';

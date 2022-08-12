@@ -7,7 +7,7 @@ import { NewTemplatePageState } from 'src/app/interfaces/product/productsPageSta
 import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { TabService } from 'src/app/services/tab.service';
-import { maxCount, maxPrice } from '../products/products.component';
+import { maxCount, maxPrice } from '../../products/products.component';
 
 @Component({
   selector: 'app-new-template',
