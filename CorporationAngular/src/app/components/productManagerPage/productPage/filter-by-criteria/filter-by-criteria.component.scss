@@ -1,11 +1,28 @@
 .filter-by-criteria-container{
     @apply w-full h-full px-12 py-4 lg:px-48 overflow-y-auto;
 
+    
     .form-title-container{
-        @apply flex justify-end my-2;
+        @apply flex  my-2 space-x-1;
+
+
+        .form-access{
+            @apply
+            w-full
+            flex-1 
+            p-2 
+            border border-transparent rounded-md 
+            text-sm text-white font-bold text-center
+            bg-red-500;
+        }
+
+        .invisible-form-access{
+            @apply invisible;
+        }
 
         .form-title{
             @apply 
+                flex-none
                 p-2 
                 border border-transparent rounded-md 
                 text-sm text-white font-bold bg-blue-800;
@@ -13,13 +30,17 @@
     }
 
     .form-container{
-        @apply w-full space-y-4 p-4 rounded-md border-2 border-blue-700;
-
+        @apply relative w-full space-y-4 p-4 rounded-md border-2 border-blue-700;
         
         
+        .block-screen{
+            @apply
+                z-40 absolute top-0 right-0
+                w-full h-full
+                bg-gray-200 opacity-50;
+        }
         .section-filter-row{
             @apply flex gap-x-4;
-
             .option-filter-container{
                 @apply flex-1 w-1/3;
 

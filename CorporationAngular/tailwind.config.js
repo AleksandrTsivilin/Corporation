@@ -70,7 +70,10 @@ module.exports = {
           '-1/2':'-50%',
           '1/12':'8.33333333333%',
           '1/5':'20%',
-          'full':'100%'
+          'full':'100%',
+          '-1.25':'-5px',
+          '0.25':'1px',
+          '25.5':'102px'
         }, 
         lineClamp: {
           '8': '8',
@@ -193,6 +196,26 @@ module.exports = {
             'right': '2px'
           },
           
+          // link
+          '._link':{
+            'position': 'absolute',
+            'top':'0',
+            'right': '2px',
+            'width':'100%',
+            'height':'100%',
+          },
+          
+          // rigth up
+          '._right':{
+            'border-top': '5px solid transparent',
+            'border-bottom': '5px solid transparent',
+            'border-left': '5px solid #1e40af'
+          },
+          '._up':{
+            'border-left': '5px solid transparent',
+            'border-right': '5px solid transparent',
+            'border-bottom': '5px solid #1e40af'
+          }
         })
       }),    
      

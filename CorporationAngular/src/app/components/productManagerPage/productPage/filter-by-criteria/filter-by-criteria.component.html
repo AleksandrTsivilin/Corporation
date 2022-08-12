@@ -23,8 +23,20 @@
 <div 
     class="filter-by-criteria-container"
 >  
+
+    
     <!-- form title container -->
     <div class="form-title-container">
+
+        <!-- access information -->
+        <div 
+            class="form-access"
+            [ngClass]="{'invisible-form-access' : !startFilter.readonly}"
+        >
+            read only
+        </div>
+
+        <!-- form title -->
         <div 
             class="form-title"
         > 
@@ -37,6 +49,11 @@
         #filterForm="ngForm"
     >
         
+        <!-- block form  -->
+        <div 
+            class="block-screen"
+            *ngIf="startFilter.readonly"
+        ></div>
         
         <!-- location filter -->
         <div class="section-filter-row">
@@ -275,7 +292,7 @@
 
             <!-- count control container -->
             <div class="range-controllers">
-               
+            
                 <!-- header and radio count -->
                 <div class="option-filter-header">
                     <!-- title container -->
@@ -410,8 +427,8 @@
                     ></app-reset-button>
                 </div>
 
-                 <!-- radio controller price -->
-                 <div class="px-8 flex justify-between custom-control custom-radio">
+                <!-- radio controller price -->
+                <div class="px-8 flex justify-between custom-control custom-radio">
                     <!-- input radio 50 -->
                     <div>
                         <input
@@ -503,7 +520,7 @@
                 </div>       
             </div>
         </div>
-
+        
         <!-- action container -->
         <div class="flex justify-around">
 

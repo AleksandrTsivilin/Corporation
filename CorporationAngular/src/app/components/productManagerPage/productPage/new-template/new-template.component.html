@@ -10,7 +10,7 @@
 
     <div class="btn-close-container">
         <app-close-btn
-            (responce)="close()"
+            (responce)="close();"
         ></app-close-btn>
     </div>
 
@@ -23,41 +23,4 @@
         (submitForm)="applyCriteria($event)"
     ></app-filter-by-criteria>
 </div>
-<!-- <ng-template #toLoadingOption>
-    <div class="relative">
-        <select                         
-            class="_form-select"
-        >          
-        </select>
-        <span class="loading-animate"></span>
-    </div>
-</ng-template>
 
-<ng-template #showRegionTitle>
-    <select                         
-        class="_form-select"
-    >        
-        <option                           
-            *ngFor="let region of regions" 
-        >
-            {{region.title}}
-        </option>
-    </select>
-    
-</ng-template>
-
-<ng-template #showFactoryTitle>
-    <select                         
-        class="_form-select"
-    >        
-        <option                           
-            *ngFor="let factory of factories" 
-        >
-            {{factory.title}}
-        </option>
-    </select>
-</ng-template>
-
-<ng-template #addedSpace>
-    <br>
-</ng-template> -->

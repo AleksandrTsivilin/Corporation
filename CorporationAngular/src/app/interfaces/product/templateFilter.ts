@@ -3,5 +3,6 @@ import { CriteriaProduct } from "./criteriaProduct";
 export interface TemplateFilter{
     id:number,
     title:string,
-    criteria:CriteriaProduct
+    criteria:CriteriaProduct,
+    readonly:boolean
 }

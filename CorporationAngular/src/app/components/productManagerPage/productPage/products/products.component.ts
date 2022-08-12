@@ -70,20 +70,21 @@ export class ProductsComponent implements OnInit {
   }
 
   templateFilter:TemplateFilter={
-    id:0,
-    title:"new template",
-    criteria:{
-        regionId:0,
-        factoryId:0,
-        storageId:0,
-        manufacturerId:0,
-        categoryId:0,
-        unitId:0,
-        startPrice:0,
-        endPrice:maxPrice,
-        startCount:0,
-        endCount:maxCount
-    }
+    id: 0,
+    title: "new template",
+    criteria: {
+      regionId: 0,
+      factoryId: 0,
+      storageId: 0,
+      manufacturerId: 0,
+      categoryId: 0,
+      unitId: 0,
+      startPrice: 0,
+      endPrice: maxPrice,
+      startCount: 0,
+      endCount: maxCount
+    },
+    readonly: false
   }
 
   //templateFilter: TemplateFilter | null = null;
@@ -174,7 +175,7 @@ export class ProductsComponent implements OnInit {
     // else{
     //   this.loadPageState();
     // }
-    currentTemplate 
+    currentTemplate !==undefined
       ? this.startSetting(currentTemplate)
       : this.loadPageState();
     //const currentTemplate = this.getCurrentTemplate();
@@ -262,7 +263,6 @@ export class ProductsComponent implements OnInit {
   }
 
   toggleDetailedSearch(){
-    //console.log(this.templateFilter.criteria)
     if (this.isOpenDetailedSearch) {
       this.modalInfo={
         title:"Are you sure close filter menu",
@@ -270,17 +270,20 @@ export class ProductsComponent implements OnInit {
         position:Positions.center
       }
       this.isShowModalWarning=true;
-      return
+      return;
     }
     
     this.isOpenDetailedSearch=!this.isOpenDetailedSearch;   
+    this.savePageState();
   }  
               
   closeWarningModal(answer:boolean){
     if (answer) {
       
       if (!this.isApplyFilter) this.resetCriteria();
-      this.isOpenDetailedSearch=!this.isOpenDetailedSearch;  
+      this.isOpenDetailedSearch=!this.isOpenDetailedSearch; 
+      this.savePageState(); 
+      this.localStorage.remove(ProductKeys.CRITERIA_TABLE);
     }
     this.isShowModalWarning=false;
   }
@@ -533,6 +536,7 @@ export class ProductsComponent implements OnInit {
     const pageState = this.localStorage.get<TableProductsPageState>(ProductKeys.TABLE);
     const template = pageState?.template;
     const ordered = pageState?.isOrdered;
+    const isOpenDetail = pageState?.isOpenDetail;
     
     template
       ? this.startSetting(template)
@@ -547,6 +551,8 @@ export class ProductsComponent implements OnInit {
       this.sortCriteria = pageState?.sortCriteria ? pageState?.sortCriteria : "*";
       this.ascDirection = pageState?.ascDirection ? pageState?.ascDirection : 1;
     }
+
+    if (isOpenDetail) this.isOpenDetailedSearch = true;
   }
 
   private startSetting(currentTemplate : TemplateFilter | null){
@@ -571,7 +577,8 @@ export class ProductsComponent implements OnInit {
        searchString : this.filterProductForm.searchString,
        isOrdered :  this._isOrdered,
        sortCriteria : this.sortCriteria,
-       ascDirection : this.ascDirection
+       ascDirection : this.ascDirection,
+       isOpenDetail : this.isOpenDetailedSearch
     })
   }
 

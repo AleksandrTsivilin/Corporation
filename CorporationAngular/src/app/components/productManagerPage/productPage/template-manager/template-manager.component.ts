@@ -35,6 +35,8 @@ export class TemplateManagerComponent implements OnInit {
 
   isShowModal:boolean;
   isScrolling:boolean=false;
+  opened : number = -1 ;
+  isOpenMenu : boolean = false;
 
   templates:TemplateFilter[]=[];
   selected:number = 0;
@@ -82,6 +84,18 @@ export class TemplateManagerComponent implements OnInit {
     this.tabServce.remove(ProductTitlePages.TEMPLATES)
   }
 
+  // toggleMenu(){
+  //   this.isOpenMenu = !this.isOpenMenu;
+  // }
+
+  openDetails(index : number){
+    this.isOpenMenu = !this.isOpenMenu;
+    this.isOpenMenu
+      ? this.opened = index
+      : this.opened = -1;
+    
+  }
+
 
   private getTemplates() {    
     // this.templateService.getByUser().subscribe(templates=>{
@@ -91,7 +105,8 @@ export class TemplateManagerComponent implements OnInit {
 
     // test data
     this.templates = [
-      {id:1, title:"Kiev region", criteria:{
+      {id:1, title:"Kiev region", readonly:false,
+       criteria:{
           regionId:1,
           factoryId:0,
           storageId:0,
@@ -103,7 +118,8 @@ export class TemplateManagerComponent implements OnInit {
           startPrice:0,
           endPrice:maxPrice
       }},
-      {id:2, title:"Odessa region", criteria:{
+      {id:2, title:"Odessa region", readonly:false,
+       criteria:{
         regionId:2,
         factoryId:0,
         storageId:0,
@@ -115,30 +131,31 @@ export class TemplateManagerComponent implements OnInit {
         startPrice:0,
         endPrice:maxPrice
       }}, 
-//       {id:1, title:"Kiev region", criteria:{
-//         regionId:1,
-//         factoryId:0,
-//         storageId:0,
-//         manufacturerId:0,
-//         categoryId:0,
-//         unitId:0,
-//         startCount:0,
-//         endCount:maxCount,
-//         startPrice:0,
-//         endPrice:maxPrice
-//     }},
-//     {id:2, title:"Odessa region", criteria:{
-//       regionId:2,
-//       factoryId:0,
-//       storageId:0,
-//       manufacturerId:0,
-//       categoryId:0,
-//       unitId:0,
-//       startCount:0,
-//       endCount:maxCount,
-//       startPrice:0,
-//       endPrice:maxPrice
-//     }}, 
+      {id:3, title:"another region", readonly:true,
+       criteria:{
+        regionId:0,
+        factoryId:0,
+        storageId:16,
+        manufacturerId:0,
+        categoryId:0,
+        unitId:0,
+        startCount:0,
+        endCount:90,
+        startPrice:500,
+        endPrice:25000
+    }},
+    // {id:12, title:"Odessa region", criteria:{
+    //   regionId:2,
+    //   factoryId:0,
+    //   storageId:0,
+    //   manufacturerId:0,
+    //   categoryId:0,
+    //   unitId:0,
+    //   startCount:0,
+    //   endCount:maxCount,
+    //   startPrice:0,
+    //   endPrice:maxPrice
+    // }}, 
 //     {id:1, title:"Kiev region", criteria:{
 //       regionId:1,
 //       factoryId:0,

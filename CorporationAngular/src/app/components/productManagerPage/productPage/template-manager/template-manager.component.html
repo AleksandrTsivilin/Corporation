@@ -28,7 +28,7 @@
                     <span class="btn-add-animate"></span>
                     <a 
                         routerLink="{{routers.NEW_TEMPLATE}}" 
-                        class="link"></a>
+                        class="_link"></a>
                 </button>
 
                 <button 
@@ -48,37 +48,65 @@
             *ngIf="templates.length>0 else emptyTemplates"
         >            
             <div 
-                class="item-list"                
+                class="w-full relative"        
                 *ngFor="let template of templates let i=index"
             >
                 <div 
-                    class="item-title"  
-                    [ngClass]="template.id === selected ? 'selected' : 'non-selected'"                  
+                    class="item-list"
                 >
-                    <div class="title">
-                        {{template.title}}
-                    </div>  
-                    <button class="menu-container">
-                        <div class="menu">
-                            <div class="point"></div>
-                            <div class="point"></div>
-                            <div class="point"></div>
-                        </div>                            
-                    </button>                  
-                </div>
-                <div class="item-control">
-                    <button 
-                        class="btn"                                             
+
+                    
+                    <!-- title template -->
+                    <div 
+                        class="item-title relative"
+                        [ngClass]="template.id === selected ? 'selected' : 'non-selected'"                  
                     >
-                        apply
-                        <a
-                            routerLink="{{routers.TABLE}}" 
-                            [state]="{template:template}" 
-                            class="link"
-                        ></a>  
-                    </button>                                              
-                </div>                
-            </div>            
+                        <div class="title">
+                            {{template.title}}
+                        </div>  
+
+                        <!-- template details button-->
+                        <button 
+                            class="menu-container"
+                            (click) = "menu.toggle()"
+                        >
+                            <div 
+                                class="menu"
+                                *ngIf="!menu.isOpened else toClose"
+                            >
+                                <div class="point"></div>
+                                <div class="point"></div>
+                                <div class="point"></div>
+                            </div>   
+                                               
+                        </button>  
+                        
+                        <!-- template detail component -->
+                        <app-template-item-detail                             
+                            #menu
+                            [template]="template"
+                        >
+                        </app-template-item-detail>    
+                    </div>
+
+                    <!-- apply button -->
+                    <div class="item-control">
+                        <button 
+                            class="btn"                                             
+                        >
+                            apply
+                            <a
+                                routerLink="{{routers.TABLE}}" 
+                                [state]="{template:template}" 
+                                class="_link"
+                            ></a>  
+                        </button>                                              
+                    </div>                     
+                    
+                
+                </div>                        
+            </div> 
+             
         </div>
     </div>   
 </div>
@@ -99,5 +127,12 @@
    <div class="info-container">    
         Sorry, You don't have any templates yet!!!
    </div>
+</ng-template>
+
+
+<ng-template #toClose>
+    <div class="close-btn-detail-container">
+        <span class="close-btn"></span>
+    </div>
 </ng-template>
 

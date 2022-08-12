@@ -56,6 +56,7 @@ import { ErrorCatchInterceptor } from './interceptors/error-catch.interceptor';
 import { NewTemplateComponent } from './components/productManagerPage/productPage/new-template/new-template.component';
 import { CloseBtnComponent } from './components/tools/closePageBtn/close-btn/close-btn.component';
 import { GetInfoModalComponent } from './components/modals/getInfoModal/get-info-modal/get-info-modal.component';
+import { TemplateItemDetailComponent } from './components/productManagerPage/productPage/template-item-detail/template-item-detail.component';
 
 
 
@@ -109,7 +110,8 @@ import { GetInfoModalComponent } from './components/modals/getInfoModal/get-info
     ProductInstructionComponent,
     NewTemplateComponent,
     CloseBtnComponent,
-    GetInfoModalComponent
+    GetInfoModalComponent,
+    TemplateItemDetailComponent
     
     
     

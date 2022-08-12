@@ -1,12 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { FactoryUrls, Urls } from 'src/app/enums/urls';
 import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 
 @Injectable({
   providedIn: 'root'
 })
 export class FactoryService {
-
+ 
   constructor(private readonly client:HttpClient) { }
 
   getFactoriesByAcces(){
@@ -19,4 +20,14 @@ export class FactoryService {
     const params = new HttpParams().set("id",id);
     return this.client.get<FactoryInfo[]>(urlGetFactoryByRegionId,{params});
   }
+
+  getById(id: number) {
+    const url = Urls.FACTORY + FactoryUrls.BY_ID;
+    const params = new HttpParams().set(
+      "id",id
+    )
+
+    return this.client.get<FactoryInfo>(url,{params})
+  }
+
 }

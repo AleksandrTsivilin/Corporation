@@ -1,5 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { StorageUrls, Urls } from 'src/app/enums/urls';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 
 @Injectable({
@@ -29,6 +30,13 @@ export class StorageService {
     const urlGetStoragesByFactoryId="https://localhost:5001/api/Storage/ByFactoryId";
     const params = new HttpParams().set("id",id);
     return this.client.get<StorageInfo[]>(urlGetStoragesByFactoryId,{params})
+  }
+
+  getById(id : number){
+    const url = Urls.STORAGES + StorageUrls.BY_ID;
+    const params = new HttpParams().set("id",id);
+
+    return this.client.get<StorageInfo>(url,{params});
   }
 
   getStorageByRegionId(id:number){

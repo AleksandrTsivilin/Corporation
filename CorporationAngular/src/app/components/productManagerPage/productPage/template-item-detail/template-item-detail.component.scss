@@ -1,0 +1,92 @@
+
+
+:host-context(.hidden){
+    display: none;
+}
+
+
+
+:host{
+    position: relative;
+
+
+    .detail-card{
+        @apply
+            z-50 absolute top-8 -right-24
+            w-60
+            bg-white
+            border-2 border-blue-800
+            rounded-md
+            animate-fade
+            lg:w-96
+            lg:top-1 lg:right-7;
+
+    }
+
+    .animate-sign{
+
+        @apply
+            absolute -top-1.25 right-25.5 
+            w-0 h-0
+            lg:invisible;
+    }
+
+    .animate-sign-lg{
+
+        @apply 
+            absolute top-0.25 -right-1.25
+            w-0 h-0
+            invisible lg:visible; 
+    }
+
+    .action-container{
+        @apply 
+            flex justify-end 
+            space-x-1 
+            my-1 mr-2;
+        
+        .btn-container{
+            @apply 
+                w-7 h-7;
+
+            .btn{
+                @apply
+                    relative 
+                    border-2 border-transparent rounded-md
+                    hover:border-gray-300;
+
+                .img{
+                    @apply w-full h-full;
+                }
+            }
+        }
+    }
+
+    .title-container{
+        @apply text-blue-700 font-bold my-1 text-center;
+    }
+
+    .line-container{
+        @apply w-full px-2;
+
+        .line{
+            @apply w-full h-0.5 bg-blue-800;
+        }
+    }
+
+    .detail-info-container{
+        @apply 
+            py-1 space-y-2 text-blue-700 font-thin;
+
+        
+        .row-info{
+            @apply flex pl-2;
+
+            .item-row{
+                @apply flex-1;
+            }
+        }
+    }
+}
+    
+    

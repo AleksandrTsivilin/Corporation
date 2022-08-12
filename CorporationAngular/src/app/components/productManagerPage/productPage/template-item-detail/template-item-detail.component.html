@@ -1,0 +1,91 @@
+
+
+<div class="detail-card">
+    <span class="animate-sign-lg  _right"></span>
+    <span class="animate-sign _up"></span>
+
+    <!-- action section -->
+    <section class="action-container">
+        <div class="btn-container">
+
+            <!-- edit button -->
+            <button class="btn">
+                <a 
+                    class="_link"
+                    routerLink="{{routers.NEW_TEMPLATE}}"
+                    [state]="{template:template}"
+                ></a>
+                <img 
+                    class="img" 
+                    src="/assets/images/icons/edit-item.png">
+            </button>
+        </div>
+
+        <!-- remove button -->
+        <div class="btn-container">
+            <button 
+                class="btn" 
+                (click)="remove()">
+                <img 
+                    class="img" 
+                    src="/assets/images/icons/remove-item.png">
+            </button>
+        </div>
+    </section>
+
+    <!-- title container -->
+    <div class="title-container">{{template.title}}</div>
+
+    <!-- line container -->
+    <div class="line-container">
+        <div class="line"></div>
+    </div>
+
+
+    <!-- detail section -->
+    <section class="detail-info-container">
+        <div class="row-info">
+            <div class="item-row">region</div>
+            <div class="item-row">region</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">factory</div>
+            <div class="item-row">factory</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">storage</div>
+            <div class="item-row">storage</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">manufacturer</div>
+            <div class="item-row">manufacturer</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">category</div>
+            <div class="item-row">category</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">unit</div>
+            <div class="item-row">unit</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">price start</div>
+            <div class="item-row">price start</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">price end</div>
+            <div class="item-row">price end</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">count start</div>
+            <div class="item-row">count start</div>
+        </div>
+        <div class="row-info">
+            <div class="item-row">count end</div>
+            <div class="item-row">count end</div>
+        </div>
+    </section>
+    
+</div>
+
+
