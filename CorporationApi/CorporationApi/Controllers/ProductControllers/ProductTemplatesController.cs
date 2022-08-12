@@ -41,9 +41,8 @@ namespace CorporationApi.Controllers.ProductControllers
         [HttpPost("add")]
         public async Task<IActionResult> Add(FilterProductModel filter)
         {
-            var result = await _service.Add(filter);
-            //var identityInfo = GetIdentityInfo("ProductManager");
-            //var templates = await _service.GetByUser(identityInfo);
+            var identityInfo = GetIdentityInfo("ProductManager");
+            var result = await _service.Add(filter,identityInfo);
             return Ok(result);
         }
 
