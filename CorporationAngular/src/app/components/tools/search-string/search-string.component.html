@@ -1,0 +1,25 @@
+
+<div class="search-string-container relative">
+    <input 
+        class="_form-input"
+        placeholder="search"
+        type="text"  
+        [(ngModel)]="search"
+        (ngModelChange)="start()"      
+    >
+
+    <button class="btn-reset"
+        [ngClass]="{'non-active-clear-btn': isEmpty}"
+        *ngIf="isComplited else showProccessLoading"
+        (click)="clear()"
+    >
+        <span class="animation-btn"></span>
+    </button>
+</div>
+
+<ng-template #showProccessLoading>
+    
+    <div class="animation-loading-container">
+        <span class="animation-loading"></span>
+    </div>
+</ng-template>

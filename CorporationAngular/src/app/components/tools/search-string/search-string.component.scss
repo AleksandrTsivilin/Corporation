@@ -1,0 +1,54 @@
+
+.search-string-container{
+    @apply w-full;
+}
+
+
+.btn-reset{
+    @apply 
+        absolute  right-1 top-1/2 -mt-3
+        w-6 h-6 
+        rounded-full
+        hover:bg-gray-200;
+}
+
+.non-active-clear-btn{
+    @apply invisible;
+}
+
+// animatin button reset 
+.animation-btn::before,
+.animation-btn::after{
+    @apply
+        absolute top-1/2 right-1/2 -mt-0.25 -mr-1.5
+        h-0.5 w-3
+        bg-red-500;    
+}
+
+.animation-btn::before,
+.animation-btn::after{
+    content: "";
+}
+
+.animation-btn::after{
+    @apply transform rotate-45 origin-center;
+}
+
+.animation-btn::before{
+    @apply transform -rotate-45 origin-center;
+}
+
+// loading animation
+.animation-loading-container{
+    @apply
+        absolute right-1 top-1/2 -mt-1.5
+        w-6 h-6;
+
+    .animation-loading{
+        @apply 
+            flex w-3 h-3
+            my-auto
+            rounded-full
+            border-b-2 border-green-500 animate-spin;
+    }
+}

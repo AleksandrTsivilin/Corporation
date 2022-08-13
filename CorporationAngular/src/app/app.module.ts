@@ -58,6 +58,7 @@ import { CloseBtnComponent } from './components/tools/closePageBtn/close-btn/clo
 import { GetInfoModalComponent } from './components/modals/getInfoModal/get-info-modal/get-info-modal.component';
 import { TemplateItemDetailComponent } from './components/productManagerPage/productPage/templatePages/template-item-detail/template-item-detail.component';
 import { EditTemplateComponent } from './components/productManagerPage/productPage/templatePages/edit-template/edit-template.component';
+import { SearchStringComponent } from './components/tools/search-string/search-string.component';
 
 
 
@@ -113,7 +114,8 @@ import { EditTemplateComponent } from './components/productManagerPage/productPa
     CloseBtnComponent,
     GetInfoModalComponent,
     TemplateItemDetailComponent,
-    EditTemplateComponent
+    EditTemplateComponent,
+    SearchStringComponent
     
     
     
