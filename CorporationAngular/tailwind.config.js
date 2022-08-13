@@ -200,7 +200,7 @@ module.exports = {
           '._link':{
             'position': 'absolute',
             'top':'0',
-            'right': '2px',
+            'right': '0',
             'width':'100%',
             'height':'100%',
           },

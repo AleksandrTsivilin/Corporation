@@ -15,38 +15,51 @@
         class="template-manager"     
     >
 
-        
-        
-        <!-- close button  -->
-        <div class="btn-action-container">
+        <!-- board control -->
 
-            <!-- add template button -->
-            <div class="btn-action">
-                <button 
-                    class="btn-add"
-                >
-                    <span class="btn-add-animate"></span>
-                    <a 
-                        routerLink="{{routers.NEW_TEMPLATE}}" 
-                        class="_link"></a>
-                </button>
+        <section class="board-control-container">
+            <div class="board-control">
 
-                <button 
-                    class="btn-close" 
-                    (click)="close()"
-                >
-                    <span class="btn-close-animate"></span>
-                </button>
+                <!-- search input -->
+                <div class="search-string-container">
+                    <app-search-string 
+                        class="search-string"
+                        [delay]="1000"
+                        [search]="search"
+                        [isComplited]="isComplited"
+                        (newCriteria)="filterBySearch($event)"
+                    ></app-search-string>
+                </div>
+
+                <!-- action buttons -->
+                <div class="flex-none flex my-auto space-x-2 pr-2">
+                    
+                    <!-- add button -->
+                    <button 
+                        class="btn-add"
+                    >
+                        <span class="btn-add-animate"></span>
+                        <a 
+                            routerLink="{{routers.NEW_TEMPLATE}}" 
+                            class="_link"></a>
+                    </button>
+
+                    <!-- close button  -->
+                    <button 
+                        class="btn-close" 
+                        (click)="close()"
+                    >
+                        <span class="btn-close-animate"></span>
+                    </button>
+                </div>
             </div>
-
-            
-        </div>
-
+        </section>
+        
         <!-- list templates -->
         <div 
             class="list-templates"
             *ngIf="templates.length>0 else emptyTemplates"
-        >            
+        >      
             <div 
                 class="w-full relative"        
                 *ngFor="let template of templates let i=index"
@@ -58,8 +71,8 @@
                     
                     <!-- title template -->
                     <div 
-                        class="item-title relative"
-                        [ngClass]="template.id === selected ? 'selected' : 'non-selected'"                  
+                        class="item-title "
+                                        
                     >
                         <div class="title">
                             {{template.title}}

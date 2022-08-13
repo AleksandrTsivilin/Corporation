@@ -6,6 +6,7 @@ export enum Urls{
     MANUFACTURER = 'https://localhost:5001/api/Manufacturer',
     CATEGORY = 'https://localhost:5001/api/CategoryProduct',
     UNIT = 'https://localhost:5001/api/UnitProduct',
+    PRODUCT_TEMPLATES = 'https://localhost:5001/api/ProductTemplates'
 }
 
 export enum RegionUrls{
@@ -30,5 +31,9 @@ export enum CategoryUrls{
 
 export enum UnitUrls{
     BY_ID = '/ById'
+}
+
+export enum ProductTemplates{
+    START_WITH = '/StartWith'
 }
 

@@ -38,9 +38,7 @@ export class ProductInstructionComponent implements OnInit {
 
     answer 
       ? this.startSetting()
-      : this.router.navigate([this.routers.TEMPLATES],
-        {state:{modal:true}
-      });
+      : this.router.navigate([this.routers.TEMPLATES]);
     
   }
 

@@ -1,62 +1,53 @@
 .template-manager-container{      
     
+    
     .template-manager{  
         @apply        
             h-full
             w-full
             flex flex-col;     
         
-// button exit container
-        .btn-section{
-            @apply flex-none flex justify-end mx-2 py-2;
 
-                                
-            .btn{
-                @apply 
-                    border-2 border-red-600
-                    bg-red-300
-                    rounded;
-            }
+// board control container
+        .board-control-container{
+            @apply 
+                z-50
+                fixed right-0 top-service-title-short md:top-service-title
+                w-full 
+                py-2
+                bg-white;
 
-            .btn:hover{
-                @apply bg-red-600;
-            }
+            .board-control{
+                @apply
+                    flex w-full h-full;
 
-            .btn:focus{
-                @apply outline-none ring-2 ring-offset-2 ring-red-600;
-                
+                .search-string-container{
+
+                    @apply flex-1 flex my-auto;
+
+                    .search-string{
+                        @apply  
+                            flex w-full px-2
+                            md:w-3/4 md:pl-4
+                            lg:pl-48;
+                    }
+                }
+                .action-container{
+                    @apply 
+                        relative my-2 ml-auto;
+                }
             }
         }
-
-        .btn-section-fixed{
-            @apply fixed right-0 top-service-title-short md:top-service-title;
-        }
-
-
 
 
     
-// buttons add and close containers
-    .btn-action-container{
-        @apply 
-            z-50
-            fixed top-service-title mt-1 right-2
-            flex justify-end 
-            pr-1;
-
-
-        .btn-action{
-
-            @apply 
-                space-x-1;
-
+// buttons add and close containers 
             .btn-add,
             .btn-close{
                 @apply 
                     relative 
                     rounded-full 
-                    h-12 w-12 
-                    border-2 border-transparent 
+                    h-12 w-12                     
                     bg-blue-600
                     sm:bg-white
                     hover:bg-white;
@@ -108,10 +99,7 @@
                     @apply bg-red-600;
                 }
             }
-        }
-
-        
-    }
+    
 
 // list templates
         .list-templates{
@@ -119,9 +107,10 @@
             @apply 
                 flex-1
                 space-y-2
-                p-12
+                p-12 pb-48
+                mt-16
                 sm:w-2/3 
-                md:w-1/2 
+                md:w-4/5 md:px-24 
                 lg:w-2/3 lg:max-w-screen-sm;
 
             .item-list{
@@ -133,10 +122,12 @@
 // item title 
                 .item-title{
                     @apply 
+                        relative 
                         flex-1 flex
                         border-transparent
                         rounded-l-lg
-                        px-4 py-2                        
+                        px-4 py-2   
+                        bg-blue-500                     
                         text-white;
 
                     .title{
@@ -213,9 +204,9 @@
 //     @apply absolute top-0 right-0 w-full h-full;
 // }
 
-.selected{
-    @apply bg-blue-700;
-}
+// .selected{
+//     @apply bg-blue-700;
+// }
 
 .non-selected{
     @apply bg-blue-500;

@@ -39,3 +39,7 @@ export interface ProductCriteriaPageState{
     criteria : CriteriaProduct
 }
 
+export interface ProductTemplatesPageState{
+    search : string
+}
+
