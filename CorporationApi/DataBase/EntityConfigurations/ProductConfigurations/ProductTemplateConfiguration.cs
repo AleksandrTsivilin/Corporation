@@ -51,10 +51,6 @@ namespace DataBase.EntityConfigurations.ProductConfigurations
 
             builder.Property(_ => _.EndPrice)
                 .IsRequired();
-
-            builder.HasOne(_ => _.User)
-                .WithMany(_ => _.ProductTemplates)
-                .HasForeignKey(_ => _.UserId);
         }
     }
 }

@@ -33,6 +33,7 @@ namespace DataBase
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<AvaiablesUserPermission> AvaiablesUser_Permissions { get; set; }
         public DbSet<ProductTemplate> ProductTemplates { get; set; }
+        public DbSet<ProductTemplateUser> ProductTemplates_Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -52,9 +52,10 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
 
         public async Task<List<ProductTemplate>> GetByUser(int userId)
         {
-            return await _context.ProductTemplates
-                .Where(template => template.UserId == userId)
-                .ToListAsync();
+            return new List<ProductTemplate>();
+                //await _context.ProductTemplates
+                //.Where(template => template.UserId == userId)
+                //.ToListAsync();
         }
     }
 }

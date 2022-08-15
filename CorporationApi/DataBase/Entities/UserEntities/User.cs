@@ -24,6 +24,6 @@ namespace DataBase.Entities.UserEntities
         [Newtonsoft.Json.JsonIgnore]
         public ICollection<AvaiableUser> Avaiables { get; set; }
         public bool IsBanned { get; set; }
-        public ICollection<ProductTemplate> ProductTemplates { get; set; }
+        public List<ProductTemplateUser> ProductTemplates { get; set; }
     }
 }

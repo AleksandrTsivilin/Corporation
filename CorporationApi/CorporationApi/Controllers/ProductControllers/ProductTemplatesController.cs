@@ -46,6 +46,14 @@ namespace CorporationApi.Controllers.ProductControllers
             return Ok(result);
         }
 
+        [HttpGet("ById")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            return Ok();
+        }
+
+
+
         private IdentityUserModel GetIdentityInfo(string key)
         {
             var claims = HttpContext.User.Identity as ClaimsIdentity;

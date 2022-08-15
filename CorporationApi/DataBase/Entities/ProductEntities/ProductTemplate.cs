@@ -20,7 +20,6 @@ namespace DataBase.Entities.ProductEntities
         public int EndCount { get; set; }
         public decimal StartPrice { get; set; }
         public decimal EndPrice { get; set; }
-        public User User { get; set; }
-        public int UserId { get; set; }
+        public List<ProductTemplateUser> Users { get; set; }
     }
 }
