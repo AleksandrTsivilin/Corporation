@@ -13,6 +13,7 @@ namespace DataBase.Entities.UserEntities
     public class User : BaseEntity
     {
         public string Username { get; set;}
+        public string UserName { get; set; }
         public byte [] Salt { get; set; }
         public string HashedPassword { get; set; }
         public int EmployeeId { get; set; }

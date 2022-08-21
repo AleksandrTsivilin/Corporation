@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services.Models.ProductModels
+namespace Services.Models.ProductModels.ProductTemplateModels
 {
-    public class ProductTemplatesModel
+    public class ProductCriteria
     {
-        public int Id { get; set; }
-        public string Title { get; set; }
         public int RegionId { get; set; }
         public int FactoryId { get; set; }
         public int StorageId { get; set; }

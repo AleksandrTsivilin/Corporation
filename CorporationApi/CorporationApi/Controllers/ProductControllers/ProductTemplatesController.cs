@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Repositories.Models.ProductModels;
 using Repositories.Specifications;
 using Services.IdentityUserServices;
+using Services.Models.ProductModels;
+using Services.Models.ProductModels.ProductTemplateModels;
 using Services.ProductServices.ProductTemplatesServices;
 using System;
 using System.Collections.Generic;
@@ -31,7 +33,7 @@ namespace CorporationApi.Controllers.ProductControllers
         }
 
         [HttpGet("byUser")]
-        public async Task<IActionResult> GetProductsByAccess()
+        public async Task<IActionResult> Get()
         {
             var identityInfo = GetIdentityInfo("ProductManager");
             var templates = await _service.GetByUser(identityInfo);
@@ -49,9 +51,63 @@ namespace CorporationApi.Controllers.ProductControllers
         [HttpGet("ById")]
         public async Task<IActionResult> GetById(int id)
         {
-            return Ok();
+            var identity = GetIdentityInfo("ProductManager");
+            var template = await _service.GetById(id, identity);
+
+            //testc code 
+
+            if (id == 5) return Ok(null);
+
+            return id % 2 == 0 
+                ? Ok(new ProductTemplateModel 
+                {
+                    Id = 5,
+                    Title = "template 11",
+                    IsOwner = true,
+                    Owner = "Vasya",
+                    Criteria  = new ProductCriteria
+                    {
+                        RegionId = 1,
+                        FactoryId = 0,
+                        StorageId = 0,
+                        ManufacturerId = 0,
+                        CategoryId = 0,
+                        UnitId = 0,
+                        StartCount = 0,
+                        EndCount = 150,
+                        StartPrice = 1000,
+                        EndPrice = 7400
+                    }
+
+                })
+                : Ok(new ProductTemplateModel {
+                    Id = 5,
+                    Title = "template 11",
+                    IsOwner = false,
+                    Owner = "Vasya",
+                    Criteria = new ProductCriteria
+                    {
+                        RegionId = 1,
+                        FactoryId = 0,
+                        StorageId = 0,
+                        ManufacturerId = 0,
+                        CategoryId = 0,
+                        UnitId = 0,
+                        StartCount = 0,
+                        EndCount = 150,
+                        StartPrice = 1000,
+                        EndPrice = 7400
+                    }
+                });
+            //return Ok();
         }
 
+        [HttpGet("detail")]
+        public async Task<IActionResult> GetDetail(int id)
+        {
+            var template = await _service.GetDetail(id);
+            return Ok(template);
+        }
 
 
         private IdentityUserModel GetIdentityInfo(string key)

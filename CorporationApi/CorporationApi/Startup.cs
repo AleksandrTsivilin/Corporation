@@ -160,6 +160,7 @@ namespace CorporationApi
                 endpoints.MapHub<ProductHub>("productHub");
                 endpoints.MapHub<MovementsHub>("/movementsHub");
                 endpoints.MapHub<UserHub>("/userHub");
+                endpoints.MapHub<ProductTemplateHub>("/productTemplateHub");
             });
         }
 
