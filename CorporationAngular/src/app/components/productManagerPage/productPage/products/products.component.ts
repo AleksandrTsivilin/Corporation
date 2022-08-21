@@ -15,10 +15,15 @@ import { AuthService } from 'src/app/services/auth.service';
 import { PermissionInfo } from 'src/app/interfaces/userManagerPage/permissionInfo';
 import { TabService } from 'src/app/services/tab.service';
 import { ProductsPageState, TableProductsPageState } from 'src/app/interfaces/product/productsPageState';
-import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
+import { TemplateFilter } from 'src/app/interfaces/product/tempalte/templateFilter';
 import { Routers } from 'src/app/enums/routers/routers';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ProductKeys } from 'src/app/enums/productPage/productKeys';
+import { takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
+import { compilePipeFromMetadata } from '@angular/compiler';
+import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
 
 
 
@@ -84,8 +89,12 @@ export class ProductsComponent implements OnInit {
       startCount: 0,
       endCount: maxCount
     },
-    readonly: false
+    owner: '',
+    isOwner: false
   }
+
+  rawTemplate : TemplateFilter | null = null;
+  
 
   //templateFilter: TemplateFilter | null = null;
 
@@ -144,6 +153,8 @@ export class ProductsComponent implements OnInit {
     edit_id:0,
     table_open:false
   }
+
+  private destroy$ = new Subject();
   
   constructor( 
     private readonly authService:AuthService,
@@ -152,11 +163,12 @@ export class ProductsComponent implements OnInit {
     private readonly updateMovementService:MovementsUpdateService,
     private readonly storageService:StorageService,
     private readonly tabService:TabService,
-    private readonly localStorage: LocalStorageService
+    private readonly localStorage: LocalStorageService,
+    private readonly templateService : ProductTemplateService
     ) { 
 
     //   this.createTab();
-
+    //debugger
     //   this.loadPageState();
 
     //   console.log("const products")
@@ -165,8 +177,11 @@ export class ProductsComponent implements OnInit {
   ngOnInit(): void {
 
     //console.log("on init")
+    
+    this.removedTabSub();
 
     const currentTemplate = history.state.template;
+
 
     // if (currentTemplate){
     //   this.createTab();
@@ -177,7 +192,7 @@ export class ProductsComponent implements OnInit {
     // }
     currentTemplate !==undefined
       ? this.startSetting(currentTemplate)
-      : this.loadPageState();
+      : this.loadData();
     //const currentTemplate = this.getCurrentTemplate();
 
     //this.startSetting(currentTemplate);
@@ -208,18 +223,27 @@ export class ProductsComponent implements OnInit {
     //   : this.setProductFilterFormByCriteria(filterForm);
     
     
-    //this.isApplyFilter = filter !== null;    
+    //this.isApplyFilter = filter !== null;
     this.loadingOptionProductPage.isComplitedSearchByCriteria=false;
+    //this.setTemplateData(this.rawTemplate);
+    this.rawTemplate = null;
     this.loadProducts(filter);
     this.createTab();
   }
 
+  saveChanged(raw  : TemplateFilter){
+    this.rawTemplate = raw;
+    this.saveData();
+  }
+
   loadProducts(filter:TemplateFilter | null){
+      
 
     if (filter){   
       this.isApplyFilter = true;   
       this.filterProductForm.criteria = filter.criteria;
-      this.templateFilter = filter;
+      this.templateFilter = filter;      
+      
     }
     else {
       this.isApplyFilter = false;
@@ -227,7 +251,9 @@ export class ProductsComponent implements OnInit {
       this.templateFilter.id=0;
       this.templateFilter.title = "new template"
     }
-    this.savePageState();
+    this.templateService.current$.next(filter?.id);
+   
+    this.saveData();
     this.getProducts();
   }
 
@@ -251,7 +277,7 @@ export class ProductsComponent implements OnInit {
     this.productsInfo = this.productsInfo
       .filter(product=>product.title.startsWith(researchString))
     this.loadingOptionProductPage.isComplitedSearchByTitle=true;
-    this.savePageState();
+    this.saveData();
   }
 
   filterRefreshProductsByTitle(researchString:string){
@@ -259,7 +285,7 @@ export class ProductsComponent implements OnInit {
     this.filterProductForm.searchString = researchString;
     this.loadingOptionProductPage.isComplitedSearchByTitle=false;
     this.getProductsByFilter();
-    this.savePageState();
+    this.saveData();
   }
 
   toggleDetailedSearch(){
@@ -274,7 +300,7 @@ export class ProductsComponent implements OnInit {
     }
     
     this.isOpenDetailedSearch=!this.isOpenDetailedSearch;   
-    this.savePageState();
+    this.saveData();
   }  
               
   closeWarningModal(answer:boolean){
@@ -282,8 +308,8 @@ export class ProductsComponent implements OnInit {
       
       if (!this.isApplyFilter) this.resetCriteria();
       this.isOpenDetailedSearch=!this.isOpenDetailedSearch; 
-      this.savePageState(); 
-      this.localStorage.remove(ProductKeys.CRITERIA_TABLE);
+      this.rawTemplate = null;
+      this.saveData(); 
     }
     this.isShowModalWarning=false;
   }
@@ -353,7 +379,7 @@ export class ProductsComponent implements OnInit {
       
     })
     this._isOrdered = true;
-    this.savePageState();
+    this.saveData();
   }
 
   
@@ -425,6 +451,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private getProducts(){
+    console.log(this.filterProductForm);
     //this.setStatePage("loadingPage",false)    
     this.loadingOptionProductPage.isLoadingProducts=true;
     if (this.isApplyFilter) this.getProductsByFilter();
@@ -531,12 +558,13 @@ export class ProductsComponent implements OnInit {
   }
 
   
-  private loadPageState(){
+  private loadData(){
     
     const pageState = this.localStorage.get<TableProductsPageState>(ProductKeys.TABLE);
     const template = pageState?.template;
     const ordered = pageState?.isOrdered;
     const isOpenDetail = pageState?.isOpenDetail;
+    const raw = pageState?.raw
     
     template
       ? this.startSetting(template)
@@ -553,6 +581,8 @@ export class ProductsComponent implements OnInit {
     }
 
     if (isOpenDetail) this.isOpenDetailedSearch = true;
+
+    if (raw) this.rawTemplate = raw;
   }
 
   private startSetting(currentTemplate : TemplateFilter | null){
@@ -570,7 +600,7 @@ export class ProductsComponent implements OnInit {
     this.subscribeTokenData();
   }
 
-  private savePageState(){
+  private saveData(){
 
     this.localStorage.set(ProductKeys.TABLE,{
        template : this.isApplyFilter ? this.templateFilter : null,
@@ -578,8 +608,14 @@ export class ProductsComponent implements OnInit {
        isOrdered :  this._isOrdered,
        sortCriteria : this.sortCriteria,
        ascDirection : this.ascDirection,
-       isOpenDetail : this.isOpenDetailedSearch
+       isOpenDetail : this.isOpenDetailedSearch,
+       raw: this.rawTemplate
     })
+  }
+
+  private clearData(){
+    this.localStorage.remove(ProductKeys.TABLE);
+    this.templateService.current$.next(null);
   }
 
   private createTab(){
@@ -587,7 +623,7 @@ export class ProductsComponent implements OnInit {
    
     this.tabService.addedTab(
       {
-        title: "products",
+        title: ProductTitlePage.TABLE,
         router: Routers.TABLE,
         additional: this.isApplyFilter
           ? this.templateFilter.title
@@ -607,6 +643,23 @@ export class ProductsComponent implements OnInit {
       isLoadingProducts:false
     }
   }
+
+  private removedTabSub(){
+    this.tabService.removedTab$
+    .pipe(takeUntil(this.destroy$))
+      .subscribe(tab=>{
+        if (tab.title === ProductTitlePage.TABLE) this.clearData();
+      })
+  }
+
+  // private setTemplateData(template : TemplateFilter){
+  //   this.rawTemplate = template; 
+  //   this.isApply = template !==null;
+  // }
+
+  // private resetTemplateData(){
+  //   this.r
+  // }
 
   // private setErrorPage(statusCode:number){
   //   this.errorPage={

@@ -3,6 +3,7 @@ import { DepartmentInfo } from "./location/department/departmentInfo";
 import { EmployeeInfo } from "./employee/employeeInfo";
 import { Access } from "./userManagerPage/access";
 
+
 export interface UserInfo{
     [x: string]: any;
     id:number 

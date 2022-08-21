@@ -31,7 +31,7 @@
         <!-- access information -->
         <div 
             class="form-access"
-            [ngClass]="{'invisible-form-access' : !startFilter.readonly}"
+            [ngClass]="{'invisible-form-access' : true}"
         >
             read only
         </div>
@@ -50,10 +50,11 @@
     >
         
         <!-- block form  -->
-        <div 
+
+        <!-- <div 
             class="block-screen"
             *ngIf="startFilter.readonly"
-        ></div>
+        ></div> -->
         
         <!-- location filter -->
         <div class="section-filter-row">
@@ -528,7 +529,7 @@
             <div class="btn-container">
                 <button
                     class="btn-submit"
-                    [ngClass]="{'no-hover': !isChangedOption}"
+                    [ngClass]="{'no-hover': isEmptyFilter}"
                     (click)="onSubmitFilter()"
                     type="button"
                 >
@@ -549,10 +550,12 @@
             </div>
 
             <!-- apply and save -->
+            <!-- [ngClass]="{'no-hover': (isEmptyFilter || ( !isChangedOption && startFilter.id!==0))}" -->
+
             <div class="btn-container">
                 <button
                     class="btn-submit"
-                    [ngClass]="{'no-hover': isEmptyFilter || ( !isChangedOption && startFilter.id!==0)}"
+                    [ngClass]="{'no-hover':(isEmptyFilter || ( !isChangedOption && startFilter.id!==0)) }"
                     (click)="onSubmitFilterWithSave()"
                     type="button"
                 >

@@ -45,6 +45,7 @@ const routes: Routes = [
         path:"products", 
         component:ProductPageComponent,
         children:[
+          {path:"",redirectTo:"instruction",pathMatch:"full"},
           {path:"instruction",component:ProductInstructionComponent},
           {path:"table",component:ProductsComponent},
           {path:"templates",component:TemplateManagerComponent},          

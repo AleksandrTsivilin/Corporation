@@ -7,20 +7,19 @@
 
 
 :host{
-    position: relative;
-
-
+    position: relative ;
+   
     .detail-card{
         @apply
             z-30 absolute top-8 -right-24
-            w-60
+            w-64  h-100
             bg-white
             border-2 border-blue-800
             rounded-md
             animate-fade
             lg:w-96
-            lg:top-1 lg:right-7;
-
+            lg:top-1 lg:right-7;  
+            
     }
 
     .animate-sign{
@@ -32,33 +31,51 @@
     }
 
     .animate-sign-lg{
-
+        // top-0.25
         @apply 
-            absolute top-0.25 -right-1.25
+            absolute 
+            -right-1.25
             w-0 h-0
             invisible lg:visible; 
+
+            margin-top: 40px
     }
 
     .action-container{
         @apply 
-            flex justify-end 
+            flex 
             space-x-1 
             my-1 mr-2;
         
-        .btn-container{
+        .btn-container,
+        .btn-close-container{
             @apply 
                 w-7 h-7;
 
-            .btn{
-                @apply
-                    relative 
-                    border-2 border-transparent rounded-md
-                    hover:border-gray-300;
+            
+        }
 
-                .img{
-                    @apply w-full h-full;
-                }
+        .btn-close-container{
+            @apply flex-1;
+        }
+
+        .btn-container{
+            @apply flex-none;
+        }
+
+        .btn{
+            @apply
+                relative 
+                border-2 border-transparent rounded-md
+                hover:border-gray-300;
+
+            .img{
+                @apply w-7 h-7;
             }
+        }
+
+        .btn-close{
+            @apply lg:invisible;
         }
     }
 
@@ -76,17 +93,41 @@
 
     .detail-info-container{
         @apply 
-            py-1 space-y-2 text-blue-700 font-thin;
-
-        
-        .row-info{
-            @apply flex pl-2;
-
-            .item-row{
-                @apply flex-1;
+            py-2 space-y-2;
+            
+            .row-info{
+                @apply flex pl-2 text-blue-700 font-thin;
+    
+                .item-row{
+                    @apply flex-1;
+                }
             }
-        }
+        
     }
 }
     
     
+.load-container{
+    @apply h-full w-full flex;
+
+    .loading-animate{
+        @apply 
+            flex w-16 h-16 m-auto
+            animate-spin 
+            border-b-2 border-green-600 
+            rounded-full 
+            duration-1000;
+    }
+}
+
+.error-container{
+
+    @apply 
+        h-80 flex my-auto p-2;
+
+    .error-message{
+        @apply 
+            text-blue-700 font-bold 
+            md:m-auto;
+    }
+}

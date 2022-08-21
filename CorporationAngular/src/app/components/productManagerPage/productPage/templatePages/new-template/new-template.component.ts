@@ -1,11 +1,15 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { ProductKeys } from 'src/app/enums/productPage/productKeys';
 import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
 import { Routers } from 'src/app/enums/routers/routers';
-import { NewTemplatePageState } from 'src/app/interfaces/product/productsPageState';
-import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
+import { ProductNewTemplatePageState } from 'src/app/interfaces/product/productsPageState';
+import { TemplateFilter } from 'src/app/interfaces/product/tempalte/templateFilter'; 
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
 import { TabService } from 'src/app/services/tab.service';
 import { maxCount, maxPrice } from '../../products/products.component';
 
@@ -14,12 +18,13 @@ import { maxCount, maxPrice } from '../../products/products.component';
   templateUrl: './new-template.component.html',
   styleUrls: ['./new-template.component.scss']
 })
-export class NewTemplateComponent implements OnInit {
+export class NewTemplateComponent implements OnInit, OnDestroy {
 
 
   routers = Routers;
-  keys = ProductKeys;
-  newTemplate: TemplateFilter ={
+  readonly keyStorage = ProductKeys.NEW_TEMPLATE;
+
+  @Output() newTemplate: TemplateFilter = {
     id: 0,
     title: 'new template',
     criteria: {
@@ -34,28 +39,41 @@ export class NewTemplateComponent implements OnInit {
       startPrice: 0,
       endPrice: maxPrice
     },
-    readonly: false
+    owner: '',
+    isOwner: false
   }
+
+  @Output () isApply : boolean = false;
+
+  isComplited: boolean = true;
+
+  private destroy$ = new Subject();
+  private rawTemplate: TemplateFilter | null = null;
 
   constructor(
     private readonly router:Router,
     private readonly tabService : TabService,
-    private readonly localStorage:LocalStorageService
+    private readonly localStorage : LocalStorageService
   ) { }
 
   ngOnInit(): void {
-    this.createTab();
-    const template = history.state.template;
-    console.log(template)
-    //if (template) this.startSetting(template);
-    template 
-      ? this.startSetting(template)
-      : this.loadData();
 
-    //if (template) this.newTemplate = template;
+    this.loadData();
+
+    this.createTab();
+
+    this.removedTabSub();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
+  }
+
+  
+
   applyCriteria(filter:TemplateFilter | null){
+
     this.clearData();
     this.router.navigate([this.routers.TABLE],{
       state:{
@@ -64,8 +82,13 @@ export class NewTemplateComponent implements OnInit {
     })
   }
 
+  saveChanges(raw : TemplateFilter){
+    this.rawTemplate = raw;
+    this.isApply = true;
+    this.saveData();
+  }
+
   close(){
-    this.clearData();
     this.tabService.remove(ProductTitlePage.NEW_TEMPLATES);
   }
 
@@ -78,27 +101,35 @@ export class NewTemplateComponent implements OnInit {
     })
   }
 
-  private loadData(){
-   const state =  this.localStorage.get<NewTemplatePageState>(ProductKeys.NEW_TEMPLATE);
-  
-    const template = state?.template;
-
-    if (template) this.newTemplate = template;
-  }
-
-  private saveData(){
+  private saveData() {
     this.localStorage.set(ProductKeys.NEW_TEMPLATE,{
-      'template' : this.newTemplate,
+      raw : this.rawTemplate,
+      isChanged : this.isApply
     })
   }
 
-  private startSetting(template : TemplateFilter){
-    this.newTemplate = template;
-    this.saveData();
+  private loadData(){
+    const state = this.localStorage
+      .get<ProductNewTemplatePageState>
+        (ProductKeys.NEW_TEMPLATE);
+
+    if (state?.raw) this.newTemplate = state.raw;
+    if( state?.isChanged) this.isApply = true;
   }
 
   private clearData(){
     this.localStorage.remove(ProductKeys.NEW_TEMPLATE);
-    this.localStorage.remove(ProductKeys.CRITERIA_TEMPLATE);
   }
+
+  private removedTabSub(){
+
+    this.tabService.removedTab$ 
+      .pipe(
+        takeUntil(this.destroy$)
+        )
+      .subscribe(tab=>{
+        if (tab.title === ProductTitlePage.NEW_TEMPLATES)
+          this.clearData();
+      })
+  }  
 }

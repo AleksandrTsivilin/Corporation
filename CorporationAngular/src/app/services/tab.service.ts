@@ -58,24 +58,26 @@ export class TabService {
 
     const tabs = this.tabs$.value;
 
-    const index = tabs.findIndex(tab=>tab.title === title);
+    const index = tabs.findIndex(tab=>tab.title === title); 
 
     if (index < 0) return;
 
-    this.clearItem(tabs[index].key);
+    this.removedTab$.next(tabs[index]);
 
-    tabs.splice(index,1);
+    tabs.splice(index,1); console.log(tabs);
 
     this.tabs$.next(tabs);
 
+    this.saveData();
     const length = tabs.length;
+    
 
     if (length===0) {
       this.router.navigate(['/services']);
       return;
     }
 
-    if (length===1){
+    if (length===1) {
       const nextRouter = tabs[0].router;
       this.router.navigate([nextRouter]);
       return;
@@ -88,10 +90,7 @@ export class TabService {
     else{
       const nextRouter = tabs[index].router;
       this.router.navigate([nextRouter]);
-    }
-
-    this.saveData();
-    
+    }    
   }
 
   private tokenDataSubscribe(){
@@ -140,11 +139,21 @@ export class TabService {
     
   }
 
-  private clearItem(key:any){
-    this.localStorage.remove(key);
-  }
+  // private clearItem(key:any){
+  //   this.localStorage.remove(key);
+  // }
 
   private isFoundIndex(index:number):boolean{
     return index>=0;
   }
+
+  // private getNewRouter(tabs : TabRouter [], curr : readonly number) : string{
+  //   const length = tabs.length;
+  //   switch (length) {
+  //     case 0 : return "/services";
+  //     case 1 : return tabs[0].router;
+  //     case curr : tabs[length-1].router;
+  //     default : tabs.[]
+  //   }
+  // }
 }

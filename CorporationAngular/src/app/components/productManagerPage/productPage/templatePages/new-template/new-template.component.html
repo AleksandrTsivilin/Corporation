@@ -18,9 +18,14 @@
         <span>New product template</span>
     </div>
 
-    <app-filter-by-criteria
+    <!-- *ngIf="!isLoadingPage else toShowLoadingPage" -->
+
+    <!-- filter criteria component -->
+    <app-filter-by-criteria        
         [startFilter]="newTemplate"
         (submitForm)="applyCriteria($event)"
+        (changed)="saveChanges($event)"
     ></app-filter-by-criteria>
 </div>
+
 

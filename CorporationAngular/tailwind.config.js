@@ -36,6 +36,7 @@ module.exports = {
           'short-header':'48px', // height nav menu 
           '160':'640px',
           '120':'480px',
+          '100':'400px',
           '10.5':'42px',
           '9.5':'38px',
           '1/10':'10%',

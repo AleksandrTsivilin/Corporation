@@ -1,7 +1,10 @@
-import { Component, HostBinding, HostListener, Input, OnInit } from '@angular/core';
+import { animate, AnimationBuilder,  style } from '@angular/animations';
+import { Component, ElementRef, HostBinding, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { Routers} from 'src/app/enums/routers/routers'
-import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
-import { maxCount, maxPrice } from '../../products/products.component';
+import { TemplateFilterWithDetails } from 'src/app/interfaces/product/tempalte/templateFilterWithDetails';
+import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
+import { UpdateProductTemplateService } from 'src/app/services/productPage/updateServices/update-product-template.service';
+
 
 @Component({
   selector: 'app-template-item-detail',
@@ -10,24 +13,19 @@ import { maxCount, maxPrice } from '../../products/products.component';
 })
 export class TemplateItemDetailComponent implements OnInit {
 
+  
+  @ViewChild('shiftCard') elementRef: ElementRef | undefined;
+  @ViewChild('sign_lg') elementSignRef: ElementRef | undefined;
+  private shift = 50;
+  
   routers = Routers;
-  @Input() template : TemplateFilter = {
-    id: 0,
-    title: '',
-    readonly:false,
-    criteria: {
-      regionId:0,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice,
-    }
-  };
+  
+  isLoading:boolean = true;
+
+  templateInfo : TemplateFilterWithDetails  | null = null;
+
+  @Input() id: number = 0;
+  @Input() index:number=0;
 
 
   @HostBinding('class')  
@@ -36,16 +34,27 @@ export class TemplateItemDetailComponent implements OnInit {
 
   toOpen:boolean = false;
   isOpened:boolean = false;
+  isSomethingWrong: boolean = false;
 
 
-  constructor() { }
+  constructor(
+    private readonly templateService:ProductTemplateService,
+    private readonly builder : AnimationBuilder,
+    private readonly update:UpdateProductTemplateService
+    ) {console.log("detail component") }
 
   ngOnInit(): void {
+    
   }
+
+  ngAfterViewInit() { 
+    this.createAnimation();
+    this.createPositionSignLg();
+   }
+
 
   @HostListener('click',['$event'])
   hostClick(event:Event){
-    console.log('host click')
     event.stopPropagation();
   }
 
@@ -66,13 +75,58 @@ export class TemplateItemDetailComponent implements OnInit {
       this.toOpen = true;
       this.isOpened = true;
       this.hostClass = "";
+      this.getDetails();
     }
   }
 
   remove(){
     console.log("remove template");
+    this.update.delete(5);
   }
 
- 
+  close(){
+    this.hostClass="hidden"
+    this.isOpened = false;
+  }
+
+  private getDetails(){
+    this.isLoading = true;
+    this.templateService.getDetails(this.id)
+      .subscribe(templateInfo=>{
+
+        templateInfo 
+          ? this.templateInfo = templateInfo
+          : this.isSomethingWrong = true;
+
+        //if (this.templateInfo) this.templateInfo.isOwner = false;
+        this.isLoading = false;
+      },()=>{
+        this.isLoading = false;
+      })
+  }
+
+  private createAnimation(){
+    const offset = this.index*this.shift*(-1);
+
+    const myAnimation = this.builder.build([
+      style({ height: '*' }),
+      animate(0, style({ transform: `translateY(${offset}px)` }))
+    ])
+
+    const player = myAnimation.create(this.elementRef?.nativeElement)
+    player.play();
+  }
+
+  private createPositionSignLg(){
+    const offset = this.index*this.shift;
+
+    const myAnimation = this.builder.build([
+      style({ height: '*' }),
+      animate(0, style({ 'margin-top' : `${offset}px` }))
+    ])
+
+    const player = myAnimation.create(this.elementSignRef?.nativeElement);
+    player.play()
+  }
 
 }

@@ -1,6 +1,7 @@
 
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
+import { ProductKeys } from 'src/app/enums/productPage/productKeys';
 import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
 import { GetDataModal, ModalInfo, ResponceGetDataModal } from 'src/app/interfaces/modal';
@@ -8,7 +9,7 @@ import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/cat
 import { CriteriaProduct } from 'src/app/interfaces/product/criteriaProduct';
 import { LoadingOptionFilterByCriteria} from 'src/app/interfaces/product/loadingOptionProductPage';
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
-import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
+import { TemplateFilter } from 'src/app/interfaces/product/tempalte/templateFilter';
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { FactoryService } from 'src/app/services/factoryManager/factory.service';
@@ -35,8 +36,9 @@ export class FilterByCriteriaComponent implements OnInit {
 
   @Input() startFilter:TemplateFilter={
       id:0,
-      title:"",
-      readonly:false,
+      title:"new template",
+      owner:"",
+      isOwner:false,
       criteria:{
         regionId:0,
         factoryId:0,
@@ -51,6 +53,9 @@ export class FilterByCriteriaComponent implements OnInit {
       }
   }
 
+  @Input () keyStorage: ProductKeys  = ProductKeys.TABLE;
+  //@Input () isApply: boolean = false;
+
   @Output () modalInfo:ModalInfo={
     title:"",
     message:"",
@@ -64,6 +69,8 @@ export class FilterByCriteriaComponent implements OnInit {
 
 
   @Output() submitForm =new EventEmitter<TemplateFilter | null>();
+
+  @Output() changed = new EventEmitter<TemplateFilter>();
 
   loadingOptionFilterByCriteria:LoadingOptionFilterByCriteria={
     isComplitedLoadingRegions:false,
@@ -122,12 +129,12 @@ export class FilterByCriteriaComponent implements OnInit {
 
   ngOnInit(): void {
     
-    if (this.startFilter.readonly){
-      this.getByTemplate();
-      return;
-    }
+    // if (this.startFilter.owner){
+    //   this.getByTemplate();
+    //   return;
+    // }
 
-    this.loadData();
+    this.startSetting();
     
     this.getRegions();
     this.getFactories();
@@ -144,6 +151,7 @@ export class FilterByCriteriaComponent implements OnInit {
     this.isChangedOption=true;
     this.title = "new template";
     this.isEmptyFilter = this.isEmptyForm();
+    //this.isApply = true;
     this.saveData();
   }
 
@@ -224,7 +232,11 @@ export class FilterByCriteriaComponent implements OnInit {
     : this.submitForm.emit({
       id:this.isChangedOption ? 0: this.startFilter.id,
       title:this.title,
-      readonly:this.startFilter.readonly,
+      owner:this.startFilter.owner,
+      isOwner: this.startFilter.isOwner,
+      //isSubcrible:this.startFilter.isSubcrible,
+      //readonly:this.startFilter.readonly,
+      //isApplying:true,
       criteria:this.rawFilter});
     
     this.clearData();
@@ -260,6 +272,11 @@ export class FilterByCriteriaComponent implements OnInit {
 
   closeGetInfoModal(responce : ResponceGetDataModal){
 
+    if(!responce.answer) {
+      this.isShowModalGetInfo = false;
+      return;
+    }
+
     this.title = responce.data;
     this.templateService.add({
       title: responce.data,
@@ -273,9 +290,9 @@ export class FilterByCriteriaComponent implements OnInit {
       endCount: this.rawFilter.endCount,
       startPrice: this.rawFilter.startPrice,
       endPrice: this.rawFilter.endPrice
-    })
+    }).subscribe();
     this.isShowModalGetInfo = false;
-    this.saveData();
+    //this.saveData();
     this.onSubmitFilter();
     
   }
@@ -491,28 +508,38 @@ export class FilterByCriteriaComponent implements OnInit {
     return 0;
   }
 
-  private loadData(){
+  private startSetting(){
 
     this.rawFilter = this.getRawFilter(this.startFilter.criteria);
     this.title = this.startFilter.title;
+    //this.isApply = this.startFilter.isApplying;
+
   }
 
   private saveData(){
-    // this.localStorage.set("test",{
-    //   "filter":this.rawFilter
-    // });
-    // this.localStorage.set(this.currentProductKey,{
-    //   id : this.isChangedOption ? 0 : this.startFilter.id,
-    //   isChanged : this.isChangedOption,
-    //   title : this.title,
-    //   criteria  : this.rawFilter
 
-    // })
+    // this.localStorage.update(
+    //   this.keyStorage,"raw",{
+    //     id: this.isChangedOption ? 0 : this.startFilter.id,
+    //     title : this.title,
+    //     isApplying : this.isApply,
+    //     criteria : this.rawFilter
+    //   }
+    // )
+    
+    this.changed.emit({
+      id: this.isChangedOption ? 0 : this.startFilter.id,
+      title : this.title,
+      owner : this.startFilter.owner,
+      isOwner : this.startFilter.isOwner,
+      criteria : this.rawFilter
+    })
+    
   }
 
   private clearData(){
    
-    this.localStorage.remove("test");
+    //this.localStorage.remove("test");
     // this.localStorage.remove(ProductKeys.CRITERIA_TABLE);
     // this.localStorage.remove(this.currentProductKey);
 
@@ -546,9 +573,7 @@ export class FilterByCriteriaComponent implements OnInit {
       ? this.loadingOptionFilterByCriteria.isComplitedLoadingUnits =true
       : this.getUnitById(criteria.unitId);
 
-    this.rawFilter = this.getRawFilter(criteria);
-
-    this.title = this.startFilter.title;
+    this.startSetting();
 
   }
 
@@ -632,20 +657,9 @@ export class FilterByCriteriaComponent implements OnInit {
         this.loadingOptionFilterByCriteria.isComplitedLoadingUnits = true;
       })
   }
-  // private isCheckAccess(id : number, items : RegionInfo[] | FactoryInfo[] | StorageInfo[])
-  //    : boolean{
-  //   return items
-  //     .map(item=>item.id)
-  //     .includes(id);
-  // }
+  
 
-  // private getKeyData(){
-
-  //   const currKey = this.tabService.currRouter;
-  //   switch (currKey){    
-  //     case (Routers.TABLE) : return ProductKeys.CRITERIA_TABLE;
-  //     case (Routers.NEW_TEMPLATE) : return ProductKeys.CRITERIA_TEMPLATE;
-  //     default : return "";
-  //   }
+  // isAllowApply() : boolean{
+  //   return !this.isApplying;
   // }
 }

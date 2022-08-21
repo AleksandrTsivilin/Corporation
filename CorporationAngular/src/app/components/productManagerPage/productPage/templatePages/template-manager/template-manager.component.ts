@@ -1,11 +1,11 @@
-import { Component, HostListener, OnInit, Output } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit, Output } from '@angular/core';
 import { offsetHeader } from 'src/app/components/mainPageComponent/nav-menu/nav-menu.component';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { ModalInfo } from 'src/app/interfaces/modal';
-import { TemplateFilter } from 'src/app/interfaces/product/templateFilter';
+import { TemplateFilter } from 'src/app/interfaces/product/tempalte/templateFilter';
 import { maxCount, maxPrice } from '../../products/products.component';
 import { Routers} from 'src/app/enums/routers/routers' 
-import { Router } from '@angular/router';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ProductKeys } from 'src/app/enums/productPage/productKeys';
 import { ProductTemplatesPageState } from 'src/app/interfaces/product/productsPageState';
@@ -13,6 +13,8 @@ import { TabService } from 'src/app/services/tab.service';
 import { ProductTitlePage as ProductTitlePages } from 'src/app/enums/productPage/productTitlePage';
 import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
 import { SearchStringResponce } from 'src/app/interfaces/searchStringResponce';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 
 
@@ -24,9 +26,10 @@ import { SearchStringResponce } from 'src/app/interfaces/searchStringResponce';
 })
 
 
-export class TemplateManagerComponent implements OnInit {
+export class TemplateManagerComponent implements OnInit, OnDestroy {
 
   routers = Routers;
+  titlePage = ProductTitlePages.TEMPLATES;
 
   @Output() modalInfo:ModalInfo={
     title:"Would you like to apply any templates?",
@@ -34,26 +37,49 @@ export class TemplateManagerComponent implements OnInit {
     position:Positions.center
   }
 
-  isShowModal:boolean = true;
+  isShowModal:boolean = false;
   isScrolling:boolean=false;
   opened : number = -1 ;
   isOpenMenu : boolean = false;
+  isModeStart:boolean = false;
 
+  selected:number | null | undefined;
   templates:TemplateFilter[]=[];
 
   search:string = "";
-  isComplited:boolean = true;
+  isComplitedSearch:boolean = true;
+  isLoadingPage:boolean = true;
 
+  private destroy$ = new Subject();
   
   constructor(
     private readonly router: Router,
+    private readonly route:ActivatedRoute,
     private readonly localStorage: LocalStorageService,
     private readonly tabServce : TabService,
     private readonly templateService : ProductTemplateService
     ) {}
 
   ngOnInit(): void {
+    this.isModeStart = history.state.start;
+
+    // this.selected  = this.templateService.current$.value 
+    //   ? this.templateService.current$
+    //   : 0;
     
+   
+    this.isModeStart
+      ? this.isShowModal = true
+      : this.loadData();
+
+    this.routeSub();
+    this.currentTemplateSub();
+    this.removedTabSub();
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next(true);
+    this.destroy$.complete();
   }
 
   @HostListener("document:scroll")
@@ -62,7 +88,6 @@ export class TemplateManagerComponent implements OnInit {
   }
 
   answerModal(answer:boolean){
-   
     this.isShowModal = false;
     answer 
       ? this.loadData()
@@ -85,13 +110,13 @@ export class TemplateManagerComponent implements OnInit {
   filterBySearch(responce : SearchStringResponce){
 
     if (!responce.isSameDirection) {
-      this.isComplited = false;
+      this.isComplitedSearch = false;
       this.templateService.getStartWith(responce.criteria)
         .subscribe(templates=>{
           this.templates = templates;
-          this.isComplited = true;
+          this.isComplitedSearch = true;
         },()=>{
-          this.isComplited = true;
+          this.isComplitedSearch = true;
         })
     }
     else{
@@ -100,190 +125,19 @@ export class TemplateManagerComponent implements OnInit {
     }
     this.search = responce.criteria;
     this.saveData();
-      
-    console.log(responce)
+    
   }
 
-  private getTemplates() {    
-    // this.templateService.getByUser().subscribe(templates=>{
-    //   console.log(templates)
-    // })
-
-
-    // test data
-    this.templates = [
-      {id:1, title:"Kiev region", readonly:false,
-       criteria:{
-          regionId:1,
-          factoryId:0,
-          storageId:0,
-          manufacturerId:0,
-          categoryId:0,
-          unitId:0,
-          startCount:0,
-          endCount:maxCount,
-          startPrice:0,
-          endPrice:maxPrice
-      }},
-      {id:2, title:"Odessa region", readonly:false,
-       criteria:{
-        regionId:2,
-        factoryId:0,
-        storageId:0,
-        manufacturerId:0,
-        categoryId:0,
-        unitId:0,
-        startCount:0,
-        endCount:maxCount,
-        startPrice:0,
-        endPrice:maxPrice
-      }}, 
-      {id:3, title:"another region", readonly:true,
-       criteria:{
-        regionId:0,
-        factoryId:0,
-        storageId:16,
-        manufacturerId:0,
-        categoryId:0,
-        unitId:0,
-        startCount:0,
-        endCount:90,
-        startPrice:500,
-        endPrice:25000
-    }},
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-    {id:12, title:"Odessa region", readonly:false, criteria:{
-      regionId:2,
-      factoryId:0,
-      storageId:0,
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      startCount:0,
-      endCount:maxCount,
-      startPrice:0,
-      endPrice:maxPrice
-    }}, 
-// {id:1, title:"Kiev region", criteria:{
-//   regionId:1,
-//   factoryId:0,
-//   storageId:0,
-//   manufacturerId:0,
-//   categoryId:0,
-//   unitId:0,
-//   startCount:0,
-//   endCount:maxCount,
-//   startPrice:0,
-//   endPrice:maxPrice
-// }},
-// {id:2, title:"Odessa region", criteria:{
-// regionId:2,
-// factoryId:0,
-// storageId:0,
-// manufacturerId:0,
-// categoryId:0,
-// unitId:0,
-// startCount:0,
-// endCount:maxCount,
-// startPrice:0,
-// endPrice:maxPrice
-// }}, 
-    ]
+  private getTemplates() { 
+    this.isLoadingPage = true;   
+    this.templateService.getByUser()
+      .subscribe(templates=>{
+        this.templates  = templates;
+        console.log(templates)
+        this.isLoadingPage = false;
+    },()=>{
+      this.isLoadingPage = true;
+    })   
   }
 
   private loadData(){
@@ -295,12 +149,18 @@ export class TemplateManagerComponent implements OnInit {
       .get<ProductTemplatesPageState>(ProductKeys.TEMPLATES);
 
     if (state?.search) this.search = state?.search;
+    if (state?.curr) this.selected = state.curr;
   }
 
   private saveData(){
     this.localStorage.set(ProductKeys.TEMPLATES,{
-      "search"  : this.search
+      "search"  : this.search,
+      "curr": this.selected
     })
+  }
+
+  private clearData(){
+    this.localStorage.remove(ProductKeys.NEW_TEMPLATE);
   }
 
   private createTab(){
@@ -311,4 +171,52 @@ export class TemplateManagerComponent implements OnInit {
       key: ProductKeys.TEMPLATES
     })
   }
+
+  private routeSub(){
+    this.route.queryParams
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(params=>{
+        const id = params["tempId"];
+
+        if (id && this.isValidId(id)) this.getById(id);
+      })
+  }
+
+  private isValidId(id : number) : boolean{
+    return id > 0;
+  }
+
+  private getById(id : number){
+    this.templateService.getById(id)
+      .subscribe(template=>{
+
+        template
+          ? this.router.navigate([this.routers.TABLE],{
+            state : {template:template}
+          })
+          : this.router.navigate([this.routers.NEW_TEMPLATE]);
+      })
+  }
+
+  private currentTemplateSub(){
+    this.templateService.current$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(current=>{
+        
+
+        this.selected = this.isModeStart ? null : current;
+       
+        this.saveData();
+      })
+  }
+
+  private removedTabSub(){
+    this.tabServce.removedTab$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(tab=>{
+        if (tab.title === ProductTitlePages.NEW_TEMPLATES)
+          this.clearData();
+      })
+  }
+
 }

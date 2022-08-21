@@ -1,12 +1,17 @@
 import { TabRouter } from "../roleselector/tab";
 import { CriteriaProduct } from "./criteriaProduct";
-import { TemplateFilter } from "./templateFilter";
+import { TemplateFilter } from "./tempalte/templateFilter";
 
 // it will be unnecessary interface
 export interface ProductsPageState{
     [x: string]: any;
     edit_id:number,
     table_open:boolean
+}
+
+
+export interface ProductPageState{
+    start : string
 }
 
 export interface EditProductPageState{
@@ -19,7 +24,8 @@ export interface TableProductsPageState{
     isOrdered : boolean,
     sortCriteria : string,
     ascDirection : number,
-    isOpenDetail : boolean
+    isOpenDetail : boolean,
+    raw:TemplateFilter
 }
 
 export interface ProductTemplatePageState{
@@ -28,8 +34,9 @@ export interface ProductTemplatePageState{
     curr : string
 }
 
-export interface NewTemplatePageState{
-    template : TemplateFilter
+export interface ProductNewTemplatePageState{
+    raw : TemplateFilter,
+    isChanged: boolean
 }
 
 export interface ProductCriteriaPageState{
@@ -40,6 +47,7 @@ export interface ProductCriteriaPageState{
 }
 
 export interface ProductTemplatesPageState{
-    search : string
+    search : string,
+    curr: number
 }
 

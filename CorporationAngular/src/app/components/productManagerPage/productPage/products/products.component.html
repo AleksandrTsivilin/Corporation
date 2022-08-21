@@ -190,8 +190,9 @@
         <div class="section">
           <app-filter-by-criteria
             *ngIf="isOpenDetailedSearch"
-            [startFilter]="templateFilter"
+            [startFilter]="rawTemplate ?  rawTemplate : templateFilter"            
             (submitForm)="applyCriteria($event)"
+            (changed)="saveChanged($event)" 
           ></app-filter-by-criteria>
         </div>
 

@@ -127,11 +127,25 @@
                         border-transparent
                         rounded-l-lg
                         px-4 py-2   
-                        bg-blue-500                     
+                                            
                         text-white;
 
-                    .title{
-                        @apply flex-1;
+                    .title-container{
+                        @apply relative flex-1;
+
+                        p{
+                            @apply ml-4 line-clamp-1;
+                        }
+
+                        .image-container{
+                            @apply absolute top-1/2 left-0 w-3 h-3;
+
+                            margin-top: -7px;
+
+                            .img{
+                                @apply w-full;
+                            }
+                        }
                     }
 
                     .menu-container{
@@ -184,48 +198,34 @@
 }
 
 
-// .item-menu{
-//     @apply         
-//         w-full h-full bg-gray-400
-//         transform duration-700;
-// }
-// .item-menu-close{
-//     @apply 
-//         transform -translate-y-full;
-// }
+.selected-item{
+    @apply bg-blue-700;
+}
 
-// .item-menu-open{
-//     @apply                            
-//         transform translate-y-0;
-        
-// }
-
-// .link {
-//     @apply absolute top-0 right-0 w-full h-full;
-// }
-
-// .selected{
-//     @apply bg-blue-700;
-// }
-
-.non-selected{
+.non-selected-item{
     @apply bg-blue-500;
+}
+
+.item-title-hover{
+    @apply hover:bg-blue-200;
 }
 
 
 .info-container{
     @apply 
-        flex mx-auto mt-16
-        font-semibold text-2xl text-blue-500;
+        w-full mt-24
+        font-semibold text-center text-2xl text-blue-500;
+
 }
 
-// .item-list-move{
-//     @apply transform translate-y-24 duration-700;
-// }
+.info-container-button{
+    @apply 
+        w-full flex justify-center mt-4;
 
-// .item-list-non-move{
-//     @apply transform translate-y-0 duration-700;
-// }
+    .button-container{
+        @apply flex w-36 h-10;
+    }
+}
 
 .close-btn-detail-container{
     @apply 
