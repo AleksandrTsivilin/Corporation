@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
-import { ToastrService } from 'ngx-toastr';
 import { HubUrls } from 'src/app/enums/hubUrls';
+import { CodeNotification, NotificationService, TypeNotification } from '../../notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -41,17 +41,25 @@ export class ProductTemplateSignalrService {
 
       this.hubConnection
         .onreconnected(_=> {
-          
-          this.toastr.success("connection has been restored")
+          this.notify.registration({
+            code:CodeNotification.CONNECTION_RESTORED,
+            message:"connection has been restored",
+            type: TypeNotification.SUCCESS
+          })
         })
 
 
-      this.hubConnection.onreconnecting(_=>
-        this.toastr.error("you are offline"))
+      this.hubConnection.onreconnecting(_=>{
+        this.notify.registration({
+          code:CodeNotification.DISCONNECT,
+          message:"you are offline",
+          type:TypeNotification.ERROR
+        })
+      })
         
   }
   
-  constructor( private readonly toastr:ToastrService) { 
+  constructor(private readonly notify : NotificationService ) { 
     
   }
 }
