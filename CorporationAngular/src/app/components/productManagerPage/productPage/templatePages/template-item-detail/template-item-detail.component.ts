@@ -1,5 +1,5 @@
 import { animate, AnimationBuilder,  style } from '@angular/animations';
-import { Component, ElementRef, HostBinding, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Routers} from 'src/app/enums/routers/routers'
 import { TemplateFilterWithDetails } from 'src/app/interfaces/product/tempalte/templateFilterWithDetails';
 import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
@@ -9,9 +9,10 @@ import { UpdateProductTemplateService } from 'src/app/services/productPage/updat
 @Component({
   selector: 'app-template-item-detail',
   templateUrl: './template-item-detail.component.html',
-  styleUrls: ['./template-item-detail.component.scss']
+  styleUrls: ['./template-item-detail.component.scss'],
+  providers:[UpdateProductTemplateService]
 })
-export class TemplateItemDetailComponent implements OnInit {
+export class TemplateItemDetailComponent implements OnInit, OnDestroy {
 
   
   @ViewChild('shiftCard') elementRef: ElementRef | undefined;
@@ -44,7 +45,11 @@ export class TemplateItemDetailComponent implements OnInit {
     ) {console.log("detail component") }
 
   ngOnInit(): void {
-    
+    //this.update.start();
+  }
+
+  ngOnDestroy(): void {
+    //this.update.stop();
   }
 
   ngAfterViewInit() { 

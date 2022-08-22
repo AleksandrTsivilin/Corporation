@@ -131,7 +131,7 @@ import { SearchStringComponent } from './components/tools/search-string/search-s
     BrowserAnimationsModule,
     ToastrModule.forRoot({
       enableHtml:true,
-      timeOut:500,
+      timeOut:10000,
       positionClass:'toast-top-right',
       preventDuplicates:false
     })
