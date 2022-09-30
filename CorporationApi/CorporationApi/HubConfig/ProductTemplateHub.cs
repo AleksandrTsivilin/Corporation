@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.SignalR;
 using Repositories.Models.ProductModels;
+using Repositories.Models.ResponceInfoModel;
 using Services.ProductServices.ProductTemplatesServices;
 using System;
 using System.Collections.Generic;
@@ -15,27 +16,25 @@ namespace CorporationApi.HubConfig
         {
             _service = service;
         }
-        //public async Task MoveProducts(MoveProductModel model)
-        //{
-
-        //    var storages = await Task.Run(() => _service.MovedProducts(model));
-        //    if (storages is not null)
-        //        await Clients.All.SendAsync("changeProducts", storages);
-
-        //}
+       
 
         public async Task Delete(int id)
         {
-            var removedId = await _service.Delete(id);
-            if (removedId != 0)
-                await Clients.All.SendAsync("removedId", removedId);
+            var responce = await _service.Delete(id);
+            await Send(responce);
         }
 
         public async Task Update(int id, FilterProductModel filter)
         {
-            var updatedId = await _service.Update(id, filter);
-            if (updatedId != 0)
-                await Clients.All.SendAsync("removedId", updatedId);
+            var responce = await _service.Update(id, filter);
+            await Send(responce);
         }
+
+        private async Task Send(ResponceInfo<int> responce)
+        {
+            if (responce is null) return;
+            await Clients.All.SendAsync("changed", responce);
+        }
+
     }
 }

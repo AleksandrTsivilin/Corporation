@@ -4,6 +4,7 @@ using DataBase.Entities.ProductEntities;
 using Microsoft.EntityFrameworkCore;
 using Repositories.BaseRepositories;
 using Repositories.Models.ProductModels;
+using Repositories.Models.ResponceInfoModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -143,7 +144,7 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
             }
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<ResponceInfo<int>> Delete(int id)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
@@ -152,22 +153,30 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
 
                 if (templateUser is null) throw new Exception();
                 if (!templateUser.IsOwner) throw new Exception();
+
+                var responce = new ResponceBuilder<int>(
+                    templateUser.Template.Id,
+                    templateUser.Template.Title,
+                    ActionType.DELETE)
+                    .Responce;
 
                 _context.ProductTemplates.Remove(templateUser.Template);
 
                 await _context.SaveChangesAsync();
 
                 transaction.Commit();
-                return id;
+                return responce;
             }
             catch
             {
                 transaction.Rollback();
-                return 0;
+                return null;
             }
         }
 
-        public async Task<int> Update(int id, FilterProductModel filter)
+       
+
+        public async Task<ResponceInfo<int>> Update(int id, FilterProductModel filter)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
@@ -176,7 +185,11 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
                 if (templateUser is null) throw new Exception();
                 if (!templateUser.IsOwner) throw new Exception();
 
-
+                var responce = new ResponceBuilder<int>(
+                        templateUser.Template.Id,
+                        templateUser.Template.Title,
+                        ActionType.UPDATE
+                    ).Responce;
                 var template = templateUser.Template;
 
                 template.Title = filter.Title;
@@ -192,14 +205,24 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
 
                 await _context.SaveChangesAsync();
                 transaction.Commit();
-                return template.Id;
+                return responce;
             }
             catch
             {
                 transaction.Rollback();
-                return 0;
+                return null;
             }
         }
+
+        //private ResponceInfo<T> CreateResponce<T>(T data, string title, ActionType action)
+        //{
+        //    var message = GetMessage(title, action);
+        //    return new ResponceInfo<T>
+        //    {
+        //        Data = data,
+        //        Message = message
+        //    };
+        //}
 
         private async Task<T> GetEntityById<T>(int id) where T : BaseEntity
         {
@@ -213,6 +236,21 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
                     .FirstOrDefaultAsync(templateUser => templateUser.Template.Id == id);
         }
 
-        //private async Task<T> GetTest(int id)
+        //private string GetMessage(ProductTemplateUser templateUser)
+        //{
+        //    return "template " + templateUser.Template.Title + "has been deleted by owner";
+        //}
+
+        //private string GetMessage(string title, ActionType action)
+        //{
+        //    var raw = "template " + title;
+        //    switch (action)
+        //    {
+        //        case ActionType.UPDATE: return raw + " has been updated by owner";
+        //        case ActionType.DELETE: return raw + " has been deleted by owner";
+        //        case ActionType.CREATE: return raw + " has been created by owner";
+        //        default: return "";
+        //    }
+        //}
     }
 }

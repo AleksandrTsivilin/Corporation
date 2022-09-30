@@ -1,5 +1,6 @@
 ﻿using DataBase.Entities.ProductEntities;
 using Repositories.Models.ProductModels;
+using Repositories.Models.ResponceInfoModel;
 using Repositories.ProductRepositories.ProductTemplatesRepositories;
 using Repositories.Specifications;
 using Services.Models.ProductModels;
@@ -106,16 +107,16 @@ namespace Services.ProductServices.ProductTemplatesServices
             };
         }
 
-        public async Task<int> Delete(int id)
+        public async Task<ResponceInfo<int>> Delete(int id)
         {
-            var removedId = await _repository.Delete(id);
-            return removedId;
+            var responce = await _repository.Delete(id);
+            return responce;
         }
 
-        public async Task<int> Update(int id, FilterProductModel filter)
+        public async Task<ResponceInfo<int>> Update(int id, FilterProductModel filter)
         {
-            var updatedId = await _repository.Update(id, filter);
-            return updatedId;
+            var responce = await _repository.Update(id, filter);
+            return responce;
         }
 
         private List<ProductTemplateModel> GetProductTemplatesModels(List<ProductTemplateUser> templates)

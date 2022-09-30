@@ -1,5 +1,6 @@
 ﻿using DataBase.Entities.ProductEntities;
 using Repositories.Models.ProductModels;
+using Repositories.Models.ResponceInfoModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
         Task<int> Add(FilterProductModel filter, int userId);
         Task<ProductTemplateUser> GetById(int id, int userId);
         Task<ProductTemplateWithDetail> GetDetail(int id);
-        Task<int> Delete(int id);
-        Task<int> Update(int id, FilterProductModel filter);
+        Task<ResponceInfo<int>> Delete(int id);
+        Task<ResponceInfo<int>> Update(int id, FilterProductModel filter);
     }
 }
