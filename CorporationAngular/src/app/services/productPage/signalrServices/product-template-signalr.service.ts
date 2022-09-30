@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import * as signalR from "@microsoft/signalr";
 import { HubUrls } from 'src/app/enums/hubUrls';
-import { CodeNotification, NotificationService, TypeNotification } from '../../notification.service';
+import { Routers } from 'src/app/enums/routers/routers';
+import { NotificationService } from '../../notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,44 +26,36 @@ export class ProductTemplateSignalrService {
       this.hubConnection
         .start()
         .then(()=>{ 
-          console.log("hubConnection product template")
-          
-          //this.ssSubj.next({type: "HubConnStarted"});
-          //
-          //this.isConnection=true;
-          
-          //
-          //this.askServerListener();
-          //this.askServer();
         })
         .catch(err=>{
-          console.log("some errors")
-          debugger;
+          this.router.navigate([Routers.RESPONCES])
         })
 
       this.hubConnection
         .onreconnected(_=> {
-          this.notify.registration({
-            code:CodeNotification.CONNECTION_RESTORED,
-            message:"connection has been restored",
-            type: TypeNotification.SUCCESS
-          })
+          this.notify.success(
+            "connection has been restored",
+            "connection manager"
+          )
         })
 
 
       this.hubConnection.onreconnecting(_=>{
-        this.notify.registration({
-          code:CodeNotification.DISCONNECT,
-          message:"you are offline",
-          type:TypeNotification.ERROR
-        })
+        this.notify.error(
+          "you are offline",
+          "connection manager"
+        )
       })
         
   }
   
-  constructor(private readonly notify : NotificationService ) { 
+  constructor(
+    private readonly notify:NotificationService,
+    private readonly router:Router) { 
     
   }
+
+  
 }
 
 

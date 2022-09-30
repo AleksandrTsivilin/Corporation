@@ -529,7 +529,7 @@
             <div class="btn-container">
                 <button
                     class="btn-submit"
-                    [ngClass]="{'no-hover': isEmptyFilter}"
+                    [ngClass]="{'no-hover': isEmptyFilter && !isChangedOption}"
                     (click)="onSubmitFilter()"
                     type="button"
                 >

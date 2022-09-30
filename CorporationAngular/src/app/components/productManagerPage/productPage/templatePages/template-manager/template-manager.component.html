@@ -107,6 +107,8 @@
                                 #menu
                                 [id]="template.id"
                                 [index]="i"
+                                (removeItem)="remove(template)"
+                                (editItem)="edit(template)"
                             >
                             </app-template-item-detail>    
                         </div>

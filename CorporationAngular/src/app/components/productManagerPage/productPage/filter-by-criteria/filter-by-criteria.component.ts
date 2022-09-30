@@ -2,6 +2,7 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { ProductKeys } from 'src/app/enums/productPage/productKeys';
+import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
 import { FactoryInfo } from 'src/app/interfaces/location/factory/factoryInfo';
 import { RegionInfo } from 'src/app/interfaces/location/region/regionInfo';
 import { GetDataModal, ModalInfo, ResponceGetDataModal } from 'src/app/interfaces/modal';
@@ -9,6 +10,8 @@ import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/cat
 import { CriteriaProduct } from 'src/app/interfaces/product/criteriaProduct';
 import { LoadingOptionFilterByCriteria} from 'src/app/interfaces/product/loadingOptionProductPage';
 import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
+import { NewTemplateFilter } from 'src/app/interfaces/product/newTemplateFilter';
+//import { ProductCriteriaPageState, ProductPageState } from 'src/app/interfaces/product/productsPageState';
 import { TemplateFilter } from 'src/app/interfaces/product/tempalte/templateFilter';
 import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
@@ -19,10 +22,14 @@ import { ManufacturerService } from 'src/app/services/productPage/ManufacturersS
 import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
+import { UpdateProductTemplateService } from 'src/app/services/productPage/updateServices/update-product-template.service';
 import { RegionService } from 'src/app/services/regionManager/region.service';
 import { maxCount, maxPrice } from '../products/products.component';
 
-
+// export interface CriteriaInfo  {
+//   key:ProductTitlePage,
+//   criteria: CriteriaProduct
+// }
 
 
 
@@ -53,7 +60,10 @@ export class FilterByCriteriaComponent implements OnInit {
       }
   }
 
-  @Input () keyStorage: ProductKeys  = ProductKeys.TABLE;
+  @Input() key: ProductTitlePage  = ProductTitlePage.DEFAULT;
+
+  //@Input () keyStorage: ProductKeys  = ProductKeys.TABLE;
+
   //@Input () isApply: boolean = false;
 
   @Output () modalInfo:ModalInfo={
@@ -70,7 +80,7 @@ export class FilterByCriteriaComponent implements OnInit {
 
   @Output() submitForm =new EventEmitter<TemplateFilter | null>();
 
-  @Output() changed = new EventEmitter<TemplateFilter>();
+  //@Output() changed = new EventEmitter<TemplateFilter>();
 
   loadingOptionFilterByCriteria:LoadingOptionFilterByCriteria={
     isComplitedLoadingRegions:false,
@@ -82,6 +92,7 @@ export class FilterByCriteriaComponent implements OnInit {
   }
 
 
+  //isNewCriteria:boolean = true;
   rawFilter: CriteriaProduct ={
     regionId:0,
     factoryId:0,
@@ -96,7 +107,8 @@ export class FilterByCriteriaComponent implements OnInit {
   }
 
   title:string = "";
-  
+  private currentId:number = 0;
+  //templates : CriteriaInfo [] = [];
 
   regions: RegionInfo[]=[];
   factories:FactoryInfo[]=[];
@@ -124,7 +136,7 @@ export class FilterByCriteriaComponent implements OnInit {
     private readonly categoryService:CategoryService,
     private readonly unitService:UnitService,
     private readonly templateService: ProductTemplateService,
-    private readonly localStorage:LocalStorageService
+    private readonly updateTemplateService : UpdateProductTemplateService
     ) { }
 
   ngOnInit(): void {
@@ -152,7 +164,17 @@ export class FilterByCriteriaComponent implements OnInit {
     this.title = "new template";
     this.isEmptyFilter = this.isEmptyForm();
     //this.isApply = true;
-    this.saveData();
+
+    //const index = this.templates.findIndex(template=>template.key === this.key)
+
+    // index >=0 
+    //   ? this.templates[index].criteria = this.rawFilter
+    //   : this.templates.push({
+    //     key:this.key,
+    //     criteria:this.rawFilter
+    //   })
+    
+    // this.saveData();
   }
 
   changeFilterRegion(){
@@ -234,12 +256,9 @@ export class FilterByCriteriaComponent implements OnInit {
       title:this.title,
       owner:this.startFilter.owner,
       isOwner: this.startFilter.isOwner,
-      //isSubcrible:this.startFilter.isSubcrible,
-      //readonly:this.startFilter.readonly,
-      //isApplying:true,
       criteria:this.rawFilter});
     
-    this.clearData();
+    //this.clearData();
   }
 
   clearFilterForm(){
@@ -267,7 +286,15 @@ export class FilterByCriteriaComponent implements OnInit {
   }
 
   onSubmitFilterWithSave(){
-    this.isShowModalGetInfo = true;
+    if  (!this.startFilter.id){
+      this.isShowModalGetInfo = true;
+      return;
+    }
+    
+    const newTemplate = this.getNewTemplate(this.startFilter.title)
+    this.updateTemplateService.update(newTemplate,this.startFilter.id);
+    //this.templateService.update(newTemplate, this.startFilter.id);
+    this.onSubmitFilter();
   }
 
   closeGetInfoModal(responce : ResponceGetDataModal){
@@ -278,19 +305,9 @@ export class FilterByCriteriaComponent implements OnInit {
     }
 
     this.title = responce.data;
-    this.templateService.add({
-      title: responce.data,
-      regionId: this.rawFilter.regionId,
-      factoryId: this.rawFilter.factoryId,
-      storageId: this.rawFilter.storageId,
-      manufacturerId: this.rawFilter.manufacturerId,
-      categoryId: this.rawFilter.categoryId,
-      unitId: this.rawFilter.unitId,
-      startCount: this.rawFilter.startCount,
-      endCount: this.rawFilter.endCount,
-      startPrice: this.rawFilter.startPrice,
-      endPrice: this.rawFilter.endPrice
-    }).subscribe();
+    const newTemplate = this.getNewTemplate(responce.data);
+    this.templateService.add(newTemplate)
+      .subscribe();
     this.isShowModalGetInfo = false;
     //this.saveData();
     this.onSubmitFilter();
@@ -510,40 +527,85 @@ export class FilterByCriteriaComponent implements OnInit {
 
   private startSetting(){
 
+    // this.rawFilter = this.getRawFilter(this.startFilter.criteria);
+    // this.title = this.startFilter.title;
+    // this.currentId = this.startFilter.id;
+
+    //this.loadData();
+    
+    //this.templates= []
+    // console.log(this.templates)
+    // const index = this.templates.findIndex(template=>template.key===this.key);
+
+    // const currentCriteria = index>=0
+    //   ? this.templates[index].criteria
+    //   : this.startFilter.criteria;
+
     this.rawFilter = this.getRawFilter(this.startFilter.criteria);
     this.title = this.startFilter.title;
+    this.currentId = this.startFilter.id
+
+    // if (index >=0){
+    //   const criteria = this.templates[index].criteria;
+    //   this.rawFilter = this.getRawFilter(criteria);
+    //   this.title = this.startFilter.title;
+    //   this.currentId = this.startFilter.id
+    // }
+    // else{
+    //   this.rawFilter = this.getRawFilter(this.startFilter.criteria);
+    //   this.title = this.startFilter.title;
+    //   this.currentId = this.startFilter.id;
+    // }
+      
+    //console.log(this.startFilter)
+    //this.isNewCriteria = this.startFilter.id === 0;
     //this.isApply = this.startFilter.isApplying;
 
   }
 
-  private saveData(){
+  // private saveData(){
 
-    // this.localStorage.update(
-    //   this.keyStorage,"raw",{
-    //     id: this.isChangedOption ? 0 : this.startFilter.id,
-    //     title : this.title,
-    //     isApplying : this.isApply,
-    //     criteria : this.rawFilter
-    //   }
-    // )
+  //   this.localStorage.set(ProductKeys.CRITERIA,{
+  //     templates:this.templates
+  //   })
+  //   // this.localStorage.update(
+  //   //   this.keyStorage,"raw",{
+  //   //     id: this.isChangedOption ? 0 : this.startFilter.id,
+  //   //     title : this.title,
+  //   //     isApplying : this.isApply,
+  //   //     criteria : this.rawFilter
+  //   //   }
+  //   // )
     
-    this.changed.emit({
-      id: this.isChangedOption ? 0 : this.startFilter.id,
-      title : this.title,
-      owner : this.startFilter.owner,
-      isOwner : this.startFilter.isOwner,
-      criteria : this.rawFilter
-    })
-    
-  }
+  //   // this.changed.emit({
+  //   //   id: this.isChangedOption ? 0 : this.startFilter.id,
+  //   //   title : this.title,
+  //   //   owner : this.startFilter.owner,
+  //   //   isOwner : this.startFilter.isOwner,
+  //   //   criteria : this.rawFilter
+  //   // })
+  //   // this.localStorage.set(ProductKeys.CRITERIA,{
+  //   //   templates:this.templates
+  //   // })
+  // }
 
-  private clearData(){
+  // private loadData(){
+  //   const pageState = this.localStorage.get<ProductCriteriaPageState>(ProductKeys.CRITERIA);
+
+  //   if (pageState) this.templates = pageState.templates;
+  // }
+
+  // private clearData(){
    
-    //this.localStorage.remove("test");
-    // this.localStorage.remove(ProductKeys.CRITERIA_TABLE);
-    // this.localStorage.remove(this.currentProductKey);
+  //   this.templates = this.templates.filter(template=>template.key!==this.key);
+  //   this.localStorage.set(ProductKeys.CRITERIA,{
+  //     templates:this.templates
+  //   })
+  //   //this.localStorage.remove("test");
+  //   // this.localStorage.remove(ProductKeys.CRITERIA_TABLE);
+  //   // this.localStorage.remove(this.currentProductKey);
 
-  }
+  // }
 
   private getByTemplate(){
 
@@ -656,6 +718,22 @@ export class FilterByCriteriaComponent implements OnInit {
       },()=>{
         this.loadingOptionFilterByCriteria.isComplitedLoadingUnits = true;
       })
+  }
+
+  private getNewTemplate(title : string) : NewTemplateFilter {
+    return {
+      title: title,
+      regionId: this.rawFilter.regionId,
+      factoryId: this.rawFilter.factoryId,
+      storageId: this.rawFilter.storageId,
+      manufacturerId: this.rawFilter.manufacturerId,
+      categoryId: this.rawFilter.categoryId,
+      unitId: this.rawFilter.unitId,
+      startCount: this.rawFilter.startCount,
+      endCount: this.rawFilter.endCount,
+      startPrice: this.rawFilter.startPrice,
+      endPrice: this.rawFilter.endPrice
+    }
   }
   
 

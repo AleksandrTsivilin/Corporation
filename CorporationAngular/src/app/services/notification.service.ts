@@ -1,43 +1,57 @@
-import { not } from '@angular/compiler/src/output/output_ast';
 import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { IndividualConfig, Toast, ToastrService } from 'ngx-toastr';
 
-export interface NotificationInfo{
-  code:CodeNotification,
-  message:string,
-  type:TypeNotification
-}
 
-export enum CodeNotification{
-  CONNECTION_RESTORED,
-  DISCONNECT
-}
-
-export enum TypeNotification{
-  SUCCESS,
-  ERROR
-}
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
+  private config : IndividualConfig = {
+    disableTimeOut: false,
+    timeOut: 5000,
+    closeButton: true,
+    extendedTimeOut: 1000,
+    progressBar: false,
+    progressAnimation: "decreasing",
+    enableHtml: false,
+    toastClass: "ngx-toastr",
+    positionClass:"toast-top-right",
+    titleClass:"",
+    messageClass: "",
+    easing:"ease-in",
+    easeTime: "300",
+    tapToDismiss: true,
+    toastComponent: Toast,
+    onActivateTick: false,
+    newestOnTop: true,
+    payload: null
+  }
+  constructor(private readonly toastr : ToastrService) { }
 
-  constructor(private readonly toastr:ToastrService) { }
-
-  registration(notification : NotificationInfo){
-    this.show(notification);
+  success(message:string, sender : string){
+    this.toastr.success(
+      message,
+      sender,
+      this.config
+    )
   }
 
-  private show(notification:NotificationInfo){
-    switch (notification.type){
-      case TypeNotification.SUCCESS : {
-        this.toastr.success(notification.message);break;
-      }
-      case TypeNotification.ERROR : {
-        this.toastr.error(notification.message);break;
-      }
-    }
+  info(message:string, sender : string){
+    this.toastr.info(
+      message,
+      sender,
+      this.config
+    )
   }
+
+  error(message:string, sender : string){
+    this.toastr.error(
+      message,
+      sender,
+      this.config
+    )
+  }
+  
 }

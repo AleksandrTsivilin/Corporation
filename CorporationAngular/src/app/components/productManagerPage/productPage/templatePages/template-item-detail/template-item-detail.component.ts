@@ -1,5 +1,5 @@
 import { animate, AnimationBuilder,  style } from '@angular/animations';
-import { Component, ElementRef, HostBinding, HostListener, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, HostBinding, HostListener, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Routers} from 'src/app/enums/routers/routers'
 import { TemplateFilterWithDetails } from 'src/app/interfaces/product/tempalte/templateFilterWithDetails';
 import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
@@ -27,7 +27,8 @@ export class TemplateItemDetailComponent implements OnInit, OnDestroy {
 
   @Input() id: number = 0;
   @Input() index:number=0;
-
+  @Output() removeItem = new EventEmitter();
+  @Output() editItem = new EventEmitter();
 
   @HostBinding('class')  
   hostClass="hidden"
@@ -40,16 +41,13 @@ export class TemplateItemDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly templateService:ProductTemplateService,
-    private readonly builder : AnimationBuilder,
-    private readonly update:UpdateProductTemplateService
-    ) {console.log("detail component") }
+    private readonly builder : AnimationBuilder
+    ) {}
 
   ngOnInit(): void {
-    //this.update.start();
   }
 
   ngOnDestroy(): void {
-    //this.update.stop();
   }
 
   ngAfterViewInit() { 
@@ -85,8 +83,12 @@ export class TemplateItemDetailComponent implements OnInit, OnDestroy {
   }
 
   remove(){
-    console.log("remove template");
-    this.update.delete(5);
+    this.removeItem.emit();
+
+  }
+
+  edit(){
+    this.editItem.emit();
   }
 
   close(){
@@ -103,7 +105,6 @@ export class TemplateItemDetailComponent implements OnInit, OnDestroy {
           ? this.templateInfo = templateInfo
           : this.isSomethingWrong = true;
 
-        //if (this.templateInfo) this.templateInfo.isOwner = false;
         this.isLoading = false;
       },()=>{
         this.isLoading = false;

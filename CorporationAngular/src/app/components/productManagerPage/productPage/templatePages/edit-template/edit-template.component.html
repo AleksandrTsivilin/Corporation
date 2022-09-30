@@ -1,1 +1,28 @@
-<p>edit-template works!</p>
+<div class="py-44">
+    
+    <div class="image-form-container">
+        <img 
+            class="_image-logo-form" 
+            src="assets/images/logo_picture/signalr_logo.png"
+        > 
+    </div>
+
+
+    <div class="btn-close-container">
+        <app-close-btn
+            (responce)="close();"
+        ></app-close-btn>
+    </div>
+
+    <div class="header-form">
+        <span>Editing product template</span>
+    </div>
+
+   
+
+    <!-- filter criteria component -->
+    <app-filter-by-criteria        
+        [startFilter]="startTemplate"
+        (submitForm)="applyCriteria($event)"
+    ></app-filter-by-criteria>
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnDestroy, OnInit, Output } from '@angular/core';
 import { TableHeader } from 'src/app/interfaces/header-table';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
@@ -24,6 +24,8 @@ import { Subject } from 'rxjs';
 import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
 import { compilePipeFromMetadata } from '@angular/compiler';
 import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
+import { UpdateProductTemplateService } from 'src/app/services/productPage/updateServices/update-product-template.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -35,10 +37,11 @@ export const maxPrice:number=15000;
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.scss']
 })
-export class ProductsComponent implements OnInit {
+export class ProductsComponent implements OnInit, OnDestroy {
 
 
   routers = Routers;
+  titlePage = ProductTitlePage.TABLE
   @Output() userProductPermissions:UserExtraPermissions={    
     canUpdate:false,
     canDelete:false
@@ -164,7 +167,9 @@ export class ProductsComponent implements OnInit {
     private readonly storageService:StorageService,
     private readonly tabService:TabService,
     private readonly localStorage: LocalStorageService,
-    private readonly templateService : ProductTemplateService
+    private readonly templateService : ProductTemplateService,
+    private readonly updateTemplateService : UpdateProductTemplateService,
+    private readonly toastr : ToastrService
     ) { 
 
     //   this.createTab();
@@ -178,6 +183,7 @@ export class ProductsComponent implements OnInit {
 
     //console.log("on init")
     
+    this.updateTemplateSub();
     this.removedTabSub();
 
     const currentTemplate = history.state.template;
@@ -209,6 +215,11 @@ export class ProductsComponent implements OnInit {
   
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next(true)
+    this.destroy$.complete();
+  }
+
   // toggleTemplate(){
   //   //this.pageState.innerRouter = "template";
   // }
@@ -231,10 +242,10 @@ export class ProductsComponent implements OnInit {
     this.createTab();
   }
 
-  saveChanged(raw  : TemplateFilter){
-    this.rawTemplate = raw;
-    this.saveData();
-  }
+  // saveChanged(raw  : TemplateFilter){
+  //   this.rawTemplate = raw;
+  //   this.saveData();
+  // }
 
   loadProducts(filter:TemplateFilter | null){
       
@@ -650,6 +661,27 @@ export class ProductsComponent implements OnInit {
       .subscribe(tab=>{
         if (tab.title === ProductTitlePage.TABLE) this.clearData();
       })
+  }
+
+  private updateTemplateSub(){
+    this.updateTemplateService.TemplateChanges$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(responce=>{
+      const templateId = responce.data;
+      if (this.templateFilter.id === templateId)
+        console.log("template changed products")
+        this.templateFilter.title = "new template"
+        this.templateFilter.id = 0;
+        this.saveData();
+        this.createTab();
+        this.createToastr(responce.message);
+    })
+  }
+
+  private createToastr(message : string){
+    this.toastr.info(message,ProductTitlePage.TEMPLATES,{
+      closeButton:true
+    })
   }
 
   // private setTemplateData(template : TemplateFilter){

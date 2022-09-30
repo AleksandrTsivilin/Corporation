@@ -1,3 +1,4 @@
+//import { CriteriaInfo } from "src/app/components/productManagerPage/productPage/filter-by-criteria/filter-by-criteria.component";
 import { TabRouter } from "../roleselector/tab";
 import { CriteriaProduct } from "./criteriaProduct";
 import { TemplateFilter } from "./tempalte/templateFilter";
@@ -34,20 +35,27 @@ export interface ProductTemplatePageState{
     curr : string
 }
 
-export interface ProductNewTemplatePageState{
-    raw : TemplateFilter,
-    isChanged: boolean
-}
+// export interface ProductNewTemplatePageState{
+//     isChanged: boolean
+// }
 
-export interface ProductCriteriaPageState{
-    id: number,
-    isChanged : boolean,
-    title : string,
-    criteria : CriteriaProduct
-}
+// export interface ProductCriteriaPageState{
+//     id: number,
+//     isChanged : boolean,
+//     title : string,
+//     criteria : CriteriaProduct
+// }
 
 export interface ProductTemplatesPageState{
     search : string,
     curr: number
 }
+
+export interface ProductTemplateEditPageState{
+    template:TemplateFilter
+}
+
+// export interface ProductCriteriaPageState{
+//     templates: CriteriaInfo []
+// }
 

@@ -13,8 +13,10 @@ import { TabService } from 'src/app/services/tab.service';
 import { ProductTitlePage as ProductTitlePages } from 'src/app/enums/productPage/productTitlePage';
 import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
 import { SearchStringResponce } from 'src/app/interfaces/searchStringResponce';
-import { Subject } from 'rxjs';
+import { pipe, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { UpdateProductTemplateService } from 'src/app/services/productPage/updateServices/update-product-template.service';
+import { ToastrService } from 'ngx-toastr';
 
 
 
@@ -57,7 +59,9 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
     private readonly route:ActivatedRoute,
     private readonly localStorage: LocalStorageService,
     private readonly tabServce : TabService,
-    private readonly templateService : ProductTemplateService
+    private readonly templateService : ProductTemplateService,
+    private readonly update  : UpdateProductTemplateService,
+    private readonly toastr : ToastrService
     ) {}
 
   ngOnInit(): void {
@@ -75,6 +79,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
     this.routeSub();
     this.currentTemplateSub();
     this.removedTabSub();
+    this.updateSub();
   }
 
   ngOnDestroy(): void {
@@ -107,6 +112,16 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
 
   }
 
+  remove(template : TemplateFilter){
+    this.update.delete(template.id);
+  }
+
+  edit(template : TemplateFilter){
+    this.router.navigate([this.routers.EDIT_TEMPLATE],{
+      state:{template:template}
+    })
+  }
+
   filterBySearch(responce : SearchStringResponce){
 
     if (!responce.isSameDirection) {
@@ -129,7 +144,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
   }
 
   private getTemplates() { 
-    this.isLoadingPage = true;   
+    //this.isLoadingPage = true;   
     this.templateService.getByUser()
       .subscribe(templates=>{
         this.templates  = templates;
@@ -160,7 +175,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
   }
 
   private clearData(){
-    this.localStorage.remove(ProductKeys.NEW_TEMPLATE);
+    //this.localStorage.remove(ProductKeys.NEW_TEMPLATE);
   }
 
   private createTab(){
@@ -219,4 +234,48 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
       })
   }
 
+  private updateSub(){
+    this.update.TemplateChanges$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(responce =>{
+
+        const id = responce.data;
+       
+        if (!id) return;
+
+        const index = this.templates
+          .findIndex(template => template.id === id)
+        
+        if (index < 0) return;
+
+        this.templateService.getByUser()
+          .subscribe(templates=>{
+            this.templates = templates;
+            this.createToastr(responce.message);
+          })
+
+        
+
+      })
+  }
+
+  private createToastr(message : string){
+
+    const name = ProductTitlePages.TEMPLATES;
+    this.toastr.info(
+      message,
+      name,{
+      closeButton:true
+    })
+  }
+
+  // createNotification(tempalte:TemplateFilter){
+  //   this.notify.registration({
+  //     code:CodeNotification.INFO,
+  //     message: tempalte.title + " has been deleted",
+  //     type: TypeNotification.INFO
+  //   })
+  // }
 }
+
+

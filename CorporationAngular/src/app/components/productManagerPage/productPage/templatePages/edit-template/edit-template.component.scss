@@ -1,0 +1,13 @@
+.btn-close-container{
+    @apply 
+        z-50
+        fixed top-service-title mt-1 right-2
+        flex justify-end 
+        pr-1;
+
+    
+}
+
+.image-form-container{
+    @apply pt-12;
+}

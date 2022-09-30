@@ -1,4 +1,5 @@
 export enum Routers{
+    RESPONCES = "/responces",
     TABLE = "/services/products/table",
     TEMPLATES = "/services/products/templates",
     NEW_TEMPLATE = "/services/products/newTemplate",

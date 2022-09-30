@@ -50,4 +50,5 @@ export class ProductTemplateService {
     const params = new HttpParams().set("id",id);
     return this.client.get<TemplateFilterWithDetails>(url,{params});
   }
+
 }
