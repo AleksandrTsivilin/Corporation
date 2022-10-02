@@ -1,0 +1,12 @@
+
+<app-carousel
+    [shift]="600"
+    [delay]="5000"   
+    
+    >
+    <ng-container *ngFor="let item of arrImages">
+        <ng-container *appCarouselElement>
+            <img class="item" src={{item}}>
+        </ng-container>
+    </ng-container>
+</app-carousel>

@@ -60,6 +60,9 @@ import { TemplateItemDetailComponent } from './components/productManagerPage/pro
 import { EditTemplateComponent } from './components/productManagerPage/productPage/templatePages/edit-template/edit-template.component';
 import { SearchStringComponent } from './components/tools/search-string/search-string.component';
 import { InfoComponent } from './components/homePage/mainPage/info/info.component';
+import { LogoSliderComponent } from './components/homePage/mainPage/logoSlider/logo-slider/logo-slider.component';
+import { CarouselElementDirective } from './directives/carusel-element.directive';
+import { CarouselComponent } from './components/homePage/mainPage/logoSlider/carousel/carousel.component';
 
 
 
@@ -117,7 +120,10 @@ import { InfoComponent } from './components/homePage/mainPage/info/info.componen
     TemplateItemDetailComponent,
     EditTemplateComponent,
     SearchStringComponent,
-    InfoComponent
+    InfoComponent,
+    LogoSliderComponent,
+    CarouselElementDirective,
+    CarouselComponent
     
     
     

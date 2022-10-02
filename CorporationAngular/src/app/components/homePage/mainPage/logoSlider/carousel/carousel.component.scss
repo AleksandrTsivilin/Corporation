@@ -1,0 +1,22 @@
+.carousel-container{
+    @apply
+        w-150 h-28
+        bg-white
+        border-transparent
+        rounded-md
+        shadow-xl
+        overflow-hidden;
+
+
+    .carousel-list{
+        @apply
+            w-full h-full
+            flex
+            m-0 p-0;
+
+        .carousel-item{
+            @apply
+                w-full h-full flex-none;
+        }
+    }
+}

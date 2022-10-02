@@ -45,6 +45,7 @@ module.exports = {
         },
         width:{
           '160':'640px',
+          '150':'600px',
           '0.75':'3px'
         },
         rotate:{
