@@ -1,0 +1,19 @@
+.info-section{
+    @apply 
+        flex justify-around
+        text-red-600
+        font-bold;
+        
+    .info-section__container{
+
+        @apply space-x-2;
+
+        .info-section__value{
+            @apply 
+                text-6xl       
+                lg:text-8xl;
+        }
+    }
+
+    
+}

@@ -17,7 +17,7 @@
             @apply 
                 
                 invisible
-                md:ml-11 bg-white
+                md:ml-11 
                 md:visible md:w-160 md:h-32 md:flex-none;
 
             
@@ -27,7 +27,14 @@
         .header-slogan-container{
             @apply                 
                 invisible
+                flex
+                opacity-70
+                text-red-600 text-6xl font-bold
                 md:visible flex-1;
+
+            .header-slogan-container__text{
+                @apply flex m-auto;
+            }
         }
 
 // info container

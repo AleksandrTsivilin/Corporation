@@ -59,6 +59,7 @@ import { GetInfoModalComponent } from './components/modals/getInfoModal/get-info
 import { TemplateItemDetailComponent } from './components/productManagerPage/productPage/templatePages/template-item-detail/template-item-detail.component';
 import { EditTemplateComponent } from './components/productManagerPage/productPage/templatePages/edit-template/edit-template.component';
 import { SearchStringComponent } from './components/tools/search-string/search-string.component';
+import { InfoComponent } from './components/homePage/mainPage/info/info.component';
 
 
 
@@ -115,7 +116,8 @@ import { SearchStringComponent } from './components/tools/search-string/search-s
     GetInfoModalComponent,
     TemplateItemDetailComponent,
     EditTemplateComponent,
-    SearchStringComponent
+    SearchStringComponent,
+    InfoComponent
     
     
     
