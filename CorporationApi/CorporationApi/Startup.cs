@@ -59,11 +59,11 @@ namespace CorporationApi
                 opts =>
                 {
                     opts
-                    //.AllowAnyOrigin()
+                    .WithOrigins("http://localhost:4200")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     //.AllowAnyOriginWithCredentials()
-                    .SetIsOriginAllowed(origin => true) // allow any origin
+                    //.SetIsOriginAllowed(origin => true) // allow any origin
                     .AllowCredentials();
                 }));
 

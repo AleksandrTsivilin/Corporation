@@ -54,51 +54,52 @@ namespace CorporationApi.Controllers.ProductControllers
             var identity = GetIdentityInfo("ProductManager");
             var template = await _service.GetById(id, identity);
 
+            return Ok(template);
             //testc code 
 
-            if (id == 5) return Ok(null);
+            //if (id == 5) return Ok(null);
 
-            return id % 2 == 0 
-                ? Ok(new ProductTemplateModel 
-                {
-                    Id = 5,
-                    Title = "template 11",
-                    IsOwner = true,
-                    Owner = "Vasya",
-                    Criteria  = new ProductCriteria
-                    {
-                        RegionId = 1,
-                        FactoryId = 0,
-                        StorageId = 0,
-                        ManufacturerId = 0,
-                        CategoryId = 0,
-                        UnitId = 0,
-                        StartCount = 0,
-                        EndCount = 150,
-                        StartPrice = 1000,
-                        EndPrice = 7400
-                    }
+            //return id % 2 == 0 
+            //    ? Ok(new ProductTemplateModel 
+            //    {
+            //        Id = 5,
+            //        Title = "template 11",
+            //        IsOwner = true,
+            //        Owner = "Vasya",
+            //        Criteria  = new ProductCriteria
+            //        {
+            //            RegionId = 1,
+            //            FactoryId = 0,
+            //            StorageId = 0,
+            //            ManufacturerId = 0,
+            //            CategoryId = 0,
+            //            UnitId = 0,
+            //            StartCount = 0,
+            //            EndCount = 150,
+            //            StartPrice = 1000,
+            //            EndPrice = 7400
+            //        }
 
-                })
-                : Ok(new ProductTemplateModel {
-                    Id = 5,
-                    Title = "template 11",
-                    IsOwner = false,
-                    Owner = "Vasya",
-                    Criteria = new ProductCriteria
-                    {
-                        RegionId = 1,
-                        FactoryId = 0,
-                        StorageId = 0,
-                        ManufacturerId = 0,
-                        CategoryId = 0,
-                        UnitId = 0,
-                        StartCount = 0,
-                        EndCount = 150,
-                        StartPrice = 1000,
-                        EndPrice = 7400
-                    }
-                });
+            //    })
+            //    : Ok(new ProductTemplateModel {
+            //        Id = 5,
+            //        Title = "template 11",
+            //        IsOwner = false,
+            //        Owner = "Vasya",
+            //        Criteria = new ProductCriteria
+            //        {
+            //            RegionId = 1,
+            //            FactoryId = 0,
+            //            StorageId = 0,
+            //            ManufacturerId = 0,
+            //            CategoryId = 0,
+            //            UnitId = 0,
+            //            StartCount = 0,
+            //            EndCount = 150,
+            //            StartPrice = 1000,
+            //            EndPrice = 7400
+            //        }
+            //    });
             //return Ok();
         }
 
