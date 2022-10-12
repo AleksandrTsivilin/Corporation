@@ -1,9 +1,9 @@
 export interface NewProductForm{
     storageId:number,
-    title:string,
-    count:number,
-    price:number,
-    manufacturerId:number,
-    categoryId:number,
-    unitId:number
+    title:string | null,
+    count:number | null,
+    price:number | null,
+    manufacturerId:number | null,
+    categoryId:number | null,
+    unitId:number | null
 }

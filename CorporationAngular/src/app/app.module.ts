@@ -63,6 +63,10 @@ import { InfoComponent } from './components/homePage/mainPage/info/info.componen
 import { LogoSliderComponent } from './components/homePage/mainPage/logoSlider/logo-slider/logo-slider.component';
 import { CarouselElementDirective } from './directives/carusel-element.directive';
 import { CarouselComponent } from './components/homePage/mainPage/logoSlider/carousel/carousel.component';
+import { NumberOnlyDirective } from './directives/number-only.directive';
+import { TitleValidationDirective } from './directives/title-validation.directive';
+import { FormLabelComponent } from './components/tools/form-label/form-label.component';
+import { FormValidatorDirective } from './directives/form-validator.directive';
 
 
 
@@ -123,7 +127,11 @@ import { CarouselComponent } from './components/homePage/mainPage/logoSlider/car
     InfoComponent,
     LogoSliderComponent,
     CarouselElementDirective,
-    CarouselComponent
+    CarouselComponent,
+    NumberOnlyDirective,
+    TitleValidationDirective,
+    FormLabelComponent,
+    FormValidatorDirective
     
     
     

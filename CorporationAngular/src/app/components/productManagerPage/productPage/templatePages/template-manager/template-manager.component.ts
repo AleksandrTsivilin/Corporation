@@ -204,7 +204,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
   private getById(id : number){
     this.templateService.getById(id)
       .subscribe(template=>{
-
+        console.log(template)
         template
           ? this.router.navigate([this.routers.TABLE],{
             state : {template:template}

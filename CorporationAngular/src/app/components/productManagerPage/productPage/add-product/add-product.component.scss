@@ -1,21 +1,63 @@
 
 
-.form-add-product{
-    @apply w-96;
+.form-page-container{
+    @apply 
+        border-b-2 border-white         
+        bg-blue-600
+        py-40;
 
-    .form-group{
-        @apply w-full;
+    .form-page-container__close{
+        @apply  
+            z-40
+            fixed top-service-title mt-1 right-2
+            flex justify-end 
+            pr-1;
     }
-    .btn-submit{
+
+    .form-container{
+        @apply
+            m-auto w-full 
+            pr-12 space-y-12
+            border-2 border-white
+            rounded-md
+            bg-blue-300
+            sm:w-160 sm:pr-0;
+
+        // image form container
+        .image-form-container{
+            @apply 
+                w-full;
+
+            .image-form{
+                @apply 
+                    flex w-full pt-12;
+
+                .image{
+                    @apply m-auto w-44;
+                }
+            }
+        }
+
+        .form-cover{
+            @apply 
+                flex items-center justify-center 
+                pb-12 px-4 
+                sm:px-6 
+                lg:px-8;
+
+            .form{
+                @apply 
+                    max-w-md w-full  space-y-6;  
+
+                .form-label-container{
+                    @apply px-2;
+                }
+                .btn-submit-container{
+                    @apply w-full h-9.5;
+                }
+            }
             
-        @apply w-full;
-        @apply bg-green-500;
-        @apply rounded;
-        @apply text-white font-bold;
-        @apply py-2;
+        }
     }
-    
-    .btn-submit:hover{
-        @apply bg-green-700;
-    } 
 }
+

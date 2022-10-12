@@ -11,6 +11,10 @@ import { StorageService } from 'src/app/services/productPage/StoragesService/sto
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
 import { TabService } from 'src/app/services/tab.service';
+import { FormValidationMessage } from 'src/app/enums/formValidationMessage/formValidationMessage';
+import { FormValidator } from 'src/app/interfaces/formValidation/formValidation';
+import { FormRegExp } from 'src/app/enums/regExp';
+import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
 
 @Component({
   selector: 'app-add-product',
@@ -21,17 +25,19 @@ export class AddProductComponent implements OnInit {
 
   @Input() storage:string="";
 
+  formsMessage = FormValidationMessage ;
+  regExpStr = FormRegExp;
+  titlePage = ProductTitlePage;
   
-  newProductForm:NewProductForm={
-    storageId:0,
-    title:"",
-    count:0,
-    price:0,
-    manufacturerId:0,
-    categoryId:0,
-    unitId:0
+  newProductForm: NewProductForm = {
+    storageId: 0,
+    title: null,
+    count: null,
+    price: null,
+    manufacturerId: null,
+    categoryId: null,
+    unitId: null
   }
-  
 
   currentStorage:StorageInfo={
     id:0,
@@ -41,6 +47,15 @@ export class AddProductComponent implements OnInit {
   categories:CategoryInfo[]=[];
   units:UnitInfo[]=[]; 
 
+  priceErrorMessage : string | undefined;
+  countErrorMessage : string | undefined;
+  titleErrorMessage : string | undefined;
+  isValidForm = true;
+
+  countValidator : any ;
+
+  
+  
   
   constructor(
    
@@ -61,27 +76,45 @@ export class AddProductComponent implements OnInit {
     this.getCategories();
     this.getUnits();
     
+    this.checkForm();
   }
 
+  close(){
+    this.tabService.remove(this.titlePage.ADD_PRODUCT)
+  }
   onSubmit(){
-    this.newProductForm.storageId=this.currentStorage.id; 
-    console.log(this.newProductForm); 
 
+    this.newProductForm.storageId=this.currentStorage.id;      
     
-    
-    this.updateService.addProduct(this.newProductForm);
-    this.newProductForm={
-      storageId:this.newProductForm.storageId,
-      title:"",
-      manufacturerId:0,
-      categoryId:0,
-      unitId:0,
-      price:0,
-      count:0
-
-    }
+    this.updateService.addProduct(this.newProductForm);   
   }
 
+  validHandler(responce:FormValidator, key:string){
+    switch (key){
+      case 'count' : 
+        this.newProductForm.count = responce.prevState ?  Number(responce.prevState) : null;
+        this.countErrorMessage = responce.message; 
+        break;
+      case 'price' : 
+        this.newProductForm.price = responce.prevState ?  Number(responce.prevState) : null;
+        this.priceErrorMessage = responce.message; 
+        break;
+      case 'title' : 
+        this.newProductForm.title = responce.prevState;
+        this.titleErrorMessage = responce.message;
+        break;
+
+      default: break;
+    }
+
+    this.checkForm();    
+  }
+
+  private checkForm(){
+    this.isValidForm = !(this.countErrorMessage) && !(this.priceErrorMessage) && !(this.titleErrorMessage);
+  }
+  
+  
   private getCurrentStorage(){
     this.storageService.getStorageByUser("ProductManager")
       .subscribe((result)=>{
@@ -123,11 +156,10 @@ export class AddProductComponent implements OnInit {
 
   private createTab(){
     this.tabService.addedTab({
-      title: "add product",
+      title: this.titlePage.ADD_PRODUCT,
       router: "/services/addProduct",
       additional: "",
       key: undefined
     })
   }
-
 }

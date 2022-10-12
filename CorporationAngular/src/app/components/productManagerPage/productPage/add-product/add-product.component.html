@@ -1,102 +1,373 @@
 
-<h1>storage:</h1>
-<h1>{{currentStorage.title}}</h1>
-<form
-    class="form-add-product"
-    (ngSubmit)="onSubmit()"         
 
->   <div class="form-group">
-        <label>manufacturer</label>
-        <select 
-            class="form-group"
-            [(ngModel)]="newProductForm.manufacturerId"            
-            name="manufacturers"
-        >
+<div class="form-page-container">
+    <div class="form-page-container__close">
+        <app-close-btn
+            (responce)="close()"
+        ></app-close-btn>
+    </div>
+    <div class="form-container">
+        <div class="image-form-container">
+            <div class="image-form">
+                <img 
+                    class="image" 
+                    src="assets/images/logo_picture/tailwind_logo.png"
+                > 
+            </div>
+        </div>
+        <!-- title form -->
+        <div class="header-form">
+            <span>Create product : {{currentStorage.title}}</span>
+        </div>
 
-            <option 
-                *ngFor="let manufacturer of manufacturers"
-                [value]="manufacturer.id"
-                name="manufacturerId"
-            >
-                {{manufacturer.title}}
-            </option>
-        </select>
         
+        <!-- title.touched && title.invalid || titleErrorMessage.length>0 -->
+        <div class="form-cover">
+            <form
+                class="form"
+                (ngSubmit)="onSubmit(); form.reset()"         
+                #form = "ngForm"
+            >  
+                <div >
+                    <!-- <span>required invalid = {{title.invalid}}</span> -->
+                    <div class="form-label-container">
+                        <app-form-label
+                            [title]="'title'"
+                            [isValidState]="!(titleErrorMessage)"
+                            [errorMessage]="titleErrorMessage"
+                        ></app-form-label>
+                        <!-- <label 
+                            class="_form-label"
+                            *ngIf="!(title.touched && title.invalid || titleErrorMessage.length>0) else titleWarning"                             
+                        >
+                            <span class="warning-text">* </span>
+                            <span>title</span>                            
+                        </label> -->
+                    </div>
+                    <!-- <input 
+                        class="_form-input"
+                        type="text"
+                        [(ngModel)]="newProductForm.title"
+                        name="title"
+                        #title = ngModel
+                        required
+                        (ngModelChange)="checkForm()"
+                        titleValidation
+                        (titleValidation_valid)="titleValidHandler($event)"
+                    > -->
+                    <input
+                        class="_form-input"
+                        type="text"
+                        [(ngModel)]="newProductForm.title"
+                        name="title"
+                        required          
+                        inputValidator    
+                        [regExp]="regExpStr.TITLE"
+                        [regExpStart]="regExpStr.DECLINE_SPACE_AND_NUM"
+                        [minLength]="3"
+                        [maxLength]="20"
+                        [regExpEnd]="regExpStr.DECLINE_TITLE_END"
+                        (responce) = "validHandler($event,'title')"
+                        
+                    >
+                    <!-- (result)="titleValidHandler($event)" -->
+                    <!-- #title = ngModel -->
+                        <!-- required  -->
+                </div>
+                <div >
+                    <div class="form-label-container">
+                        <app-form-label
+                            [title]="'manufacturer'"
+                            [isValidState]="!(manufacturer.touched && !newProductForm.manufacturerId)"
+                            [errorMessage]="formsMessage.NOTHING_SELECTED"
+                        ></app-form-label>
+                        <!-- <label 
+                            class="_form-label" 
+                            *ngIf="manufacturer.touched && !newProductForm.manufacturerId else manufacturerWarning"
+                        >
+                            <span *ngIf="!newProductForm.manufacturerId">⚠️</span>
+                            <span [ngClass]="{'warning-text':!newProductForm.manufacturerId}">manufacturer</span>
+                            <span *ngIf="!newProductForm.manufacturerId" class="warning-text">{{formsMessage.NOTHING_SELECTED}}</span>
+                        </label> -->
+                    </div>
+                    
+                    <!-- <span>manufacturer is invalid {{manufacturer.invalid}}</span> -->
+                    <select 
+                        class="_form-select"
+                        [(ngModel)]="newProductForm.manufacturerId"            
+                        name="manufacturers"
+                        #manufacturer = ngModel 
+                        required
+                    >
+
+                        <option 
+                            *ngFor="let manufacturer of manufacturers"
+                            [value]="manufacturer.id"
+                            name="manufacturerId"
+                        >
+                            {{manufacturer.title}}
+                        </option>
+                    </select>
+                    
+                </div>
+                <div >
+                    <div class="form-label-container">
+                        <app-form-label
+                            [title]="'category'"
+                            [isValidState]="!(category.touched && !newProductForm.categoryId)"
+                            [errorMessage]="formsMessage.NOTHING_SELECTED"
+                        ></app-form-label>
+                        <!-- <label 
+                            class="_form-label"
+                            *ngIf="category.touched && !newProductForm.categoryId  else categoryWarning"
+                            >
+                                <span *ngIf="!newProductForm.categoryId ">⚠️</span>
+                                <span [ngClass]="{'warning-text': !newProductForm.categoryId}">category</span>
+                                <span *ngIf=" !newProductForm.categoryId" class="warning-text">{{formsMessage.NOTHING_SELECTED}}</span>
+                        </label> -->
+                    </div>
+                    <select 
+                        class="_form-select"
+                        [(ngModel)]="newProductForm.categoryId"
+                        #category = ngModel    
+                        name="category"
+                        required
+                    >
+                        <option 
+                            *ngFor="let category of categories"
+                            [value]="category.id"
+                            name="categoryid"
+                        >
+                            {{category.title}}
+                        </option>
+                    </select>
+                    
+                </div>
+                <div >
+                    <div class="form-label-container">
+                        <app-form-label
+                            [title]="'unit'"
+                            [isValidState]="!(unit.touched && !newProductForm.unitId)"
+                            [errorMessage]="formsMessage.NOTHING_SELECTED"
+                        ></app-form-label>
+                        <!-- <label 
+                            class="_form-label"
+                            *ngIf="unit.touched && !newProductForm.unitId else unitWarning"
+                        >
+                            <span *ngIf=" !newProductForm.unitId">⚠️</span>
+                            <span [ngClass]="{'warning-text': !newProductForm.unitId}">unit</span>
+                            <span *ngIf=" !newProductForm.unitId" class="warning-text">{{formsMessage.NOTHING_SELECTED}}</span>
+                        </label> -->
+                    </div>
+                    <select 
+                        class="_form-select"
+                        [(ngModel)]="newProductForm.unitId"
+                        #unit = ngModel
+                        name="unit"
+                        required
+                    >
+                        <option 
+                            *ngFor="let unit of units"
+                            [value]="unit.id"
+                            name="unitId"
+                        >
+                            {{unit.title}}
+                        </option>
+                    </select>
+                    
+                </div>
+                <!-- !(priceErrorMessage.length>0 || price.touched && !newProductForm.price) -->
+                <div >
+                    <div class="form-label-container">                        
+                        <app-form-label
+                            [title]="'price'"
+                            [isValidState]="!(priceErrorMessage)"
+                            [errorMessage]="priceErrorMessage"
+                        ></app-form-label>
+                        <!-- <label class="_form-label">
+                            <span *ngIf="priceErrorMessage.length>0 || price.touched && !newProductForm.price else priceWarning" >⚠️</span>
+                            <span [ngClass]="{'warning-text': priceErrorMessage.length>0 || price.touched && !newProductForm.price}">price</span> 
+                            <span 
+                                *ngIf="priceErrorMessage.length>0"
+                                [ngClass]="{'warning-text':priceErrorMessage.length>0}"
+                            > 
+                                {{priceErrorMessage}}
+                            </span>  
+                            <span 
+                                class="warning-text"
+                                *ngIf="price.touched && !newProductForm.price && priceErrorMessage.length==0"
+                            > 
+                                {{formsMessage.REQUARIED}}
+                            </span>
+                        </label> -->
+                    </div>
+                    <!-- <input
+                        class="_form-input"
+                        type="text"  
+                        [(ngModel)]="newProductForm.price"
+                        placeholder="0"
+                        numbersOnly
+                        (numbersOnly_valid) = "priceError($event)"   
+                        numbersOnly_maxLength="6" 
+                        name="price"
+                        #price = ngModel
+                        (ngModelchange)="checkForm()"
+                    >                     -->
+                    <input
+                        class="_form-input"
+                        type="text"  
+                        placeholder="0"
+                        [(ngModel)]="newProductForm.price"
+                        name="price"
+                        #price = ngModel
+                        required
+                        inputValidator        
+                        [regExp]="regExpStr.ONLY_NUM"
+                        [regExpStart]="regExpStr.DECLINE_ZERO"
+                        [maxLength]="6"
+                        [regExpDouble]="regExpStr.DOUBLE_SEPARATORS"
+                        [maxLengthDouble]="2"
+                        (responce)="validHandler($event,'price')"
+                    >
+                </div>
+                <!-- (result)="validHandler($event,'price')" -->
+                <!-- !(countErrorMessage.length>0 || count.touched && !newProductForm.count)" -->
+                <div >
+                    <div class="form-label-container">
+                        <app-form-label
+                            [title]="'count'"
+                            [isValidState]="!(countErrorMessage)"
+                            [errorMessage]="countErrorMessage"
+                        ></app-form-label>
+                        <!-- <label class="_form-label">
+                            <span *ngIf="countErrorMessage.length>0 || count.touched && !newProductForm.count else countWarning" >⚠️</span>
+                            <span [ngClass]="{'warning-text':countErrorMessage.length>0 || count.touched && !newProductForm.count}"> count</span>
+                            <span 
+                                *ngIf="countErrorMessage.length>0"
+                                [ngClass]="{'warning-text':countErrorMessage.length>0}"
+                            > 
+                                {{countErrorMessage}}
+                            </span>  
+                            <span 
+                                class="warning-text"
+                                *ngIf="count.touched && !newProductForm.count && countErrorMessage.length ==0"
+                            > 
+                                {{formsMessage.REQUARIED}}
+                            </span>
+                        </label> -->
+                    </div>
+                    <!-- <input                        
+                        class="_form-input"                        
+                        type="text"                                      
+                        [(ngModel)]="newProductForm.count"
+                        placeholder="0"
+                        numbersOnly 
+                        numbersOnly_maxLength="4"   
+                        (numbersOnly_valid) = "countError($event)"
+                        name="productCount"
+                        #count = "ngModel"
+                        (ngModelChange)="checkForm()"
+                              
+                    > -->
+                    <!-- #count="ngModel"
+                    required -->
+                    <!-- (result)="countValidHandler($event)" -->
+                    <input
+                        class="_form-input"
+                        type="text"
+                        placeholder="0"
+                        [(ngModel)]="newProductForm.count"
+                        name="productCount"
+                        required
+                        inputValidator      
+                        [regExp]="regExpStr.ONLY_NUM"
+                        [maxLength]="4"
+                        [regExpStart]="regExpStr.DECLINE_ZERO"                       
+                        (responce)="validHandler($event,'count')"   
+                               
+                    >
+                </div>
+                <!-- [formField] = "countValidator"   -->
+                <div class="flex justify-end">
+                    <span 
+                        class="warning-text font-bold"
+                        *ngIf="form.invalid || !isValidForm"
+                    >
+                        {{formsMessage.FORM_VALIDATION_TITLE}}
+                    </span>
+                </div>
+                <div class="btn-submit-container">
+                    <button 
+                        class="btn-submit"
+                        [ngClass]="{'no-hover': form.invalid || !isValidForm}"
+                        type="submit"
+                        [disabled]="form.invalid || !isValidForm "
+                    >
+                        <span
+                            class="lock"
+                            *ngIf="form.invalid || !isValidForm"
+                        >
+                            🔓
+                        </span>
+                        create product
+                    </button>
+                </div>               
+            </form> 
+        </div>
+
     </div>
-    <div class="form-group">
-        <label>category</label>
-        <select 
-            class="form-group"
-            [(ngModel)]="newProductForm.categoryId"
-                
-            name="category"
-        >
-            <option 
-                *ngFor="let category of categories"
-                [value]="category.id"
-                name="categoryid"
-            >
-                {{category.title}}
-            </option>
-        </select>
-        
-    </div>
-    <div class="form-group">
-        <label>unit</label>
-        <select 
-            class="form-group"
-            [(ngModel)]="newProductForm.unitId"
-                
-            name="unit"
-        >
-            <option 
-                *ngFor="let unit of units"
-                [value]="unit.id"
-                name="unitId"
-            >
-                {{unit.title}}
-            </option>
-        </select>
-        
-    </div>
-    <div class="form-group">
-        <label>title</label>
-        <input 
-            class="form-group"
-            type="text"
-            [(ngModel)]="newProductForm.title"
-            name="title" 
-            
-        >
-        
-    </div>
-    <div class="form-group">
-        <label>price</label>
-        <input
-            class="form-group"
-            type="text"
-            [(ngModel)]="newProductForm.price"
-            name="price"
-        >
-        
-    </div>
-    <div class="form-group">
-        <label>count</label>
-        <input
-            class="form-group"
-            type="text"
-            [(ngModel)]="newProductForm.count"
-            name="productCount"
-        >
-        
-    </div>
-    <div class="form-group">
-        <button 
-            class="btn-submit" 
-            type="submit"
-        >create product</button>
-    </div>
-    
-    
-    
-</form>
+
+    <!-- <input     
+        inputValidator
+        placeholder="0"
+        pattern="[^0-9]*"
+    > -->
+</div>
+
+
+
+
+<!-- <ng-template #titleWarning>
+    <label class="_form-label warning-text">
+        <span>⚠️ title</span>
+        <span
+            *ngIf="titleErrorMessage.length>0 else defaultTitleError"
+        > {{titleErrorMessage}}
+        </span>
+    </label>
+</ng-template> -->
+
+<!-- <ng-template #manufacturerWarning>
+   <label class="_form-label">
+        <span class="warning-text">* </span>
+        <span>manufacturer</span>
+   </label>
+</ng-template>
+
+<ng-template #categoryWarning>
+    <label class="_form-label">
+         <span class="warning-text">* </span>
+         <span>category</span>
+    </label>
+</ng-template> -->
+
+<!-- <ng-template #unitWarning>
+    <label class="_form-label">
+         <span class="warning-text">* </span>
+         <span>unit</span>
+    </label>
+</ng-template>
+
+<ng-template #priceWarning>
+    <span class="warning-text">* </span>
+</ng-template>
+
+<ng-template #countWarning>
+    <span class="warning-text">* </span>
+</ng-template>
+
+
+<ng-template #defaultTitleError>
+    <span class="warning-text">{{formsMessage.REQUARIED}}</span>
+</ng-template> -->
+

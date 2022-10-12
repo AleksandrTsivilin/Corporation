@@ -1,0 +1,15 @@
+<label 
+    class="_form-label"
+    *ngIf="isValidState else warning"                             
+>   
+    <span class="warning-text">* </span>
+    <span>{{title}}</span>                            
+</label>
+
+
+<ng-template #warning>
+    <label class="_form-label warning-text">
+        <span>⚠️ {{title}}</span>
+        <span> {{errorMessage}}</span>
+    </label>
+</ng-template>
