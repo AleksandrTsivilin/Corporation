@@ -6,7 +6,6 @@ import { NewProductForm } from 'src/app/interfaces/product/newProductForm';
 import { StorageInfo } from 'src/app/interfaces/storageInfo';
 import { CategoryService } from 'src/app/services/productPage/CategoriesService/category.service';
 import { ManufacturerService } from 'src/app/services/productPage/ManufacturersService/manufacturer.service';
-import { ProductsService } from 'src/app/services/productPage/products.service';
 import { StorageService } from 'src/app/services/productPage/StoragesService/storage.service';
 import { UnitService } from 'src/app/services/productPage/UnitsService/unit.service';
 import { ProductUpdateService } from 'src/app/services/productPage/updateServices/product-update.service';
