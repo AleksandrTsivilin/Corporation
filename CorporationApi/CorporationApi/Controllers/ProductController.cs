@@ -33,8 +33,6 @@ namespace CorporationApi.Controllers
         [HttpGet("productsByAccess")]
         public async Task<IActionResult> GetProductsByAccess()
         {
-            //var claims = HttpContext.User.Identity as ClaimsIdentity;
-            //var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
             var identityInfo = GetIdentityInfo("ProductManager");
             var product = await Task.Run(() => _service.GetProductsByAccess(identityInfo));
             return Ok(product);
@@ -51,9 +49,6 @@ namespace CorporationApi.Controllers
         [HttpPost("ByFilter")]
         public async Task<IActionResult> GetProductsByFilter([FromForm]FilterProductModel filter)
         {
-            //Console.WriteLine(filter.RegionId);
-            //var claims = HttpContext.User.Identity as ClaimsIdentity;
-            //var identityInfo = _identityService.GetIdentity(claims, "ProductManager");
             var identityInfo = GetIdentityInfo("ProductManager");
             var products = await _service.GetByFilter(filter,identityInfo);
             return Ok(products);

@@ -32,27 +32,39 @@ namespace Repositories.UserRepositories
         }
         public async Task<User> GetTryUser(LoginModel model)
         {
-            var user = await _context.Users
-                .Include(user => user.Department)
-                    .ThenInclude(department => department.Factory)
-                        .ThenInclude(factory => factory.Region)
-                .Include(user => user.Employee)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiable => avaiable.Access)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiables => avaiables.Role)
-                .Include(user => user.Avaiables)
-                    .ThenInclude(avaiables => avaiables.AvaiablesUser_Permissions)
-                        .ThenInclude(ap => ap.Permission)
-                .FirstOrDefaultAsync(user => user.Username == model.Username);
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var user = await _context.Users
+               .Include(user => user.Department)
+                   .ThenInclude(department => department.Factory)
+                       .ThenInclude(factory => factory.Region)
+               .Include(user => user.Employee)
+               .Include(user => user.Avaiables)
+                   .ThenInclude(avaiable => avaiable.Access)
+               .Include(user => user.Avaiables)
+                   .ThenInclude(avaiables => avaiables.Role)
+               .Include(user => user.Avaiables)
+                   .ThenInclude(avaiables => avaiables.AvaiablesUser_Permissions)
+                       .ThenInclude(ap => ap.Permission)
+               .FirstOrDefaultAsync(user => user.Username == model.Username);
 
-            if (user is null) return null;
+                if (user is null) return null;
 
-            var hashedPassword = GetHashedPassword(model.Password, user.Salt);
+                var hashedPassword = GetHashedPassword(model.Password, user.Salt);
 
-            return !hashedPassword.Equals(user.HashedPassword)
-                ? null
-                : user;
+                transaction.Commit();
+
+                return !hashedPassword.Equals(user.HashedPassword)
+                    ? null
+                    : user;
+            }
+            catch(Exception ex)
+            {
+                transaction.Rollback();
+                return null;
+            }
+           
 
         }
 

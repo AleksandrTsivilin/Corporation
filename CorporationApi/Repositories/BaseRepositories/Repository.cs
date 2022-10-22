@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Repositories.BaseRepositories
 {
-    public class Repository<T> : IRepository<T> /*where T : class*/ where T : BaseEntity
+    public class Repository<T> : IRepository<T>  where T : BaseEntity
     { 
         protected readonly DBContext _context;
 

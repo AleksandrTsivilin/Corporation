@@ -63,8 +63,6 @@ namespace CorporationApi.Controllers
         public async Task<IActionResult> RegistrationUser(NewUserWithRegistrationId model)
         {
             var user = await _userService.AddUserWithRegistrationId(model);
-            //var user = await _userService
-            //    .TryGetUser(model);
 
             if (user is null)
                 return Unauthorized();

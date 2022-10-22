@@ -115,12 +115,15 @@ namespace Repositories.ProductRepositories
         public async Task<List<Product>> GetByAccess(
             ProductSpecificationByAccess specification)
         {
+            using var transaction = _context.Database.BeginTransaction();
             try
             {
                 var productStorage = GetQueryDefault(specification);
 
                 var productStorageExecuted = await productStorage.ToListAsync();
 
+
+                transaction.Commit();
                 return productStorageExecuted
                     .Select(ps => ps.Product)
                     .Distinct<Product>()
@@ -128,12 +131,14 @@ namespace Repositories.ProductRepositories
             }
             catch (Exception ex)
             {
+                transaction.Rollback();
                 return new List<Product>();
             }
         }
 
         public async Task<List<Product>> GetByUser(int departmentId)
         {
+            using var transaction = _context.Database.BeginTransaction();
             try
             {
                 var productStorage = await _context.Product_Storage
@@ -147,10 +152,13 @@ namespace Repositories.ProductRepositories
                     .Where(ps => ps.Storage.DepartmentId == departmentId)
                     .ToListAsync();
 
+                transaction.Commit();
+
                 return productStorage.Select(ps => ps.Product).ToList();
             }
             catch (Exception ex)
             {
+                transaction.Rollback();
                 return new List<Product>();
             }
         }
