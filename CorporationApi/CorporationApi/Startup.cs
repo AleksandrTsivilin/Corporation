@@ -59,9 +59,10 @@ namespace CorporationApi
                 opts =>
                 {
                     opts
-                    .WithOrigins("http://localhost:4200")
+                    .WithOrigins("http://localhost:4200", "http://localhost:51678")
                     .AllowAnyHeader()
                     .AllowAnyMethod()
+                    //.AllowAnyOrigin()
                     //.AllowAnyOriginWithCredentials()
                     //.SetIsOriginAllowed(origin => true) // allow any origin
                     .AllowCredentials();
@@ -144,6 +145,9 @@ namespace CorporationApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CorporationApi v1"));
                 app.UseCors("devCors");
             }
+
+
+            app.UseCors("local angular");
 
             app.UseHttpsRedirection();
 

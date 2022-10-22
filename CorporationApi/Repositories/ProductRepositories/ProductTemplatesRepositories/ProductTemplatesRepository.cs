@@ -1,6 +1,7 @@
 ﻿using DataBase;
 using DataBase.Entities;
 using DataBase.Entities.ProductEntities;
+using DataBase.Entities.UserEntities;
 using Microsoft.EntityFrameworkCore;
 using Repositories.BaseRepositories;
 using Repositories.Models.ProductModels;
@@ -14,18 +15,22 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
 {
     public class ProductTemplatesRepository : Repository<ProductTemplate>, IProductTemplatesRepository
     {
+        //private readonly defaultMessage {get;} = "Operation was canceled, template is not avaible.Try again later";
+        //private int A { get; set; } = 5;
+        //private string _defaultMessage { get; } = "";
 
         public ProductTemplatesRepository(DBContext context)
             : base(context) { }
 
-        public async Task<int> Add(FilterProductModel filter, int userId)
+        public async Task<ResponceInfo<int>> Add(FilterProductModel filter, int userId)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
             {
                 var user = await _context.Users.FirstOrDefaultAsync(user => user.Id == userId);
 
-                if (user is null) return 0;
+                if (user is null)
+                    return new ResponceBuilder<int>(0, BadResponce.INVALID_USER).Responce;
 
                 await _context.ProductTemplates.AddAsync(
                     new ProductTemplate
@@ -54,27 +59,39 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
 
                 var template = await _context.ProductTemplates
                     .FirstOrDefaultAsync(template => template.Title == filter.Title);
+
+                if (template is null)
+                {
+                    transaction.Rollback();
+                    return new ResponceBuilder<int>(0, BadResponce.INVALID_TEMPLATE).Responce;
+                }
+
+                //throw new Exception();
                 transaction.Commit();
-                return template is not null ? template.Id : 0;
+
+
+                var publisher = template.Title;
+                var responce = new ResponceBuilder<int>(template.Id, publisher, TypeOperation.CREATE).Responce;
+                return responce;
             }
             catch (Exception ex)
             {
                 transaction.Rollback();
-                return 0;
+                return new ResponceBuilder<int>(0, BadResponce.INVALID_TEMPLATE).Responce;
             }
 
         }
 
-        public async Task<ProductTemplateUser> GetById(int id, int userId)
+        public async Task<List<ProductTemplateUser>> GetByIdWithUsers(int id)
         {
             try
             {
-                var templateUser = await _context.ProductTemplates_Users
+                var templateUsers = await _context.ProductTemplates_Users
                     .Include(ptu => ptu.User)
                     .Include(ptu => ptu.Template)
-                    .FirstOrDefaultAsync
-                        (ptu => ptu.UserId == userId && ptu.TemplateId == id);
-                return templateUser;
+                    .Where(ptu => ptu.TemplateId == id)
+                    .ToListAsync();
+                return templateUsers;
             }
             catch (Exception ex)
             {
@@ -92,15 +109,17 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
             return templates;
         }
 
-        public async Task<ProductTemplateWithDetail>GetDetail(int id)
+        public async Task<ProductTemplateWithDetail>GetDetail(int id, int userId)
         {
             using var transaction = _context.Database.BeginTransaction();
             try
             {
-                var templateUser = await _context.ProductTemplates_Users
-                    .Include(ptu => ptu.User)
-                    .Include(ptu => ptu.Template)
-                    .FirstOrDefaultAsync(template => template.Id == id);
+                //var templateUser = await _context.ProductTemplates_Users
+                //    .Include(ptu => ptu.User)
+                //    .Include(ptu => ptu.Template)
+                //    .FirstOrDefaultAsync(template => template.Id == id && template.User.Id == userId);
+                var templateUser = await GetQueryDefault()
+                    .FirstOrDefaultAsync(template => template.Template.Id == id && template.User.Id == userId);
 
                 if (templateUser is null) return null;
 
@@ -151,13 +170,16 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
             {
                 var templateUser = await GetTemplateUserById(id);
 
-                if (templateUser is null) throw new Exception();
-                if (!templateUser.IsOwner) throw new Exception();
+                if (templateUser is null)
+                    return new ResponceBuilder<int>(0, BadResponce.INVALID_TEMPLATE).Responce;
+
+                if (!templateUser.IsOwner)
+                    return new ResponceBuilder<int>(0, BadResponce.DECLINED).Responce;
 
                 var responce = new ResponceBuilder<int>(
                     templateUser.Template.Id,
                     templateUser.Template.Title,
-                    ActionType.DELETE)
+                    TypeOperation.DELETE)
                     .Responce;
 
                 _context.ProductTemplates.Remove(templateUser.Template);
@@ -167,10 +189,10 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
                 transaction.Commit();
                 return responce;
             }
-            catch
+            catch (Exception ex)
             {
                 transaction.Rollback();
-                return null;
+                return new ResponceBuilder<int>(0, BadResponce.INVALID_TEMPLATE).Responce;
             }
         }
 
@@ -188,7 +210,7 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
                 var responce = new ResponceBuilder<int>(
                         templateUser.Template.Id,
                         templateUser.Template.Title,
-                        ActionType.UPDATE
+                        TypeOperation.UPDATE
                     ).Responce;
                 var template = templateUser.Template;
 
@@ -214,20 +236,80 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
             }
         }
 
-        //private ResponceInfo<T> CreateResponce<T>(T data, string title, ActionType action)
-        //{
-        //    var message = GetMessage(title, action);
-        //    return new ResponceInfo<T>
-        //    {
-        //        Data = data,
-        //        Message = message
-        //    };
-        //}
-
-        private async Task<T> GetEntityById<T>(int id) where T : BaseEntity
+        public async Task<ResponceInfo<bool>> AddUser(int templateId, int userId)
         {
-            return await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var user = await GetEntityById<User>(userId);
+                if (user is null)
+                {
+                    var message = "user does not excist, try login again";
+                    var responce = new ResponceBuilder<bool>(
+                    false, message)
+                    .Responce;
+
+                    return responce;
+                }
+
+                var template = await GetEntityById<ProductTemplate>(templateId);
+
+                if (template is null)
+                {
+                    var message = "template has not founded";
+                    var responce = new ResponceBuilder<bool>(
+                        false, message).Responce;
+                    return responce;
+                }
+
+                var newTemplateProduct_User = new ProductTemplateUser
+                {
+                    IsOwner = false,
+                    UserId = user.Id,
+                    TemplateId = template.Id
+                };
+                await _context.ProductTemplates_Users.AddAsync(newTemplateProduct_User);
+                //var templateUser = await _context.ProductTemplates_Users
+                //   .Include(ptu => ptu.User)
+                //   .Include(ptu => ptu.Template)
+                //   .FirstOrDefaultAsync(template => template.Id == templateId);
+
+                //if (templateUser is null)
+                //{
+                //    var message = "template has not founded";
+                //    var responce = new ResponceBuilder<bool>(
+                //        false, message, TypeOperation.DEFAULT).Responce;
+                //    return responce;
+                //}
+
+
+
+                await _context.SaveChangesAsync();
+                var publisher = template.Title;
+                var successResponce = new ResponceBuilder<bool>(
+                    true, publisher, TypeOperation.SUBSCRIBE).Responce;
+
+
+                transaction.Commit();
+                return successResponce;
+            }
+            catch(Exception ex)
+            {
+                transaction.Rollback();
+                var message = "operation was failed, try again later";
+                var responce = new ResponceBuilder<bool>(
+                false, message)
+                .Responce;
+
+                return responce;
+            }
         }
+
+
+        //private async Task<T> GetEntityById<T>(int id) where T : BaseEntity
+        //{
+        //    return await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id);
+        //}
 
         private async Task<ProductTemplateUser> GetTemplateUserById(int id)
         {
@@ -235,6 +317,15 @@ namespace Repositories.ProductRepositories.ProductTemplatesRepositories
                     .Include(tpu => tpu.Template)
                     .FirstOrDefaultAsync(templateUser => templateUser.Template.Id == id);
         }
+
+        private IQueryable<ProductTemplateUser> GetQueryDefault()
+        {
+            return _context.ProductTemplates_Users
+                    .Include(ptu => ptu.User)
+                    .Include(ptu => ptu.Template);
+        }
+
+        
 
         //private string GetMessage(ProductTemplateUser templateUser)
         //{

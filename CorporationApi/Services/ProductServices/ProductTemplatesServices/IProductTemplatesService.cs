@@ -11,10 +11,12 @@ namespace Services.ProductServices.ProductTemplatesServices
     public interface IProductTemplatesService
     {
         Task<List<ProductTemplateModel>> GetByUser(IdentityUserModel identityInfo);
-        Task<int> Add(FilterProductModel filter, IdentityUserModel identityInfo);
-        Task<ProductTemplateModel> GetById(int id, IdentityUserModel identity);
-        Task<ProductTemplateWithDetailModel> GetDetail(int id);
+        Task<ResponceInfo<int>> Add(FilterProductModel filter, IdentityUserModel identityInfo);
+        //Task<ProductTemplateModel> GetById(int id, IdentityUserModel identity);
+        Task<ProductTemplateWithDetailModel> GetDetail(int id, IdentityUserModel identity);
         Task<ResponceInfo<int>> Delete(int id);
         Task<ResponceInfo<int>> Update(int id, FilterProductModel filter);
+        Task<ProductTemplateInfoByUserModel> GetByIdWithUsers(int id, IdentityUserModel identity);
+        Task<ResponceInfo<bool>> AddUser(int id, IdentityUserModel identity);
     }
 }

@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 
 namespace Repositories
 {
-    public enum ActionType
+    public enum TypeOperation
     {
         DEFAULT,
         CREATE,
         UPDATE,
-        DELETE
+        DELETE,
+        SUBSCRIBE
     }
 
 }

@@ -1,5 +1,5 @@
 ﻿using CorporationApi.Filters;
-using Microsoft.AspNetCore.Http;
+//using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Repositories.Models.ProductModels;
 using Repositories.Specifications;
@@ -44,72 +44,42 @@ namespace CorporationApi.Controllers.ProductControllers
         public async Task<IActionResult> Add(FilterProductModel filter)
         {
             var identityInfo = GetIdentityInfo("ProductManager");
-            var result = await _service.Add(filter,identityInfo);
-            return Ok(result);
+            var responce = await _service.Add(filter, identityInfo);
+            return Ok(responce);
         }
 
-        [HttpGet("ById")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var identity = GetIdentityInfo("ProductManager");
-            var template = await _service.GetById(id, identity);
+        //[HttpGet("ById")]
+        //public async Task<IActionResult> GetById(int id)
+        //{
+        //    var identity = GetIdentityInfo("ProductManager");
+        //    var template = await _service.GetById(id, identity);
 
-            return Ok(template);
-            //testc code 
-
-            //if (id == 5) return Ok(null);
-
-            //return id % 2 == 0 
-            //    ? Ok(new ProductTemplateModel 
-            //    {
-            //        Id = 5,
-            //        Title = "template 11",
-            //        IsOwner = true,
-            //        Owner = "Vasya",
-            //        Criteria  = new ProductCriteria
-            //        {
-            //            RegionId = 1,
-            //            FactoryId = 0,
-            //            StorageId = 0,
-            //            ManufacturerId = 0,
-            //            CategoryId = 0,
-            //            UnitId = 0,
-            //            StartCount = 0,
-            //            EndCount = 150,
-            //            StartPrice = 1000,
-            //            EndPrice = 7400
-            //        }
-
-            //    })
-            //    : Ok(new ProductTemplateModel {
-            //        Id = 5,
-            //        Title = "template 11",
-            //        IsOwner = false,
-            //        Owner = "Vasya",
-            //        Criteria = new ProductCriteria
-            //        {
-            //            RegionId = 1,
-            //            FactoryId = 0,
-            //            StorageId = 0,
-            //            ManufacturerId = 0,
-            //            CategoryId = 0,
-            //            UnitId = 0,
-            //            StartCount = 0,
-            //            EndCount = 150,
-            //            StartPrice = 1000,
-            //            EndPrice = 7400
-            //        }
-            //    });
-            //return Ok();
-        }
+        //    return Ok(template);
+        //}
 
         [HttpGet("detail")]
         public async Task<IActionResult> GetDetail(int id)
         {
-            var template = await _service.GetDetail(id);
+            var identity = GetIdentityInfo("ProductManager");
+            var template = await _service.GetDetail(id, identity);
             return Ok(template);
         }
 
+        [HttpGet("ByIdWithUsers")]
+        public async Task<IActionResult> GetByIdWithUsers(int id)
+        {
+            var identity = GetIdentityInfo("ProductManager");
+            var template = await _service.GetByIdWithUsers(id, identity);
+            return Ok(template);
+        }
+
+        //[HttpPost("addUser")]
+        //public async Task<IActionResult> AddUser(int id)
+        //{
+        //    var identity = GetIdentityInfo("ProductManager");
+        //    var responce = _service.AddUser(id, identity);
+        //    return Ok();
+        //}
 
         private IdentityUserModel GetIdentityInfo(string key)
         {

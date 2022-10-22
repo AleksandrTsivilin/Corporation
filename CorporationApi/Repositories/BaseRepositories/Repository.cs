@@ -32,5 +32,10 @@ namespace Repositories.BaseRepositories
         {
             return await _context.Set<T>().FirstOrDefaultAsync(entity => entity.Id == id);
         }
+
+        protected async Task<T2> GetEntityById<T2>(int id) where T2 : BaseEntity
+        {
+            return await _context.Set<T2>().FirstOrDefaultAsync(e => e.Id == id);
+        }
     }
 }

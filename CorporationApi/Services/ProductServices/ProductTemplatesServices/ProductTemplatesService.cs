@@ -32,25 +32,77 @@ namespace Services.ProductServices.ProductTemplatesServices
             return GetProductTemplatesModels(templates);
         }
 
-        public async Task<ProductTemplateModel> GetById(int id, IdentityUserModel identity)
+        //public async Task<ProductTemplateModel> GetById(int id, IdentityUserModel identity)
+        //{
+        //    return null;
+        //    //var userId = identity.UserId;
+        //    //var template = await _repository.GetById(id, userId);
+        //    //return template is null
+        //    //    ? null
+        //    //    : GetProductTemplateModel(template);
+        //}
+
+        public async Task<ProductTemplateInfoByUserModel> GetByIdWithUsers(int id, IdentityUserModel identity)
         {
             var userId = identity.UserId;
-            var template = await _repository.GetById(id, userId);
-            return template is null
-                ? null
-                : GetProductTemplateModel(template);
+            var templateUsers = await _repository.GetByIdWithUsers(id);
+            if (templateUsers is null) return null;
+
+            var templateUser = templateUsers.FirstOrDefault(tpu => tpu.UserId == userId);
+
+            var isSaved = templateUser is not null;
+            var isOwner = templateUser is not null ? templateUser.IsOwner : false;
+            var countUser = templateUsers.Count;
+
+            var templateModel = GetProductTemplateModel(templateUsers[0]);
+            return new ProductTemplateInfoByUserModel
+            {
+                Id = templateModel.Id,
+                Title = templateModel.Title,
+                IsOwner = isOwner,
+                Owner = templateModel.Owner,
+                Criteria = templateModel.Criteria,
+                IsSaved = isSaved,
+                CountUser = countUser
+            };
+            //return null;
+
+
+
+            //var templateUser = templateProduct_User.FirstOrDefault(tpu => tpu.UserId ==  userId);
+            //if (templateProduct_User.User.Id != userId)
+            //{
+            //    templateProduct_User.IsOwner = false;
+            //}
+
+            //var templateModel = GetProductTemplateModel(templateProduct_User);
+            //var isSaved = IsHasUser(templateProduct_User, userId);
+            //var countUser = templateProduct_User.Template.Users.Count;
+            //return new ProductTemplateInfoByUserModel
+            //{
+            //    Id = templateModel.Id,
+            //    Title = templateModel.Title,
+            //    IsOwner = templateModel.IsOwner,
+            //    Owner = templateModel.Owner,
+            //    Criteria = templateModel.Criteria,
+            //    IsSaved = isSaved,
+            //    CountUser = countUser
+
+            //};
+            //return null;
         }
 
-        public async Task<int> Add(FilterProductModel filter, IdentityUserModel identity)
+        public async Task<ResponceInfo<int>> Add(FilterProductModel filter, IdentityUserModel identity)
         {
             var userId = identity.UserId;
-            var result = await _repository.Add(filter, userId);
-            return result;
+            var responce = await _repository.Add(filter, userId);
+            return responce;
         }
 
-        public async Task<ProductTemplateWithDetailModel> GetDetail(int id)
+        public async Task<ProductTemplateWithDetailModel> GetDetail(int id, IdentityUserModel identity)
         {
-            var template = await _repository.GetDetail(id);
+            var userId = identity.UserId;
+            var template = await _repository.GetDetail(id, userId);
             return new ProductTemplateWithDetailModel 
             {
                 Id = template.Id,
@@ -119,6 +171,12 @@ namespace Services.ProductServices.ProductTemplatesServices
             return responce;
         }
 
+        public async Task<ResponceInfo<bool>> AddUser(int templateId, IdentityUserModel identity)
+        {
+            var userId = identity.UserId;
+            var responce = await _repository.AddUser(templateId, userId);
+            return responce;
+        }
         private List<ProductTemplateModel> GetProductTemplatesModels(List<ProductTemplateUser> templates)
         {
             return templates.Select(templateUser => GetProductTemplateModel(templateUser))
@@ -129,6 +187,7 @@ namespace Services.ProductServices.ProductTemplatesServices
         {
             var template = templateUser.Template;
             var user = templateUser.User;
+
             return new ProductTemplateModel
             {
                 Id = template.Id,
@@ -151,6 +210,15 @@ namespace Services.ProductServices.ProductTemplatesServices
             };
         }
 
+        private bool IsHasUser(ProductTemplateUser template, int userId)
+        {
+            var user = template.Template.Users
+                .FirstOrDefault(user => user.UserId == userId);
+
+            return user is not null;
+        }
+
+        
         //private int TryGetInt(int value)
         //{
         //    return value == 0 ? 0 : value;
