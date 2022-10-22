@@ -150,7 +150,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
     this.templateService.getByUser()
       .subscribe(templates=>{
         this.templates  = templates;
-        console.log(templates)
+        
         this.isLoadingPage = false;
     },()=>{
       this.isLoadingPage = true;
@@ -170,7 +170,6 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
   }
 
   private saveData(){
-    console.log("save data template = " + this.selected)
     this.localStorage.set(ProductKeys.TEMPLATES,{
       "search"  : this.search,
       "curr": this.selected
@@ -204,36 +203,12 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
     return id > 0;
   }
 
-  // private getById(id : number){
-  //   this.templateService.getById(id)
-  //     .subscribe(template=>{
-  //       template
-  //         ? this.router.navigate([this.routers.TABLE],{
-  //           state : {template:template}
-  //         })
-  //         : this.router.navigate([this.routers.NEW_TEMPLATE]);
-  //     })
-  // }
+  
 
   private getByIdWithUsers(id : number){
     this.templateService.getByIdWithUsers(id)
       .subscribe(templateInfo=>{
-        console.log(templateInfo)
-        // if (templateInfo){
-        //   this.router.navigate([this.routers.TABLE],{
-        //     state:{
-        //       template:templateInfo
-        //     }
-        //   })
-        // }
-        // else{
-        //   this.router.navigate([this.routers.EDIT_TEMPLATE],{
-        //     state:{
-        //       template:templateInfo,
-        //       isUnsaved:true
-        //     }
-        //   })
-        // }
+       
         if (!templateInfo) return;
         if (templateInfo.isSaved) 
           this.router.navigate([this.routers.TABLE],{

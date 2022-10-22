@@ -11,9 +11,8 @@ export class ProductUpdateService {
 
   changesProductStorage$=new BehaviorSubject<number[]>([]);
   constructor(private readonly signalr:ProductSignalrService) { 
-    if (!signalr.isConnection)
+    if (!signalr.hubConnection?.state)
       signalr.startConnection();
-    console.log( signalr.isConnection)
     this.productChangesOnLis();
   }
 
@@ -39,7 +38,6 @@ export class ProductUpdateService {
   }
 
   private productChangesOnLis() {
-    console.log("productChange on")
     this.signalr.hubConnection
       ?.on("changeProducts",(changes:number[])=>{
         console.log("changeProductsLis")

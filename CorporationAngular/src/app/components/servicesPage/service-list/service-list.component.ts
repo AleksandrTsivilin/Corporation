@@ -14,14 +14,6 @@ enum CardTypes{
   ADD_MOVEMENT_PRODUCTS 
 }
 
-// interface UserPermissionsByRole{
-//   canReadUsers:boolean,
-//   canCreateUser:boolean,
-//   canReadProducts:boolean,
-//   canCreateProduct:boolean,
-//   canCreateMovementProducts:boolean
-// }
-
 
 @Component({
   selector: 'app-service-list',
@@ -30,14 +22,7 @@ enum CardTypes{
 })
 export class ServiceListComponent implements OnInit {
 
-  // tokenData:TokenData={
-  //   userId:0,
-  //   username:"",
-  //   avaiables:[],
-  //   department:0,
-  //   factory:0,
-  //   region:0
-  // }
+  
 
   permissions:AvaiableServiceByRole={
     canCreateUser:false,
@@ -49,7 +34,7 @@ export class ServiceListComponent implements OnInit {
   cards=CardTypes;
   selectedCard:number = CardTypes.NONE;
 
-  //isSelectedService:boolean=true;
+  
   isScrolling:boolean=false;
   constructor(private readonly authService:AuthService) { }
 
@@ -68,12 +53,8 @@ export class ServiceListComponent implements OnInit {
       : this.selectedCard=type;
   }
 
-  selectService(){
-    //this.isSelectedService=true;
-  }
 
   private createPermissions(avaiables:AvaiableUser[]) {
-    console.log(avaiables)
     avaiables.map(avaiable=>{
       this.setUserPermissions(avaiable);
       this.setProductPermissions(avaiable);

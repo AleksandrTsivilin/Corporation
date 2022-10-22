@@ -129,11 +129,7 @@ module.exports = {
               'border': '2px solid #2563eb'
             }
           },
-          // form components
-          // '._page-form-container':{
-          //   'border-bottom': '2px solid white',
-          //   'background-color': '#2563eb'
-          // },
+          
           '.header-form':{
             'font-size': '30px',
             'line-height':' 36px',

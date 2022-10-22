@@ -1,59 +1,31 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { fromEventPattern } from 'rxjs';
-import { CategoryInfo } from 'src/app/interfaces/product/categoryManagerPage/categoryInfo';
-import { ManufacturerInfo } from 'src/app/interfaces/product/manufacturerManagerPage/manufacturerInfo';
+import { Urls } from 'src/app/enums/urls';
 import { FilterProductForm, ProductFilterForm } from 'src/app/interfaces/product/productFilterForm';
 import { ProductInfo } from 'src/app/interfaces/product/productsInfo';
-import { UnitInfo } from 'src/app/interfaces/product/unitManagerPage/unitInfo';
-import { StorageInfo } from 'src/app/interfaces/storageInfo';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductsService {
 
+  urls = Urls;
   constructor(private readonly client:HttpClient) { }
 
   getProductsByAccess(){
-    const urlGetProducts="https://localhost:5001/api/Product/productsByAccess";
+    const urlGetProducts=this.urls.PRODUCT_BY_ACCESS;
     return this.client.get<ProductInfo[]>(urlGetProducts);
   }
 
   getProductsByUser(){
-    const urlGetProducts="https://localhost:5001/api/Product/ByUser";
+    const urlGetProducts=this.urls.PRODUCT_BY_USER;
     return this.client.get<ProductInfo[]>(urlGetProducts);
   }
 
-  // getManufacturers(){
-  //   const urlGetManufacturers="https://localhost:5001/api/Product/manufacturer";
-  //   return this.client.get<ManufacturerInfo[]>(urlGetManufacturers);
-  // }
 
-  // getCategories(){
-  //   const urlGetCategories="https://localhost:5001/api/Product/category";
-  //   return this.client.get<CategoryInfo[]>(urlGetCategories);
-  // }
-
-  // getUnits(){
-  //   const urlGetUnits="https://localhost:5001/api/Product/unit";
-  //   return this.client.get<UnitInfo []>(urlGetUnits);
-  // }
-
-  // getStorages(){
-  //   const urlGetStorage="https://localhost:5001/api/Product/storage";
-  //   return this.client.get<StorageInfo []>(urlGetStorage);
-  // }
-
-  // getStorageByUser(userId:number){
-  //   console.log("getStorageByUser")
-  //   const urlGetStorageByUser="https://localhost:5001/api/Product/storageByUser";
-  //   let params=new HttpParams();
-  //   params.append("userId",userId);
-  //   return this.client.get<StorageInfo>(urlGetStorageByUser,{params})
-  // }
   getByFilter(filter:FilterProductForm){
-    const urlGetByFilter="https://localhost:5001/api/Product/ByFilter";
+    const urlGetByFilter=this.urls.PRODUCT_BY_FILTER;
     var formData= new FormData();
     formData.append("Title",filter.searchString)
     formData.append("regionId",filter.criteria.regionId?.toString());

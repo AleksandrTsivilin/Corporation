@@ -21,11 +21,11 @@ export class AddCategoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit(){
-    console.log(this.formCategory);
-    //this.signalrService.addCategory(this.formCategory);
-    this.addCategory.emit();
+  // onSubmit(){
+  //   console.log(this.formCategory);
+  //   //this.signalrService.addCategory(this.formCategory);
+  //   this.addCategory.emit();
 
-  } 
+  // } 
 
 }

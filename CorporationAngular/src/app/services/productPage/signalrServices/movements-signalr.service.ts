@@ -9,7 +9,6 @@ export class MovementsSignalrService {
   isConnection:boolean=false;
 
   startConnection=()=>{
-    console.log("startConnection movements signalr")
     this.hubConnection=new signalR.HubConnectionBuilder()
       .withUrl('https://localhost:5001/movementsHub',
       {

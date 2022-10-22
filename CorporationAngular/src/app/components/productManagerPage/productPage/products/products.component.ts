@@ -47,20 +47,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     canDelete:false
   }  
 
-  // productFilterForm:ProductFilterForm = {
-  //   title:"",
-  //   regionId:0,
-  //   factoryId:0,
-  //   storageId:0,
-  //   manufacturerId:0,
-  //   categoryId:0,
-  //   unitId:0,
-  //   startPrice:0,
-  //   endPrice:maxPrice,
-  //   startCount:0,
-  //   endCount:maxCount
-  // }
-
   filterProductForm:FilterProductForm = {
     searchString: "",
     criteria:{
@@ -99,7 +85,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   rawTemplate : TemplateFilter | null = null;
   
 
-  //templateFilter: TemplateFilter | null = null;
+  
 
   @Output() modalInfo:ModalInfo={
     title:"",
@@ -107,22 +93,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     position:Positions.center
   }
 
-  //@Output() selectedTemplateId:number = 0;
+  
 
   headersTable:TableHeader[]=[];
   productsInfo:ProductInfo[]=[];
 
   storages:StorageInfo[]=[];
  
-  // newProductForm:NewProductForm={
-  //   storageId:0,
-  //   title:"",
-  //   price:0,
-  //   count:0,
-  //   manufacturerId:0,
-  //   categoryId:0,
-  //   unitId:0
-  // }
+  
 
   selectedProduct : ProductInfo={
     id:0,
@@ -138,7 +116,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   isOpenDetailedSearch:boolean =false;
   isApplyFilter:boolean=false;
   isShowModalWarning=false;
-  //private isHasTab : boolean = false;
   
   loadingOptionProductPage:LoadingOptionProductPage={
     isComplitedSearchByCriteria:true,
@@ -146,7 +123,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     isLoadingProducts:true
   }
 
-  //private editedProductId:number=0;
+ 
   ascDirection = 1;
   sortCriteria="";
   private _isOrdered:boolean=false;
@@ -170,47 +147,19 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private readonly templateService : ProductTemplateService,
     private readonly updateTemplateService : UpdateProductTemplateService,
     private readonly notify : NotificationService
-    // private readonly toastr : ToastrService
-    ) { 
-
-    //   this.createTab();
-    //debugger
-    //   this.loadPageState();
-
-    //   console.log("const products")
-   }
+    ) {}
 
   ngOnInit(): void {
 
-    //console.log("on init")
     
     this.updateTemplateSub();
     this.removedTabSub();
 
     const currentTemplate = history.state.template;
-    // if (currentTemplate){
-    //   this.createTab();
-    //   this.startSetting(currentTemplate);
-    // }
-    // else{
-    //   this.loadPageState();
-    // }
+   
     currentTemplate !==undefined
       ? this.startSetting(currentTemplate)
       : this.loadData();
-    //const currentTemplate = this.getCurrentTemplate();
-
-    //this.startSetting(currentTemplate);
-
-    // this.loadProducts(currentTemplate);
-
-    // this.getHeadersTable();    
-      
-    // this.getStorages(); 
-
-    // this.setProductsInfoLis();  
-    
-    // this.subscribeTokenData();
   
   }
 
@@ -219,32 +168,14 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  // toggleTemplate(){
-  //   //this.pageState.innerRouter = "template";
-  // }
-
   applyCriteria(filter:TemplateFilter | null){
     this.isOpenDetailedSearch=false;
-    // filter ===null 
-    //   ? this.resetProductFilterForm()
-    //   : this.templateFilter = filter;
-    // filterForm===null
-    //   ? this.resetProductFilterForm()
-    //   : this.setProductFilterFormByCriteria(filterForm);
-    
-    
-    //this.isApplyFilter = filter !== null;
+   
     this.loadingOptionProductPage.isComplitedSearchByCriteria=false;
-    //this.setTemplateData(this.rawTemplate);
     this.rawTemplate = null;
     this.loadProducts(filter);
     this.createTab();
   }
-
-  // saveChanged(raw  : TemplateFilter){
-  //   this.rawTemplate = raw;
-  //   this.saveData();
-  // }
 
   loadProducts(filter:TemplateFilter | null){
       
@@ -281,7 +212,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   filterCurrentProductsByTitle(researchString:string){
-    //this.productFilterForm.title=researchString;
     this.filterProductForm.searchString = researchString;
     this.loadingOptionProductPage.isComplitedSearchByTitle=false;
     this.productsInfo = this.productsInfo
@@ -291,7 +221,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   filterRefreshProductsByTitle(researchString:string){
-    //this.productFilterForm.title=researchString;
     this.filterProductForm.searchString = researchString;
     this.loadingOptionProductPage.isComplitedSearchByTitle=false;
     this.getProductsByFilter();
@@ -324,40 +253,11 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.isShowModalWarning=false;
   }
 
-  // startEdit(editProduct:ProductInfo){
-
-  //   this.editedProductId=editProduct.id;
-  //   this.newProductForm={
-  //     storageId:0,
-  //     title:editProduct.title,
-  //     price:editProduct.price,
-  //     count:editProduct.count,
-  //     manufacturerId:editProduct.manufacturer.id,
-  //     categoryId:editProduct.category.id,
-  //     unitId:editProduct.unit.id
-  //   }
-
-  //   this.savePageState("innerRouter", "/edit");
-    
-  // }
-
   remove(removeProduct:ProductInfo){
     this.updateService.remove(removeProduct.id);
   }
 
-  // update(updateProduct:NewProductForm){
-  //   this.updateService.updateProduct(updateProduct,this.editedProductId); 
-  //   this.closeEditPage(); 
-
-  // }
-
-  // closeEditPage(){
-  //   this.savePageState("innerRouter", "");
-  //   this.editedProductId=0;
-  // }
-
   openProductInfo(product:ProductInfo){
-    //this.savePageState("innerRouter", "productInfo");
     this.selectedProduct = product;
   }
 
@@ -392,15 +292,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.saveData();
   }
 
-  
-  // private setStatePage(path: string, isActive: boolean) {
-  //   this.pageState={
-  //     path:path,
-  //     isActive:isActive
-  //   }
-
-  //   this.localStorageSevice.setSettingsProductsPage({innerRouter:path})
-  // }
 
   private updateProducts(changes:number[]){
     if (changes.length===0) return;
@@ -436,14 +327,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
       title:"details",
       isOrdered:false
     }];
-
-    // if (this.avaiablesPermissions.canUpdate) {
-    //   headers.push({title:"edit",isActive:false});
-    // }
-
-    // if (this.avaiablesPermissions.canDelete) {
-    //   headers.push({title:"delete",isActive:false})
-    // }
     
     if (this.userProductPermissions.canUpdate) headers.push({title:"edit",isOrdered:false});
 
@@ -461,8 +344,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   private getProducts(){
-    console.log(this.filterProductForm);
-    //this.setStatePage("loadingPage",false)    
+      
     this.loadingOptionProductPage.isLoadingProducts=true;
     if (this.isApplyFilter) this.getProductsByFilter();
     else {
@@ -471,21 +353,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
         ? this.getProductsByDefault()
         : this.getProductsByTitle(searchString); 
     }
-    // this.isApplyFilter
-    //   ? this.getProductsByFilter()
-    //   : this.getProductsByDefault();
-    
-    
-
-
-    // if (this.isEmptyProductFilterForm(this.productFilterForm)){
-    //   this.getProductsByDefault(); 
-    //   console.log(this.pageState.path)     
-    // }
-    // else{
-    //   this.getProductsByFilter();
-    //   this.isApplyFilter=true;
-    // }
   }
 
   private getProductsByDefault(){
@@ -496,15 +363,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.productsInfo=result; 
         if (this._isOrdered) this.orderCol(this.sortCriteria);
         this.loadingComplited();
-        //this.savePageState("innerRouter","")
-        //this.pageState.innerRouter=""             
-        
-        // this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
-        // this.loadingOptionProductPage.isLoadingProducts = false;
     },(err)=>{
 
-      //this.pageState.innerRouter="responce500";
-      //this.savePageState("innerRouter","responce500")
     })
   }
 
@@ -514,10 +374,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.productsInfo=products;
         if (this._isOrdered) this.orderCol(this.sortCriteria);
         this.pageState.innerRouter="";
-        this.loadingComplited();
-        // this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
-        // this.loadingOptionProductPage.isComplitedSearchByTitle=true;
-        // this.loadingOptionProductPage.isLoadingProducts = false;        
+        this.loadingComplited();   
       })
   }
 
@@ -527,8 +384,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
       this.productsInfo = products;
       if (this._isOrdered) this.orderCol(this.sortCriteria);
       this.loadingComplited();
-      // this.loadingOptionProductPage.isComplitedSearchByCriteria=true;
-      // this.loadingOptionProductPage.isLoadingProducts = false;
     })
   }
 
@@ -629,7 +484,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
   }
 
   private createTab(){
-    console.log("create product tab")
    
     this.tabService.addedTab(
       {
@@ -689,38 +543,10 @@ export class ProductsComponent implements OnInit, OnDestroy {
         default: break;
 
       }
-      // this.templateFilter.title = "new template"
-      // this.templateFilter.id = 0;
-      
-      
-      // this.saveData();
-      // this.createTab();
+     
       if (responce.type!==TypeOperation.DEFAULT)
         this.notify.info(responce.message,ProductTitlePage.TEMPLATES);
         
     })
   }
-
-  // private createToastr(message : string){
-    
-  //   // this.toastr.info(message,ProductTitlePage.TEMPLATES,{
-  //   //   closeButton:true
-  //   // })
-  // }
-
-  // private setTemplateData(template : TemplateFilter){
-  //   this.rawTemplate = template; 
-  //   this.isApply = template !==null;
-  // }
-
-  // private resetTemplateData(){
-  //   this.r
-  // }
-
-  // private setErrorPage(statusCode:number){
-  //   this.errorPage={
-  //     isErrorPage: true,
-  //     statusCode: statusCode
-  //   }
-  // }
 }

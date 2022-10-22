@@ -6,9 +6,12 @@ export enum Urls{
     MANUFACTURER = 'https://localhost:5001/api/Manufacturer',
     CATEGORY = 'https://localhost:5001/api/CategoryProduct',
     UNIT = 'https://localhost:5001/api/UnitProduct',
-    PRODUCT_TEMPLATES = 'https://localhost:5001/api/ProductTemplates'
+    PRODUCT_TEMPLATES = 'https://localhost:5001/api/ProductTemplates',
+    PRODUCT_BY_ACCESS = "https://localhost:5001/api/Product/productsByAccess",
+    PRODUCT_BY_USER = "https://localhost:5001/api/Product/ByUser",
+    PRODUCT_BY_FILTER = "https://localhost:5001/api/Product/ByFilter"
 
-    // "https://localhost:5001/api/ProductTemplates/ById?id=15"
+    
 }
 
 export enum RegionUrls{

@@ -7,7 +7,7 @@ import { debounceTime } from 'rxjs/operators';
   templateUrl: './filter-by-title.component.html',
   styleUrls: ['./filter-by-title.component.scss']
 })
-export class FilterByTitleComponent implements OnInit, OnDestroy {
+export class FilterByTitleComponent implements OnInit {
 
   
   @Input() search:string="";
@@ -20,12 +20,9 @@ export class FilterByTitleComponent implements OnInit, OnDestroy {
   private prevSearch:string=""
   
   constructor() { }
-  ngOnDestroy(): void {
-    console.log('onDestroy');
-  }
+ 
 
   ngOnInit(): void {
-    console.log('onInit filter by title')
     this.prevSearch=this.search;
     this.search$.next(this.search)
     this.setSearchLis();
