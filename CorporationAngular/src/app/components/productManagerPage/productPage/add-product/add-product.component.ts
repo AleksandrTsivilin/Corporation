@@ -46,6 +46,7 @@ export class AddProductComponent implements OnInit {
   categories:CategoryInfo[]=[];
   units:UnitInfo[]=[]; 
 
+  
   priceErrorMessage : string | undefined;
   countErrorMessage : string | undefined;
   titleErrorMessage : string | undefined;
@@ -56,14 +57,13 @@ export class AddProductComponent implements OnInit {
   
   
   
-  constructor(
-   
+  constructor(   
     private readonly updateService:ProductUpdateService,
     private readonly manufacturerService:ManufacturerService,
     private readonly categoryService:CategoryService,
     private readonly unitService:UnitService,
     private readonly storageService:StorageService,
-    private readonly tabService:TabService
+    private readonly tabService:TabService,
     ) {}
 
   ngOnInit(): void {

@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
+import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
+import { TypeOperation } from 'src/app/enums/typeOperation';
 import { NewTemplateFilter } from 'src/app/interfaces/product/newTemplateFilter';
 import { ResponceInfo } from 'src/app/interfaces/responceInfo/responceInfo';
+import { NotificationService } from '../../notification.service';
 import { ProductTemplateSignalrService } from '../signalrServices/product-template-signalr.service';
 
 
@@ -20,7 +23,8 @@ export class UpdateProductTemplateService {
   TemplateChanges$ = new Subject<ResponceInfo>();
 
   constructor(
-    private readonly signalr:ProductTemplateSignalrService
+    private readonly signalr:ProductTemplateSignalrService,
+    private readonly notify:NotificationService
     ) { 
       
     if (!this.signalr.hubConnection?.state){
@@ -35,16 +39,37 @@ export class UpdateProductTemplateService {
     this.signalr.hubConnection?.invoke("Delete",id);
   }
 
-  update(filter: NewTemplateFilter, id: number) {
-    const newFilter = this.convertForm(filter)
-    console.log(newFilter)
-    this.signalr.hubConnection?.invoke("Update",id,newFilter);
+  // create new template
+  add(filter: NewTemplateFilter) {
+   const newFilter = this.convertForm(filter);
+   this.signalr.hubConnection?.invoke("Add", newFilter)
+  }
+
+  // change existing template
+  update(filter: NewTemplateFilter, id: number){
+    const updatedFilter = this.convertForm(filter);
+    this.signalr.hubConnection?.invoke("Update",id,updatedFilter);
+  }
+
+  // add user to existing template
+  addUser(templId:number){
+    this.signalr.hubConnection?.invoke("AddUser",templId);
   }
 
   private changesLis(){
     this.signalr.hubConnection?.on("changed", (response  : ResponceInfo) =>{
     
-      this.TemplateChanges$.next(response)
+      if (!response.data) {
+        this.notify.error(response.message,ProductTitlePage.TEMPLATES);
+        return;
+      }
+      
+      // if (response.type == TypeOperation.CREATE){
+      //   this.notify.success(response.message, ProductTitlePage.TEMPLATES);
+      //   return;
+      // }
+
+      this.TemplateChanges$.next(response);
     })
   }
 

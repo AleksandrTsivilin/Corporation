@@ -56,7 +56,11 @@
         }
 
         .btn-close-container{
-            @apply flex-1;
+            @apply flex-none;
+        }
+
+        .readonly{
+            @apply flex-1 text-center bg-red-600 rounded-md;
         }
 
         .btn-container{

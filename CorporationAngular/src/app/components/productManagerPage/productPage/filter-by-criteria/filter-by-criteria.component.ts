@@ -30,7 +30,12 @@ import { maxCount, maxPrice } from '../products/products.component';
 //   key:ProductTitlePage,
 //   criteria: CriteriaProduct
 // }
-
+enum ModeCriteria{
+  NEW,
+  DIRTY,
+  EDIT,
+  ADD_USER
+}
 
 
 @Component({
@@ -60,7 +65,11 @@ export class FilterByCriteriaComponent implements OnInit {
       }
   }
 
-  @Input() key: ProductTitlePage  = ProductTitlePage.DEFAULT;
+  @Input() isUnSaved:boolean=false;
+
+  // @Input() isSaved:boolean = false;
+
+  // @Input() key: ProductTitlePage  = ProductTitlePage.DEFAULT;
 
   //@Input () keyStorage: ProductKeys  = ProductKeys.TABLE;
 
@@ -107,7 +116,7 @@ export class FilterByCriteriaComponent implements OnInit {
   }
 
   title:string = "";
-  private currentId:number = 0;
+  // private currentId:number = 0;
   //templates : CriteriaInfo [] = [];
 
   regions: RegionInfo[]=[];
@@ -128,6 +137,9 @@ export class FilterByCriteriaComponent implements OnInit {
   isChangedOption:boolean=false;
   isEmptyFilter:boolean =true;
 
+  private mode = ModeCriteria.NEW;
+  private handler : Function | undefined;
+
   constructor(
     private readonly regionService:RegionService,
     private readonly factoryService:FactoryService,
@@ -140,41 +152,26 @@ export class FilterByCriteriaComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    this.start();
+    // this.startSetting();
     
-    // if (this.startFilter.owner){
-    //   this.getByTemplate();
-    //   return;
-    // }
+    // this.getRegions();
+    // this.getFactories();
+    // this.getStorages();
+    // this.getManufacturers();
+    // this.getCategories();
+    // this.getUnits();
 
-    this.startSetting();
-    
-    this.getRegions();
-    this.getFactories();
-    this.getStorages();
-    this.getManufacturers();
-    this.getCategories();
-    this.getUnits();
-
-    this.isEmptyFilter=this.isEmptyForm();
+    // this.isEmptyFilter=this.isEmptyForm();
     
   } 
 
   changedFilter(){
     this.isChangedOption=true;
-    this.title = "new template";
+    this.title = this.mode === ModeCriteria.NEW ? "new template" : "editing " + this.startFilter.title;
     this.isEmptyFilter = this.isEmptyForm();
-    //this.isApply = true;
-
-    //const index = this.templates.findIndex(template=>template.key === this.key)
-
-    // index >=0 
-    //   ? this.templates[index].criteria = this.rawFilter
-    //   : this.templates.push({
-    //     key:this.key,
-    //     criteria:this.rawFilter
-    //   })
-    
-    // this.saveData();
+    this.isUnSaved = true;
+  
   }
 
   changeFilterRegion(){
@@ -245,20 +242,43 @@ export class FilterByCriteriaComponent implements OnInit {
     this.rawFilter.endCount=endCount;
     this.changedFilter();
   }  
+
+  cansel(){
+    this.start();
+    
+  }
   
+  private start(){
+    this.startSetting();
+    
+    this.getRegions();
+    this.getFactories();
+    this.getStorages();
+    this.getManufacturers();
+    this.getCategories();
+    this.getUnits();
+
+    this.isEmptyFilter=this.isEmptyForm();
+  }
   onSubmitFilter(){
     
+    const newId = this.isChangedOption ? 0: this.startFilter.id;
+    const title = this.isChangedOption ? "new template": this.startFilter.title
+    this.submitting(newId,title);
     
+    
+    
+  }
+
+  private submitting(newId:number,title : string){
     this.isEmptyFilter
     ? this.submitForm.emit(null)
     : this.submitForm.emit({
-      id:this.isChangedOption ? 0: this.startFilter.id,
-      title:this.title,
+      id:newId,
+      title:title,
       owner:this.startFilter.owner,
       isOwner: this.startFilter.isOwner,
       criteria:this.rawFilter});
-    
-    //this.clearData();
   }
 
   clearFilterForm(){
@@ -286,31 +306,80 @@ export class FilterByCriteriaComponent implements OnInit {
   }
 
   onSubmitFilterWithSave(){
-    if  (!this.startFilter.id){
-      this.isShowModalGetInfo = true;
-      return;
-    }
+   
+   
+    // const newTemplate = this.getNewTemplate(this.startFilter.title);
     
-    const newTemplate = this.getNewTemplate(this.startFilter.title)
-    this.updateTemplateService.update(newTemplate,this.startFilter.id);
-    //this.templateService.update(newTemplate, this.startFilter.id);
-    this.onSubmitFilter();
+    
+    if (this.mode === ModeCriteria.NEW && this.isChangedOption) {
+      console.log("add new template"); 
+      this.isShowModalGetInfo = true;
+
+      this.handler = (title:string)=>{
+        const newTitle = title;
+        const newFilter = this.getNewTemplate(newTitle);
+        
+        this.templateService.add(newFilter)
+          .subscribe(responce=>{
+            this.submitting(responce.data,newTitle);
+          })
+      }
+    }
+    if (this.mode === ModeCriteria.DIRTY && this.isChangedOption && this.startFilter.isOwner) {
+      console.log("you can edit this template"); 
+      // to offer change title
+    
+      // const newTitle = "test update";
+      const updatedFilter = this.getNewTemplate(this.startFilter.title);
+      this.updateTemplateService.update(updatedFilter, this.startFilter.id);
+      this.submitting(this.startFilter.id, this.startFilter.title);
+    }
+    if (this.mode === ModeCriteria.DIRTY && !this.isChangedOption && !this.startFilter.isOwner) {
+      console.log("you can be added as user"); 
+    
+      this.updateTemplateService.addUser(this.startFilter.id);
+      this.submitting(this.startFilter.id, this.startFilter.title);
+    }
+    // // if (this.mode === ModeCriteria.DIRTY && this.isChangedOption && !this.startFilter.isOwner) {console.log("you let create a new template base on past template ");return}
+    // console.log("unknown case in onSubmitFilterWithSave")
+    // console.log(this.startFilter)
+    // console.log(this.mode)
+    
   }
 
+  
   closeGetInfoModal(responce : ResponceGetDataModal){
 
+   
     if(!responce.answer) {
       this.isShowModalGetInfo = false;
+      this.handler = undefined;
+      // const newTitle = ""// get new title in modal
+      // const newFilter = this.getNewTemplate(newTitle);
+      // this.updateTemplateService.add(newFilter);
+      // const newId = this.mode === ModeCriteria.NEW 
+      // ? 0
+      // : this.startFilter.id
+
+      // this.submitting(newId,this.startFilter.title);
       return;
     }
 
-    this.title = responce.data;
-    const newTemplate = this.getNewTemplate(responce.data);
-    this.templateService.add(newTemplate)
-      .subscribe();
-    this.isShowModalGetInfo = false;
-    //this.saveData();
-    this.onSubmitFilter();
+    if (this.handler) this.handler(responce.data);
+    // const newId = this.mode === ModeCriteria.NEW 
+    //   ? 0
+    //   : this.startFilter.id
+
+    // this.submitting(newId,this.startFilter.title);
+
+
+    // this.title = responce.data;
+    // const newTemplate = this.getNewTemplate(responce.data);
+    // this.templateService.add(newTemplate)
+    //   .subscribe();
+    // this.isShowModalGetInfo = false;
+    // //this.saveData();
+    // this.onSubmitFilter();
     
   }
 
@@ -543,7 +612,10 @@ export class FilterByCriteriaComponent implements OnInit {
 
     this.rawFilter = this.getRawFilter(this.startFilter.criteria);
     this.title = this.startFilter.title;
-    this.currentId = this.startFilter.id
+    this.mode = this.startFilter.id ===0 
+      ? ModeCriteria.NEW 
+      : ModeCriteria.DIRTY;
+    // this.currentId = this.startFilter.id
 
     // if (index >=0){
     //   const criteria = this.templates[index].criteria;

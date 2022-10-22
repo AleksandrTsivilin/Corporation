@@ -100,7 +100,6 @@ export class TemplateItemDetailComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.templateService.getDetails(this.id)
       .subscribe(templateInfo=>{
-
         templateInfo 
           ? this.templateInfo = templateInfo
           : this.isSomethingWrong = true;

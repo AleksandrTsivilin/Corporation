@@ -167,3 +167,17 @@
         animate-spin;
 }
 
+.btn-cansel{
+    @apply
+        relative 
+        border-2 border-transparent rounded-md
+        hover:border-gray-300;
+
+    .img{
+        @apply w-12 h-7;
+    }
+}
+
+// .invisible{
+//     // @apply invisible;
+// }

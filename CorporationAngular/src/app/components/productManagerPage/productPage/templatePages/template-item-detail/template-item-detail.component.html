@@ -1,4 +1,4 @@
-<!-- [@toGo]="state"  -->
+
 
 <div 
     
@@ -15,9 +15,10 @@
 
         <div *ngIf="!isLoading else toLoadingPage">
             <!-- action section -->
+            <!-- *ngIf="templateInfo?.isOwner else emptyBtnContainer" -->
             <section 
                 class="action-container"
-                *ngIf="templateInfo?.isOwner else emptyBtnContainer"
+                
             >
                 <!-- close button only mobile size -->
                 <div class="btn-close-container">
@@ -31,10 +32,19 @@
                     </button>
                 </div>
                 <div 
-                    class="btn-container"                    
+                    class="readonly"
+                    [ngClass]="{'invisible':templateInfo?.isOwner}"
+                >
+                    readonly
+                </div>
+                <div 
+                    class="btn-container"  
+                    [ngClass]="{'no-hover':!templateInfo?.isOwner}"                   
                 >
                     <!-- edit button -->
-                    <button class="btn" (click)="edit()">
+                    <button 
+                        class="btn" (click)="edit()" 
+                    >
                         <!-- <a 
                             class="_link"
                             routerLink="{{routers.EDIT_TEMPLATE}}"
@@ -50,6 +60,7 @@
                 <div class="btn-container">
                     <button 
                         class="btn" 
+                        [ngClass]="{'no-hover':!templateInfo?.isOwner}"  
                         (click)="remove()">
                         <img 
                             class="img" 

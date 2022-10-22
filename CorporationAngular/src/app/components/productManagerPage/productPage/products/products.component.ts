@@ -22,10 +22,10 @@ import { ProductKeys } from 'src/app/enums/productPage/productKeys';
 import { takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
-import { compilePipeFromMetadata } from '@angular/compiler';
 import { ProductTemplateService } from 'src/app/services/productPage/productTemplate/product-template.service';
 import { UpdateProductTemplateService } from 'src/app/services/productPage/updateServices/update-product-template.service';
-import { ToastrService } from 'ngx-toastr';
+import { NotificationService } from 'src/app/services/notification.service';
+import { TypeOperation } from 'src/app/enums/typeOperation';
 
 
 
@@ -93,7 +93,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
       endCount: maxCount
     },
     owner: '',
-    isOwner: false
+    isOwner: true
   }
 
   rawTemplate : TemplateFilter | null = null;
@@ -169,7 +169,8 @@ export class ProductsComponent implements OnInit, OnDestroy {
     private readonly localStorage: LocalStorageService,
     private readonly templateService : ProductTemplateService,
     private readonly updateTemplateService : UpdateProductTemplateService,
-    private readonly toastr : ToastrService
+    private readonly notify : NotificationService
+    // private readonly toastr : ToastrService
     ) { 
 
     //   this.createTab();
@@ -187,8 +188,6 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.removedTabSub();
 
     const currentTemplate = history.state.template;
-
-
     // if (currentTemplate){
     //   this.createTab();
     //   this.startSetting(currentTemplate);
@@ -666,23 +665,48 @@ export class ProductsComponent implements OnInit, OnDestroy {
   private updateTemplateSub(){
     this.updateTemplateService.TemplateChanges$
       .pipe(takeUntil(this.destroy$))
-      .subscribe(responce=>{
+      .subscribe(responce=>{        
       const templateId = responce.data;
-      if (this.templateFilter.id === templateId)
-        console.log("template changed products")
-        this.templateFilter.title = "new template"
-        this.templateFilter.id = 0;
-        this.saveData();
-        this.createTab();
-        this.createToastr(responce.message);
+      if (this.templateFilter.id !==templateId) return;
+      switch(responce.type){          
+
+        case Number(TypeOperation.UPDATE): 
+          console.log("action after updating");                      
+          break;
+
+        case Number(TypeOperation.DELETE):
+          console.log("action after delete");
+          break;
+        
+        case Number(TypeOperation.SUBSCRIBE):
+          console.log("action after additing user");
+          console.log(responce)
+          responce.data
+            ? this.notify.info(responce.message,ProductTitlePage.TEMPLATES)
+            : this.notify.error(responce.message,ProductTitlePage.TEMPLATES);
+          
+          break;
+        default: break;
+
+      }
+      // this.templateFilter.title = "new template"
+      // this.templateFilter.id = 0;
+      
+      
+      // this.saveData();
+      // this.createTab();
+      if (responce.type!==TypeOperation.DEFAULT)
+        this.notify.info(responce.message,ProductTitlePage.TEMPLATES);
+        
     })
   }
 
-  private createToastr(message : string){
-    this.toastr.info(message,ProductTitlePage.TEMPLATES,{
-      closeButton:true
-    })
-  }
+  // private createToastr(message : string){
+    
+  //   // this.toastr.info(message,ProductTitlePage.TEMPLATES,{
+  //   //   closeButton:true
+  //   // })
+  // }
 
   // private setTemplateData(template : TemplateFilter){
   //   this.rawTemplate = template; 

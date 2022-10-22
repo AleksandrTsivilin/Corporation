@@ -16,3 +16,13 @@ export interface TemplateFilter{
     isOwner:boolean,
     criteria:CriteriaProduct
 }
+
+export interface TemplateFilterInfo{
+    id:number,
+    title:string,
+    owner:string,
+    isOwner:boolean,
+    criteria:CriteriaProduct
+    countUser : number,
+    isSaved:boolean
+}

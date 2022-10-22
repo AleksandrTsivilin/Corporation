@@ -23,6 +23,9 @@
     <!-- filter criteria component -->
     <app-filter-by-criteria        
         [startFilter]="startTemplate"
+        [isUnSaved]="isUnSaved"
         (submitForm)="applyCriteria($event)"
     ></app-filter-by-criteria>
 </div>
+
+

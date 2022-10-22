@@ -40,7 +40,7 @@ export class NewTemplateComponent implements OnInit {
       endPrice: maxPrice
     },
     owner: '',
-    isOwner: false
+    isOwner: true
   }
 
   //@Output () isApply : boolean = false;
@@ -58,6 +58,7 @@ export class NewTemplateComponent implements OnInit {
 
   ngOnInit(): void {
 
+    
     //this.loadData();
 
     this.createTab();

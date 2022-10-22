@@ -48,6 +48,7 @@ export class AuthService {
             this.tokenData$.next(tokenData);
 
             this.localStorage.clear();
+
             this.localStorage.set(this.key, tokenData);
             return tokenData;
         })

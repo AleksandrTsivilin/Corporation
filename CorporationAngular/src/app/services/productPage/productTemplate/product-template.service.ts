@@ -4,17 +4,23 @@ import { map } from 'rxjs/operators'
 import { BehaviorSubject, Subject } from 'rxjs';
 import { ProductTemplates, Urls } from 'src/app/enums/urls';
 import { NewTemplateFilter } from 'src/app/interfaces/product/newTemplateFilter';
-import { TemplateFilter } from 'src/app/interfaces/product/tempalte/templateFilter';
+import { TemplateFilter, TemplateFilterInfo } from 'src/app/interfaces/product/tempalte/templateFilter';
 import { TemplateFilterWithDetails } from 'src/app/interfaces/product/tempalte/templateFilterWithDetails';
+import { ResponceInfo } from 'src/app/interfaces/responceInfo/responceInfo';
+import { NotificationService } from '../../notification.service';
+import { ProductTitlePage } from 'src/app/enums/productPage/productTitlePage';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductTemplateService {
+  
 
   current$ = new BehaviorSubject<number | null | undefined>(null);
   
-  constructor(private readonly client:HttpClient ) {}
+  constructor(
+    private readonly client:HttpClient,
+    private readonly notify:NotificationService ) {}
 
   getByUser(){
     const url = Urls.PRODUCT_TEMPLATES + ProductTemplates.BY_USER;
@@ -24,10 +30,17 @@ export class ProductTemplateService {
   add(newTemplate:NewTemplateFilter){
     const url = Urls.PRODUCT_TEMPLATES + ProductTemplates.ADD;
 
-    return this.client.post<number>(url,newTemplate)
-    .pipe( map(id=>{
-        console.log(id);
-        if (id) this.current$.next(id);
+    return this.client.post<ResponceInfo>(url,newTemplate)
+    .pipe( map(responce=>{
+        const templateId = responce.data;
+        if (templateId) {
+          this.current$.next(templateId);
+          this.notify.success(responce.message,ProductTitlePage.TEMPLATES);
+        }
+        else {
+          this.notify.error(responce.message, ProductTitlePage.TEMPLATES);
+        }
+        return responce;
       })
     );
   }
@@ -38,10 +51,17 @@ export class ProductTemplateService {
     return this.client.get<TemplateFilter[]>(url,{params});
   }
 
-  getById(id : number) {
-    const url = Urls.PRODUCT_TEMPLATES + ProductTemplates.BY_ID;
+  // getById(id : number) {
+  //   const url = Urls.PRODUCT_TEMPLATES + ProductTemplates.BY_ID;
+  //   const params = new HttpParams().set("id",id);
+  //   return this.client.get<TemplateFilter>(url,{params});
+  // }
+
+  getByIdWithUsers(id : number){
+    const url = this.urlBuilder(ProductTemplates.BY_ID_WITH_USERS);
     const params = new HttpParams().set("id",id);
-    return this.client.get<TemplateFilter>(url,{params});
+    return this.client.get<TemplateFilterInfo>(url,{params});
+    // return this.client.get<TemplateFilter>(url,{params});
   }
 
   getDetails(id : number){
@@ -49,6 +69,14 @@ export class ProductTemplateService {
 
     const params = new HttpParams().set("id",id);
     return this.client.get<TemplateFilterWithDetails>(url,{params});
+  }
+
+  addUser(id: number) {
+    throw new Error('Method not implemented.');
+  }
+
+  private urlBuilder(relativeUrl : string) : string {
+    return Urls.PRODUCT_TEMPLATES + relativeUrl;
   }
 
 }

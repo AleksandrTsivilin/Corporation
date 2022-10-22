@@ -2,7 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit, Output } from '@angular/cor
 import { offsetHeader } from 'src/app/components/mainPageComponent/nav-menu/nav-menu.component';
 import { Positions } from 'src/app/components/modals/modal/modal.component';
 import { ModalInfo } from 'src/app/interfaces/modal';
-import { TemplateFilter } from 'src/app/interfaces/product/tempalte/templateFilter';
+import { TemplateFilter, TemplateFilterInfo } from 'src/app/interfaces/product/tempalte/templateFilter';
 import { maxCount, maxPrice } from '../../products/products.component';
 import { Routers} from 'src/app/enums/routers/routers' 
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
@@ -17,6 +17,7 @@ import { pipe, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { UpdateProductTemplateService } from 'src/app/services/productPage/updateServices/update-product-template.service';
 import { ToastrService } from 'ngx-toastr';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 
 
@@ -39,6 +40,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
     position:Positions.center
   }
 
+  
   isShowModal:boolean = false;
   isScrolling:boolean=false;
   opened : number = -1 ;
@@ -168,6 +170,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
   }
 
   private saveData(){
+    console.log("save data template = " + this.selected)
     this.localStorage.set(ProductKeys.TEMPLATES,{
       "search"  : this.search,
       "curr": this.selected
@@ -193,7 +196,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
       .subscribe(params=>{
         const id = params["tempId"];
 
-        if (id && this.isValidId(id)) this.getById(id);
+        if (id && this.isValidId(id)) this.getByIdWithUsers(id);
       })
   }
 
@@ -201,15 +204,50 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
     return id > 0;
   }
 
-  private getById(id : number){
-    this.templateService.getById(id)
-      .subscribe(template=>{
-        console.log(template)
-        template
-          ? this.router.navigate([this.routers.TABLE],{
-            state : {template:template}
+  // private getById(id : number){
+  //   this.templateService.getById(id)
+  //     .subscribe(template=>{
+  //       template
+  //         ? this.router.navigate([this.routers.TABLE],{
+  //           state : {template:template}
+  //         })
+  //         : this.router.navigate([this.routers.NEW_TEMPLATE]);
+  //     })
+  // }
+
+  private getByIdWithUsers(id : number){
+    this.templateService.getByIdWithUsers(id)
+      .subscribe(templateInfo=>{
+        console.log(templateInfo)
+        // if (templateInfo){
+        //   this.router.navigate([this.routers.TABLE],{
+        //     state:{
+        //       template:templateInfo
+        //     }
+        //   })
+        // }
+        // else{
+        //   this.router.navigate([this.routers.EDIT_TEMPLATE],{
+        //     state:{
+        //       template:templateInfo,
+        //       isUnsaved:true
+        //     }
+        //   })
+        // }
+        if (!templateInfo) return;
+        if (templateInfo.isSaved) 
+          this.router.navigate([this.routers.TABLE],{
+            state:{
+              template:this.getTemplateFilter(templateInfo)
+            }})
+        else {
+          
+          this.router.navigate([this.routers.EDIT_TEMPLATE],{
+            state : {
+              template:this.getTemplateFilter(templateInfo), 
+              isUnSaved : !templateInfo.isSaved}
           })
-          : this.router.navigate([this.routers.NEW_TEMPLATE]);
+        }
       })
   }
 
@@ -218,7 +256,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(current=>{
         
-
+        
         this.selected = this.isModeStart ? null : current;
        
         this.saveData();
@@ -238,7 +276,10 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
     this.update.TemplateChanges$
       .pipe(takeUntil(this.destroy$))
       .subscribe(responce =>{
-
+       
+        if (!responce.data){
+          console.log(responce.message);
+        }
         const id = responce.data;
        
         if (!id) return;
@@ -276,6 +317,16 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
   //     type: TypeNotification.INFO
   //   })
   // }
+
+  private getTemplateFilter(templateInfo : TemplateFilterInfo) : TemplateFilter{
+    return {
+      id:templateInfo.id,
+      title:templateInfo.title,
+      owner:templateInfo.owner,
+      isOwner:templateInfo.isOwner,
+      criteria:templateInfo.criteria
+    }
+  }
 }
 
 

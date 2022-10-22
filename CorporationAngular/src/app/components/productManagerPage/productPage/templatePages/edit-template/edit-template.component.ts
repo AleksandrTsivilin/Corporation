@@ -37,9 +37,13 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   }
  }
 
+//  @Output() isSaved:boolean = false;
+
   routers = Routers;
   private destroy$ = new Subject();
 
+  isUnSaved: boolean = false;
+  isShowModal:boolean = false;
   constructor(
     private readonly tabService : TabService,
     private readonly router:Router,
@@ -47,16 +51,25 @@ export class EditTemplateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    // const template = history.state.template;
+    // if (template) {
+    //   this.startTemplate = template;
+    //   this.saveData();
+    // }
+    // else this.loadData();
+
     const template = history.state.template;
-    
+    const isUnSaved = history.state.isUnSaved;
     if (template) {
       this.startTemplate = template;
+      
+      if (isUnSaved) this.isUnSaved = isUnSaved;
       this.saveData();
     }
     else this.loadData();
-
     this.createTab();
     this.removedSub();
+
   }
 
   ngOnDestroy(): void {

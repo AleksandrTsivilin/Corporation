@@ -38,6 +38,7 @@ export enum UnitUrls{
 export enum ProductTemplates{
     START_WITH = '/StartWith',
     BY_ID = '/ById',
+    BY_ID_WITH_USERS = '/ByIdWithUsers',
     BY_USER = '/ByUser',
     ADD = '/Add',
     DETAIL = '/detail'
