@@ -19,7 +19,6 @@ export class ProductUpdateService {
   addProduct(newProductForm:NewProductForm){
     
     let addedProduct = this.convertForm(newProductForm); 
-    console.log('addProduct')
     this.signalr.hubConnection?.invoke("AddProduct",addedProduct)
       .then()
       .catch(err=>{console.error(err)})
@@ -27,7 +26,6 @@ export class ProductUpdateService {
 
   updateProduct(newProductForm:NewProductForm,id:number){
     const product=this.convertForm(newProductForm);
-    console.log(product);
     this.signalr.hubConnection?.invoke("UpdateProduct",product,id)
   }
 
@@ -40,7 +38,6 @@ export class ProductUpdateService {
   private productChangesOnLis() {
     this.signalr.hubConnection
       ?.on("changeProducts",(changes:number[])=>{
-        console.log("changeProductsLis")
         this.changesProductStorage$.next(changes);
     })
   }
