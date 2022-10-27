@@ -26,7 +26,7 @@ export class UpdateProductTemplateService {
     private readonly signalr:ProductTemplateSignalrService,
     private readonly notify:NotificationService
     ) { 
-      
+      console.log(this.signalr.hubConnection?.state)
     if (!this.signalr.hubConnection?.state){
   
       this.signalr.startConnection();

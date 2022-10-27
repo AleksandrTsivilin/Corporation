@@ -44,7 +44,7 @@ export class ProductTemplateSignalrService {
         this.notify.error(
           "you are offline",
           "connection manager"
-        )
+        );console.log("onreconnecting")
       })
         
   }
@@ -52,7 +52,7 @@ export class ProductTemplateSignalrService {
   constructor(
     private readonly notify:NotificationService,
     private readonly router:Router) { 
-    
+    console.log("constructor product template signal")
   }
 
   

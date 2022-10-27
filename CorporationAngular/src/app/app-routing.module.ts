@@ -24,6 +24,8 @@ import { ServicesPageComponent } from './components/servicesPage/services-page/s
 import { AddUserComponent } from './components/userManagerPage/add-user/add-user.component';
 import { UsersComponent } from './components/userManagerPage/users/users.component';
 import { ServicesGuard } from './guards/services.guard';
+import { EditProductGuard } from './guards/edit-product.guard';
+import { ProductsGuard } from './guards/products.guard';
 
 
 const routes: Routes = [
@@ -44,12 +46,13 @@ const routes: Routes = [
       {
         path:"products", 
         component:ProductPageComponent,
+        canActivate:[ProductsGuard],
         children:[
           {path:"",redirectTo:"instruction",pathMatch:"full"},
           {path:"instruction",component:ProductInstructionComponent},
           {path:"table",component:ProductsComponent},
           {path:"templates",component:TemplateManagerComponent},          
-          {path:"edit",component:EditProductComponent},
+          {path:"edit",component:EditProductComponent,canActivate : [EditProductGuard]},
           {path:"details",component:ProductItemInfoComponent},
           {path:"newTemplate", component: NewTemplateComponent},
           {path:"editTemplate", component: EditTemplateComponent}

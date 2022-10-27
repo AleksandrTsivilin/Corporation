@@ -68,11 +68,6 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isModeStart = history.state.start;
-
-    // this.selected  = this.templateService.current$.value 
-    //   ? this.templateService.current$
-    //   : 0;
-    
    
     this.isModeStart
       ? this.isShowModal = true
@@ -145,8 +140,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
     
   }
 
-  private getTemplates() { 
-    //this.isLoadingPage = true;   
+  private getTemplates() {   
     this.templateService.getByUser()
       .subscribe(templates=>{
         this.templates  = templates;
@@ -194,7 +188,7 @@ export class TemplateManagerComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(params=>{
         const id = params["tempId"];
-
+        console.log("router sub template manager")
         if (id && this.isValidId(id)) this.getByIdWithUsers(id);
       })
   }

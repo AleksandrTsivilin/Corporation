@@ -17,14 +17,14 @@ import { LocalStorageService } from './local-storage.service';
 export class AuthService {
   private key:string = "td";
 
-  tokenData : TokenData={
-    userId:0,
-    username:"",
-    avaiables:[],
-    department:0,
-    factory:0,
-    region:0
-  }
+  // tokenData : TokenData={
+  //   userId:0,
+  //   username:"",
+  //   avaiables:[],
+  //   department:0,
+  //   factory:0,
+  //   region:0
+  // }
 
   tokenData$=new BehaviorSubject<TokenData | null>(null);
   token$=new BehaviorSubject<string | null>(null);
@@ -61,6 +61,25 @@ export class AuthService {
     this.token$.next(null);
     this.tokenData$.next(null);
     this.localStorage.clear();
+  }
+
+  isHasRole(title:string):boolean{
+    const tokenData = this.tokenData$.value;
+    if(!tokenData) return false;
+   
+    return  tokenData.avaiables
+      .map(avaiable=>avaiable.role.title)
+      .includes(title);     
+  }
+
+  isHasPermission(permission:string,role:string) : boolean{
+    const tokenData = this.tokenData$.value;
+    if (!tokenData) return false;
+    const avaiableByRole = tokenData.avaiables
+    .find(avaiable => avaiable.role.title === role);
+    if (!avaiableByRole) return false;
+    return avaiableByRole.permissions.map(permission=>permission.title).includes(permission);
+      
   }
 
   addUser(newUser:NewUser){
