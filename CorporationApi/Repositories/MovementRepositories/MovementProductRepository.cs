@@ -56,7 +56,7 @@ namespace Repositories.MovementRepositories
                         {
                             _context.Product_Storage.Remove(productStorageFrom);
                         }
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                     }
                     else
                     {
@@ -66,7 +66,7 @@ namespace Repositories.MovementRepositories
                         {
                             _context.Product_Storage.Remove(productStorageFrom);
                         }
-                        _context.SaveChanges();
+                        await _context.SaveChangesAsync();
                     }
                 }
 
