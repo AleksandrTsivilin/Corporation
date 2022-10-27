@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 import { Routers } from '../enums/routers/routers';
 import { AuthService } from '../services/auth.service';
+import { NotificationService } from '../services/notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,8 @@ export class EditProductGuard implements CanActivate {
 
   constructor(
     private readonly authService:AuthService,
-    private readonly router:Router){
+    private readonly router:Router,
+    private readonly notify:NotificationService){
 
   }
   canActivate(
@@ -19,8 +21,10 @@ export class EditProductGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
     const isHasPermission = this.authService.isHasPermission("Update","ProductManager");
-    if (!isHasPermission) { this.router.navigate([Routers.TABLE])}
-    return isHasPermission;
+    if (isHasPermission) return true;
+    this.notify.error("Route is not avaiable","Guard")
+    this.router.navigate([Routers.TABLE])
+    return false;
   }
   
 }
