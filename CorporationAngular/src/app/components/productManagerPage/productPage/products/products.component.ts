@@ -401,6 +401,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
     })
 
     this.updateMovementService.movementsProduct$
+    
       .subscribe((changes)=>{
         this.updateProducts(changes);
       })
