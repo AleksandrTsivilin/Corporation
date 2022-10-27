@@ -19,7 +19,7 @@ export class EditProductGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
     const isHasPermission = this.authService.isHasPermission("Update","ProductManager");
-    if (!isHasPermission) this.router.navigate([Routers.TABLE])
+    if (!isHasPermission) { this.router.navigate([Routers.TABLE])}
     return isHasPermission;
   }
   

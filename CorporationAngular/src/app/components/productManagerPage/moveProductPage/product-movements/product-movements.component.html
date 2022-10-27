@@ -12,16 +12,18 @@
         class="h-full"
         (ngSubmit)="onSubmit()"        
     > 
-        <div class="align-middle inline-block w-full shadow overflow-y-scroll bg-white shadow-dashboard px-8 py-2 rounded-bl-lg rounded-br-lg">
+        <div class="align-middle inline-block w-full shadow overflow-y-scroll bg-white shadow-dashboard px-8 py-2 rounded-bl-lg rounded-br-lg text-bg-700">
             <div class="flex justify-between font-bold ">
-                <div class="flex my-auto gap-x-1">
+                <div class="flex my-auto gap-x-1 text-blue-700">
                     <span>From : </span>
                     <h1>{{currentStorage.title}}</h1>
                 </div>
-                <div class="flex gap-x-1">
+                <div class="flex gap-x-1 text-blue-700">
                     <span class="my-auto">To : </span>
+                    
                     <select 
-                        class="rounded w-96"
+                        class="_form-select w-96"
+
                         [(ngModel)]=formMovedProducts.to
                         name="to"
                     >
@@ -35,7 +37,7 @@
                     </select>
                 </div>              
             
-                <div class="flex gap-x-3 my-auto">
+                <div class="flex gap-x-3 my-auto text-blue-700">
                     <div>
                         <span>Total :</span>
                     </div>
@@ -43,12 +45,9 @@
                         <span>{{totalMoved}}</span>
                     </div>
                 </div>
-                <button 
-                    class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-500 text-base font-medium text-white font-bold hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-600 sm:ml-3 sm:w-auto sm:text-sm" 
-                    type="submit"
-                >
-                    submit
-                </button>
+                <div class="w-48 h-9 my-auto">
+                    <button type="submit" class="btn-submit">submit</button>
+                </div>
             </div>
         </div>
         <div class="table-container  align-middle inline-block w-full shadow overflow-y-scroll bg-white shadow-dashboard px-8  rounded-bl-lg rounded-br-lg">

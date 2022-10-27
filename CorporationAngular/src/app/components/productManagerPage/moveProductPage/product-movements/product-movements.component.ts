@@ -55,12 +55,12 @@ export class ProductMovementsComponent implements OnInit {
       private readonly tabService:TabService
      
       ) {
-          // tabService.addedTab({
-          //   title: "add movements products",
-          //   router: "/services/addMovementProduct",
-          //   additional: "",
-          //   key: undefined
-          // })
+          tabService.addedTab({
+            title: "add movements products",
+            router: "/services/addMovementProduct",
+            additional: "",
+            key: undefined
+          })
        }
 
   ngOnInit(): void {

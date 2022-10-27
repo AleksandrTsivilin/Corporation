@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MovedProductAction } from 'src/app/interfaces/product/MovementProductManagerPage/movedProductAction';
-//import { MovedProduct } from 'src/app/interfaces/product/MovementProductManagerPage/movementProductForm';
+
 
 @Component({
   selector: 'tr[app-product-item-movements]',

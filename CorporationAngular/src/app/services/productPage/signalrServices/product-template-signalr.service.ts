@@ -31,21 +31,21 @@ export class ProductTemplateSignalrService {
           this.router.navigate([Routers.RESPONCES])
         })
 
-      this.hubConnection
-        .onreconnected(_=> {
-          this.notify.success(
-            "connection has been restored",
-            "connection manager"
-          )
-        })
+      // this.hubConnection
+      //   .onreconnected(_=> {
+      //     this.notify.success(
+      //       "connection has been restored",
+      //       "connection manager"
+      //     )
+      //   })
 
 
-      this.hubConnection.onreconnecting(_=>{
-        this.notify.error(
-          "you are offline",
-          "connection manager"
-        );console.log("onreconnecting")
-      })
+      // this.hubConnection.onreconnecting(_=>{
+      //   this.notify.error(
+      //     "you are offline",
+      //     "connection manager"
+      //   );console.log("onreconnecting")
+      // })
         
   }
   
