@@ -395,16 +395,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
   
 
   private setProductsInfoLis(){
+    
     this.updateService.changesProductStorage$
       .subscribe((changes)=>{
         this.updateProducts(changes);  
     })
 
     this.updateMovementService.movementsProduct$
-    
       .subscribe((changes)=>{
         this.updateProducts(changes);
       })
+     
   }
 
   private resetCriteria(){
