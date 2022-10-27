@@ -17,15 +17,6 @@ import { LocalStorageService } from './local-storage.service';
 export class AuthService {
   private key:string = "td";
 
-  // tokenData : TokenData={
-  //   userId:0,
-  //   username:"",
-  //   avaiables:[],
-  //   department:0,
-  //   factory:0,
-  //   region:0
-  // }
-
   tokenData$=new BehaviorSubject<TokenData | null>(null);
   token$=new BehaviorSubject<string | null>(null);
   
