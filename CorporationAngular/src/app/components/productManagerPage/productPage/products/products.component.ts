@@ -177,13 +177,12 @@ export class ProductsComponent implements OnInit, OnDestroy {
     this.createTab();
   }
 
-  loadProducts(filter:TemplateFilter | null){
-      
+  loadProducts(filter:TemplateFilter | null){    
 
     if (filter){   
       this.isApplyFilter = true;   
       this.filterProductForm.criteria = filter.criteria;
-      this.templateFilter = filter;      
+      this.templateFilter = filter;     
       
     }
     else {
@@ -397,13 +396,13 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
   private setProductsInfoLis(){
     this.updateService.changesProductStorage$
-      .pipe(takeUntil(this.destroy$))
+    .pipe(takeUntil(this.destroy$))
       .subscribe((changes)=>{
         this.updateProducts(changes);  
     })
 
     this.updateMovementService.movementsProduct$
-      .pipe(takeUntil(this.destroy$))
+    .pipe(takeUntil(this.destroy$))
       .subscribe((changes)=>{
         this.updateProducts(changes);
       })
